@@ -1,0 +1,52 @@
+--localhost:8000
+
+function love.load(arg)
+	--define globals
+	lovebird = require("libs.lovebird")
+	lovebird.update()
+	require("utils.utils")
+	suit = require("libs.suit")
+	
+	function Class(a,b)
+		if a==nil then
+			return require("libs.middleclass")("Unnamed")
+		elseif type(a)=="table" then
+			return require("libs.middleclass")("Unnamed",a)
+		elseif type(a)=="string" then
+			return require("libs.middleclass")(a,b)
+		end
+	end
+	
+	TILE_SIZE = 71
+	
+	ui = require("ui.movableCamera"):new(
+		love.graphics.getWidth(),
+		love.graphics.getHeight(),
+		require("ui.worldViewer"):new(0,0,"-22")
+	)
+end
+
+function love.update(dt)
+	lovebird.update(dt)
+	ui:update(dt)
+end
+
+function love.draw()
+	ui:draw()
+end
+
+function love.resize(w, h)
+	ui:resize(w,h)
+end
+
+function love.keypressed(key, scancode, isrepeat)
+	ui:keypressed(key, scancode, isrepeat)
+end
+
+function love.mousemoved(x, y, dx, dy)
+	ui:mousemoved(x, y, dx, dy)
+end
+
+function love.wheelmoved(x, y)
+	ui:wheelmoved(x,y)
+end

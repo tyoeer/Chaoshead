@@ -1,0 +1,5 @@
+Todo:
+-add the remaining known headers
+-decide upon a fixed terminology
+
+Bugs:
