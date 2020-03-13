@@ -1,5 +1,6 @@
 Todo:
 -add the remaining known headers
--decide upon a fixed terminology
+-decide upon a fixed terminology for Levelhead related stuff
+-decide how to hproperly handle interactive stuff (example: mouse pos) when nesting UI's
 
 Bugs:

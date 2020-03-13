@@ -10,7 +10,8 @@ function UI:initialize(w,h,child)
 	self.y = 0
 	self.zoomFactor = 1
 	self.child = child
-	Parent:initialize(w,h)
+	Parent.initialize(self,w,h)
+	self.title = child.title
 end
 
 function UI:resize(w,h)
@@ -38,10 +39,10 @@ function UI:wheelmoved(x,y)
 end
 
 function UI:draw()
-	love.graphics.translate(self.width/2, self.height/2)
-	love.graphics.scale(self.zoomFactor)
-	love.graphics.translate(self.x, self.y)
 	love.graphics.push()
+		love.graphics.translate(self.width/2, self.height/2)
+		love.graphics.scale(self.zoomFactor)
+		love.graphics.translate(self.x, self.y)
 		self.child:draw()
 	love.graphics.pop()
 end

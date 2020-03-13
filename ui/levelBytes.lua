@@ -16,6 +16,7 @@ end
 
 function LBUI:initialize(w,h,level)
 	Parent.initialize(self,w,h)
+	self.title = "Hex Inspector"
 	
 	if type(level)=="table" then
 		self:setLevel(level)
@@ -41,7 +42,7 @@ end
 function LBUI:reload()
 	local l = self.level
 	l:readAll()
-	table.print(l.rawContentEntries)
+	--table.print(l.rawContentEntries)
 	self.all = bytesToHex(l.raw)
 	self.prefix = bytesToHex(l:getBytes(1,9))
 	self.bgm = bytesToHex(l:getBytes(10,5))
