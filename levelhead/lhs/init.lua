@@ -6,23 +6,40 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 
 ]]--
 
+--these are used when the level id is given
 local userCode = "m7n6j8"
 local levelsPath = love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/"..userCode.."/stages/"
 local extension = ".lhs"
 
+local files = {
+	love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/m7n6j8/stages/-22.lhs",
+}
+
 function LHS:initialize(level)
 	local t = type(level)
 	if t=="number" then
-		self.fileName = tostring(level)
+		self:loadFile(levelsPath ..level.. extension)
 	elseif t=="string" then
-		self.fileName = level
+		self:loadFile(levelsPath ..level.. extension)
+	elseif t=="nil" then
+		self:loadDefaultFile()
 	end
-	self:loadFile(levelsPath ..self.fileName.. extension)
+end
+
+function LHS:loadDefaultFile()
+	for _,v in ipairs(files) do
+		local file,err = io.open(v,"rb")
+		if file then
+			self.raw = file:read("*a")
+			file:close()
+			break
+		end
+	end
 end
 
 function LHS:loadFile(fullPath)
-	local file,e = io.open(fullPath,"rb")
-	print(e)
+	local file,err = io.open(fullPath,"rb")
+	if err then error(err) end
 	self.raw = file:read("*a")
 	file:close()
 end

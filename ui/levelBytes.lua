@@ -21,6 +21,8 @@ function LBUI:initialize(w,h,level)
 		self:setLevel(level)
 	elseif type(level)=="string" then
 		self:loadLevel(level)
+	elseif level == nil then
+		self:loadLevel()
 	else
 		error("Invalid level type: "..type(level).." "..tostring(level))
 	end

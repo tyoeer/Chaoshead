@@ -22,7 +22,7 @@ function love.load(arg)
 	ui = require("ui.movableCamera"):new(
 		love.graphics.getWidth(),
 		love.graphics.getHeight(),
-		require("ui.worldViewer"):new(0,0,"-22")
+		require("ui.worldViewer"):new(0,0,nil)
 	)
 end
 
