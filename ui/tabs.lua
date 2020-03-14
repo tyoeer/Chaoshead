@@ -29,8 +29,11 @@ end
 function UI:resize(w,h)
 	self.width = w
 	self.height = h
+	
+	self.tabWidth = w / self.nChildren
+	
 	for child in self.children:iterate() do
-		child:resize(w,h-self.tabHeight)
+		child:resize(w, h-self.tabHeight)
 	end
 end
 

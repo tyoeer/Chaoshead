@@ -7,13 +7,12 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 ]]--
 
 --these are used when the level id is given
-local userCode = "m7n6j8"
+local userCode = "xxqtsv"
 local levelsPath = love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/"..userCode.."/stages/"
 local extension = ".lhs"
 
 local files = {
-	love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/m7n6j8/stages/-23.lhs",
-	love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/m7n6j8/stages/-22.lhs",
+	love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/xxqtsv/stages/-12.lhs",
 }
 
 function LHS:initialize(level)
