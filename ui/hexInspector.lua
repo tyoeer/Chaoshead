@@ -81,6 +81,7 @@ end
 
 function UI:draw()
 	resetRows(self)
+	local c = self.level.rawContentEntries
 	love.graphics.setColor(1,1,1)
 	textRow("Headers:",-1)
 		row("all")
@@ -101,8 +102,13 @@ function UI:draw()
 			textRow("-> "..self.level.rawHeaders.height,1)
 		row("unknown")
 	textRow("Content:",-1)
-		textRow("Single Foreground Objects:")
-		indent = 2
+		textRow("Single Foreground Objects: ".. c.singleForeground.nEntries)
+		for _,v in ipairs(c.singleForeground.entries) do
+			local hex = bytesToHex(self.level.raw:sub(v.startOffset,v.endOffset))
+			textRow(hex,2)
+		end
+		textRow("Foreground Rows:")
+			textRow(bytesToHex(self.level.raw:sub(c.singleForeground.endOffset+1)))
 end
 
 function UI:keypressed(key, scancode, isrepeat)

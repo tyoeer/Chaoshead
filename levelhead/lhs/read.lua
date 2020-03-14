@@ -41,6 +41,7 @@ function LHS:readSingleForeground()
 	local offset = c.startOffset+3
 	for i=1,c.nEntries,1 do
 		local entry = {}
+		entry.startOffset = offset
 		entry.id = self:getNumber(offset)
 		entry.amount = self:getNumber(offset+2)
 		entry.objects={}
@@ -51,9 +52,10 @@ function LHS:readSingleForeground()
 			entry.objects[j] = item
 		end
 		offset = offset + entry.amount*2 + 4
+		entry.endOffset = offset - 1
 		c.entries[i] = entry
 	end
-	c.endOffset = offset
+	c.endOffset = offset-1
 end
 
 function LHS:readAll()
