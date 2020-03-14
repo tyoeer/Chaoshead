@@ -25,16 +25,16 @@ function love.load(arg)
 	love.graphics.setLineStyle("rough")
 	--build ui
 	ui = require("ui.tabs"):new(love.graphics.getWidth(),love.graphics.getHeight())
+	local hexInspector = require("ui.movableCamera"):new(
+		-1,-1,
+		require("ui.hexInspector"):new(-1,-1,nil)
+	)
+	ui:addChild(hexInspector)
 	local worldViewer = require("ui.movableCamera"):new(
 		-1,-1,
 		require("ui.worldViewer"):new(-1,-1,nil)
 	)
 	ui:addChild(worldViewer)
-	local hexExplorer = require("ui.movableCamera"):new(
-		-1,-1,
-		require("ui.levelBytes"):new(-1,-1,nil)
-	)
-	ui:addChild(hexExplorer)
 end
 
 function love.update(dt)
