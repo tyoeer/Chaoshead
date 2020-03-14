@@ -78,6 +78,13 @@ local function row(display,label,extraIndent)
 	text = text .. this[display]
 	textRow(text,extraIndent)
 end
+local function sectionRows(section, label)
+	textRow(label..": ".. this.level.rawContentEntries[section].nEntries)
+	for _,v in ipairs(this.level.rawContentEntries[section].entries) do
+		local hex = bytesToHex(this.level.raw:sub(v.startOffset,v.endOffset))
+		textRow(hex,2)
+	end
+end
 
 function UI:draw()
 	resetRows(self)
@@ -102,13 +109,12 @@ function UI:draw()
 			textRow("-> "..self.level.rawHeaders.height,1)
 		row("unknown")
 	textRow("Content:",-1)
-		textRow("Single Foreground Objects: ".. c.singleForeground.nEntries)
-		for _,v in ipairs(c.singleForeground.entries) do
-			local hex = bytesToHex(self.level.raw:sub(v.startOffset,v.endOffset))
-			textRow(hex,2)
-		end
-		textRow("Foreground Rows:")
-			textRow(bytesToHex(self.level.raw:sub(c.singleForeground.endOffset+1)))
+		sectionRows("singleForeground","Single foreground objects")
+		sectionRows("foregroundRows","Foreground rows")
+		sectionRows("foregroundColumns","Foreground columns")
+		textRow("Object properties:")
+			textRow(bytesToHex(self.level.raw:sub(c.foregroundColumns.endOffset+1)),1)
+			textRow(bytesToHex(self.level.raw:sub(c.foregroundColumns.endOffset+3)),1)
 end
 
 function UI:keypressed(key, scancode, isrepeat)

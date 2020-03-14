@@ -62,7 +62,28 @@ function LHS:readForegroundRows()
 	local c = {}
 	self.rawContentEntries.foregroundRows = c
 	c.startOffset = self.rawContentEntries.singleForeground.endOffset+1
-	c.nEntries = self:getNumber2(c.startOffset)
+	c.nEntries = self:getNumber2(c.startOffset+1)
+	c.entries = {}
+	local offset = c.startOffset+3
+	for i=1,c.nEntries,1 do
+		local entry = {}
+		entry.startOffset = offset
+		entry.x = self:getNumber1(offset)
+		entry.y = self:getNumber1(offset+1)
+		entry.id = self:getNumber2(offset+2)
+		entry.length = self:getNumber1(offset+4)
+		offset = offset + 5
+		entry.endOffset = offset - 1
+		c.entries[i] = entry
+	end
+	c.endOffset = offset-1
+end
+
+function LHS:readForegroundColumns()
+	local c = {}
+	self.rawContentEntries.foregroundColumns = c
+	c.startOffset = self.rawContentEntries.foregroundRows.endOffset+1
+	c.nEntries = self:getNumber2(c.startOffset+1)
 	c.entries = {}
 	local offset = c.startOffset+3
 	for i=1,c.nEntries,1 do
@@ -83,7 +104,8 @@ function LHS:readAll()
 	self:readHeaders()
 	self.rawContentEntries = {}
 	self:readSingleForeground()
-	self:readForegroundsRows()
+	self:readForegroundRows()
+	self:readForegroundColumns()
 end
 
 return LHS
