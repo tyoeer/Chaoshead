@@ -4,7 +4,7 @@ local LHS = require("levelhead.lhs")
 --LevelBytesUI
 local LBUI = Class(BaseUI)
 --in case it ever changes, and this feels better
-local Parent = LBUI.super
+local Super = LBUI.super
 
 local function bytesToHex(bytes)
 	local out = love.data.encode("string","hex",bytes)
@@ -15,7 +15,7 @@ local function bytesToHex(bytes)
 end
 
 function LBUI:initialize(w,h,level)
-	Parent.initialize(self,w,h)
+	Super.initialize(self,w,h)
 	self.title = "Hex Inspector"
 	
 	if type(level)=="table" then

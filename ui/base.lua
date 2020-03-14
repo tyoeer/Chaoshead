@@ -11,11 +11,19 @@ function BaseUI:resize(w,h)
 end
 
 function BaseUI:getMouseX()
-	return love.mouse.getX()
+	if self.parent then
+		return self.parent:getMouseX(self)
+	else
+		return love.mouse.getX()
+	end
 end
 
 function BaseUI:getMouseY()
-	return love.mouse.getY()
+	if self.parent then
+		return self.parent:getMouseY(self)
+	else
+		return love.mouse.getY()
+	end
 end
 
 function BaseUI:getMousePos()

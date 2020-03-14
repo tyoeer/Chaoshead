@@ -4,11 +4,11 @@ local LHS = require("levelhead.lhs")
 --LevelBytesUI
 local UI = Class(BaseUI)
 --in case it ever changes, and this feels better
-local Parent = UI.super
+local Super = UI.super
 
 
 function UI:initialize(w,h,level)
-	Parent.initialize(self,w,h)
+	Super.initialize(self,w,h)
 	self.title = "World Viewer"
 	
 	if type(level)=="table" then
