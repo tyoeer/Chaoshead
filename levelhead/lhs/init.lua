@@ -12,6 +12,7 @@ local levelsPath = love.filesystem.getUserDirectory().."AppData/Local/Platformer
 local extension = ".lhs"
 
 local files = {
+	love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/m7n6j8/stages/-23.lhs",
 	love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/m7n6j8/stages/-22.lhs",
 }
 
@@ -48,8 +49,12 @@ function LHS:getBytes(offset,length)
 	return self.raw:sub(offset,offset+length-1)
 end
 
-function LHS:getNumber(offset)
-	return math.bytesToNumber(self:getBytes(offset,1))
+function LHS:getNumber1(offset)
+	return math.bytesToNumberLE(self:getBytes(offset,1))
+end
+
+function LHS:getNumber2(offset)
+	return math.bytesToNumberLE(self:getBytes(offset,2))
 end
 
 --load the other files

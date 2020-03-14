@@ -62,7 +62,7 @@ function math.romanNumber(number)
 	return out
 end
 
-
+--big endian
 function math.numberToBytes(myNumber)
 	local output={}
 	local i=0
@@ -90,6 +90,40 @@ function math.bytesToNumber(bytes)
 	local i=0
 	local result=0
 	for char in bytes:reverse():gmatch(".") do
+		result=result+( char:byte()*(256^i) )
+		i=i+1
+	end
+	return result
+end
+
+--little endian
+function math.numberToBytesLE(myNumber)
+	local output={}
+	local i=0
+	while i<200 do
+		i=i+1
+		output[i]=math.fmod(myNumber,256)
+		--myNumber=math.fmod(myNumber,256)
+		myNumber=math.floor(myNumber/256)
+		if myNumber < 256 then
+			output[i+1]=myNumber
+			break
+		end
+	end
+	local newOutput={}
+	
+	for i,v in ipairs(output) do
+		table.insert(newOutput,v)
+	end
+	
+	
+	return string.char(unpack(newOutput))
+end
+
+function math.bytesToNumberLE(bytes)
+	local i=0
+	local result=0
+	for char in bytes:gmatch(".") do
 		result=result+( char:byte()*(256^i) )
 		i=i+1
 	end

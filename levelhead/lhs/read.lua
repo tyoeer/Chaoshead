@@ -14,7 +14,7 @@ function LHS:readHeaders()
 	local segment = 1
 	h.title = {""}
 	while true do
-		local byte = self:getNumber(i)
+		local byte = self:getNumber1(i)
 		if byte == 0x00 then
 			self.titleEndOffset = i
 			break
@@ -27,31 +27,52 @@ function LHS:readHeaders()
 		i = i + 1
 	end
 	--level dimensions
-	h.width = self:getNumber(self.titleEndOffset+2)
-	h.height = self:getNumber(self.titleEndOffset+3)
+	h.width = self:getNumber1(self.titleEndOffset+2)
+	h.height = self:getNumber1(self.titleEndOffset+3)
 end
 
 function LHS:readSingleForeground()
 	self.contentStartOffset = self.titleEndOffset+8
 	local c = {}
 	self.rawContentEntries.singleForeground = c
-	c.nEntries = self:getNumber(self.contentStartOffset+1)
+	c.nEntries = self:getNumber2(self.contentStartOffset+1)
 	c.startOffset = self.contentStartOffset
 	c.entries = {}
 	local offset = c.startOffset+3
 	for i=1,c.nEntries,1 do
 		local entry = {}
 		entry.startOffset = offset
-		entry.id = self:getNumber(offset)
-		entry.amount = self:getNumber(offset+2)
+		entry.id = self:getNumber2(offset)
+		entry.amount = self:getNumber2(offset+2)
 		entry.objects={}
 		for j=1,entry.amount,1 do
 			local item = {}
-			item.x = self:getNumber(offset+2+j*2)
-			item.y = self:getNumber(offset+3+j*2)
+			item.x = self:getNumber1(offset+2+j*2)
+			item.y = self:getNumber1(offset+3+j*2)
 			entry.objects[j] = item
 		end
 		offset = offset + entry.amount*2 + 4
+		entry.endOffset = offset - 1
+		c.entries[i] = entry
+	end
+	c.endOffset = offset-1
+end
+
+function LHS:readForegroundRows()
+	local c = {}
+	self.rawContentEntries.foregroundRows = c
+	c.startOffset = self.rawContentEntries.singleForeground.endOffset+1
+	c.nEntries = self:getNumber2(c.startOffset)
+	c.entries = {}
+	local offset = c.startOffset+3
+	for i=1,c.nEntries,1 do
+		local entry = {}
+		entry.startOffset = offset
+		entry.x = self:getNumber1(offset)
+		entry.y = self:getNumber1(offset+1)
+		entry.id = self:getNumber2(offset+2)
+		entry.length = self:getNumber1(offset+4)
+		offset = offset + 5
 		entry.endOffset = offset - 1
 		c.entries[i] = entry
 	end
@@ -62,6 +83,7 @@ function LHS:readAll()
 	self:readHeaders()
 	self.rawContentEntries = {}
 	self:readSingleForeground()
+	self:readForegroundsRows()
 end
 
 return LHS
