@@ -1,5 +1,5 @@
 local World = require("levelhead.world")
-local Object = require("levelhead.items.base")
+local Object = require("levelhead.objects.base")
 
 local LHS = {}
 

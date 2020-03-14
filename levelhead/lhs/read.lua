@@ -46,10 +46,10 @@ function LHS:readSingleForeground()
 		entry.amount = self:getNumber2(offset+2)
 		entry.objects={}
 		for j=1,entry.amount,1 do
-			local item = {}
-			item.x = self:getNumber1(offset+2+j*2)
-			item.y = self:getNumber1(offset+3+j*2)
-			entry.objects[j] = item
+			local object = {}
+			object.x = self:getNumber1(offset+2+j*2)
+			object.y = self:getNumber1(offset+3+j*2)
+			entry.objects[j] = object
 		end
 		offset = offset + entry.amount*2 + 4
 		entry.endOffset = offset - 1
