@@ -1,4 +1,7 @@
 Todo:
+-improve HexInspector single foerground sub entry display
+-add property reading
+-row & column parsing
 -add the remaining known headers
 -decide upon a fixed terminology for Levelhead related stuff
 -decide how to properly handle interactive stuff (example: mouse pos) when nesting UI's
