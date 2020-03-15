@@ -9,5 +9,5 @@ https://docs.google.com/spreadsheets/d/1bzASSn2FgjqUldPzX8DS66Lv-r2lk3V12jZjl51u
 
 ## Terminology
 - Object: a single thing inside the level.
-- Level element: a type of object e.g. Blasters, Armor Plates.
+- (Level) element: a type of object e.g. Blasters, Armor Plates.
 - Item: Something GR-18 can grab and carry.

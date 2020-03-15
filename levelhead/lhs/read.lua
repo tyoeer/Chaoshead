@@ -9,6 +9,15 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 function LHS:readHeaders()
 	local h = {}
 	self.rawHeaders = h
+	--misc before title
+	h.music = self:getNumber1(10)
+	h.mode = self:getNumber1(12)
+	h.minPlayers = self:getNumber1(14)
+	h.sharePowerups = self:getNumber1(16)>=1
+	h.weather = self:getNumber1(18)>=1
+	h.language = self:getNumber1(20)
+	h.mpRespawnStyle = self:getNumber1(22)
+	h.horCameraBoundary = self:getNumber1(24)>=1 -- true means it is bound by the level bounderies
 	--title
 	local i = 25
 	local segment = 1
@@ -26,6 +35,8 @@ function LHS:readHeaders()
 		end
 		i = i + 1
 	end
+	--zone
+	h.zone = self:getNumber1(self.titleEndOffset+1)
 	--level dimensions
 	h.width = self:getNumber1(self.titleEndOffset+2)
 	h.height = self:getNumber1(self.titleEndOffset+3)
