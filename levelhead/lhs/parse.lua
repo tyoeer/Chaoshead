@@ -46,14 +46,14 @@ function LHS:parseForegroundRows(w)
 end
 
 function LHS:parseForegroundColumns(w)
-	local raw = self.rawContentEntries.foregroundRows
+	local raw = self.rawContentEntries.foregroundColumns
 	for i=1,raw.nEntries,1 do
 		local entry = raw.entries[i]
 		for y=0,entry.length,1 do
 			local obj = Object:new(
 				entry.id,
 				entry.x + 1,
-				w.height - entry.y + y
+				w.height - entry.y - y
 			)
 			w:addObject(obj)
 		end
