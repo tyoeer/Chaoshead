@@ -1,0 +1,104 @@
+Name	ID (deicmal)	ID (hex)	Save Format (How it's saved, see the doc for mroe info)	Elements using this property	 
+Sending Channel	0	#00	B	Pressure Switch, Flippy Longswitch, ...	
+???	1	#01			
+Start State	2	#02	A	Key Chest, Pressure Switch, ...	
+Rotation	3	#03	A	Prizeblock, Pressure Switch, ...	
+Direction	4	#04	B	(Trig)blaster, Arrow Hologram	
+Invisible	5	#05	B	Prizeblock, Jem, Clock Switch, ...	
+Jems Required	6	#06	B	Jem Switch, Jem Gate	
+Enemies Required	7	#07	A	Battle Switch, Battle Gate	
+Locking	8	#08	A	Eye Switch, Baddie Eyeswitch, Package Cam, Spike Trap	
+Batteries Required	9	#09	A	Charge Switch	
+On Seconds	10	#0A	C	Clock Switch	
+Off Seconds	11	#0B	C	Clock Switch	
+Seconds	12	#0C	C	Tempswitch	
+Behaviour	13	#0D	A	Tempswitch, Waitswitch	
+Range	14	#0E	A	Eye Switch, Baddie Eyeswitch, Package Cam	
+Minimum Players	15	#0F	A	Eye Switch	
+Minimum Enemies	16	#10	A	Baddie Eyeswitch	
+Bombs Available	17	#11	A	Bomb Beamer	
+Enemies Available	18	#12	A	Robo Factory	
+Enemy Type	19	#13	A	Robo Factory	
+Cooldown	20	#14	A	Robo Factory	
+Direction	21	#15	A	Toe Slider	
+Speed	22	#16	B	Toe Slider	
+Power	23	#17	B	(Trig)blaster	
+Spin Speed	24	#18	B	(Trig)blaster	
+Fire Delay	25	#19	C	Blaster	
+???	32	#20			
+???	33	#21			
+Rift ID	28	#1C	B	Rift	
+Destination Rift ID (not set=0, not the editor default of 1)	29	#1D	B	Rift	
+Movement	30	#1E	A	Swoopadoop, Blobfush, Whizzblade, Fireball	
+Direction	31	#1F	A	Cromblers	
+Cooldown	32	#20	C	Cromblers	
+Time Offset	33	#21	C	(Look)cannon	
+???	34	#22			
+Distance	35	#23	A	Swoopadoop, Blobfush, Whizzblade, Fireball	
+Speed (horizontal, vertical)	36	#24	A	Swoopadoop, Blobfush, Whizzblade, Fireball	
+Active Speed	37	#25	B	Path	
+Closed	38	#26	A	Path	
+End Action	39	#27	A	Path	
+Start Direction	40	#28	B	Swoopadoop, Blobfush, Whizzblade, Burny Whirler, Spike Chainer, Fireball, Spinny Platform	
+Speed (circular in case of fireball)	41	#29	B	Burny Whirler, Spike Chainer, Fireball	
+Length	42	#2A	A	Burny Whirler, Spike Chainer	
+Gap	43	#2B	A	Burny Whirler	
+Spike Size 	44	#2C	A	Spike Chainer	
+Chains	45	#2D	A	Burny Whirler, Spike Chainer, Spinny Platform	
+Powerup	46	#2E	A	GR-18	
+Color	47	#2F	A	Hardlight, Rift, Key Chests, ...	
+Projectile	48	#30	A	(Look)cannon	
+Receiving Channel	49	#31	B	Prizeblock, Hardlight, ...	
+???	50	#32			
+Pitch	51	#33	A	Boombox	
+???	52	#34			
+???	53	#35			
+Instrument	54	#36	A	Boombox	
+Pitch (identical to #33, the pitch gets saved double)	55	#37	A	Boombox	
+Platform Size	56	#38	A	Spinny Platform	
+Length	57	#39	A	Spinny Platform	
+Speed (circular)	58	#3A	B	Swoopadoop, Blobfush, Whizzblade, Spinny Platform	
+Icon	59	#3B	A	Sign	
+Switch Requirements	60	#3C	A	Prizeblock, Hardlight, ...	
+Visuals	61	#3D	A	Path	
+???	62	#3E			
+Song	63	#3F	A	Jukebox	
+Sharp	64	#40	A	Boombox	
+Delay Seconds	65	#41	C	Waitswitch	
+???	66	#42			
+???	67	#43			
+Volume	68	#44	A	Boombox	
+Zoom Level	69	#45	A	ZOOM-R	
+Gate Style	70	#46	A	Purge Gate	
+Inactvie Speed	71	#47	B	Path	
+Rotation Style	72	#48	A	(Trig)blaster, Burny Whirler, Spike Chainer	
+Swing Degrees	73	#49	B	(Trig)blaster, Burny Whirler, Spike Chainer	
+Swing Speed	74	#4A	A	Burny Whirler, Spike Chainer	
+Swing Time Offset	75	#4B	C	(Trig)blaster, Burny Whirler, Spike Chainer	
+Muted	76	#4C	A	Pressure Switch, Clock Switch, ...	
+Style	77	#4D	A	Cromblers	
+Camera Lock Style	78	#4E	A	Camera Anchor	
+Swing Speed	79	#4F	B	(Trig)blaster	
+Range Right	80	#50	A	Eye Switch, Baddie Eyeswitch, Package Cam	
+Range Up	81	#51	A	Eye Switch, Baddie Eyeswitch, Package Cam	
+Range Left	82	#52	A	Eye Switch, Baddie Eyeswitch, Package Cam	
+Range Down	83	#53	A	Eye Switch, Baddie Eyeswitch, Package Cam	
+Detection Shape	84	#54	A	Eye Switch, Baddie Eyeswitch, Package Cam	
+Behaviour	85	#55	A	Pressure Switch	
+Horizontal Flip	86	#56	A	Key Chest, Sign	
+Fire Style	87	#57	A	Burny Whirler, Fireball	
+Jingle	88	#58	A	Jinglebox	
+Positional	89	#59	A	Jinglebox	
+Sending Channel	90	#5A	B	Key Chest, Key Gate	
+Repeatable	91	#5B	A	Jinglebox	
+Reusable	92	#5C	A	BUDD-E	
+Note Beats	93	#5D	C	Boombox	
+Repeat Beats	94	#5E	C	Boombox	
+Beats Per Minute	95	#5F	A	Boombox	
+Percussion Note	96	#60	A	Boombox	
+Start Delay Beats	97	#61	C	Boombox	
+Repeat Count (always saved for some reason)	98	#62	B	Boombox	
+	0				
+	0				
+	0				
+	0				
