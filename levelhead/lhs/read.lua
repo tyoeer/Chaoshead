@@ -111,12 +111,40 @@ function LHS:readForegroundColumns()
 	c.endOffset = offset-1
 end
 
+function LHS:readSingleProperties()
+	local c = {}
+	self.rawContentEntries.singleProperties = c
+	c.startOffset = self.rawContentEntries.foregroundColumns.endOffset+1
+	c.nEntries = self:getNumber1(c.startOffset+1)
+	c.entries = {}
+	local offset = c.startOffset+2
+	for i=1,c.nEntries,1 do
+		local entry = {}
+		entry.startOffset = offset
+		entry.id = self:getNumber1(offset)
+		entry.amount = self:getNumber2(offset+1)
+		entry.entries={}
+		for j=0,entry.amount-1,1 do
+			local subentry = {}
+			subentry.value = self:getNumber1(offset+j*5+3)
+			subentry.x = self:getNumber1(offset+j*5+6)
+			subentry.y = self:getNumber1(offset+j*5+7)
+			entry.entries[j+1] = subentry
+		end
+		offset = offset + entry.amount*5 + 3
+		entry.endOffset = offset - 1
+		c.entries[i] = entry
+	end
+	c.endOffset = offset-1
+end
+
 function LHS:readAll()
 	self:readHeaders()
 	self.rawContentEntries = {}
 	self:readSingleForeground()
 	self:readForegroundRows()
 	self:readForegroundColumns()
+	self:readSingleProperties()
 end
 
 return LHS
