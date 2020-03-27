@@ -35,6 +35,7 @@ function love.load(arg)
 		require("ui.worldViewer"):new(-1,-1,nil)
 	)
 	ui:addChild(worldViewer)
+	
 end
 
 function love.update(dt)
