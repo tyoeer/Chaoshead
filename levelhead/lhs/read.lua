@@ -1,6 +1,8 @@
 local LHS = {}
 local bit = require("bit")
 
+local P = require("levelhead.data.properties"):new()
+
 --[[
 
 It should be noted that the raw stuff uses zero as lowest value when refering to coördinates
@@ -112,13 +114,18 @@ function LHS:readForegroundColumns()
 	c.endOffset = offset-1
 end
 
-function LHS:readSingleProperties()
-	local P = require("levelhead.data.properties"):new()
+function LHS:readSingleProperties(isPath)
 	--object properties
 	local c = {}
-	self.rawContentEntries.singleProperties = c
-	c.startOffset = self.rawContentEntries.foregroundColumns.endOffset+1
-	c.nEntries = self:getNumber1(c.startOffset+1)
+	if isPath then
+		self.rawContentEntries.singlePathProperties = c
+		c.startOffset = self.rawContentEntries.singleObjectProperties.endOffset
+		c.nEntries = self:getNumber1(c.startOffset+1)
+	else
+		self.rawContentEntries.singleObjectProperties = c
+		c.startOffset = self.rawContentEntries.foregroundColumns.endOffset+1
+		c.nEntries = self:getNumber1(c.startOffset+1)
+	end
 	c.entries = {}
 	local offset = c.startOffset+2
 	for i=1,c.nEntries,1 do
@@ -169,6 +176,8 @@ function LHS:readSingleProperties()
 			end
 			offset = offset + entry.amount*8 + 3
 		else
+			print("Error-------------------------------")
+			print("prop.id",entry.id)
 			error("Illegal property save format: "..format)
 		end
 		entry.endOffset = offset - 1
@@ -183,7 +192,8 @@ function LHS:readAll()
 	self:readSingleForeground()
 	self:readForegroundRows()
 	self:readForegroundColumns()
-	self:readSingleProperties()
+	self:readSingleProperties(false)
+	self:readSingleProperties(true)
 end
 
 return LHS
