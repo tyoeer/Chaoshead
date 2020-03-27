@@ -1,4 +1,5 @@
 local LHS = {}
+local bit = require("bit")
 
 --[[
 
@@ -112,6 +113,8 @@ function LHS:readForegroundColumns()
 end
 
 function LHS:readSingleProperties()
+	local P = require("levelhead.data.properties"):new()
+	--object properties
 	local c = {}
 	self.rawContentEntries.singleProperties = c
 	c.startOffset = self.rawContentEntries.foregroundColumns.endOffset+1
@@ -124,14 +127,50 @@ function LHS:readSingleProperties()
 		entry.id = self:getNumber1(offset)
 		entry.amount = self:getNumber2(offset+1)
 		entry.entries={}
-		for j=0,entry.amount-1,1 do
-			local subentry = {}
-			subentry.value = self:getNumber1(offset+j*5+3)
-			subentry.x = self:getNumber1(offset+j*5+6)
-			subentry.y = self:getNumber1(offset+j*5+7)
-			entry.entries[j+1] = subentry
+		local format = P:getSaveFormat(entry.id)
+		if format=="A" then
+			for j=0,entry.amount-1,1 do
+				local subentry = {}
+				subentry.value = self:getNumber1(offset+j*5+3)
+				subentry.x = self:getNumber1(offset+j*5+6)
+				subentry.y = self:getNumber1(offset+j*5+7)
+				entry.entries[j+1] = subentry
+			end
+			offset = offset + entry.amount*5 + 3
+		elseif format=="B" then
+			for j=0,entry.amount-1,1 do
+				local subentry = {}
+				subentry.value = self:getNumber2(offset+j*5+3)
+				--checks if the most significant bit is set
+				-- 32768 = 2^15
+				if subentry.value > 32768 then
+					subentry.value = subentry.value - 65536
+				end
+				subentry.x = self:getNumber1(offset+j*5+7)
+				subentry.y = self:getNumber1(offset+j*5+8)
+				entry.entries[j+1] = subentry
+			end
+			offset = offset + entry.amount*6 + 3
+		elseif format=="C" then
+			for j=0,entry.amount-1,1 do
+				local subentry = {}
+				--parse the float
+				--see https://en.wikipedia.org/wiki/Single-precision_floating-point_format
+				do
+					local value = math.bytesToNumberLE(self:getBytes(offset+j*5+3, 4))
+					local sign = bit.rshift(value,31)==0 and 1 or -1
+					local exponent = bit.band(bit.rshift(value,23),0xFF) - 127
+					local fraction = bit.band(value,0x7FFFFF) / (2^23)
+					subentry.value = math.roundPrecision(sign * 2^exponent * (1+fraction), 0.01)
+				end
+				subentry.x = self:getNumber1(offset+j*5+9)
+				subentry.y = self:getNumber1(offset+j*5+10)
+				entry.entries[j+1] = subentry
+			end
+			offset = offset + entry.amount*8 + 3
+		else
+			error("Illegal property save format: "..format)
 		end
-		offset = offset + entry.amount*5 + 3
 		entry.endOffset = offset - 1
 		c.entries[i] = entry
 	end

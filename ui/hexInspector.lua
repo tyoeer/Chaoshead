@@ -85,7 +85,16 @@ local function sectionRows(section, label)
 		textRow(hex,2)
 	end
 end
-
+local function propertyRows(section, label)
+	textRow(label..": ".. this.level.rawContentEntries[section].nEntries)
+	for _,v in ipairs(this.level.rawContentEntries[section].entries) do
+		local hex = bytesToHex(this.level.raw:sub(v.startOffset,v.endOffset))
+		textRow(hex,2)
+		for i,v in ipairs(v.entries) do
+			textRow("-> "..v.value.." ("..v.x..","..v.y..")",3)
+		end
+	end
+end
 function UI:draw()
 	resetRows(self)
 	local c = self.level.rawContentEntries
@@ -112,7 +121,7 @@ function UI:draw()
 		sectionRows("singleForeground","Single foreground objects")
 		sectionRows("foregroundRows","Foreground rows")
 		sectionRows("foregroundColumns","Foreground columns")
-		sectionRows("singleProperties","Properties")
+		propertyRows("singleProperties","Properties")
 		textRow("Object properties:")
 			textRow(bytesToHex(self.level.raw:sub(c.foregroundColumns.endOffset+1)),1)
 			textRow(bytesToHex(self.level.raw:sub(c.foregroundColumns.endOffset+3)),1)
