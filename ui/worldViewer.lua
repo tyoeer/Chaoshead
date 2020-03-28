@@ -9,7 +9,7 @@ local Super = UI.super
 
 function UI:initialize(w,h,level)
 	Super.initialize(self,w,h)
-	self.title = "World Viewer"
+	self.title = "Level Viewer"
 	
 	if type(level)=="table" then
 		self:setLevel(level)

@@ -1,4 +1,4 @@
-local World = require("levelhead.world")
+local Level = require("levelhead.level")
 local Object = require("levelhead.objects.base")
 
 local LHS = {}
@@ -11,7 +11,7 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 
 function LHS:parseHeaders()
 	local raw = self.rawHeaders
-	local w = World:new(raw.width, raw.height)
+	local w = Level:new(raw.width, raw.height)
 	return w
 end
 

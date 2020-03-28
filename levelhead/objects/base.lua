@@ -1,9 +1,9 @@
 local Base = Class()
 
-function Base:initialize(id,x,y)
+function Base:initialize(id)
 	self.id = id
-	self.x = x
-	self.y = y
+	--self.x = nil
+	--self.y = nil
 end
 
 function Base:draw()
