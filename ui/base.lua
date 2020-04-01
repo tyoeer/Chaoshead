@@ -8,18 +8,24 @@ end
 
 function BaseUI:getMouseX()
 	if self.parent then
-		return self.parent:getMouseX(self)
+		return self.parent:getPropagatedMouseX(self)
 	else
 		return love.mouse.getX()
 	end
 end
-
 function BaseUI:getMouseY()
 	if self.parent then
-		return self.parent:getMouseY(self)
+		return self.parent:getPropagatedMouseY(self)
 	else
 		return love.mouse.getY()
 	end
+end
+
+function BaseUI:getPropagatedMouseX(child)
+	return self:getMouseX()
+end
+function BaseUI:getPropagatedMouseY(child)
+	return self:getMouseY()
 end
 
 function BaseUI:getMousePos()

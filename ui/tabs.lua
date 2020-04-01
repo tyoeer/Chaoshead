@@ -25,8 +25,8 @@ function UI:addChild(child)
 end
 
 
-function UI:getMouseY(child)
-	return self.class.super.getMouseY(self)-(child and self.tabHeight or 0)
+function UI:getPropagatedMouseY(child)
+	return self:getMouseY() - self.tabHeight
 end
 
 -- events

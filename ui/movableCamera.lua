@@ -15,28 +15,20 @@ function UI:initialize(w,h,child)
 end
 
 
-function UI:getMouseX(child)
-	if child then
-		local x = self.class.super.getMouseX(self)
-		x = x - self.width/2
-		x = x / self.zoomFactor
-		x = x - self.x
-		return x
-	else
-		return self.class.super.getMouseX(self)
-	end
+function UI:getPropagatedMouseX(child)
+	local x = self:getMouseX(self)
+	x = x - self.width/2
+	x = x / self.zoomFactor
+	x = x - self.x
+	return x
 end
 
-function UI:getMouseY(child)
-	if child then
-		local y = self.class.super.getMouseY(self)
-		y = y - self.height/2
-		y = y / self.zoomFactor
-		y = y - self.y
-		return y
-	else
-		return self.class.super.getMouseY(self)
-	end
+function UI:getPropagatedMouseY(child)
+	local y = self:getMouseY(self)
+	y = y - self.height/2
+	y = y / self.zoomFactor
+	y = y - self.y
+	return y
 end
 
 --events
