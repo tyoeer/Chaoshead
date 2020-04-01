@@ -50,4 +50,28 @@ function UI:keypressed(...)
 	self.child:keypressed(...)
 end
 
+function UI:getMouseX(child)
+	if child then
+		local x = self.class.super.getMouseX(self)
+		x = x - self.width/2
+		x = x / self.zoomFactor
+		x = x - self.x
+		return x
+	else
+		return self.class.super.getMouseX(self)
+	end
+end
+
+function UI:getMouseY(child)
+	if child then
+		local y = self.class.super.getMouseY(self)
+		y = y - self.height/2
+		y = y / self.zoomFactor
+		y = y - self.y
+		return y
+	else
+		return self.class.super.getMouseY(self)
+	end
+end
+
 return UI
