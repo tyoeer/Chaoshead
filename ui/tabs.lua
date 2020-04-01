@@ -74,20 +74,19 @@ function UI:getMouseY(child)
 end
 
 function UI:mousepressed(x,y,button,isTouch)
-	local i = 1
-	for child in self.children:iterate() do
-		local xx = (i-1)*self.tabWidth
-		if math.isPointInRectangle(
-			x,y,
-			xx, 0,
-			xx+self.tabWidth, self.tabHeight
-		) then
-			self.activeChild = child
-			return
+	if y <= self.tabHeight then
+		local i = 1
+		for child in self.children:iterate() do
+			local xx = (i-1)*self.tabWidth
+			if x >= xx and x < xx+self.tabWidth then
+				self.activeChild = child
+				return
+			end
+			i = i + 1
 		end
-		i = i + 1
+	else
+		self.activeChild:mousepressed(x,y-self.tabHeight,buttton,isTouch)
 	end
-	self.activeChild:mousepressed(x,y-self.tabHeight,buttton,isTouch)
 end
 
 function UI:keypressed(...)
