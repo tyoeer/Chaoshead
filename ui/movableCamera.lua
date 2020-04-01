@@ -7,6 +7,7 @@ function UI:initialize(w,h,child)
 	self.x = 0
 	self.y = 0
 	self.zoomFactor = 1
+	self.zoomSpeed = math.sqrt(2)
 	self.child = child
 	child.parent = self
 	self.class.super.initialize(self,w,h)
@@ -26,12 +27,11 @@ function UI:mousemoved(x,y,dx,dy)
 	end
 end
 
-local zoomSpeed = math.sqrt(2)
 function UI:wheelmoved(x,y)
 	if y>0 then
-		self.zoomFactor = self.zoomFactor * zoomSpeed
+		self.zoomFactor = self.zoomFactor * self.zoomSpeed
 	elseif y<0 then
-		self.zoomFactor = self.zoomFactor / zoomSpeed
+		self.zoomFactor = self.zoomFactor / self.zoomSpeed
 	end
 	self.x = math.roundPrecision(self.x,self.zoomFactor)
 	self.y = math.roundPrecision(self.y,self.zoomFactor)
