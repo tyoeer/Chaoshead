@@ -20,12 +20,8 @@ function LHS:parseSingleForeground(w)
 	for i=1,raw.nEntries,1 do
 		local entry = raw.entries[i]
 		for j=1,entry.amount,1 do
-			local obj = Object:new(
-				entry.id,
-				entry.objects[j].x + 1,
-				w.height - entry.objects[j].y
-			)
-			w:addObject(obj)
+			local obj = Object:new(entry.id)
+			w:addObject(obj, entry.objects[j].x + 1, w.height - entry.objects[j].y)
 		end
 	end
 end
@@ -35,12 +31,8 @@ function LHS:parseForegroundRows(w)
 	for i=1,raw.nEntries,1 do
 		local entry = raw.entries[i]
 		for x=0,entry.length,1 do
-			local obj = Object:new(
-				entry.id,
-				entry.x + x + 1,
-				w.height - entry.y
-			)
-			w:addObject(obj)
+			local obj = Object:new(entry.id)
+			w:addObject(obj, entry.x + x + 1, w.height - entry.y)
 		end
 	end
 end
@@ -50,12 +42,8 @@ function LHS:parseForegroundColumns(w)
 	for i=1,raw.nEntries,1 do
 		local entry = raw.entries[i]
 		for y=0,entry.length,1 do
-			local obj = Object:new(
-				entry.id,
-				entry.x + 1,
-				w.height - entry.y - y
-			)
-			w:addObject(obj)
+			local obj = Object:new(entry.id)
+			w:addObject(obj, entry.x + 1, w.height - entry.y - y)
 		end
 	end
 end
