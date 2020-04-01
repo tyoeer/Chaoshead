@@ -24,13 +24,15 @@ function love.load(arg)
 	love.graphics.setPointSize(1)
 	love.graphics.setLineStyle("rough")
 	--build ui
-	ui = require("ui.tabs"):new(love.graphics.getWidth(),love.graphics.getHeight())
-	local hexInspector = require("ui.movableCamera"):new(
+	ui = require("ui.structure.tabs"):new(love.graphics.getWidth(),love.graphics.getHeight())
+	local hexInspector = require("ui.structure.movableCamera"):new(
 		-1,-1,
 		require("ui.hexInspector"):new(-1,-1,nil)
 	)
 	ui:addChild(hexInspector)
-	local worldViewer = require("ui.movableCamera"):new(
+	local levelEditor = require("ui.levelEditor"):new(-1,-1)
+	ui:addChild(levelEditor)
+	local worldViewer = require("ui.structure.movableCamera"):new(
 		-1,-1,
 		require("ui.worldViewer"):new(-1,-1,nil)
 	)
