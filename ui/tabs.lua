@@ -70,7 +70,7 @@ function UI:draw()
 end
 
 function UI:getMouseY(child)
-	return self.class.super.getMouseY(self)+(child and self.tabHeight or 0)
+	return self.class.super.getMouseY(self)-(child and self.tabHeight or 0)
 end
 
 function UI:mousepressed(x,y,button,isTouch)
