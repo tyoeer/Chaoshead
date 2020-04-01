@@ -14,41 +14,6 @@ function UI:initialize(w,h,child)
 	self.title = child.title
 end
 
-function UI:resize(w,h)
-	self.width = w
-	self.height = h
-	self.child:resize(w,h)
-end
-
-function UI:mousemoved(x,y,dx,dy)
-	if love.mouse.isDown(1) or love.mouse.isDown(3) then
-		self.x = self.x + dx/self.zoomFactor
-		self.y = self.y + dy/self.zoomFactor
-	end
-end
-
-function UI:wheelmoved(x,y)
-	if y>0 then
-		self.zoomFactor = self.zoomFactor * self.zoomSpeed
-	elseif y<0 then
-		self.zoomFactor = self.zoomFactor / self.zoomSpeed
-	end
-	self.x = math.roundPrecision(self.x,self.zoomFactor)
-	self.y = math.roundPrecision(self.y,self.zoomFactor)
-end
-
-function UI:draw()
-	love.graphics.push()
-		love.graphics.translate(self.width/2, self.height/2)
-		love.graphics.scale(self.zoomFactor)
-		love.graphics.translate(self.x, self.y)
-		self.child:draw()
-	love.graphics.pop()
-end
-
-function UI:keypressed(...)
-	self.child:keypressed(...)
-end
 
 function UI:getMouseX(child)
 	if child then
@@ -73,5 +38,56 @@ function UI:getMouseY(child)
 		return self.class.super.getMouseY(self)
 	end
 end
+
+--events
+
+local relay = function(index)
+	UI[index] = function(self, ...)
+		self.child[index](self.activeChild, ...)
+	end
+end
+
+relay("update")
+
+function UI:draw()
+	love.graphics.push()
+		love.graphics.translate(self.width/2, self.height/2)
+		love.graphics.scale(self.zoomFactor)
+		love.graphics.translate(self.x, self.y)
+		self.child:draw()
+	love.graphics.pop()
+end
+
+relay("focus")
+relay("visible")
+function UI:resize(w,h)
+	self.width = w
+	self.height = h
+	self.child:resize(w,h)
+end
+
+function UI:keypressed(...)
+	self.child:keypressed(...)
+end
+relay("textinput")
+
+relay("mousepressed")
+relay("mousereleased")
+function UI:mousemoved(x,y,dx,dy)
+	if love.mouse.isDown(1) or love.mouse.isDown(3) then
+		self.x = self.x + dx/self.zoomFactor
+		self.y = self.y + dy/self.zoomFactor
+	end
+end
+function UI:wheelmoved(x,y)
+	if y>0 then
+		self.zoomFactor = self.zoomFactor * self.zoomSpeed
+	elseif y<0 then
+		self.zoomFactor = self.zoomFactor / self.zoomSpeed
+	end
+	self.x = math.roundPrecision(self.x,self.zoomFactor)
+	self.y = math.roundPrecision(self.y,self.zoomFactor)
+end
+
 
 return UI

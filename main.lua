@@ -38,6 +38,7 @@ function love.load(arg)
 	
 end
 
+
 function love.update(dt)
 	lovebird.update(dt)
 	ui:update(dt)
@@ -47,32 +48,32 @@ function love.draw()
 	ui:draw()
 end
 
+function love.focus(focus)
+	ui:focus(focus)
+end
+function love.visible(visible)
+	ui:visible(visible)
+end
 function love.resize(w, h)
 	ui:resize(w,h)
 end
 
-
 function love.keypressed(key, scancode, isrepeat)
 	ui:keypressed(key, scancode, isrepeat)
 end
-
 function love.textinput(text)
 	ui:textinput(text)
 end
 
-
 function love.mousepressed(x, y, button, isTouch)
 	ui:mousepressed(x,y, button, isTouch)
 end
-
 function love.mousereleased(x, y, button, isTouch)
 	ui:mousereleased(x,y, button, isTouch)
 end
-
 function love.mousemoved(x, y, dx, dy)
 	ui:mousemoved(x, y, dx, dy)
 end
-
 function love.wheelmoved(x, y)
 	ui:wheelmoved(x,y)
 end

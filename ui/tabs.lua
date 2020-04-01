@@ -24,16 +24,20 @@ function UI:addChild(child)
 	end
 end
 
-function UI:resize(w,h)
-	self.width = w
-	self.height = h
-	
-	self.tabWidth = w / self.nChildren
-	
-	for child in self.children:iterate() do
-		child:resize(w, h-self.tabHeight)
+
+function UI:getMouseY(child)
+	return self.class.super.getMouseY(self)-(child and self.tabHeight or 0)
+end
+
+-- events
+
+local relay = function(index)
+	UI[index] = function(self, ...)
+		self.activeChild[index](self.activeChild, ...)
 	end
 end
+
+relay("update")
 
 function UI:draw()
 	--draw activeChild
@@ -69,9 +73,21 @@ function UI:draw()
 	end
 end
 
-function UI:getMouseY(child)
-	return self.class.super.getMouseY(self)-(child and self.tabHeight or 0)
+relay("focus")
+relay("visible")
+function UI:resize(w,h)
+	self.width = w
+	self.height = h
+	
+	self.tabWidth = w / self.nChildren
+	
+	for child in self.children:iterate() do
+		child:resize(w, h-self.tabHeight)
+	end
 end
+
+relay("keypressed")
+relay("textinput")
 
 function UI:mousepressed(x,y,button,isTouch)
 	if y <= self.tabHeight then
@@ -88,17 +104,9 @@ function UI:mousepressed(x,y,button,isTouch)
 		self.activeChild:mousepressed(x,y-self.tabHeight,buttton,isTouch)
 	end
 end
+relay("mousereleased")
+relay("mousemoved")
+relay("wheelmoved")
 
-function UI:keypressed(...)
-	self.activeChild:keypressed(...)
-end
-
-function UI:mousemoved(...)
-	self.activeChild:mousemoved(...)
-end
-
-function UI:wheelmoved(...)
-	self.activeChild:wheelmoved(...)
-end
 
 return UI
