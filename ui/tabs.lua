@@ -1,7 +1,6 @@
 local BaseUI = require("ui.base")
 local Pool = require("utils.entitypool")
 
---LevelBytesUI
 local UI = Class(BaseUI)
 
 function UI:initialize(w,h)
