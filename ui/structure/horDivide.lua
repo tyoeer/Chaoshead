@@ -15,14 +15,14 @@ function UI:initialize(w,h, left,right)
 	right.parent = self
 	self.divisionRatio = 0.3
 	--self.divisionX = -1
-	self.divisionWidth = 1
+	self.divisionWidth = 1 -1
 	self.class.super.initialize(self,w,h)
 	self.title = "Divide"
 end
 
 function UI:setDivisionRatio(ratio)
 	self.divisionRatio = ratio
-	self.divisionX = self.width * ratio
+	self.divisionX = math.round(self.width * ratio)
 	
 	self.leftChild:resize(self.divisionX-1, self.height)
 	self.rightChild:resize(self.width - self.divisionX - self.divisionWidth, self.height)
@@ -81,8 +81,8 @@ function UI:draw()
 		self.divisionX, self.height
 	)
 	love.graphics.line(
-		self.divisionX + self.divisionWidth-1, 0,
-		self.divisionX + self.divisionWidth-1, self.height
+		self.divisionX + self.divisionWidth, 0,
+		self.divisionX + self.divisionWidth, self.height
 	)
 end
 

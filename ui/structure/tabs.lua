@@ -47,6 +47,7 @@ function UI:draw()
 		love.graphics.intersectScissor(x, y, endX-x, endY-y)
 		self.activeChild:draw()
 	love.graphics.pop("all")
+	
 	--draw ui
 	love.graphics.setColor(1,1,1,1)
 	love.graphics.line(0,self.tabHeight, self.width,self.tabHeight)
@@ -82,6 +83,7 @@ function UI:resize(w,h)
 	
 	for child in self.children:iterate() do
 		child:resize(w, h-self.tabHeight)
+		child = self.activeChild
 	end
 end
 

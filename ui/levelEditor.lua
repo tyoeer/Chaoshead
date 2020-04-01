@@ -1,15 +1,20 @@
 local BaseUI = require("ui.base")
-local DIV = require("ui.structure.horDivide")
-local VIEW = require("ui.worldViewer")
-local TABS = require("ui.structure.tabs")
+
+local DET_LEVEL = require("ui.details.level")
 
 local UI = Class(BaseUI)
 
 function UI:initialize(w,h)
 	--self.level
-	self.viewer = VIEW:new(-1,-1)
-	self.detailsUI = TABS:new(-1,-1)
-	self.rootUI = DIV:new(w,h, self.detailsUI, self.viewer)
+	self.viewer = require("ui.worldViewer"):new(-1,-1)
+	self.detailsUI = require("ui.structure.tabs"):new(-1,-1)
+	self.detailsUI:addChild(DET_LEVEL:new(-1,-1))
+	self.rootUI = require("ui.structure.horDivide"):new(
+		w,h, self.detailsUI,
+		require("ui.structure.movableCamera"):new(-1,-1,self.viewer)
+	)
+	self.rootUI.parent = self
+	
 	self.class.super.initialize(self,w,h)
 	self.title = "Level Editor"
 end
@@ -17,6 +22,11 @@ end
 function UI:setLevel(level)
 	self.level = level
 	self.viewer:setLevel(level)
+	for child in self.detailsUI.children:iterate() do
+		if child.setLevel then
+			child:setLevel(level)
+		end
+	end
 end
 
 -- events
@@ -33,7 +43,11 @@ relay("draw")
 
 relay("focus")
 relay("visible")
-relay("resize")
+function UI:resize(w,h)
+	self.width = w
+	self.height = h
+	self.rootUI:resize(w,h)
+end
 
 relay("keypressed")
 relay("textinput")
