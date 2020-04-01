@@ -66,9 +66,7 @@ function UI:resize(w,h)
 	self.child:resize(w,h)
 end
 
-function UI:keypressed(...)
-	self.child:keypressed(...)
-end
+relay("keypressed")
 relay("textinput")
 
 relay("mousepressed")
@@ -77,6 +75,8 @@ function UI:mousemoved(x,y,dx,dy)
 	if love.mouse.isDown(1) or love.mouse.isDown(3) then
 		self.x = self.x + dx/self.zoomFactor
 		self.y = self.y + dy/self.zoomFactor
+	else
+		self.child:mousemoved(x,y,dx,dy)
 	end
 end
 function UI:wheelmoved(x,y)
