@@ -1,5 +1,5 @@
 # Chaoshead
-A level editor/reverse engineering tool for Levelhead levels/stages.
+A level editor/reverse engineering tool for Levelhead levels/stages, made using [Löve2d](http://www.love2d.org).
 
 ## Useful links
 WIP file specification:<br>
