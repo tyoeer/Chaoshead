@@ -3,15 +3,13 @@ local Pool = require("utils.entitypool")
 
 --LevelBytesUI
 local UI = Class(BaseUI)
---in case it ever changes, and this feels better
-local Super = UI.super
 
 function UI:initialize(w,h)
 	self.children = Pool:new()
 	self.nChildren = 0
 	self.tabHeight = 30
 	self.tabWidth = w
-	Super.initialize(self,w,h)
+	self.class.super.initialize(self,w,h)
 	self.title = "Tabs"
 end
 
@@ -72,7 +70,7 @@ function UI:draw()
 end
 
 function UI:getMouseY(child)
-	return Super.getMouseY(self)+(child and self.tabHeight or 0)
+	return self.class.super.getMouseY(self)+(child and self.tabHeight or 0)
 end
 
 function UI:mousepressed(x,y,button,isTouch)

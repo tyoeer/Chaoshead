@@ -2,8 +2,6 @@ local BaseUI = require("ui.base")
 
 --LevelBytesUI
 local UI = Class(BaseUI)
---in case it ever changes, and this feels better
-local Super = UI.super
 
 function UI:initialize(w,h,child)
 	self.x = 0
@@ -11,7 +9,7 @@ function UI:initialize(w,h,child)
 	self.zoomFactor = 1
 	self.child = child
 	child.parent = self
-	Super.initialize(self,w,h)
+	self.class.super.initialize(self,w,h)
 	self.title = child.title
 end
 

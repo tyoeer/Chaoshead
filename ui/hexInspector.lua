@@ -3,8 +3,6 @@ local LHS = require("levelhead.lhs")
 
 --LevelBytesUI
 local UI = Class(BaseUI)
---in case it ever changes, and this feels better
-local Super = UI.super
 
 local function bytesToHex(bytes)
 	local out = love.data.encode("string","hex",bytes)
@@ -15,7 +13,7 @@ local function bytesToHex(bytes)
 end
 
 function UI:initialize(w,h,level)
-	Super.initialize(self,w,h)
+	self.class.super.initialize(self,w,h)
 	self.title = "Hex Inspector"
 	
 	if type(level)=="table" then
