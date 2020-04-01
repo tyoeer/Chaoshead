@@ -35,6 +35,10 @@ function UI:reload()
 	self.world = l:parseAll()
 end
 
+function UI:getMouseTile()
+	return math.floor(self:getMouseX()/TILE_SIZE), math.floor(self:getMouseY()/TILE_SIZE)
+end
+
 function UI:draw()
 	--bg
 	love.graphics.setColor(0,0.5,1,1)
@@ -43,9 +47,18 @@ function UI:draw()
 		0, 0,
 		self.world.width*TILE_SIZE, self.world.height*TILE_SIZE
 	)
+	--objects
 	for obj in self.world.allObjects:iterate() do
 		obj:draw()
 	end
+	--hover
+	local x,y = self:getMouseTile()
+	love.graphics.setColor(1,1,1,0.5)
+	love.graphics.rectangle(
+		"fill",
+		x*TILE_SIZE, y*TILE_SIZE,
+		TILE_SIZE, TILE_SIZE
+	)
 end
 
 function UI:keypressed(key, scancode, isrepeat)
