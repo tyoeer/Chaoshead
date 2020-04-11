@@ -35,7 +35,7 @@ function UI:reload()
 end
 
 function UI:getMouseTile()
-	return math.floor(self:getMouseX()/TILE_SIZE), math.floor(self:getMouseY()/TILE_SIZE)
+	return math.ceil(self:getMouseX()/TILE_SIZE), math.ceil(self:getMouseY()/TILE_SIZE)
 end
 
 function UI:draw()
@@ -55,7 +55,7 @@ function UI:draw()
 	love.graphics.setColor(1,1,1,0.5)
 	love.graphics.rectangle(
 		"fill",
-		x*TILE_SIZE, y*TILE_SIZE,
+		(x-1)*TILE_SIZE, (y-1)*TILE_SIZE,
 		TILE_SIZE, TILE_SIZE
 	)
 end
