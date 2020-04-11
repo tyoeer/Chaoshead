@@ -6,7 +6,7 @@ local UI = Class(BaseUI)
 
 function UI:initialize(w,h)
 	--self.level
-	self.viewer = require("ui.worldEditor"):new(-1,-1)
+	self.viewer = require("ui.worldEditor"):new(-1,-1,nil,self)
 	self.detailsUI = require("ui.structure.tabs"):new(-1,-1)
 	self.detailsUI:addChild(DET_LEVEL:new(-1,-1))
 	self.rootUI = require("ui.structure.horDivide"):new(
@@ -31,6 +31,7 @@ end
 
 function UI:addTab(tab)
 	self.detailsUI:addChild(tab)
+	self.detailsUI:setActive(tab)
 end
 
 function UI:removeTab(tab)
