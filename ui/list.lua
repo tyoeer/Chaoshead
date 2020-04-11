@@ -60,7 +60,7 @@ end
 
 local relayMouse = function(index)
 	UI[index] = function(self, x,y, ...)
-		if y <= self.padding then break end
+		if y <= self.padding then return end
 		local checkY = self.padding
 		for c in self.children:iterate() do
 			checkY = checkY + c.height
@@ -108,12 +108,12 @@ end
 relayAll("keypressed")
 relayAll("textinput")
 
-relayMosue("mousepressed")
+relayMouse("mousepressed")
 relayMouse("mousereleased")
 relayMouse("mousemoved")
-UI:wheelmoved() = function(self, ...)
+function UI:wheelmoved(self, ...)
 	local x,y = self:getMousePos()
-	if y <= self.padding then break end
+	if y <= self.padding then return end
 	local checkY = self.padding
 	for c in self.children:iterate() do
 		checkY = checkY + c.height
