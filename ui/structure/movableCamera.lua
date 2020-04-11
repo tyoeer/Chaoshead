@@ -10,7 +10,7 @@ function UI:initialize(w,h,child)
 	self.zoomSpeed = math.sqrt(2)
 	self.child = child
 	child.parent = self
-	self.class.super.initialize(self,w,h)
+	UI.super.initialize(self,w,h)
 	self.title = child.title
 end
 

@@ -1,24 +1,23 @@
-local UI = Class(require("ui.base"))
+local UI = Class(require("ui.list"))
 
 function UI:initialize(w,h,level)
-	self.level = level
-	self.class.super.initialize(self,w,h)
+	UI.super.initialize(self,w,h)
 	self.title = "Level Info"
+	self:setLevel(level)
 end
 
 function UI:setLevel(level)
 	self.level = level
+	self:reload()
 end
 
-function UI:draw()
-	love.graphics.setColor(1,1,1,1)
+function UI:reload()
+	self:resetList()
 	if self.level then
-		love.graphics.print("Width:",10,10)
-		love.graphics.print(self.level.width,60,10)
-		love.graphics.print("Height:",10,30)
-		love.graphics.print(self.level.height,60,30)
+		self:addTextEntry("Width:  "..self.level.width)
+		self:addTextEntry("Height: "..self.level.height)
 	else
-		love.graphics.print("No level loaded :(",10,10)
+		self:addTextEntry("No level loaded :(")
 	end
 end
 

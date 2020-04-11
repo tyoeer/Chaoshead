@@ -8,7 +8,7 @@ function UI:initialize(w,h)
 	self.nChildren = 0
 	self.tabHeight = 30
 	self.tabWidth = w
-	self.class.super.initialize(self,w,h)
+	UI.super.initialize(self,w,h)
 	self.title = "Tabs"
 end
 

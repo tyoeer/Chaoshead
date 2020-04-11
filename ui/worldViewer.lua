@@ -5,7 +5,7 @@ local LHS = require("levelhead.lhs")
 local UI = Class(BaseUI)
 
 function UI:initialize(w,h,level)
-	self.class.super.initialize(self,w,h)
+	UI.super.initialize(self,w,h)
 	self.title = "Level Viewer"
 	
 	if type(level)=="table" then

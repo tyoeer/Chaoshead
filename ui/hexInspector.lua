@@ -13,7 +13,7 @@ local function bytesToHex(bytes)
 end
 
 function UI:initialize(w,h,level)
-	self.class.super.initialize(self,w,h)
+	UI.super.initialize(self,w,h)
 	self.title = "Hex Inspector"
 	
 	if type(level)=="table" then

@@ -16,7 +16,7 @@ function UI:initialize(w,h, left,right)
 	self.divisionRatio = 0.3
 	--self.divisionX = -1
 	self.divisionWidth = 1 -1
-	self.class.super.initialize(self,w,h)
+	UI.super.initialize(self,w,h)
 	self.title = "Divide"
 end
 

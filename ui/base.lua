@@ -1,4 +1,4 @@
-local BaseUI = Class()
+local BaseUI = Class("BaseUI")
 
 function BaseUI:initialize(w,h)
 	self.title = "Unnamed"
