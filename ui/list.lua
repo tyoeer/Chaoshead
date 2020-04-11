@@ -10,7 +10,6 @@ function UI:initialize(w,h)
 	self.padding = 10
 	self.textEntryHeight = 20
 	
-	print(self.class.super)
 	UI.super.initialize(self,w,h)
 	self.title = "List"
 end

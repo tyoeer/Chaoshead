@@ -35,7 +35,7 @@ end
 
 local relay = function(index)
 	UI[index] = function(self, ...)
-		self.child[index](self.activeChild, ...)
+		self.child[index](self.child, ...)
 	end
 end
 
