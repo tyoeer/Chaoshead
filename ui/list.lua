@@ -25,6 +25,16 @@ function UI:addTextEntry(text)
 	self.nChildren = self.nChildren + 1
 end
 
+function UI:addUIEntry(ui)
+	local e = {
+		type = "ui",
+		ui = ui,
+		height = ui:getMinHeight()
+	}
+	self.children:add(e)
+	self.nChildren = self.nChildren + 1
+end
+
 function UI:resetList()
 	--the garbage collector should take care of the old pool
 	self.children = Pool:new()
@@ -42,11 +52,28 @@ local relayAll = function(index)
 	UI[index] = function(self, ...)
 		for c in self.children:iterate() do
 			if c.type=="ui" then
-				c[index](c, ...)
+				c.ui[index](c, ...)
 			end
 		end
 	end
 end
+
+local relayMouse = function(index)
+	UI[index] = function(self, x,y, ...)
+		if y <= self.padding then break end
+		local checkY = self.padding
+		for c in self.children:iterate() do
+			checkY = checkY + c.height
+			if y <= checkY then
+				if c.type=="ui" then
+					c.ui[index](c.ui, x,y, ...)
+				end
+				break
+			end
+		end
+	end
+end
+
 
 relayAll("update")
 
@@ -56,48 +83,47 @@ function UI:draw()
 		for c in self.children:iterate() do
 			if c.type=="text" then
 				love.graphics.print(c.text,0,0)
+			elseif c.type=="ui" then
+				c.ui:draw()
 			end
 			love.graphics.translate(0, c.height)
 		end
 	love.graphics.pop("all")
 end
 
---[[
-??relay("focus")
+relayAll("focus")
 relayAll("visible")
+
 function UI:resize(w,h)
 	self.width = w
 	self.height = h
 	
-	self.tabWidth = w / self.nChildren
-	
 	for child in self.children:iterate() do
-		child:resize(w, h-self.tabHeight)
-		child = self.activeChild
-	end
-end
-
-??relay("keypressed")
-??relay("textinput")
-
-M?function UI:mousepressed(x,y,button,isTouch)
-	if y <= self.tabHeight then
-		local i = 1
-		for child in self.children:iterate() do
-			local xx = (i-1)*self.tabWidth
-			if x >= xx and x < xx+self.tabWidth then
-				self.activeChild = child
-				return
-			end
-			i = i + 1
+		if child.type=="ui" then
+			child.ui:resize(w - 2*self.padding, child.ui.height)
 		end
-	else
-		self.activeChild:mousepressed(x,y-self.tabHeight,buttton,isTouch)
 	end
 end
-M?relay("mousereleased")
-M?relay("mousemoved")
-M?relay("wheelmoved")
-]]--
+
+relayAll("keypressed")
+relayAll("textinput")
+
+relayMosue("mousepressed")
+relayMouse("mousereleased")
+relayMouse("mousemoved")
+UI:wheelmoved() = function(self, ...)
+	local x,y = self:getMousePos()
+	if y <= self.padding then break end
+	local checkY = self.padding
+	for c in self.children:iterate() do
+		checkY = checkY + c.height
+		if y <= checkY then
+			if c.type=="ui" then
+				c.ui:wheelmoved(...)
+			end
+			break
+		end
+	end
+end
 
 return UI
