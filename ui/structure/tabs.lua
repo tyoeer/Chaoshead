@@ -23,6 +23,19 @@ function UI:addChild(child)
 	end
 end
 
+function UI:setActive(child)
+	self.activeChild = child
+end
+
+function UI:removeChild(child)
+	if self.children:remove(child) then
+		self.nChildren = self.nChildren - 1
+		self.tabWidth = math.floor(self.width/self.nChildren)
+		if child == self.activeChild then
+			self.activeChild = self.children:getBottom()
+		end
+	end
+end
 
 function UI:getPropagatedMouseY(child)
 	return self:getMouseY() - self.tabHeight
