@@ -115,7 +115,7 @@ function UI:mousepressed(x,y,button,isTouch)
 			i = i + 1
 		end
 	else
-		self.activeChild:mousepressed(x,y-self.tabHeight,buttton,isTouch)
+		self.activeChild:mousepressed(x,y-self.tabHeight,button,isTouch)
 	end
 end
 relay("mousereleased")
