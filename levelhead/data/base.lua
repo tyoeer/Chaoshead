@@ -17,7 +17,7 @@ end
 
 
 function DATA:getID(selector)
-	return tonumber(self:getRow(selector)[self.headers.id])
+	return self:getRow(selector)[self.headers.id]
 end
 
 function DATA:getName(selector)

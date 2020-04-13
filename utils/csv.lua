@@ -15,6 +15,7 @@ function csv.parseString(text,seperator)
 		local char = text:sub(i,i)
 		if char==SEP then
 			if out and current then
+				current = tonumber(current) or current
 				out[#out][headers[column]] = current
 			else
 				headers[column] = current
@@ -23,6 +24,7 @@ function csv.parseString(text,seperator)
 			column = column + 1
 		elseif char==END then
 			if out then
+				current = tonumber(current) or current
 				out[#out][headers[column]] = current
 			else
 				headers[column] = current
