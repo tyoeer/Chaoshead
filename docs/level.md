@@ -2,22 +2,23 @@ Represents a level.
 
 
 ```Lua
-level.class:new(width,height)
+instance = level.class:new(width,height)
 ```
- - width, height: the size of the level
+- width, height: the size of the level
+- instance: the instance representing the level
 
 Levels can also be loaded from disk using the LHS system
 
 ```Lua
 Level:addObject(object,x,y)
 ```
- - object: the __Object__ to add to the world
- - x, y: the position where to place the object
+- object: the __Object__ to add to the world
+- x, y: the position where to place the object
 
 ```Lua
 Level:removeObject(object)
 ```
- - object: the __Object__ to remove from the world
+- object: the __Object__ to remove from the world
 
 ```Lua
 level.allObjects

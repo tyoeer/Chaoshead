@@ -1,10 +1,13 @@
 Represents an object.
+- require("levelhead.objects.base") for base functionality.
+- require("levelhead.objects.properties") for objects with properties.
 
 # Base
 ```Lua
-object.class:new(id)
+instance = object.class:new(id)
 ```
 - id: the id of the level element this object is.
+- instance: the instance representing said object
 
 ```Lua
 object:draw()
@@ -12,6 +15,18 @@ object:draw()
 It errors if the object isn't in a world.
 
 # Properties
+
+```Lua
+object:set[property name](value)
+```
+- property name concatanated name of the poperty you're setting, where each word starts with with an uppercase letter
+- the new value of said property
+
+```Lua
+value = object:get[property name]()
+```
+- property name concatanated name of the poperty you're setting, where each word starts with with an uppercase letter
+- value: the value of said property
 
 ```Lua
 object:setPropertyRaw(id, value)
