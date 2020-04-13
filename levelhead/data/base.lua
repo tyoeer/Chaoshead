@@ -6,16 +6,18 @@ function DATA:getRow(selector)
 		return self.data[selector+1]
 	elseif type(selector)=="string" then
 		for i,v in ipairs(self.data) do
-			if v["Name"] == selector then
+			if v[self.headers.name] == selector then
 				return v
 			end
 		end
+	else
+		error(selector.." is invalid type: "..type(selector))
 	end
 end
 
 
 function DATA:getID(selector)
-	return self:getRow(selector)[self.headers.id]
+	return tonumber(self:getRow(selector)[self.headers.id])
 end
 
 function DATA:getName(selector)

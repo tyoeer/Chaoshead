@@ -19,7 +19,6 @@ end
 
 
 function UI:selectObject(tileX,tileY)
-	print(tileX,tileY)
 	if self.selectedObject then
 		self.selectedObject = nil
 		self.editor:removeTab(self.selectionDetails)

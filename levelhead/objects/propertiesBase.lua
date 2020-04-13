@@ -8,11 +8,11 @@ function OBJ:initialize(id)
 end
 
 function OBJ:setPropertyRaw(id, value)
-	self.properties[P:getName(id)] = value
+	self.properties[P:getID(id)] = value
 end
 
 function OBJ:getPropertyRaw(id)
-	return self.properties[P:getName(id)]
+	return self.properties[P:getID(id)]
 end
 
 return OBJ

@@ -1,3 +1,5 @@
+local P = require("levelhead.data.properties"):new()
+
 local UI = Class(require("ui.list"))
 
 function UI:initialize(w,h,object)
@@ -21,7 +23,7 @@ function UI:reload()
 		if o.properties then
 			self:addTextEntry("Properties:")
 			for k,v in pairs(o.properties) do
-				self:addTextEntry("->"..k..": "..v)
+				self:addTextEntry("->"..P:getName(k).."("..k.."): "..v)
 			end
 		end
 	end

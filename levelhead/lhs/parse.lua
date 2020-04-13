@@ -1,5 +1,5 @@
 local Level = require("levelhead.level")
-local Object = require("levelhead.objects.base")
+local Object = require("levelhead.objects.propertiesBase")
 
 local LHS = {}
 
@@ -48,11 +48,24 @@ function LHS:parseForegroundColumns(w)
 	end
 end
 
+function LHS:parseSingleProperties(w)
+	local raw = self.rawContentEntries.singleObjectProperties
+	for i=1,raw.nEntries,1 do
+		local entry = raw.entries[i]
+		for j=1,entry.amount,1 do
+			local prop = entry.entries[j]
+			local obj = w.foreground:get(prop.x + 1, w.height - prop.y)
+			obj:setPropertyRaw(entry.id, prop.value)
+		end
+	end
+end
+
 function LHS:parseAll()
 	local w = self:parseHeaders()
 	self:parseSingleForeground(w)
 	self:parseForegroundRows(w)
 	self:parseForegroundColumns(w)
+	self:parseSingleProperties(w)
 	return w
 end
 
