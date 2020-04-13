@@ -49,6 +49,14 @@ local relay = function(index)
 	end
 end
 
+local relayMouse = function(index)
+	UI[index] = function(self, x,y, ...)
+		if y > self.tabHeight then
+			self.activeChild[index](self.activeChild, x,y, ...)
+		end
+	end
+end
+
 relay("update")
 
 function UI:draw()
@@ -118,9 +126,13 @@ function UI:mousepressed(x,y,button,isTouch)
 		self.activeChild:mousepressed(x,y-self.tabHeight,button,isTouch)
 	end
 end
-relay("mousereleased")
-relay("mousemoved")
-relay("wheelmoved")
+relayMouse("mousereleased")
+relayMouse("mousemoved")
+function UI:wheelmoved(x,y)
+	if self:getMouseY() > self.tabHeight then
+		self.activeChild:wheelmoved(x,y)
+	end
+end
 
 
 return UI
