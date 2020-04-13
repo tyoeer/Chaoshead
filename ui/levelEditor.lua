@@ -10,12 +10,11 @@ function UI:initialize(w,h)
 	self.detailsUI = require("ui.structure.tabs"):new(-1,-1)
 	self.detailsUI:addChild(DET_LEVEL:new(-1,-1))
 	self.rootUI = require("ui.structure.horDivide"):new(
-		w,h, self.detailsUI,
-		require("ui.structure.movableCamera"):new(-1,-1,self.viewer)
+		w,h, self.detailsUI, self.viewer
 	)
 	self.rootUI.parent = self
 	
-	self.class.super.initialize(self,w,h)
+	UI.super.initialize(self,w,h)
 	self.title = "Level Editor"
 end
 
