@@ -104,7 +104,7 @@ local relayMouse = function(index)
 		if x < self.leftChild.width then
 			self.leftChild[index](self.leftChild, x, ...)
 		elseif x >= self.divisionX + self.divisionWidth - 1 then
-			self.rightChild[index](self.rightChild, x, ...)
+			self.rightChild[index](self.rightChild, x - self.divisionX - self.divisionWidth, ...)
 		end
 	end
 end

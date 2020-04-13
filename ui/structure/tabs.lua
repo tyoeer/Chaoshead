@@ -52,7 +52,7 @@ end
 local relayMouse = function(index)
 	UI[index] = function(self, x,y, ...)
 		if y > self.tabHeight then
-			self.activeChild[index](self.activeChild, x,y, ...)
+			self.activeChild[index](self.activeChild, x,y - self.tabHeight, ...)
 		end
 	end
 end
