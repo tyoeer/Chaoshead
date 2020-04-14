@@ -1,6 +1,5 @@
 local BaseUI = require("ui.base")
 
---LevelBytesUI
 local UI = Class(BaseUI)
 
 function UI:initialize(w,h,child)

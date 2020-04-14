@@ -1,5 +1,6 @@
 local BaseUI = require("ui.base")
 local Pool = require("utils.entitypool")
+local TextEntry = require("ui.list.text")
 
 local UI = Class("ListUI",BaseUI)
 
@@ -15,22 +16,15 @@ function UI:initialize(w,h)
 end
 
 function UI:addTextEntry(text)
-	local e = {
-		type = "text",
-		text = text,
-		height = self.textEntryHeight
-	}
-	self.children:add(e)
-	self.nChildren = self.nChildren + 1
+	self:addUIEntry(TextEntry:new(-1,-1,text,5))
 end
 
-function UI:addUIEntry(ui)
-	local e = {
-		type = "ui",
-		ui = ui,
-		height = ui:getMinHeight()
-	}
-	self.children:add(e)
+function UI:addUIEntry(c)
+	c.parent = this
+	local w = self.width - 2 * self.padding
+	local h = c:getMinimumHeight(w)
+	c:resize(w,h)
+	self.children:add(c)
 	self.nChildren = self.nChildren + 1
 end
 
@@ -50,9 +44,7 @@ end
 local relayAll = function(index)
 	UI[index] = function(self, ...)
 		for c in self.children:iterate() do
-			if c.type=="ui" then
-				c.ui[index](c, ...)
-			end
+			c[index](c, ...)
 		end
 	end
 end
@@ -64,9 +56,7 @@ local relayMouse = function(index)
 		for c in self.children:iterate() do
 			checkY = checkY + c.height
 			if y <= checkY then
-				if c.type=="ui" then
-					c.ui[index](c.ui, x,y, ...)
-				end
+					c[index](c, x,y, ...)
 				break
 			end
 		end
@@ -80,11 +70,7 @@ function UI:draw()
 	love.graphics.push("all")
 		love.graphics.translate(self.padding, self.padding)
 		for c in self.children:iterate() do
-			if c.type=="text" then
-				love.graphics.print(c.text,0,0)
-			elseif c.type=="ui" then
-				c.ui:draw()
-			end
+			c:draw()
 			love.graphics.translate(0, c.height)
 		end
 	love.graphics.pop("all")
@@ -97,10 +83,10 @@ function UI:resize(w,h)
 	self.width = w
 	self.height = h
 	
-	for child in self.children:iterate() do
-		if child.type=="ui" then
-			child.ui:resize(w - 2*self.padding, child.ui.height)
-		end
+	for c in self.children:iterate() do
+		local w = self.width - 2 * self.padding
+		local h = c:getMinimumHeight(w)
+		c:resize(w,h)
 	end
 end
 
