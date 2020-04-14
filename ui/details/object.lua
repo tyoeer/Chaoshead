@@ -23,7 +23,7 @@ function UI:reload()
 		if o.properties then
 			self:addTextEntry("Properties:")
 			for k,v in pairs(o.properties) do
-				self:addTextEntry("->"..P:getName(k).."("..k.."): "..v)
+				self:addTextEntry(P:getName(k).."("..k.."): "..v,1)
 			end
 		end
 	end

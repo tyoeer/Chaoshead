@@ -1,9 +1,10 @@
 local UI = Class(require("ui.base"))
 
-function UI:initialize(w,h,text,padding)
+function UI:initialize(w,h,text,padding,indent)
 	self.text = text
 	self.font = love.graphics.getFont()
-	self.padding = padding or 5
+	self.padding = padding or 0
+	self.indent = indent or 0
 	UI.super.initialize(self, w,h)
 end
 
@@ -15,7 +16,7 @@ end
 
 function UI:draw()
 	love.graphics.setFont(self.font)
-	love.graphics.printf(self.text, 0,0, self.width, "left")
+	love.graphics.printf(self.text, self.indent,0, self.width, "left")
 end
 
 return UI
