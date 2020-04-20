@@ -19,13 +19,13 @@ function OBJ:__index(key)
 	if key:match("set") then
 		local prop = key:match("set(.+)")
 		prop = prop:gsub("([A-Z])"," %1"):trim()
-		return function(value)
+		return function(self,value)
 			self.properties[P:getID(prop)] = value
 		end
 	elseif key:match("get") then
 		local prop = key:match("get(.+)")
 		prop = prop:gsub("([A-Z])"," %1"):trim()
-		return function()
+		return function(self)
 			return self.properties[P:getID(prop)]
 		end
 	end
