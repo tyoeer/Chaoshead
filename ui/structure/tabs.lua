@@ -24,7 +24,9 @@ function UI:addChild(child)
 end
 
 function UI:setActive(child)
+	self.activeChild:focus(false)
 	self.activeChild = child
+	child:focus(true)
 end
 
 function UI:removeChild(child)
@@ -117,7 +119,7 @@ function UI:mousepressed(x,y,button,isTouch)
 		for child in self.children:iterate() do
 			local xx = (i-1)*self.tabWidth
 			if x >= xx and x < xx+self.tabWidth then
-				self.activeChild = child
+				self:setActive(child)
 				return
 			end
 			i = i + 1
