@@ -24,7 +24,7 @@ function UI:selectObject(tileX,tileY)
 		self.editor:removeTab(self.selectionDetails)
 		self.selectionDetails = nil
 	end
-	local obj = self.level.foreground:get(tileX,tileY)
+	local obj = level.foreground:get(tileX,tileY)
 	if obj then
 		self.selectedObject = obj
 		self.selectionDetails = DET_OBJ:new(-1,-1,obj)
