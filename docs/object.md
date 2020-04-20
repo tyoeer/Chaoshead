@@ -1,6 +1,6 @@
 Represents an object.
 - require("levelhead.objects.base") for base functionality.
-- require("levelhead.objects.properties") for objects with properties.
+- require("levelhead.objects.propertiesBase") for objects with properties.
 
 # Base
 ```Lua
