@@ -5,7 +5,6 @@ function love.load(arg)
 	lovebird = require("libs.lovebird")
 	lovebird.update()
 	require("utils.utils")
-	suit = require("libs.suit")
 	
 	--temp
 	require("temp")
