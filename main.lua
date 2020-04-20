@@ -1,11 +1,14 @@
 --localhost:8000
 
 function love.load(arg)
-	--define globals
+	--load stuff
 	lovebird = require("libs.lovebird")
 	lovebird.update()
 	require("utils.utils")
 	suit = require("libs.suit")
+	
+	--temp
+	require("temp")
 	
 	function Class(a,b)
 		if a==nil then
@@ -17,7 +20,13 @@ function love.load(arg)
 		end
 	end
 	
+	--constants
 	TILE_SIZE = 71
+	
+	--globals
+	levelFile = require("levelhead.lhs"):new()
+	levelFile:readAll()
+	level = levelFile:parseAll()
 	
 	--love2d state
 	love.graphics.setLineWidth(1)
@@ -29,19 +38,16 @@ function love.load(arg)
 	
 	local hexInspector = require("ui.structure.movableCamera"):new(
 		-1,-1,
-		require("ui.hexInspector"):new(-1,-1,nil)
+		require("ui.hexInspector"):new(-1,-1)
 	)
 	ui:addChild(hexInspector)
 	
 	local levelEditor = require("ui.levelEditor"):new(-1,-1)
-	local f = require("levelhead.lhs"):new()
-	f:readAll()
-	levelEditor:setLevel(f:parseAll())
 	ui:addChild(levelEditor)
 	
 	local worldViewer = require("ui.structure.movableCamera"):new(
 		-1,-1,
-		require("ui.worldViewer"):new(-1,-1,nil)
+		require("ui.worldViewer"):new(-1,-1)
 	)
 	ui:addChild(worldViewer)
 end

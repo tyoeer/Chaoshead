@@ -18,16 +18,6 @@ function UI:initialize(w,h)
 	self.title = "Level Editor"
 end
 
-function UI:setLevel(level)
-	self.level = level
-	self.viewer:setLevel(level)
-	for child in self.detailsUI.children:iterate() do
-		if child.setLevel then
-			child:setLevel(level)
-		end
-	end
-end
-
 function UI:addTab(tab)
 	self.detailsUI:addChild(tab)
 	self.detailsUI:setActive(tab)
@@ -57,13 +47,20 @@ function UI:resize(w,h)
 	self.rootUI:resize(w,h)
 end
 
-relay("keypressed")
+function UI:keypressed(key, scancode, isrepeat)
+	if key=="r" then
+		require("utils.levelUtils").reload()
+	else
+		self.rootUI:keypressed(key, scancode, isrepeat)
+	end
+end
 relay("textinput")
 
 relay("mousepressed")
 relay("mousereleased")
 relay("mousemoved")
 relay("wheelmoved")
+
 
 
 return UI

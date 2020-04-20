@@ -9,38 +9,20 @@ local function bytesToHex(bytes)
 	out = out:upper()
 	out = out:gsub("(..)","%1 ")
 	--remove the last space
-	return out:sub(1,-1)
+	return out:sub(1,-2)
 end
 
 function UI:initialize(w,h,level)
 	UI.super.initialize(self,w,h)
 	self.title = "Hex Inspector"
 	
-	if type(level)=="table" then
-		self:setLevel(level)
-	elseif type(level)=="string" then
-		self:loadLevel(level)
-	elseif level == nil then
-		self:loadLevel()
-	else
-		error("Invalid level type: "..type(level).." "..tostring(level))
-	end
-	
 	self:reload()
 end
 
-function UI:loadLevel(level)
-	self.level = LHS:new(level)
-end
-
-function UI:setLevel(level)
-	self.level = level
-end
-
 function UI:reload()
-	local l = self.level
-	l:readAll()
-	--table.print(l.rawContentEntries)
+	require("utils.levelUtils").reload()
+	local l = levelFile
+	
 	self.all = bytesToHex(l.raw)
 	self.prefix = bytesToHex(l:getBytes(1,9))
 	self.bgm = bytesToHex(l:getBytes(10,5))
@@ -52,6 +34,12 @@ function UI:reload()
 	self.lWidth = bytesToHex(l:getBytes(l.titleEndOffset+2,1))
 	self.lHeight = bytesToHex(l:getBytes(l.titleEndOffset+3,1))
 	self.unknown = bytesToHex(l:getBytes(l.titleEndOffset+4,4))
+end
+
+function UI:focus(focus)
+	if focus then
+		self:reload()
+	end
 end
 
 local indentSize = 20
@@ -77,16 +65,16 @@ local function row(display,label,extraIndent)
 	textRow(text,extraIndent)
 end
 local function sectionRows(section, label)
-	textRow(label..": ".. this.level.rawContentEntries[section].nEntries)
-	for _,v in ipairs(this.level.rawContentEntries[section].entries) do
-		local hex = bytesToHex(this.level.raw:sub(v.startOffset,v.endOffset))
+	textRow(label..": ".. levelFile.rawContentEntries[section].nEntries)
+	for _,v in ipairs(levelFile.rawContentEntries[section].entries) do
+		local hex = bytesToHex(levelFile.raw:sub(v.startOffset,v.endOffset))
 		textRow(hex,2)
 	end
 end
 local function propertyRows(section, label)
-	textRow(label..": ".. this.level.rawContentEntries[section].nEntries)
-	for _,v in ipairs(this.level.rawContentEntries[section].entries) do
-		local hex = bytesToHex(this.level.raw:sub(v.startOffset,v.endOffset))
+	textRow(label..": ".. levelFile.rawContentEntries[section].nEntries)
+	for _,v in ipairs(levelFile.rawContentEntries[section].entries) do
+		local hex = bytesToHex(levelFile.raw:sub(v.startOffset,v.endOffset))
 		textRow(hex,2)
 		for i,v in ipairs(v.entries) do
 			textRow("-> "..v.value.." ("..v.x..","..v.y..")",3)
@@ -95,7 +83,7 @@ local function propertyRows(section, label)
 end
 function UI:draw()
 	resetRows(self)
-	local c = self.level.rawContentEntries
+	local c = levelFile.rawContentEntries
 	love.graphics.setColor(1,1,1)
 	textRow("Headers:",-1)
 		row("all")
@@ -105,15 +93,15 @@ function UI:draw()
 		row("weather")
 		row("respawn","MP respawn style")
 		row("camera","Camera hor. boundary")
-		textRow("Title: "..#(self.level.rawHeaders.title))
-			for _,v in ipairs(self.level.rawHeaders.title) do
+		textRow("Title: "..#(levelFile.rawHeaders.title))
+			for _,v in ipairs(levelFile.rawHeaders.title) do
 				textRow(v,1)
 			end
 		row("zone")
 		row("lWidth","Level width")
-			textRow("-> "..self.level.rawHeaders.width,1)
+			textRow("-> "..levelFile.rawHeaders.width,1)
 		row("lHeight","Level height")
-			textRow("-> "..self.level.rawHeaders.height,1)
+			textRow("-> "..levelFile.rawHeaders.height,1)
 		row("unknown")
 	textRow("Content:",-1)
 		sectionRows("singleForeground","Single foreground objects")
@@ -122,13 +110,12 @@ function UI:draw()
 		propertyRows("singleObjectProperties","Single Object Properties")
 		propertyRows("singlePathProperties","Single Path Properties")
 		textRow("Repeated? properties:")
-			textRow(bytesToHex(self.level.raw:sub(c.singlePathProperties.endOffset+1)),1)
-			textRow(bytesToHex(self.level.raw:sub(c.singlePathProperties.endOffset+2)),1)
+			textRow(bytesToHex(levelFile.raw:sub(c.singlePathProperties.endOffset+1)),1)
+			textRow(bytesToHex(levelFile.raw:sub(c.singlePathProperties.endOffset+2)),1)
 end
 
 function UI:keypressed(key, scancode, isrepeat)
 	if key=="r" or key=="space" then
-		self:loadLevel(self.level.fileName)
 		self:reload()
 	end
 end

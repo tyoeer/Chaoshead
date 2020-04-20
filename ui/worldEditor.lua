@@ -61,11 +61,6 @@ function UI:draw()
 	love.graphics.pop()
 end
 
-
-function UI:mousepressed(x,y,button,isTouch)
-	
-end
-
 function UI:mousemoved(x,y,dx,dy)
 	if love.mouse.isDown(1) or love.mouse.isDown(3) then
 		self.movedCamera = true
