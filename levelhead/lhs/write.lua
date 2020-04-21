@@ -9,6 +9,18 @@ function LHS:write(data)
 	self.saveHandle:write(data)
 end
 
+function LHS:write2(data)
+	data = math.numberToBytesLE(data)
+	if data:len()==1 then
+		self.saveHandle:write(data)
+		self.saveHandle:write(string.char(0x00))
+	elseif data:len()>2 then
+		error(love.data.encode("string","hex",data))
+	else
+		self.saveHandle:write(data)
+	end
+end
+
 local function deHex(d)
 	return love.data.decode("string","hex",d)
 end
@@ -59,11 +71,26 @@ function LHS:writeHeaders()
 	self:write(deHex("0000803F"))
 end
 
+function LHS:writeSingleForeground()
+	local c = self.rawContentEntries.singleForeground
+	self:write(0x0D)
+	self:write2(c.nEntries)
+	for _,v in ipairs(c.entries) do
+		self:write2(v.id)
+		self:write2(v.amount)
+		for _,o in ipairs(v.objects) do
+			self:write(o.x)
+			self:write(o.y)
+		end
+	end
+end
+
 function LHS:writeHash()
 	self:write(0x61)
 	self:write(string.rep("A",32))
 	self:write(0)
 end
+
 
 function LHS:writeAll()
 	local file, err = io.open(self.path,"wb")
@@ -71,14 +98,13 @@ function LHS:writeAll()
 	self.saveHandle = file
 	
 	self:writeHeaders()
+	self:writeSingleForeground()
 	--add empty categories to be reverse engineered
 	do
 		local w = function(d)
 			self:write(d)
-			self:write(0x00)
-			self:write(0x00)
+			self:write2(0x00)
 		end
-		w(0x0D)
 		w(0x13)
 		w(0x0B)
 		w(0x63)

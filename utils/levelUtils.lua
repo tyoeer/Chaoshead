@@ -7,6 +7,7 @@ function u.reload()
 end
 
 function u.save()
+	levelFile:serializeAll(level)
 	levelFile:writeAll()
 end
 
