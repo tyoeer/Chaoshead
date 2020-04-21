@@ -9,6 +9,54 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 
 ]]--
 
+--io
+
+local defaultFiles = {
+	love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/m7n6j8/stages/-23.lhs",
+	love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/m7n6j8/stages/-22.lhs",
+	love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/xxqtsv/stages/-12.lhs",
+}
+
+function LHS:loadDefaultFile()
+	for _,v in ipairs(defaultFiles) do
+		local file,err = io.open(v,"rb")
+		if file then
+			self.path = v
+			self.raw = file:read("*a")
+			file:close()
+			break
+		end
+	end
+end
+
+function LHS:loadFile(fullPath)
+	local file,err = io.open(fullPath,"rb")
+	if err then error(err) end
+	self.path = fullPath
+	self.raw = file:read("*a")
+	file:close()
+end
+
+function LHS:reload()
+	self:loadFile(self.path)
+end
+
+--misc
+
+function LHS:getBytes(offset,length)
+	return self.raw:sub(offset,offset+length-1)
+end
+
+function LHS:getNumber1(offset)
+	return math.bytesToNumberLE(self:getBytes(offset,1))
+end
+
+function LHS:getNumber2(offset)
+	return math.bytesToNumberLE(self:getBytes(offset,2))
+end
+
+--data reading
+
 function LHS:readHeaders()
 	local h = {}
 	self.rawHeaders = h

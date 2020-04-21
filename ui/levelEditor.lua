@@ -50,6 +50,8 @@ end
 function UI:keypressed(key, scancode, isrepeat)
 	if key=="r" then
 		require("utils.levelUtils").reload()
+	elseif key=="s" and love.keyboard.isDown("lctrl") then
+		require("utils.levelUtils").save()
 	else
 		self.rootUI:keypressed(key, scancode, isrepeat)
 	end
