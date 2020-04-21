@@ -85,6 +85,24 @@ function LHS:writeSingleForeground()
 	end
 end
 
+function LHS:writeForegroundStructures(isColumn)
+	local c
+	if isColumn then
+		c = self.rawContentEntries.foregroundColumns
+		self:write(0x0B)
+	else
+		c = self.rawContentEntries.foregroundRows
+		self:write(0x13)
+	end
+	self:write2(c.nEntries)
+	for _,v in ipairs(c.entries) do
+		self:write(v.x)
+		self:write(v.y)
+		self:write2(v.id)
+		self:write(v.length)
+	end
+end
+
 function LHS:writeHash()
 	self:write(0x61)
 	self:write(string.rep("A",32))
@@ -98,15 +116,16 @@ function LHS:writeAll()
 	self.saveHandle = file
 	
 	self:writeHeaders()
+	
 	self:writeSingleForeground()
+	self:writeForegroundStructures(false)
+	self:writeForegroundStructures(true)
 	--add empty categories to be reverse engineered
 	do
 		local w = function(d)
 			self:write(d)
 			self:write2(0x00)
 		end
-		w(0x13)
-		w(0x0B)
 		w(0x63)
 		w(0x43)
 		w(0x3A)
