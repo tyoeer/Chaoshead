@@ -72,7 +72,9 @@ function math.numberToBytes(myNumber)
 		--myNumber=math.fmod(myNumber,256)
 		myNumber=math.floor(myNumber/256)
 		if myNumber < 256 then
-			output[i+1]=myNumber
+			if myNumber~=0 then
+				output[i+1]=myNumber
+			end
 			break
 		end
 	end
@@ -106,16 +108,17 @@ function math.numberToBytesLE(myNumber)
 		--myNumber=math.fmod(myNumber,256)
 		myNumber=math.floor(myNumber/256)
 		if myNumber < 256 then
-			output[i+1]=myNumber
+			if myNumber~=0 then
+				output[i+1]=myNumber
+			end
 			break
 		end
 	end
-	local newOutput={}
 	
+	local newOutput={}
 	for i,v in ipairs(output) do
 		table.insert(newOutput,v)
 	end
-	
 	
 	return string.char(unpack(newOutput))
 end
@@ -130,15 +133,6 @@ function math.bytesToNumberLE(bytes)
 	return result
 end
 
-function math.littleEndianBytesToNumber(bytes)
-	local i=0
-	local result=0
-	for char in bytes:gmatch(".") do
-		result=result+( char:byte()*(256^i) )
-		i=i+1
-	end
-	return result
-end
 
 
 function table.getLength(inputTable)
