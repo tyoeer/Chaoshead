@@ -27,6 +27,12 @@ function UI:removeTab(tab)
 	self.detailsUI:removeChild(tab)
 end
 
+function UI:reload()
+	for v in self.detailsUI.children:iterate() do
+		if v.reload then v:reload() end
+	end
+end
+
 -- events
 
 local relay = function(index)
@@ -39,7 +45,10 @@ relay("update")
 
 relay("draw")
 
-relay("focus")
+function UI:focus(focus)
+	if focus then self:reload() end
+	self.rootUI:focus(focus)
+end
 relay("visible")
 function UI:resize(w,h)
 	self.width = w
@@ -50,6 +59,7 @@ end
 function UI:keypressed(key, scancode, isrepeat)
 	if key=="r" then
 		require("utils.levelUtils").reload()
+		self:reload()
 	elseif key=="s" and love.keyboard.isDown("lctrl") then
 		require("utils.levelUtils").save()
 	else
