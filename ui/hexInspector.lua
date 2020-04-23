@@ -79,7 +79,7 @@ local function propertyRows(section, label)
 		for _,w in ipairs(v.entries) do
 			textRow("-> "..w.value,2)
 			for _,u in ipairs(w.entries) do
-				textRow("("..u.x..","..u.y..")",3)
+				textRow("("..u.x+1..","..u.y+1..")",3)
 			end
 		end
 	end
