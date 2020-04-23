@@ -166,11 +166,11 @@ function LHS:readProperties(isPath)
 	--object properties
 	local c = {}
 	if isPath then
-		self.rawContentEntries.singlePathProperties = c
-		c.startOffset = self.rawContentEntries.singleObjectProperties.endOffset
+		self.rawContentEntries.pathProperties = c
+		c.startOffset = self.rawContentEntries.objectProperties.endOffset
 		c.nEntries = self:getNumber1(c.startOffset+1)
 	else
-		self.rawContentEntries.singleObjectProperties = c
+		self.rawContentEntries.objectProperties = c
 		c.startOffset = self.rawContentEntries.foregroundColumns.endOffset+1
 		c.nEntries = self:getNumber1(c.startOffset+1)
 	end
@@ -234,6 +234,12 @@ function LHS:readProperties(isPath)
 	c.endOffset = offset-1
 end
 
+function LHS:readRepeatedPropertySets()
+	local c = {}
+	self.rawContentEntries.repeatedPropertySets = c
+	c.startOffset = self.rawContentEntries.pathProperties.endOffset+1
+end
+
 function LHS:readAll()
 	self:readHeaders()
 	self.rawContentEntries = {}
@@ -242,6 +248,7 @@ function LHS:readAll()
 	self:readForegroundColumns()
 	self:readProperties(false)
 	self:readProperties(true)
+	self:readRepeatedPropertySets()
 end
 
 return LHS

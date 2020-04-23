@@ -48,8 +48,8 @@ function LHS:parseForegroundColumns(w)
 	end
 end
 
-function LHS:parseProperties(w)
-	local raw = self.rawContentEntries.singleObjectProperties
+function LHS:parseObjectProperties(w)
+	local raw = self.rawContentEntries.objectProperties
 	for i=1,raw.nEntries,1 do
 		local entry = raw.entries[i]
 		for j=1,entry.amount,1 do
@@ -68,7 +68,7 @@ function LHS:parseAll()
 	self:parseSingleForeground(w)
 	self:parseForegroundRows(w)
 	self:parseForegroundColumns(w)
-	self:parseProperties(w)
+	self:parseObjectProperties(w)
 	return w
 end
 
