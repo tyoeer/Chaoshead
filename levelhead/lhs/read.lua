@@ -237,7 +237,55 @@ end
 function LHS:readRepeatedPropertySets()
 	local c = {}
 	self.rawContentEntries.repeatedPropertySets = c
-	c.startOffset = self.rawContentEntries.pathProperties.endOffset+1
+	c.startOffset = self.rawContentEntries.pathProperties.endOffset + 1
+	c.nEntries = self:getNumber2(c.startOffset+1)
+	c.entries = {}
+	local offset = c.startOffset + 3
+	for i=1, c.nEntries, 1 do
+		local entry = {
+			sourceX = self:getNumber1(offset),
+			sourceY = self:getNumber1(offset+1)
+		}
+		--rows
+		entry.nRows = self:getNumber2(offset+2)
+		entry.rows = {}
+		offset = offset + 4
+		for j=1, entry.nRows, 1 do
+			subentry = {
+				x = self:getNumber1(offset),
+				y = self:getNumber1(offset+1),
+				length = self:getNumber2(offset+2)
+			}
+			offset = offset + 4
+			table.insert(entry.rows, subentry)
+		end
+		--columns
+		entry.nColumns = self:getNumber2(offset)
+		entry.columns = {}
+		offset = offset + 2
+		for j=1, entry.nColumns, 1 do
+			subentry = {
+				x = self:getNumber1(offset),
+				y = self:getNumber1(offset+1),
+				length = self:getNumber2(offset+2)
+			}
+			offset = offset + 4
+			table.insert(entry.columns, subentry)
+		end
+		--single
+		entry.nSingle = self:getNumber2(offset)
+		entry.single = {}
+		offset = offset + 2
+		for j=1, entry.nSingle, 1 do
+			subentry = {
+				x = self:getNumber1(offset),
+				y = self:getNumber1(offset+1)
+			}
+			offset = offset + 2
+			table.insert(entry.single, subentry)
+		end
+		table.insert(c.entries, entry)
+	end
 end
 
 function LHS:readAll()
