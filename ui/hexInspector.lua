@@ -76,8 +76,11 @@ local function propertyRows(section, label)
 	for _,v in ipairs(levelFile.rawContentEntries[section].entries) do
 		local hex = bytesToHex(levelFile.raw:sub(v.startOffset,v.endOffset))
 		textRow(hex,2)
-		for i,v in ipairs(v.entries) do
-			textRow("-> "..v.value.." ("..v.x..","..v.y..")",3)
+		for _,w in ipairs(v.entries) do
+			textRow("-> "..w.value,2)
+			for _,u in ipairs(w.entries) do
+				textRow("("..u.x..","..u.y..")",3)
+			end
 		end
 	end
 end

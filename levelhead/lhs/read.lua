@@ -162,7 +162,7 @@ function LHS:readForegroundColumns()
 	c.endOffset = offset-1
 end
 
-function LHS:readSingleProperties(isPath)
+function LHS:readProperties(isPath)
 	--object properties
 	local c = {}
 	if isPath then
@@ -183,51 +183,51 @@ function LHS:readSingleProperties(isPath)
 		entry.amount = self:getNumber2(offset+1)
 		entry.entries={}
 		local format = P:getSaveFormat(entry.id)
-		if format=="A" then
-			for j=0,entry.amount-1,1 do
-				local subentry = {}
-				subentry.value = self:getNumber1(offset+j*5+3)
-				subentry.x = self:getNumber1(offset+j*5+6)
-				subentry.y = self:getNumber1(offset+j*5+7)
-				entry.entries[j+1] = subentry
-			end
-			offset = offset + entry.amount*5 + 3
-		elseif format=="B" then
-			for j=0,entry.amount-1,1 do
-				local subentry = {}
-				subentry.value = self:getNumber2(offset+j*5+3)
-				--checks if the most significant bit is set
+		offset = offset + 3
+		for j=1, entry.amount, 1 do
+			local subentry = {}
+			if format=="A" then
+				subentry.value = self:getNumber1(offset)
+				offset = offset + 1
+			elseif format=="B" then
+				subentry.value = self:getNumber2(offset)
+				--checks if the most significant bit is set, because we need to negate it then
 				-- 32768 = 2^15
 				if subentry.value > 32768 then
 					subentry.value = subentry.value - 65536
 				end
-				subentry.x = self:getNumber1(offset+j*5+7)
-				subentry.y = self:getNumber1(offset+j*5+8)
-				entry.entries[j+1] = subentry
-			end
-			offset = offset + entry.amount*6 + 3
-		elseif format=="C" then
-			for j=0,entry.amount-1,1 do
-				local subentry = {}
+				offset = offset + 2
+			elseif format=="C" then
 				--parse the float
 				--see https://en.wikipedia.org/wiki/Single-precision_floating-point_format
-				do
-					local value = math.bytesToNumberLE(self:getBytes(offset+j*5+3, 4))
-					local sign = bit.rshift(value,31)==0 and 1 or -1
-					local exponent = bit.band(bit.rshift(value,23),0xFF) - 127
-					local fraction = bit.band(value,0x7FFFFF) / (2^23)
-					subentry.value = math.roundPrecision(sign * 2^exponent * (1+fraction), 0.01)
-				end
-				subentry.x = self:getNumber1(offset+j*5+9)
-				subentry.y = self:getNumber1(offset+j*5+10)
-				entry.entries[j+1] = subentry
+				local value = math.bytesToNumberLE(self:getBytes(offset, 4))
+				local sign = bit.rshift(value,31)==0 and 1 or -1
+				local exponent = bit.band(bit.rshift(value,23),0xFF) - 127
+				local fraction = bit.rshift( bit.band(value,0x7FFFFF), 23)
+				
+				--rounded because Lua appears to have floats that are a little more precise
+				subentry.value = math.roundPrecision(sign * 2^exponent * (1+fraction), 0.0001)
+				offset = offset + 4
+			else
+				print("Error-------------------------------")
+				print("prop.id",entry.id)
+				error("Illegal property save format: "..format)
 			end
-			offset = offset + entry.amount*8 + 3
-		else
-			print("Error-------------------------------")
-			print("prop.id",entry.id)
-			error("Illegal property save format: "..format)
+			
+			subentry.amount = self:getNumber2(offset)
+			subentry.entries = {}
+			offset = offset + 2
+			for k=1, subentry.amount, 1 do
+				local subsubentry = {
+					x = self:getNumber1(offset),
+					y = self:getNumber1(offset+1)
+				}
+				table.insert(subentry.entries, subsubentry)
+				offset = offset + 2
+			end
+			table.insert(entry.entries, subentry)
 		end
+		
 		entry.endOffset = offset - 1
 		c.entries[i] = entry
 	end
@@ -240,8 +240,8 @@ function LHS:readAll()
 	self:readSingleForeground()
 	self:readForegroundRows()
 	self:readForegroundColumns()
-	self:readSingleProperties(false)
-	self:readSingleProperties(true)
+	self:readProperties(false)
+	self:readProperties(true)
 end
 
 return LHS
