@@ -1,20 +1,27 @@
+# Object
 Represents an object.
-- require("levelhead.objects.base") for base functionality.
-- require("levelhead.objects.propertiesBase") for objects with properties.
+- `require("levelhead.objects.base")` for base functionality.
+- `require("levelhead.objects.propertiesBase")` for objects with properties.
 
-# Base
+Objects created by the LHS system are always property objects.
+Property objects extend base objects (they can do everything a base object can do).
+
+## Getting an object instance
+
 ```Lua
 instance = object.class:new(id)
 ```
 - id: the id of the level element this object is.
 - instance: the instance representing said object
 
+## Base
+
 ```Lua
 object:draw()
 ```
 It errors if the object isn't in a world.
 
-# Properties
+## Properties
 
 ```Lua
 object:set[property name](value)

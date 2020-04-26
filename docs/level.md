@@ -1,5 +1,7 @@
+# Level
 Represents a level.
 
+## Getting a level instance
 
 ```Lua
 instance = level.class:new(width,height)
@@ -7,7 +9,17 @@ instance = level.class:new(width,height)
 - width, height: the size of the level
 - instance: the instance representing the level
 
-Levels can also be loaded from disk using the LHS system
+```Lua
+instance = LHS:parseAll()
+```
+- LHS: an instance of from the LHS system, from which everything has already been read (with `LHS:readAll()`)
+
+```Lua
+instance = level
+```
+- level: a global variable containing the level currently in the editor
+
+## Editing the world
 
 ```Lua
 Level:addObject(object,x,y)
@@ -26,6 +38,8 @@ Level:removeForeground(x,y)
 - x, y: the position of the foreground __Object__ to remove
 
 In case there's no foreground object at the specified coördinates, nothing will happen.
+
+## Getting information from the world
 
 ```Lua
 level.allObjects
