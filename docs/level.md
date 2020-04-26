@@ -21,6 +21,13 @@ Level:removeObject(object)
 - object: the __Object__ to remove from the world
 
 ```Lua
+Level:removeForeground(x,y)
+```
+- x, y: the position of the foreground __Object__ to remove
+
+In case there's no foreground object at the specified coördinates, nothing will happen.
+
+```Lua
 level.allObjects
 ```
 Read-only __EntityPool__ with all the objects.

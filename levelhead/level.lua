@@ -15,11 +15,19 @@ function Level:initialize(w,h)
 end
 
 function Level:addObject(obj,x,y)
+	self:removeForeground(x,y)
 	obj.world = self
 	obj.x = x
 	obj.y = y
 	self.allObjects:add(obj)
 	self.foreground[x][y] = obj
+end
+
+function Level:removeForeground(x,y)
+	local obj = self.foreground[x][y]
+	if obj then
+		self:removeObject(obj)
+	end
 end
 
 function Level:removeObject(obj)
