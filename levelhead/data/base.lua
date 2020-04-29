@@ -21,7 +21,6 @@ function DATA:getID(selector)
 end
 
 function DATA:getAllIDs(name)
-	print(name)
 	local out = {}
 	for i,v in ipairs(self.data) do
 		if v[self.headers.name] == name then

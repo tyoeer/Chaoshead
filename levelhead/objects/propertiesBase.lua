@@ -21,7 +21,6 @@ function OBJ:__index(key)
 		prop = prop:gsub("([A-Z])"," %1"):trim()
 		return function(self,value)
 			for _,id in ipairs(P:getAllIDs(prop)) do
-				print(id)
 				self:setPropertyRaw(id, value)
 			end
 		end
@@ -29,6 +28,7 @@ function OBJ:__index(key)
 		local prop = key:match("get(.+)")
 		prop = prop:gsub("([A-Z])"," %1"):trim()
 		return function(self)
+			--LH doesn't set all the properties, so this is currently a bit broken
 			return self:getPropertyRaw(P:getID(prop))
 		end
 	end
