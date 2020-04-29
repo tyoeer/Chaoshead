@@ -26,13 +26,13 @@ It errors if the object isn't in a world.
 ```Lua
 object:set[property name](value)
 ```
-- property name concatanated name of the poperty you're setting, where each word starts with with an uppercase letter
+- property name: concatanated name of the poperty you're setting, where each word starts with with an uppercase letter
 - the new value of said property
 
 ```Lua
 value = object:get[property name]()
 ```
-- property name concatanated name of the poperty you're setting, where each word starts with with an uppercase letter
+- property name: concatanated name of the poperty you're getting, where each word starts with with an uppercase letter
 - value: the value of said property
 
 ```Lua
