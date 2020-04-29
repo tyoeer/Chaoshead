@@ -20,13 +20,16 @@ function OBJ:__index(key)
 		local prop = key:match("set(.+)")
 		prop = prop:gsub("([A-Z])"," %1"):trim()
 		return function(self,value)
-			self.properties[P:getID(prop)] = value
+			for _,id in ipairs(P:getAllIDs(prop)) do
+				print(id)
+				self:setPropertyRaw(id, value)
+			end
 		end
 	elseif key:match("get") then
 		local prop = key:match("get(.+)")
 		prop = prop:gsub("([A-Z])"," %1"):trim()
 		return function(self)
-			return self.properties[P:getID(prop)]
+			return self:getPropertyRaw(P:getID(prop))
 		end
 	end
 end
