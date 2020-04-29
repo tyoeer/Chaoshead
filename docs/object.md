@@ -11,7 +11,7 @@ Property objects extend base objects (they can do everything a base object can d
 ```Lua
 instance = object.class:new(id)
 ```
-- id: the id of the level element this object is.
+- id: the id or name of the level element this object is.
 - instance: the instance representing said object
 
 ## Base
