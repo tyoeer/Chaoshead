@@ -1,6 +1,8 @@
-local Level = Class()
 local Pool = require("utils.entitypool")
 local DS = require("utils.datastructures")
+local OBJ = require("levelhead.objects.propertiesBase")
+
+local Level = Class()
 --[[
 
 Top left corner is (1,1), to be consistent with Lua and Löve2d
@@ -36,6 +38,18 @@ function Level:removeObject(obj)
 	obj.world = nil
 	obj.x = nil
 	obj.y = nil
+end
+
+function Level:__index(key)
+	if key:match("place") then
+		local elem = key:match("place(.+)")
+		elem = elem:gsub("([A-Z])"," %1"):trim()
+		return function(self,x,y)
+			local o = OBJ:new(elem)
+			self:addObject(o, x,y)
+			return o
+		end
+	end
 end
 
 return Level

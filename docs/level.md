@@ -28,6 +28,13 @@ Level:addObject(object,x,y)
 - x, y: the position where to place the object
 
 ```Lua
+obj = Level:place[element](x,y)
+```
+- element: concatanated name of the level element you're placing, where each word starts with with an uppercase letter
+- x, y: the position where to place the object
+- obj: the __Object__ that has been placed
+
+```Lua
 Level:removeObject(object)
 ```
 - object: the __Object__ to remove from the world

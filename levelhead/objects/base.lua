@@ -1,7 +1,9 @@
+local E = require("levelhead.data.elements"):new()
+
 local Base = Class()
 
 function Base:initialize(id)
-	self.id = id
+	self.id = E:getID(id)
 	--self.x = nil
 	--self.y = nil
 end
