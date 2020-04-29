@@ -1,4 +1,5 @@
 local P = require("levelhead.data.properties"):new()
+local E = require("levelhead.data.elements"):new()
 
 local UI = Class(require("ui.list"))
 
@@ -17,7 +18,7 @@ function UI:reload()
 	self:resetList()
 	if self.object then
 		local o = self.object
-		self:addTextEntry("Id: "..o.id)
+		self:addTextEntry("Element: "..E:getName(o.id).." ("..o.id..")")
 		self:addTextEntry("X: "..o.x)
 		self:addTextEntry("Y: "..o.y)
 		--properties
