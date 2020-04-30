@@ -207,6 +207,14 @@ function LHS:readProperties(isPath)
 				--rounded because Lua appears to have floats that are more precise
 				subentry.value = math.roundPrecision(sign * 2^exponent * (1+fraction), 0.0001)
 				offset = offset + 4
+			elseif format=="D" then
+				subentry.value = self:getNumber1(offset)
+				--checks if the most significant bit is set, because we need to negate it then
+				-- 128 = 2^7
+				if subentry.value > 128 then
+					subentry.value = subentry.value - 256
+				end
+				offset = offset + 1
 			else
 				print("Error-------------------------------")
 				print("prop.id",entry.id)

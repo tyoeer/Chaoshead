@@ -55,7 +55,6 @@ function LHS:parseObjectProperties(w)
 		for j=1,entry.amount,1 do
 			local subentry = entry.entries[j]
 			for _,v in ipairs(subentry.entries) do
-				--print(v.x, v.y)
 				local obj = w.foreground:get(v.x + 1, w.height - v.y)
 				obj:setPropertyRaw(entry.id, subentry.value)
 			end

@@ -151,6 +151,14 @@ function LHS:writeProperties()
 					data = data .. string.char(0x00)
 				end
 				self:write(data)
+			elseif format=="D" then
+				local v = subentry.value
+				if v < 0 then
+					--read: v = vfile - 256
+					--     vfile = v + 256
+					v = v + 256
+				end
+				self:write(v)
 			else
 				error("Invalid save format: "..entry.id..": "..format)
 			end
