@@ -49,6 +49,8 @@ function love.load(arg)
 		require("ui.worldViewer"):new(-1,-1)
 	)
 	ui:addChild(worldViewer)
+	
+	ui:setActive(levelEditor)
 end
 
 
