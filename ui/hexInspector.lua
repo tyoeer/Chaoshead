@@ -20,8 +20,9 @@ function UI:initialize(w,h,level)
 end
 
 function UI:reload()
-	require("utils.levelUtils").reload()
 	local l = levelFile
+	require("utils.levelUtils").reload()
+	--l:readAll()
 	
 	self.all = bytesToHex(l.raw)
 	self.prefix = bytesToHex(l:getBytes(1,9))

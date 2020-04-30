@@ -191,8 +191,8 @@ function LHS:readProperties(isPath)
 			elseif format=="B" then
 				subentry.value = self:getNumber2(offset)
 				--checks if the most significant bit is set, because we need to negate it then
-				-- 32768 = 2^15
-				if subentry.value > 32768 then
+				-- 32768 = 2^15 - 1
+				if subentry.value > 32767 then
 					subentry.value = subentry.value - 65536
 				end
 				offset = offset + 2
