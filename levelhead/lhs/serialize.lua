@@ -1,3 +1,5 @@
+
+local DS = require("utils.datastructures")
 local LHS = {}
 
 function LHS:serializeForeground(level)
@@ -95,9 +97,60 @@ function LHS:serializeForeground(level)
 	c.nEntries = #c.entries
 end
 
+function LHS:serializeObjectProperties(level)
+	local c = {}
+	self.rawContentEntries.objectProperties = c
+	c.entries = {}
+	
+	local singleLookup = {}
+	local doubleLookup = DS.grid()
+	
+	--process
+	for obj in level.allObjects:iterate() do
+		if obj.properties then
+			for id,value in pairs(obj.properties) do
+				if not singleLookup[id] then
+					singleLookup[id] = {
+						id = id,
+						entries = {}
+					}
+					table.insert(c.entries, singleLookup[id])
+				end
+				local entry = singleLookup[id]
+				
+				local subentry
+				if not doubleLookup[id][value] then
+					subentry = {
+						value = value,
+						entries = {}
+					}
+					doubleLookup[id][value] = subentry
+					table.insert(entry.entries,subentry)
+				else
+					subentry = doubleLookup[id][value]
+				end
+				table.insert(subentry.entries,{
+					x = obj.x - 1,
+					y = level.height - obj.y
+				})
+			end
+		end
+	end
+	
+	--finalize
+	for _,entry in ipairs(c.entries) do
+		for _,subentry in ipairs(entry.entries) do
+			subentry.amount = #subentry.entries
+		end
+		entry.amount = #entry.entries
+	end
+	c.nEntries = #c.entries
+end
+
 function LHS:serializeAll(level)
 	self.rawContentEntries = {}
 	self:serializeForeground(level)
+	self:serializeObjectProperties(level)
 end
 
 return LHS

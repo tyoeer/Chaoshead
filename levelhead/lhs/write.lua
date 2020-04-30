@@ -1,3 +1,5 @@
+local P = require("levelhead.data.properties"):new()
+
 local LHS = {}
 
 --misc
@@ -15,7 +17,7 @@ function LHS:write2(data)
 		self.saveHandle:write(data)
 		self.saveHandle:write(string.char(0x00))
 	elseif data:len()>2 then
-		error(love.data.encode("string","hex",data))
+		error("Write size error: "..love.data.encode("string","hex",data))
 	else
 		self.saveHandle:write(data)
 	end
@@ -103,6 +105,67 @@ function LHS:writeForegroundStructures(isColumn)
 	end
 end
 
+function LHS:writeProperties()
+	local c = self.rawContentEntries.objectProperties
+	self:write(0x63)
+	self:write(c.nEntries)
+	for _,entry in ipairs(c.entries) do
+		self:write(entry.id)
+		self:write2(entry.amount)
+		for _,subentry in ipairs(entry.entries) do
+			local format = P:getSaveFormat(entry.id)
+			if format=="A" then
+				self:write(subentry.value)
+			elseif format=="B" then
+				local v = subentry.value
+				if v < 0 then
+					--read: v = vfile - 65536
+					--     vfile = v +65536
+					v = v + 65536
+				end
+				self:write2(v)
+			elseif format=="C" then
+				local v = subentry.value
+				-- single precision floating point:
+				-- conversion based on my understanding of the format and my read code,
+				-- because the wikipedia method is vague and complicated
+				
+				-- calculate parts
+				local sign = math.sign(v)
+				v = v * sign -- make sure v is positive
+				sign = sign==-1 and 0x80000000 or 0
+				local exponent = math.floor(math.log(v)/math.log(2))
+				v = v / 2^exponent
+				exponent = bit.band(exponent + 127, 0xFF)
+				exponent = bit.lshift(exponent,23) -- move it to the right position
+				local fraction = math.round(v * 2^23)
+				fraction = bit.band(fraction, 0x7FFFFF)
+				--combine everything
+				v = bit.bor(sign, exponent, fraction)
+				--make sure it's 4 bytes long
+				data = math.numberToBytesLE(v)
+				if data:len() > 4 then
+					error("Float write size error: "..love.data.encode("string","hex",data))
+				end
+				while data:len()~=4 do
+					data = data .. string.char(0x00)
+				end
+				self:write(data)
+			else
+				error("Invalid save format: "..entry.id..": "..format)
+			end
+			self:write2(subentry.amount)
+			for _, subsubentry in ipairs(subentry.entries) do
+				self:write(subsubentry.x)
+				self:write(subsubentry.y)
+			end
+		end
+	end
+	--path properties
+	--not supported yet
+	self:write(0x00)
+end
+
 function LHS:writeHash()
 	self:write(0x61)
 	self:write(string.rep("A",32))
@@ -120,13 +183,13 @@ function LHS:writeAll()
 	self:writeSingleForeground()
 	self:writeForegroundStructures(false)
 	self:writeForegroundStructures(true)
+	self:writeProperties()
 	--add empty categories to be reverse engineered
 	do
 		local w = function(d)
 			self:write(d)
 			self:write2(0x00)
 		end
-		w(0x63)
 		w(0x43)
 		w(0x3A)
 		w(0x15)
