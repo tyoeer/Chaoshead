@@ -168,12 +168,11 @@ function LHS:readProperties(isPath)
 	if isPath then
 		self.rawContentEntries.pathProperties = c
 		c.startOffset = self.rawContentEntries.objectProperties.endOffset
-		c.nEntries = self:getNumber1(c.startOffset+1)
 	else
 		self.rawContentEntries.objectProperties = c
 		c.startOffset = self.rawContentEntries.foregroundColumns.endOffset+1
-		c.nEntries = self:getNumber1(c.startOffset+1)
 	end
+	c.nEntries = self:getNumber1(c.startOffset+1)
 	c.entries = {}
 	local offset = c.startOffset+2
 	for i=1,c.nEntries,1 do
@@ -203,9 +202,9 @@ function LHS:readProperties(isPath)
 				local value = math.bytesToNumberLE(self:getBytes(offset, 4))
 				local sign = bit.rshift(value,31)==0 and 1 or -1
 				local exponent = bit.band(bit.rshift(value,23),0xFF) - 127
-				local fraction = bit.rshift( bit.band(value,0x7FFFFF), 23)
-				
-				--rounded because Lua appears to have floats that are a little more precise
+				--local fraction = bit.rshift( bit.band(value,0x7FFFFF), 23)
+				local fraction = bit.band(value, 0x7FFFFF) / 2^23
+				--rounded because Lua appears to have floats that are more precise
 				subentry.value = math.roundPrecision(sign * 2^exponent * (1+fraction), 0.0001)
 				offset = offset + 4
 			else
