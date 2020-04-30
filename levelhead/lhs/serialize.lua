@@ -1,4 +1,4 @@
-
+local P = require("levelhead.data.properties"):new()
 local DS = require("utils.datastructures")
 local LHS = {}
 
@@ -109,6 +109,7 @@ function LHS:serializeObjectProperties(level)
 	for obj in level.allObjects:iterate() do
 		if obj.properties then
 			for id,value in pairs(obj.properties) do
+				local go = true
 				if not singleLookup[id] then
 					singleLookup[id] = {
 						id = id,
@@ -120,19 +121,35 @@ function LHS:serializeObjectProperties(level)
 				
 				local subentry
 				if not doubleLookup[id][value] then
-					subentry = {
-						value = value,
-						entries = {}
-					}
-					doubleLookup[id][value] = subentry
-					table.insert(entry.entries,subentry)
+					--make sure the save format can handle this value
+					--fail quietly because of aggressive property setting
+					local f = P:getSaveFormat(id)
+					if f=="A" and (value<0 or value>255) then
+						go = false
+					elseif f=="B" and (value<-32768 or value>32767) then
+						go = false
+					-- no C because floats are huge
+					elseif f=="D" and (value<-128 or value>127) then
+						go = false
+					end
+					
+					if go then
+						subentry = {
+							value = value,
+							entries = {}
+						}
+						doubleLookup[id][value] = subentry
+						table.insert(entry.entries,subentry)
+					end
 				else
 					subentry = doubleLookup[id][value]
 				end
-				table.insert(subentry.entries,{
-					x = obj.x - 1,
-					y = level.height - obj.y
-				})
+				if go then
+					table.insert(subentry.entries,{
+						x = obj.x - 1,
+						y = level.height - obj.y
+					})
+				end
 			end
 		end
 	end
