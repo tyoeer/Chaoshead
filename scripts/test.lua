@@ -1,6 +1,6 @@
 local O = require("levelhead.objects.base")
 local P = require("levelhead.objects.propertiesBase")
---[[
+
 --cross
 for i=11,15,1 do
 	level:placeEnvironment(i,i)
@@ -15,7 +15,7 @@ for i=1,level.width,1 do
 	--o:setSwitchRequirements(??)
 	level:addObject(o, i,1)
 end
-]]--
+
 --conveyors
 for i=2,level.width-1,1 do
 	local o = level:placeToeSlider(i,27)
