@@ -70,31 +70,31 @@ Delay Seconds	65	#41	C		3	0.25	600	None											Waitswitch
 Volume	68	#44	A		100	0	100	None											Boombox	
 Zoom Level	69	#45	A		100	80	140	None											ZOOM-R	
 Gate Style	70	#46	A		0	0	2	Simple	!	Purge Powerups	Purge Items	Purge All	!	!	!	!	!	!	Purge Gate	
-Inactvie Speed	71	#47	B																Path	
-Rotation Style	72	#48	A																(Trig)blaster, Burny Whirler, Spike Chainer	
-Swing Degrees	73	#49	B																(Trig)blaster, Burny Whirler, Spike Chainer	
-Swing Speed	74	#4A	A																Burny Whirler, Spike Chainer	
-Swing Time Offset	75	#4B	C																(Trig)blaster, Burny Whirler, Spike Chainer	
-Muted	76	#4C	A																Pressure Switch, Clock Switch, ...	
-Style	77	#4D	A																Cromblers	
-Camera Lock Style	78	#4E	A																Camera Anchor	
-Swing Speed	79	#4F	B																(Trig)blaster	
-Range Right	80	#50	A																Eye Switch, Baddie Eyeswitch, Package Cam	
-Range Up	81	#51	A																Eye Switch, Baddie Eyeswitch, Package Cam	
-Range Left	82	#52	A																Eye Switch, Baddie Eyeswitch, Package Cam	
-Range Down	83	#53	A																Eye Switch, Baddie Eyeswitch, Package Cam	
-Detection Shape	84	#54	A																Eye Switch, Baddie Eyeswitch, Package Cam	
-Behaviour	85	#55	A																Pressure Switch	
-Horizontal Flip	86	#56	A																Key Chest, Sign	
-Fire Style	87	#57	A																Burny Whirler, Fireball	
-Jingle	88	#58	A																Jinglebox	
-Positional	89	#59	A																Jinglebox	
+Inactive Speed	71	#47	B																Path	
+Rotation Style	72	#48	A		0	0	1	Simple	!	Spin	Swing	!	!	!	!	!	!	!	(Trig)blaster, Burny Whirler, Spike Chainer	
+Swing Degrees	73	#49	B		90	0	90	None											(Trig)blaster, Burny Whirler, Spike Chainer	
+Swing Speed	74	#4A	A		-100	50	100	None											Burny Whirler, Spike Chainer	
+Swing Time Offset	75	#4B	C		0	0	30	None											(Trig)blaster, Burny Whirler, Spike Chainer	
+Muted	76	#4C	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Pressure Switch, Clock Switch, ...	
+Style	77	#4D	A		0	0	1	Simple	!	Normal	Enraged	!	!	!	!	!	!	!	Cromblers	
+Camera Lock Style	78	#4E	A		0	0	2	Simple	!	Normal	Vertical	Horizontal	!	!	!	!	!	!	Camera Anchor	
+Swing Speed	79	#4F	B		100	-200	200	None											(Trig)blaster	
+Range Right	80	#50	A		3	0	20	None											Eye Switch, Baddie Eyeswitch, Package Cam	
+Range Up	81	#51	A		3	0	20	None											Eye Switch, Baddie Eyeswitch, Package Cam	
+Range Left	82	#52	A		3	0	20	None											Eye Switch, Baddie Eyeswitch, Package Cam	
+Range Down	83	#53	A		3	0	20	None											Eye Switch, Baddie Eyeswitch, Package Cam	
+Detection Shape	84	#54	A		0	0	1	Simple	!	Square	Rectangle	!	!	!	!	!	!	!	Eye Switch, Baddie Eyeswitch, Package Cam	
+Behaviour	85	#55	A		0	0	3	Simple	!	Hold	Lock	Toggle	Explode	!	!	!	!	!	Pressure Switch	
+Horizontal Flip	86	#56	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Key Chest, Sign	
+Fire Style	87	#57	A		0	0	1	Simple	!	Hot Fire	Wildfire	!	!	!	!	!	!	!	Burny Whirler, Fireball	
+Jingle	88	#58	A		0	0	15												Jinglebox	
+Positional	89	#59	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Jinglebox	
 Sending Channel	90	#5A	B	Can be set to none	-1	-1	999	Hybrid	None	-	-	-	-	-	-	-	-	-	Key Chest, Key Gate	
-Repeatable	91	#5B	A																Jinglebox	
-Reusable	92	#5C	A																BUDD-E	
-Note Beats	93	#5D	C																Boombox	
-Repeat Beats	94	#5E	C																Boombox	
-Beats Per Minute	95	#5F	A																Boombox	
-Percussion Note	96	#60	A																Boombox	
-Start Delay Beats	97	#61	C																Boombox	
-Repeat Count	98	#62	B	Always saved for some reason.															Boombox	
+Repeatable	91	#5B	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Jinglebox	
+Reusable	92	#5C	A		1	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	BUDD-E	
+Note Beats	93	#5D	C	The duration of the note/sound	0.25	0.25	16	None											Boombox	
+Repeat Beats	94	#5E	C		0	0	1000	Hybrid	!	No Repeat	-	-	-	-	-	-	-	-	Boombox	
+Beats Per Minute	95	#5F	A		120	60	240	None											Boombox	
+Percussion Note	96	#60	A		0	0	14												Boombox	
+Start Delay Beats	97	#61	C		0	0	1000	Hybrid	!	No Delay	-	-	-	-	-	-	-	-	Boombox	
+Repeat Count	98	#62	B	Always saved for some reason.	1	1	1000	Hybrid	!	!	Infinite	-	-	-	-	-	-	-	Boombox	
