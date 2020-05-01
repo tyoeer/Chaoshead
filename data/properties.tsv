@@ -89,7 +89,7 @@ Horizontal Flip	86	#56	A																Key Chest, Sign
 Fire Style	87	#57	A																Burny Whirler, Fireball	
 Jingle	88	#58	A																Jinglebox	
 Positional	89	#59	A																Jinglebox	
-Sending Channel	90	#5A	B	Can be set to none															Key Chest, Key Gate	
+Sending Channel	90	#5A	B	Can be set to none	-1	-1	999	Hybrid	None	-	-	-	-	-	-	-	-	-	Key Chest, Key Gate	
 Repeatable	91	#5B	A																Jinglebox	
 Reusable	92	#5C	A																BUDD-E	
 Note Beats	93	#5D	C																Boombox	

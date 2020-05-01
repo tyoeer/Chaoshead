@@ -24,8 +24,8 @@ function UI:reload()
 		--properties
 		if o.properties then
 			self:addTextEntry("Properties:")
-			for k,v in pairs(o.properties) do
-				self:addTextEntry(P:getName(k).." ("..k.."): "..v,1)
+			for prop,value in pairs(o.properties) do
+				self:addTextEntry(P:getName(prop).." ("..prop.."): "..P:valueToMapping(prop,value).." ("..value..")",1)
 			end
 		end
 	end
