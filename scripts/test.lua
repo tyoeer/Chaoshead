@@ -22,3 +22,17 @@ for i=2,level.width-1,1 do
 	o:setDirection(0)
 	o:setSpeed(700)
 end
+
+--Pitch test 51 55
+local o = level:placeBoombox(2,2)
+o:setPropertyRaw(51,0)
+o:setInstrument(0)--bass
+local o = level:placeBoombox(2,3)
+o:setPropertyRaw(55,0)
+o:setInstrument(0)--bass
+local o = level:placeBoombox(3,2)
+o:setPropertyRaw(51,0)
+o:setInstrument(1)--melody
+local o = level:placeBoombox(3,3)
+o:setPropertyRaw(55,0)
+o:setInstrument(1)--melody
