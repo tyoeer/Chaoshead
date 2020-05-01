@@ -27,7 +27,7 @@ It errors if the object isn't in a world.
 object:set[property name](value)
 ```
 - property name: concatanated name of the poperty you're setting, where each word starts with with an uppercase letter
-- the new value of said property
+- value: the new value of said property
 
 ```Lua
 value = object:get[property name]()
@@ -42,6 +42,7 @@ object:setPropertyRaw(id, value)
 - value: the new value of said property
 
 ```Lua
-object:getPropertyRaw(id)
+value = object:getPropertyRaw(id)
 ```
 - id: the id/name of the property to retrieve
+- value: the value of said property
