@@ -59,7 +59,7 @@ Platform Size	56	#38	A		1	0	1	Simple	!	Short	Long	!	!	!	!	!	!	!	Spinny Platform
 Length	57	#39	A		3	1	4	None											Spinny Platform	
 Speed	58	#3A	B	Used for circular movement (type)	60	-90	90	None											Swoopadoop, Blobfush, Whizzblade, Spinny Platform	
 Icon	59	#3B	A		0	0	37												Sign	
-Switch Requirements	60	#3C	A		2	0	5	Simple	!	One Active	Any Active	All Active	One Inactvie	Any Inactvie	All Active	!	!	!	Prizeblock, Hardlight, ...	
+Switch Requirements	60	#3C	A		2	0	5	Simple	!	One Active	Any Active	All Active	One Inactive	Any Inactive	All Inactive	!	!	!	Prizeblock, Hardlight, ...	
 Visuals	61	#3D	A																Path	
 ???	62	#3E																		
 Song	63	#3F	A		9	0	30	Music											Jukebox	
