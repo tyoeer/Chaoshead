@@ -6,6 +6,7 @@
 ]]--
 function script(name)
 	local text = love.filesystem.read("scripts/"..name..".lua")
-	local f = loadstring(text)
+	local f,errorMessage = loadstring(text)
+	if not f then error(errorMessage) end
 	return f(level)
 end

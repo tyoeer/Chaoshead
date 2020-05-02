@@ -7,8 +7,6 @@ function love.load(arg)
 	require("utils.utils")
 	
 	--temp
-	require("temp")
-	
 	function Class(a,b)
 		if a==nil then
 			return require("libs.middleclass")("Unnamed")
@@ -18,6 +16,8 @@ function love.load(arg)
 			return require("libs.middleclass")(a,b)
 		end
 	end
+	
+	require("temp")
 	
 	--constants
 	TILE_SIZE = 71
