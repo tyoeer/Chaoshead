@@ -1,4 +1,4 @@
-local UI = Class(require("ui.list"))
+local UI = Class(require("ui.structure.list"))
 
 function UI:initialize(w,h)
 	UI.super.initialize(self,w,h)

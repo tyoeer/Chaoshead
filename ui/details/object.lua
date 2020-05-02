@@ -1,7 +1,7 @@
 local P = require("levelhead.data.properties"):new()
 local E = require("levelhead.data.elements"):new()
 
-local UI = Class(require("ui.list"))
+local UI = Class(require("ui.structure.list"))
 
 function UI:initialize(w,h,object)
 	UI.super.initialize(self,w,h)
