@@ -12,6 +12,7 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 --io
 
 local defaultFiles = {
+	love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/m7n6j8/stages/-26.lhs",
 	love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/m7n6j8/stages/-23.lhs",
 	love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/m7n6j8/stages/-22.lhs",
 	love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/xxqtsv/stages/-12.lhs",
