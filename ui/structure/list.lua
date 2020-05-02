@@ -8,7 +8,6 @@ function UI:initialize(w,h)
 	self.children = Pool:new()
 	self.nChildren = 0
 	
-	self.padding = 10
 	self.textEntryVPadding = 5
 	self.indentSize = 15
 	
@@ -22,7 +21,7 @@ end
 
 function UI:addUIEntry(c)
 	c.parent = this
-	local w = self.width - 2 * self.padding
+	local w = self.width
 	local h = c:getMinimumHeight(w)
 	c:resize(w,h)
 	self.children:add(c)
@@ -32,12 +31,6 @@ end
 function UI:resetList()
 	--the garbage collector should take care of the old pool
 	self.children = Pool:new()
-end
-
--- event propagation
-
-function UI:getPropagatedMouseY(child)
-	return self:getMouseY() - self.tabHeight
 end
 
 -- events
@@ -52,8 +45,7 @@ end
 
 local relayMouse = function(index)
 	UI[index] = function(self, x,y, ...)
-		if y <= self.padding then return end
-		local checkY = self.padding
+		local checkY = 0
 		for c in self.children:iterate() do
 			checkY = checkY + c.height
 			if y <= checkY then
@@ -69,7 +61,6 @@ relayAll("update")
 
 function UI:draw()
 	love.graphics.push("all")
-		love.graphics.translate(self.padding, self.padding)
 		for c in self.children:iterate() do
 			c:draw()
 			love.graphics.translate(0, c.height)
@@ -85,7 +76,7 @@ function UI:resize(w,h)
 	self.height = h
 	
 	for c in self.children:iterate() do
-		local w = self.width - 2 * self.padding
+		local w = self.width
 		local h = c:getMinimumHeight(w)
 		c:resize(w,h)
 	end
@@ -99,14 +90,11 @@ relayMouse("mousereleased")
 relayMouse("mousemoved")
 function UI:wheelmoved(self, ...)
 	local x,y = self:getMousePos()
-	if y <= self.padding then return end
-	local checkY = self.padding
+	local checkY = 0
 	for c in self.children:iterate() do
 		checkY = checkY + c.height
 		if y <= checkY then
-			if c.type=="ui" then
-				c.ui:wheelmoved(...)
-			end
+				c:wheelmoved(...)
 			break
 		end
 	end
