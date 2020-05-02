@@ -1,7 +1,7 @@
 local UI = Class(require("ui.worldViewer"))
 local DET_OBJ = require("ui.details.object")
 
-function UI:initialize(w,h,level,editor)
+function UI:initialize(level,editor)
 	--camera stuff
 	self.x = 0
 	self.y = 0
@@ -12,7 +12,7 @@ function UI:initialize(w,h,level,editor)
 	--selection stuff
 	--self.selectedObject = nil
 	--self.selectionDetails = nil
-	UI.super.initialize(self,w,h,level)
+	UI.super.initialize(self,level)
 	self.title = "World Editor"
 	self.editor = editor
 end

@@ -3,13 +3,13 @@ local Pool = require("utils.entitypool")
 
 local UI = Class(BaseUI)
 
-function UI:initialize(w,h,child,padding)
+function UI:initialize(child,padding)
 	self.child = child
 	self.paddingLeft = padding or 10
 	self.paddingRight = padding or 10
 	self.paddingUp = padding or 10
 	self.paddingDown = padding or 10
-	UI.super.initialize(self,w,h)
+	UI.super.initialize(self)
 	self.title = child.title
 end
 

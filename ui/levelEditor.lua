@@ -5,22 +5,20 @@ local DET_LEVEL = require("ui.details.level")
 
 local UI = Class(BaseUI)
 
-function UI:initialize(w,h)
+function UI:initialize()
 	--self.level
-	self.viewer = require("ui.worldEditor"):new(-1,-1,nil,self)
-	self.detailsUI = require("ui.structure.tabs"):new(-1,-1)
-	self:addTab(DET_LEVEL:new(-1,-1))
-	self.rootUI = require("ui.structure.horDivide"):new(
-		w,h, self.detailsUI, self.viewer
-	)
+	self.viewer = require("ui.worldEditor"):new(nil,self)
+	self.detailsUI = require("ui.structure.tabs"):new()
+	self:addTab(DET_LEVEL:new())
+	self.rootUI = require("ui.structure.horDivide"):new(self.detailsUI, self.viewer)
 	self.rootUI.parent = self
 	
-	UI.super.initialize(self,w,h)
+	UI.super.initialize(self)
 	self.title = "Level Editor"
 end
 
 function UI:addTab(tab)
-	tab = PAD:new(-1,-1,tab)
+	tab = PAD:new(tab)
 	self.detailsUI:addChild(tab)
 	self.detailsUI:setActive(tab)
 end

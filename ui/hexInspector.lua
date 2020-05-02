@@ -12,8 +12,8 @@ local function bytesToHex(bytes)
 	return out:sub(1,-2)
 end
 
-function UI:initialize(w,h,level)
-	UI.super.initialize(self,w,h)
+function UI:initialize(level)
+	UI.super.initialize(self)
 	self.title = "Hex Inspector"
 	
 	self:reload()

@@ -3,12 +3,12 @@ local Pool = require("utils.entitypool")
 
 local UI = Class(BaseUI)
 
-function UI:initialize(w,h)
+function UI:initialize()
 	self.children = Pool:new()
 	self.nChildren = 0
 	self.tabHeight = 30
 	self.tabWidth = w
-	UI.super.initialize(self,w,h)
+	UI.super.initialize(self)
 	self.title = "Tabs"
 end
 

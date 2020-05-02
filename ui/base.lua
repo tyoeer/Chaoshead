@@ -1,8 +1,8 @@
 local BaseUI = Class("BaseUI")
 
-function BaseUI:initialize(w,h)
+function BaseUI:initialize()
 	self.title = "Unnamed"
-	self:resize(w,h)
+	self:resize(-1,-1)
 end
 
 

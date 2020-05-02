@@ -8,7 +8,7 @@ When there's an apparent off by one error, test it first.
 Current off by ones have been deduced by pixel-perfect mouse pointer placement testing.
 ]]--
 
-function UI:initialize(w,h, left,right)
+function UI:initialize(left,right)
 	self.leftChild = left
 	left.parent = self
 	self.rightChild = right
@@ -16,7 +16,7 @@ function UI:initialize(w,h, left,right)
 	self.divisionRatio = 0.3
 	--self.divisionX = -1
 	self.divisionWidth = 1 -1
-	UI.super.initialize(self,w,h)
+	UI.super.initialize(self)
 	self.title = "Divide"
 end
 

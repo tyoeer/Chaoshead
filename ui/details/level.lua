@@ -1,7 +1,7 @@
 local UI = Class(require("ui.structure.list"))
 
-function UI:initialize(w,h)
-	UI.super.initialize(self,w,h)
+function UI:initialize()
+	UI.super.initialize(self)
 	self.title = "Level Info"
 	self:reload()
 end

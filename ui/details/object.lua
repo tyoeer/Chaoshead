@@ -3,8 +3,8 @@ local E = require("levelhead.data.elements"):new()
 
 local UI = Class(require("ui.structure.list"))
 
-function UI:initialize(w,h,object)
-	UI.super.initialize(self,w,h)
+function UI:initialize(object)
+	UI.super.initialize(self)
 	self.title = "Object Info"
 	self:setObject(object)
 end

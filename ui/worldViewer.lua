@@ -2,8 +2,8 @@ local BaseUI = require("ui.base")
 
 local UI = Class(BaseUI)
 
-function UI:initialize(w,h)
-	UI.super.initialize(self,w,h)
+function UI:initialize()
+	UI.super.initialize(self)
 	self.title = "World Viewer"
 end
 

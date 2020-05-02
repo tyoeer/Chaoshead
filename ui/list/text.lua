@@ -1,11 +1,11 @@
 local UI = Class(require("ui.base"))
 
-function UI:initialize(w,h,text,padding,indent)
+function UI:initialize(text,padding,indent)
 	self.text = text
 	self.font = love.graphics.getFont()
 	self.padding = padding or 0
 	self.indent = indent or 0
-	UI.super.initialize(self, w,h)
+	UI.super.initialize(self)
 end
 
 function UI:getMinimumHeight(width)

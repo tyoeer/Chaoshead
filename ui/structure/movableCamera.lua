@@ -2,14 +2,14 @@ local BaseUI = require("ui.base")
 
 local UI = Class(BaseUI)
 
-function UI:initialize(w,h,child)
+function UI:initialize(child)
 	self.x = 0
 	self.y = 0
 	self.zoomFactor = 1
 	self.zoomSpeed = math.sqrt(2)
 	self.child = child
 	child.parent = self
-	UI.super.initialize(self,w,h)
+	UI.super.initialize(self)
 	self.title = child.title
 end
 

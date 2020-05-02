@@ -4,19 +4,19 @@ local TextEntry = require("ui.list.text")
 
 local UI = Class("ListUI",BaseUI)
 
-function UI:initialize(w,h)
+function UI:initialize()
 	self.children = Pool:new()
 	self.nChildren = 0
 	
 	self.textEntryVPadding = 5
 	self.indentSize = 15
 	
-	UI.super.initialize(self,w,h)
+	UI.super.initialize(self)
 	self.title = "List"
 end
 
 function UI:addTextEntry(text,indent)
-	self:addUIEntry(TextEntry:new(-1,-1, text, self.textEntryVPadding, (indent or 0)*self.indentSize ))
+	self:addUIEntry(TextEntry:new(text, self.textEntryVPadding, (indent or 0)*self.indentSize ))
 end
 
 function UI:addUIEntry(c)
