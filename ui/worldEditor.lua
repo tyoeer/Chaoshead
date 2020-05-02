@@ -27,7 +27,7 @@ function UI:selectObject(tileX,tileY)
 	local obj = level.foreground:get(tileX,tileY)
 	if obj then
 		self.selectedObject = obj
-		self.selectionDetails = DET_OBJ:new(-1,-1,obj)
+		self.selectionDetails = DET_OBJ:new(obj)
 		self.editor:addTab(self.selectionDetails)
 	end
 end

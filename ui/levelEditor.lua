@@ -24,7 +24,12 @@ function UI:addTab(tab)
 end
 
 function UI:removeTab(tab)
-	self.detailsUI:removeChild(tab)
+	for child in self.detailsUI.children:iterate() do
+		if child.child==tab then
+			self.detailsUI:removeChild(child)
+			break
+		end
+	end
 end
 
 function UI:reload()
