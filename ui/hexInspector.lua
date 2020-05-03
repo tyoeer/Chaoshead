@@ -43,9 +43,10 @@ function UI:focus(focus)
 	end
 end
 
-local indentSize = 20
-local rowHeight = 20
-local xPadding, yPadding = 10,10
+local indentSize = settings.hexInspector.indentSize
+local rowHeight = settings.hexInspector.rowHeight
+local xPadding = settings.hexInspector.xPadding
+local yPadding = settings.hexInspector.yPadding
 local i = 0
 local indent = 0
 local this

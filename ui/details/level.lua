@@ -3,6 +3,10 @@ local UI = Class(require("ui.structure.list"))
 function UI:initialize()
 	UI.super.initialize(self)
 	self.title = "Level Info"
+	
+	self.textEntryVPadding = settings.editor.details.level.textEntryVerticalPadding
+	self.indentSize = settings.editor.details.level.textEntryIndentSize
+	
 	self:reload()
 end
 

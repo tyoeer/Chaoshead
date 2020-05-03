@@ -6,6 +6,10 @@ local UI = Class(require("ui.structure.list"))
 function UI:initialize(object)
 	UI.super.initialize(self)
 	self.title = "Object Info"
+	
+	self.textEntryVPadding = settings.editor.details.object.textEntryVerticalPadding
+	self.indentSize = settings.editor.details.object.textEntryIndentSize
+	
 	self:setObject(object)
 end
 

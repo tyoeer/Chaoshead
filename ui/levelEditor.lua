@@ -12,13 +12,14 @@ function UI:initialize()
 	self:addTab(DET_LEVEL:new())
 	self.rootUI = require("ui.structure.horDivide"):new(self.detailsUI, self.viewer)
 	self.rootUI.parent = self
+	self.detailsUI.tabHeight = settings.editor.details.tabHeight
 	
 	UI.super.initialize(self)
 	self.title = "Level Editor"
 end
 
 function UI:addTab(tab)
-	tab = PAD:new(tab)
+	tab = PAD:new(tab, settings.editor.details.inset)
 	self.detailsUI:addChild(tab)
 	self.detailsUI:setActive(tab)
 end

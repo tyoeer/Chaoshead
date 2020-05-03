@@ -26,6 +26,7 @@ function love.load(arg)
 	levelFile = require("levelhead.lhs"):new()
 	levelFile:readAll()
 	level = levelFile:parseAll()
+	settings = require("settings")
 	
 	--love2d state
 	love.graphics.setLineWidth(1)
@@ -34,6 +35,7 @@ function love.load(arg)
 	
 	--build ui
 	ui = require("ui.structure.tabs"):new()
+	ui.tabHeight = settings.main.tabHeight
 	ui:resize(love.graphics.getWidth(), love.graphics.getHeight())
 	
 	local hexInspector = require("ui.structure.movableCamera"):new(
