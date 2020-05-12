@@ -143,6 +143,7 @@ function Pool:removeContainer(container)
 	if self.bottom==container then
 		self.bottom = up
 	end
+	self.containerMap[container.value] = nil
 	return container
 end
 
