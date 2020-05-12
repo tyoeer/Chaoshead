@@ -10,6 +10,7 @@ function DATA:getRow(selector)
 				return v
 			end
 		end
+		error("Selector not found: "..selector)
 	else
 		error(selector.." is invalid type: "..type(selector))
 	end

@@ -50,7 +50,7 @@ function P:mappingToValue(selector, mapping)
 			return i
 		end
 	end
-	error("Illegal mapping value: "..selector.." :-: "..tostring(mapping))
+	error("Illegal mapping value for "..selector..": "..tostring(mapping).." ("..type(mapping)..")")
 end
 
 function P:valueToMapping(selector, value)
