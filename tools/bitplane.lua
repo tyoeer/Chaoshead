@@ -33,7 +33,9 @@ local Bitplane = {}
 
 --construction
 
-Bitplane.new = B.new
+Bitplane.new = function(...)
+	return B:new(...)
+end
 
 function Bitplane.newFromStrings(falseMask,trueMask,...)
 	local input = {...}
