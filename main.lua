@@ -35,7 +35,7 @@ function love.load(arg)
 	
 	--build ui
 	ui = require("ui.structure.tabs"):new()
-	ui.tabHeight = settings.main.tabHeight
+	ui.tabHeight = settings.dim.main.tabHeight
 	ui:resize(love.graphics.getWidth(), love.graphics.getHeight())
 	
 	local hexInspector = require("ui.structure.movableCamera"):new(
