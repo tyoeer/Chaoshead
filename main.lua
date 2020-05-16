@@ -6,7 +6,6 @@ function love.load(arg)
 	lovebird.update()
 	require("utils.utils")
 	
-	--temp
 	function Class(a,b)
 		if a==nil then
 			return require("libs.middleclass")("Unnamed")
@@ -17,16 +16,18 @@ function love.load(arg)
 		end
 	end
 	
+	--temp
 	require("temp")
 	
 	--constants
 	TILE_SIZE = 71
 	
 	--globals
+	settings = require("settings")
+	input = require("input.system")
 	levelFile = require("levelhead.lhs"):new()
 	levelFile:readAll()
 	level = levelFile:parseAll()
-	settings = require("settings")
 	
 	--love2d state
 	love.graphics.setLineWidth(1)
