@@ -35,24 +35,8 @@ function love.load(arg)
 	love.graphics.setLineStyle("rough")
 	
 	--build ui
-	ui = require("ui.structure.tabs"):new()
-	ui.tabHeight = settings.dim.main.tabHeight
+	ui = require("ui.main")
 	ui:resize(love.graphics.getWidth(), love.graphics.getHeight())
-	
-	local hexInspector = require("ui.structure.movableCamera"):new(
-		require("ui.hexInspector"):new()
-	)
-	ui:addChild(hexInspector)
-	
-	local levelEditor = require("ui.levelEditor"):new()
-	ui:addChild(levelEditor)
-	
-	local worldViewer = require("ui.structure.movableCamera"):new(
-		require("ui.worldViewer"):new()
-	)
-	ui:addChild(worldViewer)
-	
-	ui:setActive(levelEditor)
 end
 
 
