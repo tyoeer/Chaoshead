@@ -9,5 +9,5 @@ local function load(name,...)
 end
 
 load("dimensions","dim")
-
+load("bindings","keys")
 return out

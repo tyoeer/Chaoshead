@@ -37,6 +37,15 @@ function love.load(arg)
 	--build ui
 	ui = require("ui.main")
 	ui:resize(love.graphics.getWidth(), love.graphics.getHeight())
+	
+	--bind ui and input
+	input.parseActions(settings.bindings)
+	input.actionActivated = function(...)
+		ui:actionActivated(...)
+	end
+	input.actionDeactivated = function(...)
+		ui:actionActivated(...)
+	end
 end
 
 
@@ -60,10 +69,14 @@ function love.resize(w, h)
 end
 
 function love.keypressed(key, scancode, isrepeat)
+	input.keypressed(key, scancode, isrepeat)
 	ui:keypressed(key, scancode, isrepeat)
 end
 function love.textinput(text)
 	ui:textinput(text)
+end
+function love.keyreleased(key, scancode)
+	input.keyreleased(key, scancode)
 end
 
 function love.mousepressed(x, y, button, isTouch)

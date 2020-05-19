@@ -45,6 +45,12 @@ function BaseUI:resize(w,h)
 end
 
 function BaseUI:keypressed(key, scancode, isrepeat) end
+function BaseUI:actionActivated(name,group,isCursorBound)
+	print(name,group,isCursorBound)
+end
+function BaseUI:actionDeactivated(name,group,isCursorBound)
+	print(name,group,isCursorBound)
+end
 function BaseUI:textinput(text) end
 
 function BaseUI:mousepressed(x, y, button, isTouch) end
