@@ -29,6 +29,44 @@ function input.isKey(keycode)
 	return success
 end
 
+-- MOUSE
+
+input.triggers.mouse = {}
+
+function input.mousepressed(x, y, button, istouch, presses)
+	if input.triggers.mouse[button] then
+		for _,v in ipairs(input.triggers.mouse[button]) do
+			input.activate(v)
+		end
+	end
+end
+
+function input.mousereleased(x, y, button, istouch, presses)
+	if input.triggers.mouse[button] then
+		for _,v in ipairs(input.triggers.mouse[button]) do
+			input.deactivate(v)
+		end
+	end
+end
+
+local mouseAliases = {
+	left = 1,
+	right = 2,
+	middle = 3,
+}
+
+function input.verifyMouseButton(b)
+	--check for an alias
+	if mouseAliases[b] then
+		b = mouseAliases[b]
+	end
+	if pcall(function() love.mouse.isDown(b) end) then
+		return b
+	else
+		return false
+	end
+end
+
 -- MAIN
 
 function input.addTrigger(type,button, data)
@@ -48,13 +86,23 @@ function input.parseButton(selector)
 			if not input.isKey(button) then
 				error(button.." is not a valid key!")
 			end
+		elseif type=="mouse" then
+			button = input.verifyMouseButton(button)
+			if not button then
+				error(button.." is not a valid key!")
+			end
 		end
 	else
 		button = selector
 		if input.isKey(button) then
 			type = "keyboard"
 		else
-			error("Couldn't find valid input device for: "..button)
+			local mButton = input.verifyMouseButton(button)
+			if mButton then
+				type = "mouse"
+			else
+				error("Couldn't find valid input device for: "..button)
+			end
 		end
 	end
 	return type, button
