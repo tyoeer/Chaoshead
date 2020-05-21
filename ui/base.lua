@@ -44,17 +44,15 @@ function BaseUI:resize(w,h)
 	self.height = h
 end
 
-function BaseUI:keypressed(key, scancode, isrepeat) end
-function BaseUI:actionActivated(name,group,isCursorBound)
+function BaseUI:inputActivated(name,group,isCursorBound)
 	print(name,group,isCursorBound)
 end
-function BaseUI:actionDeactivated(name,group,isCursorBound)
+function BaseUI:inputDeactivated(name,group,isCursorBound)
 	print(name,group,isCursorBound)
 end
+
 function BaseUI:textinput(text) end
 
-function BaseUI:mousepressed(x, y, button, isTouch) end
-function BaseUI:mousereleased(x, y, button, isTouch) end
 function BaseUI:mousemoved(x, y, dx, dy) end
 function BaseUI:wheelmoved(x, y) end
 

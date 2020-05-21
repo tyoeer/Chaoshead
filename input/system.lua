@@ -4,8 +4,8 @@ local input = {
 
 -- CALLBACKS (all for public use)
 
-function input.actionActivated(name,isCursorBound,group) end
-function input.actionDeactivated(name,isCursorBound,group) end
+function input.inputActivated(name,isCursorBound,group) end
+function input.inputDeactivated(name,isCursorBound,group) end
 
 -- ACTIONS
 
@@ -160,7 +160,7 @@ function input.triggerActivation(moduleName,button)
 	if t then
 		for _,action in ipairs(t) do
 			action.active = true
-			input.actionActivated(action.name, action.group, action.isCursorBound)
+			input.inputActivated(action.name, action.group, action.isCursorBound)
 		end
 	end
 end
@@ -170,7 +170,7 @@ function input.triggerDeactivation(moduleName,button)
 	if t then
 		for _,action in ipairs(t) do
 			action.active = false
-			input.actionDeactivated(action.name, action.group, action.isCursorBound)
+			input.inputDeactivated(action.name, action.group, action.isCursorBound)
 		end
 	end
 end

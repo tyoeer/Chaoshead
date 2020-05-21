@@ -40,11 +40,11 @@ function love.load(arg)
 	
 	--bind ui and input
 	input.parseActions(settings.bindings)
-	input.actionActivated = function(...)
-		ui:actionActivated(...)
+	input.inputActivated = function(...)
+		ui:inputActivated(...)
 	end
-	input.actionDeactivated = function(...)
-		ui:actionActivated(...)
+	input.inputDeactivated = function(...)
+		ui:inputActivated(...)
 	end
 end
 
