@@ -29,7 +29,6 @@ function UI:reload()
 			"Delete",
 			function()
 				self.editor:delete(o)
-				self.editor:removeTab(self)
 			end,
 			settings.dim.editor.details.object.buttonPadding
 		)

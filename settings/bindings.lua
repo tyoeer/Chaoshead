@@ -18,6 +18,9 @@ return {
 			trigger = "mouse: left",
 			isCursorBound = true,
 		},
+		delete = {
+			trigger = "key: delete",
+		},
 	},
 	camera = {
 		drag = {

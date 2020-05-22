@@ -49,9 +49,7 @@ end
 
 function UI:selectObject(tileX,tileY)
 	if self.selectedObject then
-		self.selectedObject = nil
-		self:removeTab(self.selectionDetails)
-		self.selectionDetails = nil
+		self:deselect()
 	end
 	local obj = level.foreground:get(tileX,tileY)
 	if obj then
@@ -61,8 +59,17 @@ function UI:selectObject(tileX,tileY)
 	end
 end
 
+function UI:deselect()
+	self.selectedObject = nil
+	self:removeTab(self.selectionDetails)
+	self.selectionDetails = nil
+end
+
 function UI:delete(obj)
 	level:removeObject(obj)
+	if obj == self.selectedObject then
+		self:deselect()
+	end
 end
 
 -- events
@@ -92,8 +99,14 @@ function UI:inputActivated(name,group, isCursorBound)
 	if name=="reload" and group=="misc" then
 		require("utils.levelUtils").reload()
 		self:reload()
-	elseif name=="save" and group=="editor" then
-		require("utils.levelUtils").save()
+	elseif group=="editor" then
+		if name=="save" then
+			require("utils.levelUtils").save()
+		elseif name=="delete" then
+			if self.selectedObject then
+				self:delete(self.selectedObject)
+			end
+		end
 	else
 		self.rootUI:inputActivated(name,group, isCursorBound)
 	end
