@@ -2,17 +2,22 @@ local BaseUI = require("ui.base")
 
 local PAD = require("ui.structure.padding")
 local DET_LEVEL = require("ui.details.level")
+local DET_OBJ = require("ui.details.object")
 
 local UI = Class(BaseUI)
 
 function UI:initialize()
-	--self.level
+	--ui state
 	self.viewer = require("ui.worldEditor"):new(nil,self)
 	self.detailsUI = require("ui.structure.tabs"):new()
 	self:addTab(DET_LEVEL:new())
 	self.rootUI = require("ui.structure.horDivide"):new(self.detailsUI, self.viewer)
 	self.rootUI.parent = self
 	self.detailsUI.tabHeight = settings.dim.editor.details.tabHeight
+	
+	--editor state
+	self.selectedObject = nil
+	self.selectionDetails = nil
 	
 	UI.super.initialize(self)
 	self.title = "Level Editor"
@@ -36,6 +41,22 @@ end
 function UI:reload()
 	for v in self.detailsUI.children:iterate() do
 		if v.reload then v:reload() end
+	end
+end
+
+-- editor stuff
+
+function UI:selectObject(tileX,tileY)
+	if self.selectedObject then
+		self.selectedObject = nil
+		self:removeTab(self.selectionDetails)
+		self.selectionDetails = nil
+	end
+	local obj = level.foreground:get(tileX,tileY)
+	if obj then
+		self.selectedObject = obj
+		self.selectionDetails = DET_OBJ:new(obj)
+		self:addTab(self.selectionDetails)
 	end
 end
 

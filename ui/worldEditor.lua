@@ -1,5 +1,5 @@
 local UI = Class(require("ui.worldViewer"))
-local DET_OBJ = require("ui.details.object")
+
 
 function UI:initialize(level,editor)
 	self.editor = editor
@@ -10,28 +10,10 @@ function UI:initialize(level,editor)
 	self.zoomSpeed = math.sqrt(2)
 	--state stuff
 	self.draggedCamera = false
-	--selection stuff
-	self.selectedObject = nil
-	self.selectionDetails = nil
 	
 	--UI stuff
 	UI.super.initialize(self,level)
 	self.title = "World Editor"
-end
-
-
-function UI:selectObject(tileX,tileY)
-	if self.selectedObject then
-		self.selectedObject = nil
-		self.editor:removeTab(self.selectionDetails)
-		self.selectionDetails = nil
-	end
-	local obj = level.foreground:get(tileX,tileY)
-	if obj then
-		self.selectedObject = obj
-		self.selectionDetails = DET_OBJ:new(obj)
-		self.editor:addTab(self.selectionDetails)
-	end
 end
 
 function UI:getMouseTile(x,y)
@@ -74,7 +56,7 @@ end
 function UI:inputDeactivated(name,group, isCursorBound)
 	if name=="select" and group=="editor" then
 		if not self.draggedCamera then
-			self:selectObject(self:getMouseTile(x,y))
+			self.editor:selectObject(self:getMouseTile(x,y))
 		end
 	end
 	if name=="drag" and group=="camera" then
