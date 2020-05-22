@@ -83,7 +83,7 @@ function UI:draw()
 			)
 		end
 		love.graphics.setColor(1,1,1,1)
-		love.graphics.printf(child.title,x,y, self.tabWidth,"center")
+		love.graphics.printf(child.title,math.round(x),y, self.tabWidth,"center")
 		i = i + 1
 	end
 end
