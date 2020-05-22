@@ -8,12 +8,11 @@ ui:addChild(hexInspector)
 
 local levelEditor = require("ui.levelEditor"):new()
 ui:addChild(levelEditor)
+ui:setActive(levelEditor)
 
 local worldViewer = require("ui.structure.movableCamera"):new(
 	require("ui.worldViewer"):new()
 )
 ui:addChild(worldViewer)
-
-ui:setActive(levelEditor)
 
 return ui

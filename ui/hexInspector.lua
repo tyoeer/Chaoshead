@@ -119,8 +119,8 @@ function UI:draw()
 			textRow(bytesToHex(levelFile.raw:sub(c.pathProperties.endOffset+2)),1)
 end
 
-function UI:keypressed(key, scancode, isrepeat)
-	if key=="r" or key=="space" then
+function UI:inputActivated(name,group, isCursorBound)
+	if name=="reload" and group=="misc" then
 		self:reload()
 	end
 end

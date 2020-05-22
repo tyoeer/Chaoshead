@@ -51,14 +51,6 @@ local relay = function(index)
 	end
 end
 
-local relayMouse = function(index)
-	UI[index] = function(self, x,y, ...)
-		if y > self.tabHeight then
-			self.activeChild[index](self.activeChild, x,y - self.tabHeight, ...)
-		end
-	end
-end
-
 relay("update")
 
 function UI:draw()
@@ -110,26 +102,47 @@ function UI:resize(w,h)
 	end
 end
 
-relay("keypressed")
-relay("textinput")
-
-function UI:mousepressed(x,y,button,isTouch)
-	if y <= self.tabHeight then
-		local i = 1
-		for child in self.children:iterate() do
-			local xx = (i-1)*self.tabWidth
-			if x >= xx and x < xx+self.tabWidth then
-				self:setActive(child)
+function UI:inputActivated(name,group,isCursorBound)
+	if isCursorBound then
+		local y = self:getMouseY()
+		if y <= self.tabHeight then
+			local x = self:getMouseX()
+			if name=="click" and group=="main" then
+				local i = 1
+				for child in self.children:iterate() do
+					local xx = (i-1)*self.tabWidth
+					if x >= xx and x < xx+self.tabWidth then
+						self:setActive(child)
+						return
+					end
+					i = i + 1
+				end
+			else
 				return
 			end
-			i = i + 1
 		end
-	else
-		self.activeChild:mousepressed(x,y-self.tabHeight,button,isTouch)
+	end
+	self.activeChild:inputActivated(name,group,isCursorBound)
+end
+function UI:inputDeactivated(name,group,isCursorBound)
+	if isCursorBound then
+		local y = self:getMouseY()
+		if y > self.tabHeight then
+			self.activeChild:inputDeactivated(name,group,isCursorBound)
+		else
+			return
+		end
+	end
+	self.activeChild:inputDeactivated(name,group,isCursorBound)
+end
+
+relay("textinput")
+
+function UI:mousemoved(x,y, dx,dy, ...)
+	if y > self.tabHeight or y-dy > self.tabHeight then
+		self.activeChild:mousemoved(x,y - self.tabHeight, dx,dy, ...)
 	end
 end
-relayMouse("mousereleased")
-relayMouse("mousemoved")
 function UI:wheelmoved(x,y)
 	if self:getMouseY() > self.tabHeight then
 		self.activeChild:wheelmoved(x,y)

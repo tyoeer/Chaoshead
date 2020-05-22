@@ -44,12 +44,8 @@ function BaseUI:resize(w,h)
 	self.height = h
 end
 
-function BaseUI:inputActivated(name,group,isCursorBound)
-	print(name,group,isCursorBound)
-end
-function BaseUI:inputDeactivated(name,group,isCursorBound)
-	print(name,group,isCursorBound)
-end
+function BaseUI:inputActivated(name,group,isCursorBound) end
+function BaseUI:inputDeactivated(name,group,isCursorBound) end
 
 function BaseUI:textinput(text) end
 

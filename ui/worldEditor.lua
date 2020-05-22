@@ -2,19 +2,21 @@ local UI = Class(require("ui.worldViewer"))
 local DET_OBJ = require("ui.details.object")
 
 function UI:initialize(level,editor)
+	self.editor = editor
 	--camera stuff
 	self.x = 0
 	self.y = 0
 	self.zoomFactor = 1
 	self.zoomSpeed = math.sqrt(2)
 	--state stuff
-	self.movedCamera = false
+	self.draggedCamera = false
 	--selection stuff
-	--self.selectedObject = nil
-	--self.selectionDetails = nil
+	self.selectedObject = nil
+	self.selectionDetails = nil
+	
+	--UI stuff
 	UI.super.initialize(self,level)
 	self.title = "World Editor"
-	self.editor = editor
 end
 
 
@@ -62,18 +64,22 @@ function UI:draw()
 end
 
 function UI:mousemoved(x,y,dx,dy)
-	if love.mouse.isDown(1) or love.mouse.isDown(3) then
-		self.movedCamera = true
+	if input.isActive("drag","camera") then
+		self.draggedCamera = true
 		self.x = self.x + dx/self.zoomFactor
 		self.y = self.y + dy/self.zoomFactor
 	end
 end
 
-function UI:mousereleased(x,y, button,isTouch)
-	if not self.movedCamera then
-		self:selectObject(self:getMouseTile(x,y))
+function UI:inputDeactivated(name,group, isCursorBound)
+	if name=="select" and group=="editor" then
+		if not self.draggedCamera then
+			self:selectObject(self:getMouseTile(x,y))
+		end
 	end
-	self.movedCamera = false
+	if name=="drag" and group=="camera" then
+		self.draggedCamera = false
+	end
 end
 
 function UI:wheelmoved(x,y)

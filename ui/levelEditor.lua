@@ -62,20 +62,20 @@ function UI:resize(w,h)
 	self.rootUI:resize(w,h)
 end
 
-function UI:keypressed(key, scancode, isrepeat)
-	if key=="r" then
+function UI:inputActivated(name,group, isCursorBound)
+	if name=="reload" and group=="misc" then
 		require("utils.levelUtils").reload()
 		self:reload()
-	elseif key=="s" and love.keyboard.isDown("lctrl") then
+	elseif name=="save" and group=="editor" then
 		require("utils.levelUtils").save()
 	else
-		self.rootUI:keypressed(key, scancode, isrepeat)
+		self.rootUI:inputActivated(key, scancode, isrepeat)
 	end
 end
+relay("inputDeactivated")
+
 relay("textinput")
 
-relay("mousepressed")
-relay("mousereleased")
 relay("mousemoved")
 relay("wheelmoved")
 

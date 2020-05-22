@@ -43,19 +43,6 @@ local relayAll = function(index)
 	end
 end
 
-local relayMouse = function(index)
-	UI[index] = function(self, x,y, ...)
-		local checkY = 0
-		for c in self.children:iterate() do
-			checkY = checkY + c.height
-			if y <= checkY then
-					c[index](c, x,y, ...)
-				break
-			end
-		end
-	end
-end
-
 
 relayAll("update")
 
@@ -70,7 +57,6 @@ end
 
 relayAll("focus")
 relayAll("visible")
-
 function UI:resize(w,h)
 	self.width = w
 	self.height = h
@@ -82,12 +68,40 @@ function UI:resize(w,h)
 	end
 end
 
-relayAll("keypressed")
+local function relayInput(index)
+	UI[index] = function(self, name,group, isCursorBound)
+		if isCursorBound then
+			local y = self:getMouseY()
+			local checkY = 0
+			for c in self.children:iterate() do
+				checkY = checkY + c.height
+				if y <= checkY then
+						c[index](c, name,group, isCursorBound)
+					break
+				end
+			end
+		else
+			for c in self.children:iterate() do
+				c[index](c, name,group, isCursorBound)
+			end
+		end
+	end
+end
+relayInput("inputActivated")
+relayInput("inputDeactivated")
+
 relayAll("textinput")
 
-relayMouse("mousepressed")
-relayMouse("mousereleased")
-relayMouse("mousemoved")
+function UI:mousemoved(x,y, ...)
+	local checkY = 0
+	for c in self.children:iterate() do
+		checkY = checkY + c.height
+		if y <= checkY then
+				c:mousemoved(x,y, ...)
+			break
+		end
+	end
+end
 function UI:wheelmoved(self, ...)
 	local x,y = self:getMousePos()
 	local checkY = 0

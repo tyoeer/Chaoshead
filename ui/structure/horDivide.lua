@@ -96,22 +96,33 @@ function UI:resize(w,h)
 	self:setDivisionRatio(self.divisionRatio)
 end
 
-relayBoth("keypressed")
-relayBoth("textinput")
-
-local relayMouse = function(index)
-	UI[index] = function(self, x, ...)
-		if x < self.leftChild.width then
-			self.leftChild[index](self.leftChild, x, ...)
-		elseif x >= self.divisionX + self.divisionWidth - 1 then
-			self.rightChild[index](self.rightChild, x - self.divisionX - self.divisionWidth, ...)
+local relayInput = function(index)
+	UI[index] = function(self, name, group, isCursorBound)
+		if isCursorBound then
+			local x = self:getMouseX()
+			if x < self.leftChild.width then
+				self.leftChild[index](self.leftChild, name,group,isCursorBound)
+			elseif x >= self.divisionX + self.divisionWidth - 1 then
+				self.rightChild[index](self.rightChild, name,group,isCursorBound)
+			end
+		else
+			self.leftChild[index](self.leftChild, name,group,isCursorBound)
+			self.rightChild[index](self.rightChild, name,group,isCursorBound)
 		end
 	end
 end
+relayInput("inputActivated")
+relayInput("inputDeactivated")
 
-relayMouse("mousepressed")
-relayMouse("mousereleased")
-relayMouse("mousemoved")
+relayBoth("textinput")
+
+function UI:mousemoved(x,y, dx,dy, isTouch)
+	if x < self.leftChild.width then
+		self.leftChild:mousemoved(x,y, dx,dy, isTouch)
+	elseif x >= self.divisionX + self.divisionWidth - 1 then
+		self.rightChild:mousemoved(x - self.divisionX - self.divisionWidth, y, dx,dy, isTouch)
+	end
+end
 function UI:wheelmoved(x,y)
 	local xx = self:getMouseX()
 	if xx < self.leftChild.width then

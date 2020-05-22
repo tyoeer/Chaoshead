@@ -57,16 +57,27 @@ function UI:resize(w,h)
 	self.child:resize(w,h)
 end
 
-relay("keypressed")
+relay("inputActivated")
+relay("inputDeactivated")
+
 relay("textinput")
 
-relay("mousepressed")
-relay("mousereleased")
 function UI:mousemoved(x,y,dx,dy)
-	if love.mouse.isDown(1) or love.mouse.isDown(3) then
+	if input.isActive("drag","camera") then
 		self.x = self.x + dx/self.zoomFactor
 		self.y = self.y + dy/self.zoomFactor
 	else
+		--transform coördinates
+		x = x - self.width/2
+		x = x / self.zoomFactor
+		x = x - self.x
+		
+		y = y - self.height/2
+		y = y / self.zoomFactor
+		y = y - self.y
+		
+		dx = dx / self.zoomFactor
+		dy = dy / self.zoomFactor
 		self.child:mousemoved(x,y,dx,dy)
 	end
 end

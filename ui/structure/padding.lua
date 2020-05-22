@@ -29,14 +29,6 @@ local relay = function(index)
 	end
 end
 
-local relayMouse = function(index)
-	UI[index] = function(self, x,y, ...)
-		if x < self.width - self.paddingRight and x > self.paddingLeft
-		and y < self.height - self.paddingDown and y > self.paddingUp then
-			self.child[index](self.child, x - self.paddingLeft, y - self.paddingUp, ...)
-		end
-	end
-end
 
 relay("update")
 
@@ -60,12 +52,31 @@ function UI:resize(w,h)
 	self.child:resize(w - self.paddingLeft - self.paddingRight, h - self.paddingUp - self.paddingDown)
 end
 
-relay("keypressed")
+local relayInput = function(index)
+	UI[index] = function(self, name,group, isCursorBound)
+		if isCursorBound then
+			local x,y = self:getMousePos()
+			if x < self.width - self.paddingRight and x > self.paddingLeft
+			and y < self.height - self.paddingDown and y > self.paddingUp then
+				self.child[index](self.child, name,group, isCursorBound)
+			else
+				return
+			end
+		end
+		self.child[index](self.child, name,group, isCursorBound)
+	end
+end
+relayInput("inputActivated")
+relayInput("inputDeactivated")
+
 relay("textinput")
 
-relayMouse("mousepressed")
-relayMouse("mousereleased")
-relayMouse("mousemoved")
+function UI:mousemoved(x,y, ...)
+	if x < self.width - self.paddingRight and x > self.paddingLeft
+	and y < self.height - self.paddingDown and y > self.paddingUp then
+		self.child:mousemoved(x - self.paddingLeft, y - self.paddingUp, ...)
+	end
+end
 function UI:wheelmoved(x,y)
 	local mx, my = self:getMousePos()
 	if mx < self.width - self.paddingRight and mx > self.paddingLeft
