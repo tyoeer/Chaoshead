@@ -69,7 +69,7 @@ function UI:inputActivated(name,group, isCursorBound)
 	elseif name=="save" and group=="editor" then
 		require("utils.levelUtils").save()
 	else
-		self.rootUI:inputActivated(key, scancode, isrepeat)
+		self.rootUI:inputActivated(name,group, isCursorBound)
 	end
 end
 relay("inputDeactivated")
