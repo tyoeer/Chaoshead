@@ -1,6 +1,7 @@
 local BaseUI = require("ui.base")
 local Pool = require("utils.entitypool")
 local TextEntry = require("ui.list.text")
+local ButtonEntry = require("ui.list.button")
 
 local UI = Class("ListUI",BaseUI)
 
@@ -17,6 +18,10 @@ end
 
 function UI:addTextEntry(text,indent)
 	self:addUIEntry(TextEntry:new(text, self.textEntryVPadding, (indent or 0)*self.indentSize ))
+end
+
+function UI:addButtonEntry(text,onClick,padding)
+	self:addUIEntry(ButtonEntry:new(text,onClick,padding))
 end
 
 function UI:addUIEntry(c)
@@ -76,8 +81,8 @@ local function relayInput(index)
 			for c in self.children:iterate() do
 				checkY = checkY + c.height
 				if y <= checkY then
-						c[index](c, name,group, isCursorBound)
-					break
+					c[index](c, name,group, isCursorBound)
+					return
 				end
 			end
 		else
