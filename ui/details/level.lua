@@ -15,11 +15,11 @@ function UI:reload()
 	if level then
 		self:addTextEntry("Width:  "..level.width)
 		self:addTextEntry("Height: "..level.height)
-		self:addButtonEntry("Save Level",require("utils.levelUtils").save)
-		self:addButtonEntry("Reload Level",require("utils.levelUtils").reload)
+		self:addButtonEntry("Save Level", require("utils.levelUtils").save, settings.dim.editor.details.level.buttonPadding)
+		self:addButtonEntry("Reload Level", require("utils.levelUtils").reload, settings.dim.editor.details.level.buttonPadding)
 	else
 		self:addTextEntry("No level loaded :(")
-		self:addButtonEntry("Reload Level",require("utils.levelUtils").reload)
+		self:addButtonEntry("Try loading the level", require("utils.levelUtils").reload, settings.dim.editor.details.level.buttonPadding)
 	end
 end
 

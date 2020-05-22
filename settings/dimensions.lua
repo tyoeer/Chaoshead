@@ -9,10 +9,12 @@ return {
 			level = {
 				textEntryVerticalPadding = 5,
 				textEntryIndentSize = 15,
+				buttonPadding = 5,
 			},
 			object = {
 				textEntryVerticalPadding = 5,
 				textEntryIndentSize = 15,
+				buttonPadding = 5,
 			},
 		},
 	},
