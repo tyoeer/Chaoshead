@@ -44,7 +44,7 @@ function love.load(arg)
 		ui:inputActivated(...)
 	end
 	input.inputDeactivated = function(...)
-		ui:inputActivated(...)
+		ui:inputDeactivated(...)
 	end
 end
 
@@ -70,7 +70,7 @@ end
 
 function love.keypressed(key, scancode, isrepeat)
 	input.keypressed(key, scancode, isrepeat)
-	ui:keypressed(key, scancode, isrepeat)
+	--ui:keypressed(key, scancode, isrepeat)
 end
 function love.textinput(text)
 	ui:textinput(text)
@@ -81,11 +81,11 @@ end
 
 function love.mousepressed(x, y, button, isTouch, presses)
 	input.mousepressed(x,y, button, isTouch, presses)
-	ui:mousepressed(x,y, button, isTouch)
+	--ui:mousepressed(x,y, button, isTouch)
 end
 function love.mousereleased(x, y, button, isTouch, presses)
 	input.mousereleased(x,y, button, isTouch, presses)
-	ui:mousereleased(x,y, button, isTouch)
+	--ui:mousereleased(x,y, button, isTouch)
 end
 function love.mousemoved(x, y, dx, dy)
 	ui:mousemoved(x, y, dx, dy)
