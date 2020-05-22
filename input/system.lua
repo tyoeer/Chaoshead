@@ -1,5 +1,6 @@
 local input = {
 	modules = {},
+	actions = {},
 }
 
 -- CALLBACKS (all for public use)
@@ -60,6 +61,11 @@ function input.addAction(action,name,group)
 	else
 		parsed.isCursorBound = action.isCursorBound
 	end
+	
+	if not input.actions[group] then
+		input.actions[group] = {}
+	end
+	input.actions[group][name] = parsed
 end
 
 --for public use
@@ -68,6 +74,19 @@ function input.parseActions(actions)
 		for name, action in pairs(entries) do
 			input.addAction(action,name,group)
 		end
+	end
+end
+
+--for public use
+function input.isActive(name,group)
+	if input.actions[group] then
+		if input.actions[group][name] then
+			return input.actions[group][name].active
+		else
+			error(string.format("Invalid name %q in group %q!",name,group))
+		end
+	else
+		error(string.format("Invalid group %q!",group))
 	end
 end
 
