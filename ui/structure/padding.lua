@@ -59,9 +59,8 @@ local relayInput = function(index)
 			if x < self.width - self.paddingRight and x > self.paddingLeft
 			and y < self.height - self.paddingDown and y > self.paddingUp then
 				self.child[index](self.child, name,group, isCursorBound)
-			else
-				return
 			end
+			return
 		end
 		self.child[index](self.child, name,group, isCursorBound)
 	end

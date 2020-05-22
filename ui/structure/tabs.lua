@@ -106,9 +106,9 @@ function UI:inputActivated(name,group,isCursorBound)
 	if isCursorBound then
 		local y = self:getMouseY()
 		if y <= self.tabHeight then
-			local x = self:getMouseX()
 			if name=="click" and group=="main" then
 				local i = 1
+				local x = self:getMouseX()
 				for child in self.children:iterate() do
 					local xx = (i-1)*self.tabWidth
 					if x >= xx and x < xx+self.tabWidth then
@@ -117,9 +117,8 @@ function UI:inputActivated(name,group,isCursorBound)
 					end
 					i = i + 1
 				end
-			else
-				return
 			end
+			return
 		end
 	end
 	self.activeChild:inputActivated(name,group,isCursorBound)
@@ -129,9 +128,8 @@ function UI:inputDeactivated(name,group,isCursorBound)
 		local y = self:getMouseY()
 		if y > self.tabHeight then
 			self.activeChild:inputDeactivated(name,group,isCursorBound)
-		else
-			return
 		end
+		return
 	end
 	self.activeChild:inputDeactivated(name,group,isCursorBound)
 end
