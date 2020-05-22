@@ -30,6 +30,7 @@ function love.load(arg)
 	level = levelFile:parseAll()
 	
 	--love2d state
+	love.graphics.setFont(love.graphics.newFont("font/cnr.otf",16))
 	love.graphics.setLineWidth(1)
 	love.graphics.setPointSize(1)
 	love.graphics.setLineStyle("rough")
