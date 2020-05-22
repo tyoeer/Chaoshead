@@ -24,6 +24,7 @@ function UI:initialize()
 end
 
 function UI:addTab(tab)
+	tab.editor = self
 	tab = PAD:new(tab, settings.dim.editor.details.inset)
 	self.detailsUI:addChild(tab)
 	self.detailsUI:setActive(tab)
@@ -58,6 +59,10 @@ function UI:selectObject(tileX,tileY)
 		self.selectionDetails = DET_OBJ:new(obj)
 		self:addTab(self.selectionDetails)
 	end
+end
+
+function UI:delete(obj)
+	level:removeObject(obj)
 end
 
 -- events

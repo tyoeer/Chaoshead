@@ -25,6 +25,14 @@ function UI:reload()
 		self:addTextEntry("Element: "..E:getName(o.id).." ("..o.id..")")
 		self:addTextEntry("X: "..o.x)
 		self:addTextEntry("Y: "..o.y)
+		self:addButtonEntry(
+			"Delete",
+			function()
+				self.editor:delete(o)
+				self.editor:removeTab(self)
+			end,
+			settings.dim.editor.details.object.buttonPadding
+		)
 		--properties
 		if o.properties then
 			self:addTextEntry("Properties:")
