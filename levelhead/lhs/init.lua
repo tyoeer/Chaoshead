@@ -8,7 +8,7 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 
 --these are used when the level id is given
 local userCode = "xxqtsv"
-local levelsPath = love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/"..userCode.."/stages/"
+local levelsPath = require("levelhead.misc").getDataPath().."/UserData/"..userCode.."/stages/"
 local extension = ".lhs"
 
 function LHS:initialize(level)
