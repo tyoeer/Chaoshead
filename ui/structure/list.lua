@@ -107,7 +107,7 @@ function UI:mousemoved(x,y, ...)
 		end
 	end
 end
-function UI:wheelmoved(self, ...)
+function UI:wheelmoved(...)
 	local x,y = self:getMousePos()
 	local checkY = 0
 	for c in self.children:iterate() do
