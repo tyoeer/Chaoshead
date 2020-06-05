@@ -1,7 +1,7 @@
 local BaseUI = require("ui.base")
 --local Pool = require("utils.entitypool")
 
-local UI = Class(BaseUI)
+local UI = Class("HorDivideUI",BaseUI)
 
 --[[
 When there's an apparent off by one error, test it first.
@@ -11,13 +11,29 @@ Current off by ones have been deduced by pixel-perfect mouse pointer placement t
 function UI:initialize(left,right)
 	self.leftChild = left
 	left.parent = self
+	
 	self.rightChild = right
 	right.parent = self
+	
 	self.divisionRatio = 0.3
 	--self.divisionX = -1
 	self.divisionWidth = 1 -1
 	UI.super.initialize(self)
 	self.title = "Divide"
+end
+
+function UI:setLeftChild(ui)
+	self.leftChild.parent = nil
+	self.leftChild = ui
+	ui.parent = self
+	self:setDivisionX(self.divisionX)
+end
+
+function UI:setRightChild(ui)
+	self.rightChild.parent = nil
+	self.rightChild = ui
+	ui.parent = self
+	self:setDivisionX(self.divisionX)
 end
 
 function UI:setDivisionRatio(ratio)
@@ -41,7 +57,7 @@ function UI:getPropagatedMouseX(child)
 	elseif child == self.rightChild then
 		return self:getMouseX() - self.divisionX - self.divisionWidth
 	else
-		error("Illegal child tried to get mouse X: "..tostring(child))
+		error("Illegal child tried to get mouse X: "..tostring(child).."\nCurrent children: "..tostring(self.leftChild).." - "..tostring(self.rightChild))
 	end
 end
 
