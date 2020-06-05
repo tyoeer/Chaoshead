@@ -1,25 +1,21 @@
-local BaseUI = require("ui.base")
-
 local PAD = require("ui.structure.padding")
 local DET_LEVEL = require("ui.details.level")
 local DET_OBJ = require("ui.details.object")
 
-local UI = Class(BaseUI)
+local UI = Class(require("ui.structure.proxy"))
 
 function UI:initialize()
 	--ui state
 	self.viewer = require("ui.worldEditor"):new(nil,self)
 	self.detailsUI = require("ui.structure.tabs"):new()
 	self:addTab(DET_LEVEL:new())
-	self.rootUI = require("ui.structure.horDivide"):new(self.detailsUI, self.viewer)
-	self.rootUI.parent = self
 	self.detailsUI.tabHeight = settings.dim.editor.details.tabHeight
 	
 	--editor state
 	self.selectedObject = nil
 	self.selectionDetails = nil
 	
-	UI.super.initialize(self)
+	UI.super.initialize(self,require("ui.structure.horDivide"):new(self.detailsUI, self.viewer))
 	self.title = "Level Editor"
 end
 
@@ -72,27 +68,11 @@ function UI:delete(obj)
 	end
 end
 
--- events
-
-local relay = function(index)
-	UI[index] = function(self, ...)
-		self.rootUI[index](self.rootUI, ...)
-	end
-end
-
-relay("update")
-
-relay("draw")
+-- events (most are handled by the proxy super)
 
 function UI:focus(focus)
 	if focus then self:reload() end
-	self.rootUI:focus(focus)
-end
-relay("visible")
-function UI:resize(w,h)
-	self.width = w
-	self.height = h
-	self.rootUI:resize(w,h)
+	self.child:focus(focus)
 end
 
 function UI:inputActivated(name,group, isCursorBound)
@@ -108,16 +88,9 @@ function UI:inputActivated(name,group, isCursorBound)
 			end
 		end
 	else
-		self.rootUI:inputActivated(name,group, isCursorBound)
+		self.child:inputActivated(name,group, isCursorBound)
 	end
 end
-relay("inputDeactivated")
-
-relay("textinput")
-
-relay("mousemoved")
-relay("wheelmoved")
-
 
 
 return UI
