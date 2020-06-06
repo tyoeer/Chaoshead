@@ -9,10 +9,34 @@ ui:addChild(hexInspector)
 local levelEditor = require("ui.levelEditor"):new()
 ui:addChild(levelEditor)
 ui:setActive(levelEditor)
-
-local worldViewer = require("ui.structure.movableCamera"):new(
-	require("ui.worldViewer"):new()
+local treeExplorerTest = require("ui.treeViewer"):new(
+	{
+		getDetailsUI = function(self,data)
+			return require("ui.list.text"):new(data.title,5,0)
+		end,
+		getChildren = function(self,parent)
+			local out = {}
+			for i=1,10,1 do
+				table.insert(out,{
+					title = parent.title.."."..i,
+					folder = (i % 2 == 0)
+				})
+			end
+			return out
+		end,
+		getRootEntries = function(self)
+			local out = {}
+			for i=1,10,1 do
+				table.insert(out,{
+					title = i,
+					folder = (i % 2 == 0)
+				})
+			end
+			return out
+		end,
+	}
 )
-ui:addChild(worldViewer)
+
+ui:addChild(treeExplorerTest)
 
 return ui
