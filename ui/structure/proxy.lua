@@ -1,10 +1,5 @@
 local BaseUI = require("ui.base")
-
-local PAD = require("ui.structure.padding")
-local DET_LEVEL = require("ui.details.level")
-local DET_OBJ = require("ui.details.object")
-
-local UI = Class(BaseUI)
+local UI = Class("ProxyUI",BaseUI)
 
 function UI:initialize(child)
 	self.child = child

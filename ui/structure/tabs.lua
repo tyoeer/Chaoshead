@@ -1,7 +1,7 @@
 local BaseUI = require("ui.base")
 local Pool = require("utils.entitypool")
 
-local UI = Class(BaseUI)
+local UI = Class("TabsUI",BaseUI)
 
 function UI:initialize()
 	self.children = Pool:new()

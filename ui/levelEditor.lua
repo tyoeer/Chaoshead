@@ -2,7 +2,7 @@ local PAD = require("ui.structure.padding")
 local DET_LEVEL = require("ui.details.level")
 local DET_OBJ = require("ui.details.object")
 
-local UI = Class(require("ui.structure.proxy"))
+local UI = Class("LevelEditorUI",require("ui.structure.proxy"))
 
 function UI:initialize()
 	--ui state
