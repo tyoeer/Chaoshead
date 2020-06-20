@@ -1,6 +1,7 @@
 local UD = {}
 
 local path = require("levelhead.misc").getDataPath().."/UserData/"
+local dataFilePath = "/save_data"
 
 function UD.getUserCodes()
 	if love.system.getOS()=="Windows" then
@@ -20,8 +21,17 @@ function UD.getUserCodes()
 		end
 		return out
 	else
-		error("You're using Chaoshead on a non-windows system. I didn't think this would happen, because Levelhead is Windows only (as of the time of thsi writing). Please get in touch so we can add support for your OS.")
+		error("You're using Chaoshead on a non-windows system.\nI didn't think this would happen, because Levelhead is Windows only (as of the time of this writing).\nPlease get in touch so we can add support for your OS.")
 	end
 end
+
+function UD.getUserData(code)
+	local file = io.open(path..code..dataFilePath,"r")
+	local data = file:read("*a")
+	file:close()
+	return UD.class:new(data,code)
+end
+
+UD.class = require(select(1,...)..".class")
 
 return UD
