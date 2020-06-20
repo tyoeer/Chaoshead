@@ -8,9 +8,9 @@ dataHandler:
 	getDetailsUI(datahandler,data)
 		should return a UI node to display on the right
 	from treeList:
-		getChildren(dataRetriever,parent)
+		getChildren(dataHandler,parent)
 			should return all the children of parent
-		getRootEntries(dataRetriever)
+		getRootEntries(dataHandler)
 			should return the entries at the root
 			
 		entry format:
