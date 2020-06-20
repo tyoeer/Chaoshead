@@ -21,10 +21,10 @@ dataHandler:
 
 function UI:initialize(dataHandler)
 	--ui state
-	self.list = require("ui.treeList"):new(dataHandler,function(data)
+	self.list = require("ui.utils.treeList"):new(dataHandler,function(data)
 		self:setDetailsUI(dataHandler:getDetailsUI(data))
 	end)
-	self.details = require("ui.base"):new()
+	self.details = require("ui.structure.base"):new()
 	
 	UI.super.initialize(self,require("ui.structure.horDivide"):new(self.list, self.details))
 	self.title = "Tree Viewer"

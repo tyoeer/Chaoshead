@@ -1,4 +1,4 @@
-local BaseUI = require("ui.base")
+local BaseUI = require("ui.structure.base")
 
 local UI = Class(BaseUI)
 

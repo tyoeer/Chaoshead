@@ -1,4 +1,4 @@
-local BaseUI = require("ui.base")
+local BaseUI = require("ui.structure.base")
 local Pool = require("utils.entitypool")
 local TextEntry = require("ui.list.text")
 local ButtonEntry = require("ui.list.button")

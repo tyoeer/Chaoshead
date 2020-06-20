@@ -1,4 +1,4 @@
-local UI = Class(require("ui.base"))
+local UI = Class(require("ui.structure.base"))
 
 function UI:initialize(text,padding,indent)
 	self.text = text
