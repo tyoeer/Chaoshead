@@ -2,7 +2,7 @@ local D = Class("UserData")
 
 function D:initialize(fileData,lookupCode)
 	self.lookupCode = lookupCode
-	local jsonData, mystery, hash = fileData:match("([^\n])\n([^\n])\n(^\n)")
+	local jsonData, mystery, hash = fileData:match("([^\r\n]+)[\r\n]([^\r\n]+)[\r\n]([^\r\n]+)")
 	self.raw = require("libs.json").decode(jsonData)
 	self.mystery = mystery
 	self.hash = hash
@@ -15,7 +15,7 @@ function D:getWorkshopLevels()
 	for _,v in ipairs(self.raw.workshop.my_creations) do
 		local data = self.raw.workshop.my_workshop[v]
 		table.insert(out,{
-			name = data.name,
+			name = require("levelhead.misc").parseLevelName(data.nameparts),
 			id = v,
 			iconName = data.icon,
 		})

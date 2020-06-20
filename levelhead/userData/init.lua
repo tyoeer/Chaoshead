@@ -26,7 +26,7 @@ function UD.getUserCodes()
 end
 
 function UD.getUserData(code)
-	local file = io.open(path..code..dataFilePath,"r")
+	local file = io.open(path..code..dataFilePath,"rb")
 	local data = file:read("*a")
 	file:close()
 	return UD.class:new(data,code)
