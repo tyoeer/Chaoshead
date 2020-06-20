@@ -56,7 +56,7 @@ relay("update")
 function UI:draw()
 	--draw activeChild
 	love.graphics.push("all")
-		love.graphics.translate(0, self.tabHeight)
+		love.graphics.translate(0, self.tabHeight+1)
 		local x,y = love.graphics.transformPoint(0,0)
 		local endX,endY = love.graphics.transformPoint(self.activeChild.width, self.activeChild.height)
 		love.graphics.intersectScissor(x, y, endX-x, endY-y)
