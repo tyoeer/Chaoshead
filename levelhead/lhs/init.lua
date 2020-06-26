@@ -6,18 +6,11 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 
 ]]--
 
---these are used when the level id is given
-local userCode = "xxqtsv"
-local levelsPath = require("levelhead.misc").getDataPath().."/UserData/"..userCode.."/stages/"
-local extension = ".lhs"
-
-function LHS:initialize(level)
+function LHS:initialize(path)
 	local t = type(level)
-	if t=="number" then
-		self:loadFile(levelsPath ..level.. extension)
-	elseif t=="string" then
-		self:loadFile(levelsPath ..level.. extension)
-	elseif t=="nil" then
+	if path then
+		self:loadFile(path)
+	else
 		self:loadDefaultFile()
 	end
 end
