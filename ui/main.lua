@@ -9,34 +9,7 @@ ui:addChild(hexInspector)
 local levelEditor = require("ui.levelEditor"):new()
 ui:addChild(levelEditor)
 ui:setActive(levelEditor)
-local treeExplorerTest = require("ui.utils.treeViewer"):new(
-	{
-		getDetailsUI = function(self,data)
-			return require("ui.list.text"):new(data.title,5,0)
-		end,
-		getChildren = function(self,parent)
-			local out = {}
-			for i=1,10,1 do
-				table.insert(out,{
-					title = parent.title.."."..i,
-					folder = (i % 2 == 0)
-				})
-			end
-			return out
-		end,
-		getRootEntries = function(self)
-			local out = {}
-			for i=1,10,1 do
-				table.insert(out,{
-					title = i,
-					folder = (i % 2 == 0)
-				})
-			end
-			return out
-		end,
-	}
-)
 
-ui:addChild(treeExplorerTest)
+ui:addChild(require("ui.levelSelector"):new())
 
 return ui

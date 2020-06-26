@@ -2,6 +2,12 @@ return {
 	main = {
 		tabHeight = 30,
 	},
+	levelSelector = {
+		listDetailsDivisionRatio = 0.4,
+		details = {
+			padding = 10,
+		},
+	},
 	editor = {
 		details = {
 			inset = 10,
