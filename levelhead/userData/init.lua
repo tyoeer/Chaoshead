@@ -1,6 +1,5 @@
 local UD = {}
 
-local path = require("levelhead.misc").getDataPath().."/UserData/"
 local dataFilePath = "/save_data"
 
 function UD.getUserCodes()
@@ -8,7 +7,7 @@ function UD.getUserCodes()
 		-- /a:d display directories
 		-- /b don't show metadata
 		local listCmd = "dir /a:d /b"
-		local cdCmd = "cd \""..path.."\""
+		local cdCmd = "cd \""..require("levelhead.misc").getUserDataPath().."\""
 		local cmd = cdCmd.." && "..listCmd
 		
 		local cli = io.popen(cmd)
@@ -26,7 +25,7 @@ function UD.getUserCodes()
 end
 
 function UD.getUserData(code)
-	local file = io.open(path..code..dataFilePath,"rb")
+	local file = io.open(require("levelhead.misc").getUserDataPath()..code..dataFilePath,"rb")
 	local data = file:read("*a")
 	file:close()
 	return UD.class:new(data,code)

@@ -3,6 +3,9 @@ local m = {}
 function m.getDataPath()
 	return love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/"
 end
+function m.getUserDataPath()
+	return m.getDataPath().."UserData/"
+end
 
 --[[
 it doesn't match levelhead exactly,
