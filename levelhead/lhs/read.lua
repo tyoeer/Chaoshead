@@ -252,7 +252,8 @@ function LHS:readRepeatedPropertySets()
 	for i=1, c.nEntries, 1 do
 		local entry = {
 			sourceX = self:getNumber1(offset),
-			sourceY = self:getNumber1(offset+1)
+			sourceY = self:getNumber1(offset+1),
+			startOffset = offset,
 		}
 		--rows
 		entry.nRows = self:getNumber2(offset+2)
@@ -292,8 +293,10 @@ function LHS:readRepeatedPropertySets()
 			offset = offset + 2
 			table.insert(entry.single, subentry)
 		end
+		entry.endOffset = offset - 1
 		table.insert(c.entries, entry)
 	end
+	c.endOffset = offset - 1
 end
 
 function LHS:readAll()
