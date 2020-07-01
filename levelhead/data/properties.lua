@@ -47,7 +47,7 @@ function P:mappingToValue(selector, mapping)
 	local p = self:getRow(selector)
 	if not p[self.headers.mappingType] then
 		print(selector.." has unknown mapping!")
-		return "$UnknownValueFromMapping"
+		return "$UnknownMapping"
 	end
 	for i=-1,SIMPLE_MAPPING_SIZE,1 do
 		if mapping == p[self.headers.map[i]] then
@@ -76,7 +76,7 @@ function P:valueToMapping(selector, value)
 		end
 	else
 		print("Illegal mapping type: "..selector.." :-: "..mappingType)
-		return "$UnknownMappingFromValue"
+		return "$UnknownMapping"
 	end
 end
 

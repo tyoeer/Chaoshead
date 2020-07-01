@@ -219,6 +219,7 @@ function LHS:readProperties(isPath)
 			else
 				print("Error-------------------------------")
 				print("prop.id",entry.id)
+				print("hexdump",love.data.encode("string","hex",self:getBytes(offset-1,9)):upper():gsub("(..)","%1 "))
 				error("Illegal property save format: "..format)
 			end
 			
