@@ -8,13 +8,21 @@ function OBJ:initialize(id)
 end
 
 function OBJ:setPropertyRaw(id, value)
-	id = P:getID(id)
-	self.properties[id] = P:mappingToValue(id,value)
+	self.properties[id] = value
 end
 
 function OBJ:getPropertyRaw(id)
+	return self.properties[id]
+end
+
+function OBJ:setProperty(id, value)
 	id = P:getID(id)
-	return P:valueToMapping(id,self.properties[id])
+	self:setPropertyRaw(P:mappingToValue(id,value))
+end
+
+function OBJ:getProperty(id)
+	id = P:getID(id)
+	return P:valueToMapping(id,self:getPropertyRaw(id))
 end
 
 function OBJ:__index(key)

@@ -35,14 +35,27 @@ value = object:get[property name]()
 - property name: concatanated name of the poperty you're getting, where each word starts with with an uppercase letter
 - value: the value of said property
 
+
+```Lua
+object:setProperty(id, mapping)
+```
+- id: the id/name of the property to change
+- mapping: the new mapped value of said property
+
+```Lua
+mapping = object:getProperty(id)
+```
+- id: the id/name of the property to retrieve
+- mapping: the mapped value of said property
+
 ```Lua
 object:setPropertyRaw(id, value)
 ```
 - id: the id/name of the property to change
-- value: the new value of said property
+- value: the new raw value of said property
 
 ```Lua
 value = object:getPropertyRaw(id)
 ```
 - id: the id/name of the property to retrieve
-- value: the value of said property
+- value: the raw value of said property
