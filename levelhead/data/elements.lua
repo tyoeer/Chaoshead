@@ -5,7 +5,7 @@ function E:initialize()
 	--parse data file
 	local rawHeaders
 	self.data, rawHeaders = csv.parseString(love.filesystem.read("data/levelElements.tsv"),"\t")
-
+	
 	--parse headers
 	self.headers = {}
 	for i,v in ipairs(rawHeaders) do
