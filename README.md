@@ -12,3 +12,4 @@ https://docs.google.com/spreadsheets/d/1bzASSn2FgjqUldPzX8DS66Lv-r2lk3V12jZjl51u
 - Object: a single thing inside the level.
 - (Level) element: a type of object e.g. Blasters, Armor Plates.
 - Item: Something GR-18 can grab and carry.
+- Mapping vs. Value (in the context of properties): a value is the raw number saved in the file, a mappnig is what that number means. E.g. value 1 for rotation is mapped to/mappnig "Up".
