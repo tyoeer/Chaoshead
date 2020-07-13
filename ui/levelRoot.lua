@@ -6,24 +6,28 @@ local UI = Class(require("ui.structure.proxy"))
 function UI:initialize(levelPath)
 	self.levelPath = levelPath
 	self.levelFile = require("levelhead.lhs"):new(levelPath)
-	self.levelFIle:readAll()
-	self.level = self.levelFIle:parseAll()
+	self.levelFile:readAll()
+	self.level = self.levelFile:parseAll()
 	
 	tabs = require("ui.structure.tabs"):new()
-	tabs:addChild(require("ui.levelEditor"):new(self.level, self))
+	
+	self.hexInspector = require("ui.hexInspector"):new(self.levelFile)
+	tabs:addChild(require("ui.utils.movableCamera"):new(self.hexInspector))
+	
+	self.levelEditor = require("ui.levelEditor"):new(self.level, self)
+	tabs:addChild(self.levelEditor)
+	tabs:setActive(self.levelEditor)
 	
 	UI.super.initialize(self,tabs)
 	self.title = levelPath
 end
 
 function UI:reload()
-	self.levelFIle:readAll()
-	self.level = self.levelFIle:parseAll()
-	for c in self.child.children:iterate() do
-		if c.reload then
-			c:reload(level)
-		end
-	end
+	self.levelFile:readAll()
+	self.level = self.levelFile:parseAll()
+	
+	self.levelEditor:reload(self.level)
+	self.hexInspector:reload(self.levelFile)
 end
 
 function UI:save()

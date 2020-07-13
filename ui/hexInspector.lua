@@ -12,17 +12,20 @@ local function bytesToHex(bytes)
 	return out:sub(1,-2)
 end
 
-function UI:initialize(level)
+function UI:initialize(levelFile)
+	self.levelFile = levelFile
 	UI.super.initialize(self)
 	self.title = "Hex Inspector"
 	
 	self:reload()
 end
 
-function UI:reload()
-	local l = levelFile
-	require("utils.levelUtils").reload()
-	--l:readAll()
+function UI:reload(l)
+	if l then
+		self.levelFile = l
+	else
+		l = self.levelFile
+	end
 	
 	self.all = bytesToHex(l.raw)
 	self.prefix = bytesToHex(l:getBytes(1,9))
@@ -35,12 +38,6 @@ function UI:reload()
 	self.lWidth = bytesToHex(l:getBytes(l.titleEndOffset+2,1))
 	self.lHeight = bytesToHex(l:getBytes(l.titleEndOffset+3,1))
 	self.unknown = bytesToHex(l:getBytes(l.titleEndOffset+4,4))
-end
-
-function UI:focus(focus)
-	if focus then
-		self:reload()
-	end
 end
 
 local indentSize = settings.dim.hexInspector.indentSize
@@ -67,16 +64,16 @@ local function row(display,label,extraIndent)
 	textRow(text,extraIndent)
 end
 local function sectionRows(section, label)
-	textRow(label..": ".. levelFile.rawContentEntries[section].nEntries)
-	for _,v in ipairs(levelFile.rawContentEntries[section].entries) do
-		local hex = bytesToHex(levelFile.raw:sub(v.startOffset,v.endOffset))
+	textRow(label..": ".. this.levelFile.rawContentEntries[section].nEntries)
+	for _,v in ipairs(this.levelFile.rawContentEntries[section].entries) do
+		local hex = bytesToHex(this.levelFile.raw:sub(v.startOffset,v.endOffset))
 		textRow(hex,2)
 	end
 end
 local function propertyRows(section, label)
-	textRow(label..": ".. levelFile.rawContentEntries[section].nEntries)
-	for _,v in ipairs(levelFile.rawContentEntries[section].entries) do
-		local hex = bytesToHex(levelFile.raw:sub(v.startOffset,v.endOffset))
+	textRow(label..": ".. this.levelFile.rawContentEntries[section].nEntries)
+	for _,v in ipairs(this.levelFile.rawContentEntries[section].entries) do
+		local hex = bytesToHex(this.levelFile.raw:sub(v.startOffset,v.endOffset))
 		textRow(hex,2)
 		for _,w in ipairs(v.entries) do
 			textRow("-> "..w.value,2)
@@ -88,7 +85,7 @@ local function propertyRows(section, label)
 end
 function UI:draw()
 	resetRows(self)
-	local c = levelFile.rawContentEntries
+	local c = self.levelFile.rawContentEntries
 	love.graphics.setColor(1,1,1)
 	textRow("Headers:",-1)
 		row("all")
@@ -98,15 +95,15 @@ function UI:draw()
 		row("weather")
 		row("respawn","MP respawn style")
 		row("camera","Camera hor. boundary")
-		textRow("Title: "..#(levelFile.rawHeaders.title))
-			for _,v in ipairs(levelFile.rawHeaders.title) do
+		textRow("Title: "..#(self.levelFile.rawHeaders.title))
+			for _,v in ipairs(self.levelFile.rawHeaders.title) do
 				textRow(v,1)
 			end
 		row("zone")
 		row("lWidth","Level width")
-			textRow("-> "..levelFile.rawHeaders.width,1)
+			textRow("-> "..self.levelFile.rawHeaders.width,1)
 		row("lHeight","Level height")
-			textRow("-> "..levelFile.rawHeaders.height,1)
+			textRow("-> "..self.levelFile.rawHeaders.height,1)
 		row("unknown")
 	textRow("Content:",-1)
 		sectionRows("singleForeground","Single foreground objects")
@@ -116,8 +113,8 @@ function UI:draw()
 		propertyRows("pathProperties","Path Properties")
 		sectionRows("repeatedPropertySets","RPS")
 		textRow("Objects in objects (ex.: a jem in a prizeblock):")
-			textRow(bytesToHex(levelFile.raw:sub(c.repeatedPropertySets.endOffset+1)),1)
-			textRow(bytesToHex(levelFile.raw:sub(c.repeatedPropertySets.endOffset+2)),1)
+			textRow(bytesToHex(self.levelFile.raw:sub(c.repeatedPropertySets.endOffset+1)),1)
+			textRow(bytesToHex(self.levelFile.raw:sub(c.repeatedPropertySets.endOffset+2)),1)
 end
 
 function UI:inputActivated(name,group, isCursorBound)
