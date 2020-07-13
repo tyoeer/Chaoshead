@@ -5,7 +5,9 @@ local UI = Class(require("ui.structure.proxy"))
 
 function UI:initialize(levelPath)
 	self.levelPath = levelPath
-	self.level = LevelUtils.load(levelPath)
+	self.levelFile = require("levelhead.lhs"):new(levelPath)
+	self.levelFIle:readAll()
+	self.level = self.levelFIle:parseAll()
 	
 	tabs = require("ui.structure.tabs"):new()
 	tabs:addChild(require("ui.levelEditor"):new(self.level, self))
@@ -14,9 +16,9 @@ function UI:initialize(levelPath)
 	self.title = levelPath
 end
 
-function UI:reload(level)
-	level = level or LevelUtils.load(self.levelPath)
-	self.level = level
+function UI:reload()
+	self.levelFIle:readAll()
+	self.level = self.levelFIle:parseAll()
 	for c in self.child.children:iterate() do
 		if c.reload then
 			c:reload(level)
@@ -25,7 +27,8 @@ function UI:reload(level)
 end
 
 function UI:save()
-	LevelUtils.save(self.level, self.levelPath)
+	self.levelFile:serializeAll(self.level)
+	self.levelFile:writeAll()
 end
 
 function UI:close()
