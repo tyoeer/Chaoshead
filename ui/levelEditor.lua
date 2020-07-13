@@ -66,7 +66,7 @@ function UI:deselect()
 end
 
 function UI:delete(obj)
-	level:removeObject(obj)
+	self.level:removeObject(obj)
 	if obj == self.selectedObject then
 		self:deselect()
 	end
