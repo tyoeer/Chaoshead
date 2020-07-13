@@ -6,7 +6,17 @@ function UI:initialize(child)
 	child.parent = self
 	
 	UI.super.initialize(self)
-	self.title = "Level Editor"
+	self.title = child.title
+end
+
+function UI:setChild(child)
+	if self.child then
+		self.child.parent = nil
+	end
+	self.child = child
+	child.parent = self
+	child:resize(self.width, self.height)
+	self.title = child.title
 end
 
 -- events

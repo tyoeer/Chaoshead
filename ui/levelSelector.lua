@@ -37,10 +37,9 @@ function UI:initialize()
 			list:addTextEntry("path: ".. d.path)
 			
 			list:addButtonEntry(
-				"Load (read & parse)",
+				"Open in editor (load)",
 				function()
-					levelFile = require("levelhead.lhs"):new(d.path)
-					require("utils.levelUtils").reload()
+					ui:openEditor(d.path)
 				end
 			)
 			

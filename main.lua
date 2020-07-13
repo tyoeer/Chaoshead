@@ -25,9 +25,6 @@ function love.load(arg)
 	--globals
 	settings = require("settings")
 	input = require("input.system")
-	levelFile = require("levelhead.lhs"):new()
-	levelFile:readAll()
-	level = levelFile:parseAll()
 	
 	--love2d state
 	love.graphics.setFont(love.graphics.newFont("font/cnr.otf",16))
@@ -36,7 +33,7 @@ function love.load(arg)
 	love.graphics.setLineStyle("rough")
 	
 	--build ui
-	ui = require("ui.main")
+	ui = require("ui.chaoshead"):new()
 	ui:resize(love.graphics.getWidth(), love.graphics.getHeight())
 	
 	--bind ui and input

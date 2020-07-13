@@ -1,7 +1,7 @@
 local UI = Class(require("ui.worldViewer"))
 
 
-function UI:initialize(level,editor)
+function UI:initialize(editor)
 	self.editor = editor
 	--camera stuff
 	self.x = 0
@@ -12,7 +12,7 @@ function UI:initialize(level,editor)
 	self.draggedCamera = false
 	
 	--UI stuff
-	UI.super.initialize(self,level)
+	UI.super.initialize(self, self.editor.level)
 	self.title = "World Editor"
 end
 

@@ -1,26 +1,42 @@
 local UI = Class(require("ui.structure.list"))
 
-function UI:initialize()
+function UI:initialize(level,editor)
+	self.editor = editor
 	UI.super.initialize(self)
 	self.title = "Level Info"
 	
 	self.textEntryVPadding = settings.dim.editor.details.level.textEntryVerticalPadding
 	self.indentSize = settings.dim.editor.details.level.textEntryIndentSize
 	
-	self:reload()
+	self:reload(level)
 end
 
-function UI:reload()
+function UI:reload(level)
 	self:resetList()
-	if level then
-		self:addTextEntry("Width:  "..level.width)
-		self:addTextEntry("Height: "..level.height)
-		self:addButtonEntry("Save Level", require("utils.levelUtils").save, settings.dim.editor.details.level.buttonPadding)
-		self:addButtonEntry("Reload Level", require("utils.levelUtils").reload, settings.dim.editor.details.level.buttonPadding)
-	else
-		self:addTextEntry("No level loaded :(")
-		self:addButtonEntry("Try loading the level", require("utils.levelUtils").reload, settings.dim.editor.details.level.buttonPadding)
-	end
+	
+	self:addTextEntry("Width:  "..level.width)
+	self:addTextEntry("Height: "..level.height)
+	self:addButtonEntry(
+		"Save Level",
+		function()
+			self.editor.root:save()
+		end,
+		settings.dim.editor.details.level.buttonPadding
+	)
+	self:addButtonEntry(
+		"Reload Level",
+		function()
+			self.editor.root:reload()
+		end,
+		settings.dim.editor.details.level.buttonPadding
+	)
+	self:addButtonEntry(
+		"Close editor (without saving)",
+		function()
+			self.editor.root:close()
+		end,
+		settings.dim.editor.details.level.buttonPadding
+	)
 end
 
 return UI

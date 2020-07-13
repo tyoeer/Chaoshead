@@ -1,15 +1,41 @@
-local ui = require("ui.structure.tabs"):new()
-ui.tabHeight = settings.dim.main.tabHeight
+local UI = Class(require("ui.structure.proxy"))
 
-local hexInspector = require("ui.utils.movableCamera"):new(
-	require("ui.hexInspector"):new()
-)
-ui:addChild(hexInspector)
+function UI:initialize()
+	local tabs = require("ui.structure.tabs"):new()
+	tabs.tabHeight = settings.dim.main.tabHeight
+	
+	self.nLevels = 0
+	self.levels = require("ui.structure.tabs"):new()
+	self.levels.title = "Level Editors"
+	self.noLevelsUI = require("ui.list.text"):new("No levels opened!")
+	self.noLevelsUI.title = "Level Editors"
+	self.levelsProxy = require("ui.structure.proxy"):new(self.noLevelsUI)
+	tabs:addChild(self.levelsProxy)
+	
+	local levelSelector = require("ui.levelSelector"):new()
+	tabs:addChild(levelSelector)
+	tabs:setActive(levelSelector)
+	
+	UI.super.initialize(self,tabs)
+end
 
-local levelEditor = require("ui.levelEditor"):new()
-ui:addChild(levelEditor)
-ui:setActive(levelEditor)
+function UI:openEditor(path)
+	local editor = require("ui.levelRoot"):new(path)
+	self.levels:addChild(editor)
+	self.levels:setActive(editor)
+	self.child:setActive(self.levelsProxy)
+	self.nLevels = self.nLevels + 1
+	if self.nLevels == 1 then
+		self.levelsProxy:setChild(self.levels)
+	end
+end
 
-ui:addChild(require("ui.levelSelector"):new())
+function UI:closeEditor(editorRoot)
+	self.levels:removeChild(editorRoot)
+	self.nLevels = self.nLevels - 1
+	if self.nLevels == 0 then
+		self.levelsProxy:setChild(self.noLevelsUI)
+	end
+end
 
-return ui
+return UI

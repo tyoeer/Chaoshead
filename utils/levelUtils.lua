@@ -1,14 +1,15 @@
 local u = {}
 
-function u.reload()
-	levelFile:reload()
-	levelFile:readAll()
-	level = levelFile:parseAll()
+function u.load(path)
+	f = require("levelhead.lhs"):new(path)
+	f:readAll()
+	return f:parseAll()
 end
 
-function u.save()
-	levelFile:serializeAll(level)
-	levelFile:writeAll()
+function u.save(level,path)
+	f = require("levelhead.lhs"):new(path)
+	f:serializeAll(level)
+	f:writeAll()
 end
 
 return u

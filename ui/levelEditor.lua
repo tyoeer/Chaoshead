@@ -4,11 +4,13 @@ local DET_OBJ = require("ui.details.object")
 
 local UI = Class("LevelEditorUI",require("ui.structure.proxy"))
 
-function UI:initialize()
+function UI:initialize(level,root)
+	self.level = level
+	self.root = root
 	--ui state
-	self.viewer = require("ui.worldEditor"):new(nil,self)
+	self.viewer = require("ui.worldEditor"):new(self)
 	self.detailsUI = require("ui.structure.tabs"):new()
-	self:addTab(DET_LEVEL:new())
+	self:addTab(DET_LEVEL:new(level,self))
 	self.detailsUI.tabHeight = settings.dim.editor.details.tabHeight
 	
 	--editor state
@@ -17,6 +19,7 @@ function UI:initialize()
 	
 	UI.super.initialize(self,require("ui.structure.horDivide"):new(self.detailsUI, self.viewer))
 	self.title = "Level Editor"
+	print(self.level)
 end
 
 function UI:addTab(tab)
@@ -35,9 +38,10 @@ function UI:removeTab(tab)
 	end
 end
 
-function UI:reload()
+function UI:reload(level)
+	self.level = level
 	for v in self.detailsUI.children:iterate() do
-		if v.reload then v:reload() end
+		if v.reload then v:reload(level) end
 	end
 end
 
@@ -47,7 +51,7 @@ function UI:selectObject(tileX,tileY)
 	if self.selectedObject then
 		self:deselect()
 	end
-	local obj = level.foreground:get(tileX,tileY)
+	local obj = self.level.foreground:get(tileX,tileY)
 	if obj then
 		self.selectedObject = obj
 		self.selectionDetails = DET_OBJ:new(obj)
@@ -70,19 +74,9 @@ end
 
 -- events (most are handled by the proxy super)
 
-function UI:focus(focus)
-	if focus then self:reload() end
-	self.child:focus(focus)
-end
-
 function UI:inputActivated(name,group, isCursorBound)
-	if name=="reload" and group=="misc" then
-		require("utils.levelUtils").reload()
-		self:reload()
-	elseif group=="editor" then
-		if name=="save" then
-			require("utils.levelUtils").save()
-		elseif name=="delete" then
+	if group=="editor" then
+		if name=="delete" then
 			if self.selectedObject then
 				self:delete(self.selectedObject)
 			end
