@@ -16,9 +16,6 @@ function love.load(arg)
 		end
 	end
 	
-	--temp
-	require("temp")
-	
 	--constants
 	TILE_SIZE = 71
 	
