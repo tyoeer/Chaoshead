@@ -1,15 +1,21 @@
 # Object
 Represents an object.
-- `require("levelhead.objects.base")` for base functionality.
-- `require("levelhead.objects.propertiesBase")` for objects with properties.
-
-Objects created by the LHS system are always property objects.
+There're two different versions: with or without properties.
 Property objects extend base objects (they can do everything a base object can do).
+Objects created by the LHS system are always property objects.
 
-## Getting an object instance
+## Creation
 
+#### For objects without properties:
 ```Lua
-instance = object.class:new(id)
+instance = require("levelhead.objects.base"):new(id)
+```
+- id: the id or name of the level element this object is.
+- instance: the instance representing said object
+
+#### For objects with properties:
+```Lua
+instance = require("levelhead.objects.propertiesBase"):new(id)
 ```
 - id: the id or name of the level element this object is.
 - instance: the instance representing said object

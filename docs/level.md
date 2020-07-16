@@ -1,23 +1,15 @@
 # Level
 Represents a level.
+See the scripting documentation (in the README) for how to access the existing level when in a script
+(TL;DR use the level global).
 
-## Getting a level instance
+## Creation
 
 ```Lua
-instance = level.class:new(width,height)
+instance = require("levelhead.level"):new(width,height)
 ```
 - width, height: the size of the level
 - instance: the instance representing the level
-
-```Lua
-instance = LHS:parseAll()
-```
-- LHS: an instance of from the LHS system, from which everything has already been read (with `LHS:readAll()`)
-
-```Lua
-instance = level
-```
-- level: a global variable containing the level currently in the editor
 
 ## Editing the world
 
