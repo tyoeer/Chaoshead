@@ -1,4 +1,5 @@
 # Object
+
 Represents an object.
 There're two different versions: with or without properties.
 Property objects extend base objects (they can do everything a base object can do).
@@ -11,14 +12,12 @@ Objects created by the LHS system are always property objects.
 instance = require("levelhead.objects.base"):new(id)
 ```
 - id: the id or name of the level element this object is.
-- instance: the instance representing said object
 
 #### For objects with properties:
 ```Lua
 instance = require("levelhead.objects.propertiesBase"):new(id)
 ```
 - id: the id or name of the level element this object is.
-- instance: the instance representing said object
 
 ## Base
 

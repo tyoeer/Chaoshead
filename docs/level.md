@@ -1,4 +1,5 @@
 # Level
+
 Represents a level.
 See the scripting documentation (in the README) for how to access the existing level when in a script
 (TL;DR use the level global).
@@ -9,7 +10,6 @@ See the scripting documentation (in the README) for how to access the existing l
 instance = require("levelhead.level"):new(width,height)
 ```
 - width, height: the size of the level
-- instance: the instance representing the level
 
 ## Editing the world
 
