@@ -7,24 +7,46 @@ return {
 	},
 	misc = {
 		reload = {
-			trigger = "key: r",
+			type = "and",
+			triggers = {
+				"key: r",
+				{
+					type = "or",
+					triggers = {"lctrl","rctrl"}
+				},
+			}
 		},
 	},
 	editor = {
 		save = {
-			trigger = "key: s",
+			type = "and",
+			triggers = {
+				"key: s",
+				{
+					type = "or",
+					triggers = {"lctrl","rctrl"}
+				},
+			}
 		},
 		select = {
 			trigger = "mouse: left",
 			isCursorBound = true,
 		},
 		delete = {
-			trigger = "key: delete",
+			type = "or",
+			triggers = {
+				"key: delete",
+				"key: backspace",
+			}
 		},
 	},
 	camera = {
 		drag = {
-			trigger = "mouse: middle",
+			type = "or",
+			triggers = {
+				"mouse: middle",
+				"mouse: left"
+			},
 			isCursorBound = true,
 		}
 	}

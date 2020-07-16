@@ -41,27 +41,54 @@ function input.addTrigger(moduleName, button, action)
 	table.insert(t[button], action)
 end
 
---for public use
-function input.addAction(action,name,group)
+function input.parseAction(action)
 	local parsed = {
-		name = name,
-		group = group,
 		active = false,
 	}
-	if action.trigger then
-		local moduleName, button = input.parseButton(action.trigger)
+	if type(action)=="table" then
+		if action.trigger then
+			if action.type then
+				error(string.format("Action [%s,%s] has both a trigger (without -s) and a type!",name,group))
+			end
+			local moduleName, button = input.parseButton(action.trigger)
+			parsed.trigger = {
+				moduleName = moduleName,
+				button = button,
+			}
+			input.addTrigger(moduleName,button, parsed)
+		elseif action.type=="and" or action.type=="or" then
+			parsed.type = action.type
+			parsed.count = 0
+			parsed.total = #action.triggers
+			for _, subAction in ipairs(action.triggers) do
+				local sub = input.parseAction(subAction)
+				-- tables are pass-by-reference, so this also updates the same table that the triggers use
+				sub.parent = parsed
+			end
+		end
+		
+		if action.isCursorBound==nil then
+			parsed.isCursorBound = false
+		else
+			parsed.isCursorBound = action.isCursorBound
+		end
+	else
+		local moduleName, button = input.parseButton(action)
 		parsed.trigger = {
 			moduleName = moduleName,
 			button = button,
 		}
+		parsed.isCursorBound = false
 		input.addTrigger(moduleName,button, parsed)
 	end
-	if action.isCursorBound==nil then
-		parsed.isCursorBound = false
-	else
-		parsed.isCursorBound = action.isCursorBound
-	end
-	
+	return parsed
+end
+
+--for public use
+function input.addAction(action,name,group)
+	local parsed = input.parseAction(action)
+	parsed.group = group
+	parsed.name = name
 	if not input.actions[group] then
 		input.actions[group] = {}
 	end
@@ -174,12 +201,49 @@ end
 
 -- TRIGGER HANDLING
 
+function input.actionActivated(action)
+	action.active = true
+	if action.parent then
+		local p = action.parent
+		p.count = p.count + 1
+		if p.type=="or" then
+			if p.count > 0 and not p.active then
+				input.actionActivated(p)
+			end
+		elseif p.type=="and" then
+			if p.count == p.total then
+				input.actionActivated(p)
+			end
+		end
+	else
+		input.inputActivated(action.name, action.group, action.isCursorBound)
+	end
+end
+
+function input.actionDeactivated(action)
+	action.active = false
+	if action.parent then
+		local p = action.parent
+		p.count = p.count - 1
+		if p.type=="or" then
+			if p.count == 0 then
+				input.actionDeactivated(p)
+			end
+		elseif p.type=="and" then
+			if p.count < p.total and p.active then
+				input.actionDeactivated(p)
+			end
+		end
+	else
+		input.inputDeactivated(action.name, action.group, action.isCursorBound)
+	end
+end
+
 function input.triggerActivation(moduleName,button)
 	local t = input.modules[moduleName].triggers[button]
 	if t then
 		for _,action in ipairs(t) do
-			action.active = true
-			input.inputActivated(action.name, action.group, action.isCursorBound)
+			input.actionActivated(action)
 		end
 	end
 end
@@ -188,8 +252,7 @@ function input.triggerDeactivation(moduleName,button)
 	local t = input.modules[moduleName].triggers[button]
 	if t then
 		for _,action in ipairs(t) do
-			action.active = false
-			input.inputDeactivated(action.name, action.group, action.isCursorBound)
+			input.actionDeactivated(action)
 		end
 	end
 end
