@@ -30,6 +30,7 @@ function UI:reload(level)
 	if level then
 		self.level = level
 	else
+		self.levelFile:reload()
 		self.levelFile:readAll()
 		self.level = self.levelFile:parseAll()
 	end
