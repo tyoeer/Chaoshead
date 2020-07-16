@@ -7,7 +7,7 @@ function UI:initialize(object)
 	UI.super.initialize(self)
 	self.title = "Object Info"
 	
-	self.textEntryVPadding = settings.dim.editor.details.object.textEntryVerticalPadding
+	self.entryMargin = settings.dim.editor.details.object.entryMargin
 	self.indentSize = settings.dim.editor.details.object.textEntryIndentSize
 	
 	self:setObject(object)

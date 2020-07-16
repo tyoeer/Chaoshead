@@ -9,7 +9,7 @@ function UI:initialize()
 	self.children = Pool:new()
 	self.nChildren = 0
 	
-	self.textEntryVPadding = 5
+	self.entryMargin = 5
 	self.indentSize = 15
 	
 	UI.super.initialize(self)
@@ -17,7 +17,7 @@ function UI:initialize()
 end
 
 function UI:addTextEntry(text,indent)
-	self:addUIEntry(TextEntry:new(text, self.textEntryVPadding, (indent or 0)*self.indentSize ))
+	self:addUIEntry(TextEntry:new(text, (indent or 0)*self.indentSize ))
 end
 
 function UI:addButtonEntry(text,onClick,padding)
@@ -55,7 +55,7 @@ function UI:draw()
 	love.graphics.push("all")
 		for c in self.children:iterate() do
 			c:draw()
-			love.graphics.translate(0, c.height)
+			love.graphics.translate(0, c.height + self.entryMargin)
 		end
 	love.graphics.pop("all")
 end
@@ -82,7 +82,11 @@ local function relayInput(index)
 				checkY = checkY + c.height
 				if y <= checkY then
 					c[index](c, name,group, isCursorBound)
-					return
+					break
+				end
+				checkY = checkY + self.entryMargin
+				if y < checkY then
+					break
 				end
 			end
 		else
@@ -105,6 +109,10 @@ function UI:mousemoved(x,y, ...)
 				c:mousemoved(x,y, ...)
 			break
 		end
+		checkY = checkY + self.entryMargin
+		if y < checkY then
+			break
+		end
 	end
 end
 function UI:wheelmoved(...)
@@ -114,6 +122,10 @@ function UI:wheelmoved(...)
 		checkY = checkY + c.height
 		if y <= checkY then
 				c:wheelmoved(...)
+			break
+		end
+		checkY = checkY + self.entryMargin
+		if y < checkY then
 			break
 		end
 	end

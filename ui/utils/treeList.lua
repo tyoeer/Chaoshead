@@ -24,6 +24,7 @@ function UI:initialize(dataRetriever,onClick)
 	self.dataCache = self:toCache(dataRetriever:getRootEntries())
 	
 	self.indentSize = 2
+	self.entryMargin = 0
 	self.buttonPadding = 5
 	
 	self:reload()

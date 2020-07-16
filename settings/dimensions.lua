@@ -17,12 +17,12 @@ return {
 			inset = 10,
 			tabHeight = 30,
 			level = {
-				textEntryVerticalPadding = 5,
+				entryMargin = 8,
 				textEntryIndentSize = 15,
 				buttonPadding = 5,
 			},
 			object = {
-				textEntryVerticalPadding = 5,
+				entryMargin = 6,
 				textEntryIndentSize = 15,
 				buttonPadding = 5,
 			},

@@ -5,7 +5,7 @@ function UI:initialize(level,editor)
 	UI.super.initialize(self)
 	self.title = "Level Info"
 	
-	self.textEntryVPadding = settings.dim.editor.details.level.textEntryVerticalPadding
+	self.entryMargin = settings.dim.editor.details.level.entryMargin
 	self.indentSize = settings.dim.editor.details.level.textEntryIndentSize
 	
 	self:reload(level)
