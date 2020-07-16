@@ -54,13 +54,27 @@ function P:getMax(selector)
 	return self:getRow(selector)[self.headers.min] or "$UnknownMaximum"
 end
 
+function P:isValidMapping(selector, mapping)
+	-- probably not the cleanest way, but it's easy to write and stays on par with mappingToValue
+	return pcall(self.mappingToValue, self, selector, mapping)
+end
+
 function P:mappingToValue(selector, mapping)
 	local p = self:getRow(selector)
 	
 	local mappingType = p[self.headers.mappingType]
 	if mappingType=="None" then
-		return tonumber(mappnig)
-	elseif mappingType=="Simple" or mappingType=="Hybrid" then
+		return tonumber(mapping)
+	elseif mappingType=="Simple" then
+		for i=-1,SIMPLE_MAPPING_SIZE,1 do
+			if mapping == p[self.headers.map[i]] then
+				return i
+			end
+		end
+	elseif mappingType=="Hybrid" then
+		if tonumber(mapping) then
+			return tonumber(mapping)
+		end
 		for i=-1,SIMPLE_MAPPING_SIZE,1 do
 			if mapping == p[self.headers.map[i]] then
 				return i
@@ -73,7 +87,7 @@ function P:mappingToValue(selector, mapping)
 		return "$UnknownMapping"
 	end
 	
-	error("Illegal mapping value for "..selector..": "..tostring(mapping).." ("..type(mapping)..")")
+	error("Illegal mapping for property "..selector..": "..tostring(mapping).." ("..type(mapping)..")")
 end
 
 function P:valueToMapping(selector, value)

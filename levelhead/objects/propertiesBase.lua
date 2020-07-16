@@ -17,7 +17,7 @@ end
 
 function OBJ:setProperty(id, value)
 	id = P:getID(id)
-	self:setPropertyRaw(P:mappingToValue(id,value))
+	self:setPropertyRaw(id,P:mappingToValue(id,value))
 end
 
 function OBJ:getProperty(id)
@@ -29,9 +29,16 @@ function OBJ:__index(key)
 	if key:match("set") then
 		local prop = key:match("set(.+)")
 		prop = prop:gsub("([A-Z])"," %1"):trim()
-		return function(self,value)
+		return function(self,mapping)
+			local set = false
 			for _,id in ipairs(P:getAllIDs(prop)) do
-				self:setPropertyRaw(id, value)
+				if P:isValidMapping(id,mapping) then
+					set = true
+					self:setProperty(id, mapping)
+				end
+			end
+			if not set then
+				error("Mapping "..mapping.." is invalid for property "..property)
 			end
 		end
 	elseif key:match("get") then
@@ -39,7 +46,7 @@ function OBJ:__index(key)
 		prop = prop:gsub("([A-Z])"," %1"):trim()
 		return function(self)
 			--LH doesn't set all the properties, so this is currently a bit broken
-			return self:getPropertyRaw(P:getID(prop))
+			return self:getProperty(prop)
 		end
 	end
 end
