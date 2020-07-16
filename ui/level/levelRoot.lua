@@ -1,11 +1,12 @@
 local LevelUtils = require("utils.levelUtils")
+local LHS = require("levelhead.lhs")
 --levelRoot was the best name I could come up with, OK?
 
 local UI = Class(require("ui.structure.proxy"))
 
 function UI:initialize(levelPath)
 	self.levelPath = levelPath
-	self.levelFile = require("levelhead.lhs"):new(levelPath)
+	self.levelFile = LHS:new(levelPath)
 	self.levelFile:readAll()
 	self.level = self.levelFile:parseAll()
 	
@@ -18,14 +19,20 @@ function UI:initialize(levelPath)
 	tabs:addChild(self.levelEditor)
 	tabs:setActive(self.levelEditor)
 	
+	self.scriptInterface = require("ui.level.scriptInterface"):new(self)
+	tabs:addChild(self.scriptInterface)
+	
 	UI.super.initialize(self,tabs)
 	self.title = levelPath
 end
 
-function UI:reload()
-	self.levelFile:readAll()
-	self.level = self.levelFile:parseAll()
-	
+function UI:reload(level)
+	if level then
+		self.level = level
+	else
+		self.levelFile:readAll()
+		self.level = self.levelFile:parseAll()
+	end
 	self.levelEditor:reload(self.level)
 	self.hexInspector:reload(self.levelFile)
 end
@@ -35,9 +42,20 @@ function UI:save()
 	self.levelFile:writeAll()
 end
 
+function UI:runScript(path,disableSandbox)
+	if disableSandbox then
+		local level = require("script").runDangerously(path, self.level)
+		self:reload(level)
+	else
+		error("Tried to run script in sandboxed mode, which is currently not yet implemented.")
+	end
+end
+
+
 function UI:close()
 	ui:closeEditor(self)
 end
+
 
 function UI:focus(focus)
 	if focus then

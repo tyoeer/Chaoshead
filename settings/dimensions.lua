@@ -8,6 +8,10 @@ return {
 			padding = 10,
 		},
 	},
+	scriptInterface = {
+		horDivisionRatio = 0.4,
+		detailsPadding = 10,
+	},
 	editor = {
 		details = {
 			inset = 10,
