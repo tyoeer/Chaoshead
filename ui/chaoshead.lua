@@ -20,7 +20,7 @@ function UI:initialize()
 end
 
 function UI:openEditor(path)
-	local editor = require("ui.levelRoot"):new(path)
+	local editor = require("ui.level.levelRoot"):new(path)
 	self.levels:addChild(editor)
 	self.levels:setActive(editor)
 	self.child:setActive(self.levelsProxy)

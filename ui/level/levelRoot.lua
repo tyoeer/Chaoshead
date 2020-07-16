@@ -11,10 +11,10 @@ function UI:initialize(levelPath)
 	
 	tabs = require("ui.structure.tabs"):new()
 	
-	self.hexInspector = require("ui.hexInspector"):new(self.levelFile)
+	self.hexInspector = require("ui.level.hexInspector"):new(self.levelFile)
 	tabs:addChild(require("ui.utils.movableCamera"):new(self.hexInspector))
 	
-	self.levelEditor = require("ui.levelEditor"):new(self.level, self)
+	self.levelEditor = require("ui.level.levelEditor"):new(self.level, self)
 	tabs:addChild(self.levelEditor)
 	tabs:setActive(self.levelEditor)
 	
