@@ -54,7 +54,8 @@ function UI:buildList(data,indentLevel)
 						v.open = false
 						self:reload()
 					end,
-					self.buttonPadding
+					self.buttonPadding,
+					false
 				)
 				self:buildList(v.children, indentLevel+1)
 			else
@@ -67,7 +68,8 @@ function UI:buildList(data,indentLevel)
 						end
 						self:reload()
 					end,
-					self.buttonPadding
+					self.buttonPadding,
+					false
 				)
 			end
 		else
@@ -76,7 +78,8 @@ function UI:buildList(data,indentLevel)
 				function()
 					self.onClick(v.data)
 				end,
-				self.buttonPadding
+				self.buttonPadding,
+				false
 			)
 		end
 	end

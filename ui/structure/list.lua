@@ -20,12 +20,12 @@ function UI:addTextEntry(text,indent)
 	self:addUIEntry(TextEntry:new(text, (indent or 0)*self.indentSize ))
 end
 
-function UI:addButtonEntry(text,onClick,padding)
-	self:addUIEntry(ButtonEntry:new(text,onClick,padding))
+function UI:addButtonEntry(...)
+	self:addUIEntry(ButtonEntry:new(...))
 end
 
 function UI:addUIEntry(c)
-	c.parent = this
+	c.parent = self
 	local w = self.width
 	local h = c:getMinimumHeight(w)
 	c:resize(w,h)
@@ -36,6 +36,16 @@ end
 function UI:resetList()
 	--the garbage collector should take care of the old pool
 	self.children = Pool:new()
+end
+
+function UI:getPropagatedMouseY(target)
+	local offset = 0
+	for c in self.children:iterate() do
+		if c == target then
+			return self:getMouseY() - offset
+		end
+		offset = offset + c.height + self.entryMargin
+	end
 end
 
 -- events
@@ -106,7 +116,7 @@ function UI:mousemoved(x,y, ...)
 	for c in self.children:iterate() do
 		checkY = checkY + c.height
 		if y <= checkY then
-				c:mousemoved(x,y, ...)
+				c:mousemoved(x, y - checkY + c.height, ...)
 			break
 		end
 		checkY = checkY + self.entryMargin
