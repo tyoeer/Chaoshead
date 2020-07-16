@@ -19,7 +19,6 @@ function UI:initialize(level,root)
 	
 	UI.super.initialize(self,require("ui.structure.horDivide"):new(self.detailsUI, self.viewer))
 	self.title = "Level Editor"
-	print(self.level)
 end
 
 function UI:addTab(tab)
@@ -40,6 +39,7 @@ end
 
 function UI:reload(level)
 	self.level = level
+	self.viewer:reload(level)
 	for v in self.detailsUI.children:iterate() do
 		if v.reload then v:reload(level) end
 	end
