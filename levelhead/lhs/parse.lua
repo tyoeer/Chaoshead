@@ -1,5 +1,6 @@
 local Level = require("levelhead.level")
 local Object = require("levelhead.objects.propertiesBase")
+local E = require("levelhead.data.elements")
 
 local LHS = {}
 
@@ -30,9 +31,10 @@ function LHS:parseForegroundRows(w)
 	local raw = self.rawContentEntries.foregroundRows
 	for i=1,raw.nEntries,1 do
 		local entry = raw.entries[i]
+		local width = E:getWidth(entry.id)
 		for x=0,entry.length,1 do
 			local obj = Object:new(entry.id)
-			w:addObject(obj, entry.x + x + 1, w.height - entry.y)
+			w:addObject(obj, entry.x + width*x + 1, w.height - entry.y)
 		end
 	end
 end
@@ -41,9 +43,10 @@ function LHS:parseForegroundColumns(w)
 	local raw = self.rawContentEntries.foregroundColumns
 	for i=1,raw.nEntries,1 do
 		local entry = raw.entries[i]
+		local height = E:getWidth(entry.id)
 		for y=0,entry.length,1 do
 			local obj = Object:new(entry.id)
-			w:addObject(obj, entry.x + 1, w.height - entry.y - y)
+			w:addObject(obj, entry.x + 1, w.height - entry.y - height*y)
 		end
 	end
 end
