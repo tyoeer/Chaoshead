@@ -1,203 +1,203 @@
-Name	ID(decimal)	ID(hex)	Name Combobulator (2=In-game selectable,1=shows up, but not selectable,0=displays raw)	Is bigger version of something else	Notes
-Delete	0	#00	2		
-Environment	1	#01	1		
-Spiketron	2	#02	2		
-Vacrat	3	#03	2		
-Falltrough Ledge	4	#04	2		
-Long Flyblock	5	#05	2	Yes	
-Dense Fog	6	#06	2		
-Hardlight	7	#07	2		
-Flipwip	8	#08	2		
-Blopfush	9	#09	2		
-Flapjack	10	#0A	2		
-Jem	11	#0B	2		
-Kronkrete	12	#0C	2		
-Sproing	13	#0D	2		
-Ripcord	14	#0E	2		
-Goal	15	#0F	2		
-GR-18	16	#10	2		
-Slippy Goo	17	#11	2		
-Sky Wiggler	18	#12	2		
-Throw Block	19	#13	2		
-Tiptow	20	#14	2		
-Battle Gate	21	#15	2		
-Waylay	22	#16	2		
-Jem Gate	23	#17	2		
-Whizzblade	24	#18	2		
-Powered Gate	25	#19	2		
-Lock Switch	26	#1A	2		
-Jackdrop	27	#1B	2		
-2x2 Vacrat	28	#1C		Yes	
-Keycard	29	#1D	2		
-Key Gate	30	#1E	2		
-Blaster	31	#1F	2		
-Zipper	32	#20	2		
-Vacsteak	33	#21	2		
-Lizumi	34	#22	2		
-Pressure Switch	35	#23	2		
-Hard Clay	36	#24	2		
-Clock Switch	37	#25	2		
-Rift	38	#26	2		
-Trigblaster	39	#27	2		
-Prize Block	40	#28	2		
-Brittle Rock	41	#29	2		
-Cannon	42	#2A	2		
-Package Cam	43	#2B	2		
-Lookannon	44	#2C	2		
-Crombler	45	#2D	2		
-2x2 Crombler	46	#2E		Yes	
-Toe Slider	47	#2F	2		
-BUDD-E	48	#30	2		
-Burny Whirler	49	#31	2		
-Flyblock	50	#32	2		
-Arrow Hologram	51	#33	2		
-Flippy Longswitch	52	#34	2		
-2x2 Spiktron	53	#35		Yes	
-3x3 Spiketron	54	#36		Yes	
-Turbo Jem	55	#37	2		
-Mega Jem	56	#38	2		
-3x3 Spike Block	57	#39		Yes	
-Spike Chainer	58	#3A	2		
-TBot	59	#3B	1		
-Environment Column	60	#3C	1	Sort of	
-Jem Switch	61	#3D	2		
-Battle Switch	62	#3E	2		
-4x1 Slippy Goo	63	#3F		Yes	
-8x2 Slippy Goo	64	#40		Yes	
-2x2 Slippy Goo	65	#41		Yes	
-Rebound	66	#42	2		
-3x3 Slippy Goo	67	#43		Yes	
-3x3 Vacrat	68	#44		Yes	
-2x2 Lizumi	69	#45		Yes	
-3x3 Lizumi	70	#46		Yes	
-Swoopadoop	71	#47	2		
-Canoodle	72	#48	1		
-2x2 Flipwip	73	#49		Yes	
-3x3 Flipwip	74	#4A		Yes	
-2x2 Swoopadoop	75	#4B		Yes	
-3x3 Swoopadoop	76	#4C		Yes	
-2x2 Flapjack	77	#4D		Yes	
-3x3 Flapjack	78	#4E		Yes	
-2x2 Whizzblade	79	#4F		Yes	
-3x3 Whizzblade	80	#50		Yes	
-Popjaw	81	#51	2		
-2x2 Canoodle	82	#52		Yes	
-3x3 Canoodle	83	#53		Yes	
-2x2 Blopfush	84	#54		Yes	
-3x3 Blopfush	85	#55		Yes	
-Eye Switch	86	#56	2		
-Environment Backdrop	87	#57	1		
-Environment Enclosure	88	#58	1		
-Lectroshield	89	#59	2		
-Armor Plate	90	#5A	2		
-DBot	91	#5B	2		
-Sign	92	#5C	2		
-Doomerang	93	#5D	1		
-Purge Gate	94	#5E	2		
-Spike Trap	95	#5F	2		
-Dropblock	96	#60	1		
-Antigrav Block	97	#61	1		
-Tempswitch	98	#62	2		
-Flapsack	99	#63	2		
-Bomb Beamer	100	#64	2		
-Robo Factory	101	#65	2		
-Spike Block	102	#66	2		
-Long Dropblock	103	#67		Yes	
-2x1 Purge Gate	104	#68		Yes	
-3x1 Purge Gate	105	#69		Yes	
-1x2 Purge Gate	106	#6A		Yes	
-1x3 Purge Gate	107	#6B		Yes	
-2x2 Cannon	108	#6C		Yes	
-3x3 Cannon	109	#6D		Yes	
-3x3 Hardlight	110	#6E		Yes	
-2x2 Spike Block	111	#6F		Yes	
-2x2 Popjaw	112	#70		Yes	
-3x3 Popjaw	113	#71		Yes	
-3x3 Crombler	114	#72		Yes	
-Baddie Eyeswitch	115	#73	2		
-Bomb	116	#74	2		
-Package	117	#75	2		
-Booster	118	#76	1		
-Brake	119	#77	1		
-Battery	120	#78	2		
-Charge Switch	121	#79	2		
-Refueler	122	#7A	1		
-Package (it's the round one)	123	#7B	2		
-Ball Stopper	124	#7C	1		
-Bumper	125	#7D	2		
-Canoodle Core	126	#7E			
-Wingarang	127	#7F	2		
-Slurb Juice	128	#80	2		
-Spinny Platform	129	#81	2		
-Flingo	130	#82	2		
-2x2 Rift	131	#83		Yes	
-3x3 Rift	132	#84		Yes	
-Regret Gate	133	#85	2		
-3x1 Toe Slider	134	#86		Yes	
-2x2 Hardlight	135	#87		Yes	
-2x2 Robo Factory	136	#88		Yes	
-3x3 Robo Factory	137	#89		Yes	
-Sweep Laser	138	#8A	1		
-Boombox	139	#8B	2		
-Recycler	140	#8C	1		
-Blopsack	141	#8D	2		
-Lizumi Thorn	142	#8E	2		
-Flipegg	143	#8F	2		
-Pop Medallion	144	#90	2		
-2x2 Lookannon	145	#91		Yes	
-3x3 Lookannon	146	#92		Yes	
-2x2 Bumper	147	#93		Yes	
-3x3 Bumper	148	#94		Yes	
-Bug Head	149	#95	1		
-Stranded GR17	150	#96	1		
-Bug Body Right	151	#97	1		
-Bug Body Left	152	#98	1		
-Bug Abdomen	153	#99	1		
-Camera Anchor	154	#9A	2		
-Instructions	155	#9B	1		
-Jukebox	156	#9C	2		
-Relay	157	#9D	2		
-Waitswitch	158	#9E	2		
-2x2 Arrow Hologram	159	#9F		Yes	
-3x3 Arrow Hologram	160	#A0		Yes	
-ZOOM-R	161	#A1	2		
-Rickety Wood	162	#A2	2		
-Rickety Backdrop	163	#A3	1		
-Spookstone	164	#A4	2		
-Spookstone Backdrop	165	#A5	1		
-Kronkrete Backdrop	166	#A6	1		
-Slipy Goo Backdrop	167	#A7	1		
-Window	168	#A8	1		
-2x2 Jackdrop	169	#A9	0	Yes	
-3x3 Jackdrop	170	#AA			
-Kronkrete Enclosure	171	#AB			
-Rickety Enclosure	172	#AC			
-Spookstone Enclosure	173	#AD			
-Secret Eye	174	#AE	2		
-Falltrough Wood	175	#AF	2		
-Falltrough Spookstone	176	#B0	2		
-Falltrough Kronkrete	177	#B1	2		
-Powered Gate (hor.)	178	#B2			
-Battle Gate (hor.)	179	#B3			
-Key Gate (hor.)	180	#B4			
-Jem Gate (hor.)	181	#B5			
-Scrubb	182	#B6	2		
-Ocula	183	#B7	2		
-Squished Ocula	184	#B8	2		
-Squished Scrubb	185	#B9	2		
-Key Chest	186	#BA	2		
-Key Switch	187	#BB	2		
-Lead Block	188	#BC	2		
-2x2 Lead Block	189	#BD		Yes	
-3x3 Lead Block	190	#BE		Yes	
-2x2 Scrubb	191	#BF		Yes	
-3x3 Scrubb	192	#C0		Yes	
-2x2 Ocula	193	#C1		Yes	
-3x3 Ocula	194	#C2		Yes	
-Fireball	195	#C3	2		
-2x2 Fireball	196	#C4		Yes	
-3x3 Fireball	197	#C5		Yes	
-Jinglebox	198	#C6	2		
-Weatherbox	199	#C7	2		
-Swipe Teacher	200	#C8	1		
-Movement Teacher	201	#C9	1		
+Name	ID(decimal)	ID(hex)	Width	Height	Base ID (If this element is for example a bigger version of another, the other ones ID(decimal) goes here. "No" if this element is it's own.)	Name Combobulator (2=In-game selectable, 1=shows up, but not selectable, 0=displays raw)	Notes
+Delete	0	#00			No	2	
+Environment	1	#01	1	1	No	1	
+Spiketron	2	#02	1	1	No	2	
+Vacrat	3	#03	1	1	No	2	
+Falltrough Ledge	4	#04	1	1	No	2	
+Long Flyblock	5	#05	3	1	50	2	
+Dense Fog	6	#06	1	1	No	2	
+Hardlight	7	#07	1	1	No	2	
+Flipwip	8	#08	1	1	No	2	
+Blopfush	9	#09	1	1	No	2	
+Flapjack	10	#0A	1	1	No	2	
+Jem	11	#0B	1	1	No	2	
+Kronkrete	12	#0C	1	1	No	2	
+Sproing	13	#0D	1	1	No	2	
+Ripcord	14	#0E	1	1	No	2	
+Goal	15	#0F	2	1	No	2	
+GR-18	16	#10	1	1	No	2	
+Slippy Goo	17	#11	1	1	No	2	
+Sky Wiggler	18	#12	2	1	No	2	
+Throw Block	19	#13	1	1	No	2	
+Tiptow	20	#14	1	1	No	2	
+Battle Gate	21	#15	1	3	No	2	
+Waylay	22	#16	1	1	No	2	
+Jem Gate	23	#17	1	3	No	2	
+Whizzblade	24	#18	1	1	No	2	
+Powered Gate	25	#19	1	3	No	2	
+Lock Switch	26	#1A	1	1	No	2	
+Jackdrop	27	#1B	1	1	No	2	
+2x2 Vacrat	28	#1C	2	2	3		
+Keycard	29	#1D	1	1	No	2	
+Key Gate	30	#1E	1	3	No	2	
+Blaster	31	#1F	1	1	No	2	
+Zipper	32	#20	1	1	No	2	
+Vacsteak	33	#21	1	1	No	2	
+Lizumi	34	#22	1	1	No	2	
+Pressure Switch	35	#23	1	1	No	2	
+Hard Clay	36	#24	1	1	No	2	
+Clock Switch	37	#25	1	1	No	2	
+Rift	38	#26	1	1	No	2	
+Trigblaster	39	#27	1	1	No	2	
+Prize Block	40	#28	1	1	No	2	
+Brittle Rock	41	#29	1	1	No	2	
+Cannon	42	#2A	1	1	No	2	
+Package Cam	43	#2B	1	1	No	2	
+Lookannon	44	#2C	1	1	No	2	
+Crombler	45	#2D	1	1	No	2	
+2x2 Crombler	46	#2E	2	2	45		
+Toe Slider	47	#2F	1	1	No	2	
+BUDD-E	48	#30	2	2	No	2	
+Burny Whirler	49	#31	1	1	No	2	
+Flyblock	50	#32	1	1	No	2	
+Arrow Hologram	51	#33	1	1	No	2	
+Flippy Longswitch	52	#34	1	1	No	2	
+2x2 Spiktron	53	#35	2	2	2		
+3x3 Spiketron	54	#36	3	3	2		
+Turbo Jem	55	#37	2	2	11	2	
+Mega Jem	56	#38	2	3	11	2	
+3x3 Spike Block	57	#39	3	3	102		
+Spike Chainer	58	#3A	1	1	No	2	
+TBot	59	#3B	1	1	No	1	
+Environment Column	60	#3C			1	1	A downwards column of 16 Environment. Gets saved as Environment.
+Jem Switch	61	#3D	1	1	No	2	
+Battle Switch	62	#3E	1	1	No	2	
+4x1 Slippy Goo	63	#3F	4	1	17		
+8x2 Slippy Goo	64	#40	8	2	17		
+2x2 Slippy Goo	65	#41	2	2	17		
+Rebound	66	#42	1	1	No	2	
+3x3 Slippy Goo	67	#43	3	3	17		
+3x3 Vacrat	68	#44	3	3	3		
+2x2 Lizumi	69	#45	2	2	34		
+3x3 Lizumi	70	#46	3	3	34		
+Swoopadoop	71	#47	1	1	No	2	
+Canoodle	72	#48	1	1	No	1	
+2x2 Flipwip	73	#49	2	2	8		
+3x3 Flipwip	74	#4A	3	3	8		
+2x2 Swoopadoop	75	#4B	2	2	71		
+3x3 Swoopadoop	76	#4C	3	3	71		
+2x2 Flapjack	77	#4D	2	2	10		
+3x3 Flapjack	78	#4E	3	3	10		
+2x2 Whizzblade	79	#4F	2	2	24		
+3x3 Whizzblade	80	#50	3	3	24		
+Popjaw	81	#51	1	1	No	2	
+2x2 Canoodle	82	#52	2	2	72		
+3x3 Canoodle	83	#53	3	3	72		
+2x2 Blopfush	84	#54	2	2	9		
+3x3 Blopfush	85	#55	3	3	9		
+Eye Switch	86	#56	1	1	No	2	
+Environment Backdrop	87	#57	1	1	No	1	
+Environment Enclosure	88	#58	1	1	No	1	
+Lectroshield	89	#59	1	1	No	2	
+Armor Plate	90	#5A	1	1	No	2	
+DBot	91	#5B	1	1	No	2	
+Sign	92	#5C	1	2	No	2	
+Doomerang	93	#5D			No	1	
+Purge Gate	94	#5E	1	1	No	2	
+Spike Trap	95	#5F	1	1	No	2	
+Dropblock	96	#60			No	1	
+Antigrav Block	97	#61			No	1	
+Tempswitch	98	#62	1	1	No	2	
+Flapsack	99	#63	1	1	No	2	
+Bomb Beamer	100	#64	1	1	No	2	
+Robo Factory	101	#65	1	1	No	2	
+Spike Block	102	#66	1	1	No	2	
+Long Dropblock	103	#67			96		
+2x1 Purge Gate	104	#68	2	1	94		
+3x1 Purge Gate	105	#69	3	1	94		
+1x2 Purge Gate	106	#6A	1	2	94		
+1x3 Purge Gate	107	#6B	1	3	94		
+2x2 Cannon	108	#6C	2	2	42		
+3x3 Cannon	109	#6D	3	3	42		
+3x3 Hardlight	110	#6E	3	3	7		
+2x2 Spike Block	111	#6F	2	2	102		
+2x2 Popjaw	112	#70	2	2	81		
+3x3 Popjaw	113	#71	3	3	81		
+3x3 Crombler	114	#72	3	3	45		
+Baddie Eyeswitch	115	#73	1	1	No	2	
+Bomb	116	#74	1	1	No	2	
+Package	117	#75	1	1	No	2	
+Booster	118	#76			No	1	
+Brake	119	#77			No	1	
+Battery	120	#78	1	1	No	2	
+Charge Switch	121	#79	1	1	No	2	
+Refueler	122	#7A			No	1	
+Golf Package	123	#7B			No	2	The round one used by golf mode. Actually called "Package" in the name combobulator (a different name is used here to have unique names for everything for better API).
+Ball Stopper	124	#7C			No	1	
+Bumper	125	#7D	1	1	No	2	
+Canoodle Core	126	#7E	1	1	No		
+Wingarang	127	#7F	1	1	No	2	
+Slurb Juice	128	#80	1	1	No	2	
+Spinny Platform	129	#81	1	1	No	2	
+Flingo	130	#82	1	1	No	2	
+2x2 Rift	131	#83	2	2	38		
+3x3 Rift	132	#84	3	3	38		
+Regret Gate	133	#85	1	1	No	2	
+3x1 Toe Slider	134	#86	3	1	47		
+2x2 Hardlight	135	#87	2	2	7		
+2x2 Robo Factory	136	#88	2	2	101		
+3x3 Robo Factory	137	#89	3	3	101		
+Sweep Laser	138	#8A			No	1	
+Boombox	139	#8B	1	1	No	2	
+Recycler	140	#8C	1	1	No	1	
+Blopsack	141	#8D	1	1	No	2	
+Lizumi Thorn	142	#8E	1	1	No	2	
+Flipegg	143	#8F	1	1	No	2	
+Pop Medallion	144	#90	1	1	No	2	
+2x2 Lookannon	145	#91	2	2	44		
+3x3 Lookannon	146	#92	3	3	44		
+2x2 Bumper	147	#93	2	2	125		
+3x3 Bumper	148	#94	3	3	125		
+Bug Head	149	#95	1	1	No	1	
+Stranded GR17	150	#96	3	2	No	1	
+Bug Body Right	151	#97	1	1	No	1	
+Bug Body Left	152	#98	1	1	No	1	
+Bug Abdomen	153	#99	1	1	No	1	
+Camera Anchor	154	#9A	1	1	No	2	
+Instructions	155	#9B			No	1	
+Jukebox	156	#9C	1	1	No	2	
+Relay	157	#9D	1	1	No	2	
+Waitswitch	158	#9E	1	1	No	2	
+2x2 Arrow Hologram	159	#9F	2	2	51		
+3x3 Arrow Hologram	160	#A0	3	3	51		
+ZOOM-R	161	#A1	1	1	No	2	
+Rickety Wood	162	#A2	1	1	No	2	
+Rickety Backdrop	163	#A3	1	1	No	1	
+Spookstone	164	#A4	1	1	No	2	
+Spookstone Backdrop	165	#A5	1	1	No	1	
+Kronkrete Backdrop	166	#A6	1	1	No	1	
+Slipy Goo Backdrop	167	#A7			No	1	
+Window	168	#A8	1	1	No	1	
+2x2 Jackdrop	169	#A9	2	2	27	0	
+3x3 Jackdrop	170	#AA	3	3	27		
+Kronkrete Enclosure	171	#AB	1	1	No		
+Rickety Enclosure	172	#AC	1	1	No		
+Spookstone Enclosure	173	#AD	1	1	No		
+Secret Eye	174	#AE	1	1	No	2	
+Falltrough Wood	175	#AF	1	1	No	2	
+Falltrough Spookstone	176	#B0	1	1	No	2	
+Falltrough Kronkrete	177	#B1	1	1	No	2	
+Powered Gate (hor.)	178	#B2	3	1	25		
+Battle Gate (hor.)	179	#B3	3	1	21		
+Key Gate (hor.)	180	#B4	3	1	30		
+Jem Gate (hor.)	181	#B5	3	1	23		
+Scrubb	182	#B6	1	1	No	2	
+Ocula	183	#B7	1	1	No	2	
+Squished Ocula	184	#B8	1	1	No	2	
+Squished Scrubb	185	#B9	1	1	No	2	
+Key Chest	186	#BA	2	2	No	2	
+Key Switch	187	#BB	1	1	No	2	
+Lead Block	188	#BC	1	1	No	2	
+2x2 Lead Block	189	#BD	2	2	188		
+3x3 Lead Block	190	#BE	3	3	188		
+2x2 Scrubb	191	#BF	2	2	182		
+3x3 Scrubb	192	#C0	3	3	182		
+2x2 Ocula	193	#C1	2	2	183		
+3x3 Ocula	194	#C2	3	3	183		
+Fireball	195	#C3	1	1	No	2	
+2x2 Fireball	196	#C4	2	2	195		
+3x3 Fireball	197	#C5	3	3	195		
+Jinglebox	198	#C6	1	1	No	2	
+Weatherbox	199	#C7	1	1	No	2	
+Swipe Teacher	200	#C8			No	1	
+Movement Teacher	201	#C9			No	1	

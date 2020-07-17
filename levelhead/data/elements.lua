@@ -14,8 +14,25 @@ function E:initialize()
 			self.headers.name = v
 		elseif raw:match("iddecimal") then
 			self.headers.id = v
+		elseif raw:match("width") then
+			self.headers.width = v
+		elseif raw:match("height") then
+			self.headers.height = v
 		end
 	end
+end
+
+function E:getWidth(selector)
+	return self:getRow(selector)[self.headers.width] or "$UnknownWidth"
+end
+
+function E:getHeight(selector)
+	return self:getRow(selector)[self.headers.height] or "$UnknownHeight"
+end
+
+function E:getSize(selector)
+	local r = self:getRow(selector)
+	return r[self.headers.width] or "$UnknownWidth", r[self.headers.height] or "$UnknownHeight"
 end
 
 return E:new()
