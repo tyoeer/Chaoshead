@@ -10,7 +10,7 @@ function UI:initialize(editor)
 	self.zoomFactor = 1
 	self.zoomSpeed = math.sqrt(2)
 	--state stuff
-	self.draggedCamera = false
+	self.selecting = false
 	
 	--UI stuff
 	UI.super.initialize(self)
@@ -78,20 +78,24 @@ end
 
 function UI:mousemoved(x,y,dx,dy)
 	if input.isActive("drag","camera") then
-		self.draggedCamera = true
+		self.selecting = false
 		self.x = self.x + dx/self.zoomFactor
 		self.y = self.y + dy/self.zoomFactor
 	end
 end
 
+function UI:inputActivated(name,group, isCursorBound)
+	if name=="select" and group=="editor" then
+		self.selecting = true
+	end
+end
+
 function UI:inputDeactivated(name,group, isCursorBound)
 	if name=="select" and group=="editor" then
-		if not self.draggedCamera then
+		if self.selecting then
+			self.selecting = false
 			self.editor:selectObject(self:getMouseTile(x,y))
 		end
-	end
-	if name=="drag" and group=="camera" then
-		self.draggedCamera = false
 	end
 end
 
