@@ -12,7 +12,7 @@ function E:initialize()
 		local raw = v:gsub("%W",""):lower()
 		if raw:match("^name$") then
 			self.headers.name = v
-		elseif raw:match("iddecimal") then
+		elseif raw:match("^iddecimal$") then
 			self.headers.id = v
 		elseif raw:match("width") then
 			self.headers.width = v
