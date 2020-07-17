@@ -1,4 +1,4 @@
-Name	ID (decimal)	ID (hex)	Save Format (How it's saved, see the doc for more info)	Notes	Default	Min	Max	Mapping Type (Simple: use mapping on the right | Hybrid: use mappings on the right, _ means use number | None: use numbers | Music: use the music data)	Map: -1 (See Map: 0 for details)	Map: 0 (Which int value maps to which displayed string. - means that that mappnig is just the number. ! means that that mapping is out of range. Blue background means that it's the default, but it hasn't been verified the default is that number/byte)	Map: 1	Map: 2	Map: 3	Map: 4	Map: 5	Map: 6	Map: 7	Map: 8	Elements using this property(this column is just to help understand the property better)	 
+Name	ID (decimal)	ID (hex)	Save Format (How it's saved, see the doc for more info)	Notes	Default	Min	Max	Mapping Type (Simple: use mapping on the right | Hybrid: use mappings on the right, - means use number | None: use numbers | Music: use the music data | List:[name]: Use the [name] list from the Property Lists sheet)	Map: -1 (When the Mapping Type is List, this is the list name. Otherwise see Map: 0 for details)	Map: 0 (Which int value maps to which displayed string. - means that that mappnig is just the number. ! means that that mapping is out of range. Blue background means that it's the default, but it hasn't been verified the default is that number/byte)	Map: 1	Map: 2	Map: 3	Map: 4	Map: 5	Map: 6	Map: 7	Map: 8	Elements using this property(this column is just to help understand the property better)	 
 Sending Channel	0	#00	B	Can't be set to none.	0	0	999	None											Pressure Switch, Flippy Longswitch, ...	
 Receiving Channel	1	#01	B	Can't be set to none.	0	0	999	None											Powered Gate	
 Start State	2	#02	A		0	0	1	Simple	!	Inactive	Active	!	!	!	!	!	!	!	Key Chest, Pressure Switch, ...	
@@ -47,7 +47,7 @@ Spike Size 	44	#2C	A		1	1	3	Simple	!	!	Regular	Medium	Venti	!	!	!	!	!	Spike Chai
 Chains	45	#2D	A		1	1	4	None											Burny Whirler, Spike Chainer, Spinny Platform	
 Powerup	46	#2E	A		0	0	5	Simple	!	None	Tiptow	Waylay	Zipper	Ripcord	Rebound	!	!	!	GR-18	
 Color	47	#2F	A		2	0	3	Simple	!	Blue	Gold	Fuchsia	Green	!	!	!	!	!	Hardlight, Rift, Key Chests, ...	
-Projectile	48	#30	A		2	1	4	Simple	!	!	Fire	Steel	Rocket	Guided Missile	!	!	!	!	(Look)cannon	
+Projectile	48	#30	A		0	0	4	Simple	!	Steel	Fire	Rubber	Rocket	Guided Missile	!	!	!	!	(Look)cannon	
 Receiving Channel	49	#31	B	Can be set to none.	-1	-1	999	Hybrid	None	-	-	-	-	-	-	-	-	-	Prizeblock, Hardlight, ...	
 ???	50	#32																		
 Bass Pitch	51	#33	A	Also gets saved for the "melody" instrument. Called "Pitch" in-game.	7	0	21												Boombox	
@@ -87,7 +87,7 @@ Detection Shape	84	#54	A		0	0	1	Simple	!	Square	Rectangle	!	!	!	!	!	!	!	Eye Swit
 Behaviour	85	#55	A		0	0	3	Simple	!	Hold	Lock	Toggle	Explode	!	!	!	!	!	Pressure Switch	
 Horizontal Flip	86	#56	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Key Chest, Sign	
 Fire Style	87	#57	A		0	0	1	Simple	!	Hot Fire	Wildfire	!	!	!	!	!	!	!	Burny Whirler, Fireball	
-Jingle	88	#58	A		0	0	15												Jinglebox	
+Jingle	88	#58	A		0	0	15	List	Jingle										Jinglebox	
 Positional	89	#59	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Jinglebox	
 Sending Channel	90	#5A	B	Can be set to none	-1	-1	999	Hybrid	None	-	-	-	-	-	-	-	-	-	Key Chest, Key Gate	
 Repeatable	91	#5B	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Jinglebox	

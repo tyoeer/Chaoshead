@@ -1,5 +1,6 @@
 local csv = require("utils.csv")
 local M = require("levelhead.data.music")
+local L = require("levelhead.data.propertyLists")
 
 local P = Class(require("levelhead.data.base"))
 
@@ -18,11 +19,11 @@ function P:initialize()
 		local raw = v:lower():gsub("[^a-z0-9%-]","")
 		if raw:match("saveformat") then
 			self.headers.saveFormat = v
-		elseif raw:match("name") then
+		elseif raw:match("^name$") then
 			self.headers.name = v
-		elseif raw:match("iddecimal") then
+		elseif raw:match("^iddecimal$") then
 			self.headers.id = v
-		elseif raw:match("mappingtype") then
+		elseif raw:match("^mappingtype") then
 			self.headers.mappingType = v
 		elseif raw:match("min") then
 			self.headers.min = v
@@ -80,6 +81,8 @@ function P:mappingToValue(selector, mapping)
 				return i
 			end
 		end
+	elseif mappingType=="List" then
+		return L:mappingToValue(p[self.headers.map[-1]], mapping)
 	elseif mappingType=="Music" then
 		return M:getID(mapping)
 	else
@@ -122,10 +125,12 @@ function P:valueToMapping(selector, value)
 		else
 			return m
 		end
+	elseif mappingType=="List" then
+		return L:valueToMapping(p[self.headers.map[-1]], value)
 	elseif mappingType=="Music" then
 		return M:getName(value)
 	else
-		print("Illegal mapping type: "..selector.." :-: "..mappingType)
+		print("Illegal mapping type: "..selector.." :-: "..tostring(mappingType))
 		return "$UnknownMapping"
 	end
 end
