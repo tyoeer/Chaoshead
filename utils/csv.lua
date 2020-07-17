@@ -23,6 +23,8 @@ function csv.parseString(text,seperator)
 			current = ""
 			column = column + 1
 		elseif char==END then
+			--line ending shenanigans (a CR can otherwise get appended)
+			current = current:trim()
 			if out then
 				current = tonumber(current) or current
 				out[#out][headers[column]] = current
