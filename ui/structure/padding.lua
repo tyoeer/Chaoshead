@@ -15,7 +15,7 @@ function UI:initialize(child,padding)
 end
 
 function UI:getPropagatedMouseX(child)
-	return self:getMouseY() - self.paddingLeft
+	return self:getMouseX() - self.paddingLeft
 end
 
 function UI:getPropagatedMouseY(child)
