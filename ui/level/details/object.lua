@@ -1,5 +1,5 @@
-local P = require("levelhead.data.properties"):new()
-local E = require("levelhead.data.elements"):new()
+local P = require("levelhead.data.properties")
+local E = require("levelhead.data.elements")
 
 local UI = Class(require("ui.structure.list"))
 

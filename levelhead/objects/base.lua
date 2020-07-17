@@ -1,4 +1,4 @@
-local E = require("levelhead.data.elements"):new()
+local E = require("levelhead.data.elements")
 
 local Base = Class()
 

@@ -1,5 +1,5 @@
 local csv = require("utils.csv")
-local M = require("levelhead.data.music"):new()
+local M = require("levelhead.data.music")
 
 local P = Class(require("levelhead.data.base"))
 
@@ -130,4 +130,4 @@ function P:valueToMapping(selector, value)
 	end
 end
 
-return P
+return P:new()

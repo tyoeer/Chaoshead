@@ -18,4 +18,4 @@ function E:initialize()
 	end
 end
 
-return E
+return E:new()

@@ -1,7 +1,7 @@
 local LHS = {}
 local bit = require("bit")
 
-local P = require("levelhead.data.properties"):new()
+local P = require("levelhead.data.properties")
 
 --[[
 

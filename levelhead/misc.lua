@@ -21,7 +21,7 @@ function m.parseLevelName(name)
 			if part:match("%_") then
 				local le = part:match("iin%_(.+)")
 				if le then
-					part = require("levelhead.data.elements"):new():getName(tonumber(le))
+					part = require("levelhead.data.elements"):getName(tonumber(le))
 				else
 					part = part:match(".+%_.+%_(.+)")
 					if not part then table.print(name) end

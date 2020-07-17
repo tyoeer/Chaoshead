@@ -18,4 +18,4 @@ function M:initialize()
 	end
 end
 
-return M
+return M:new()

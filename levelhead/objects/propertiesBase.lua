@@ -1,4 +1,4 @@
-local P = require("levelhead.data.properties"):new()
+local P = require("levelhead.data.properties")
 
 local OBJ = Class(require("levelhead.objects.base"))
 
