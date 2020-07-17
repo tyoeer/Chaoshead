@@ -75,16 +75,13 @@ end
 -- events (most are handled by the proxy super)
 
 function UI:inputActivated(name,group, isCursorBound)
-	if group=="editor" then
-		if name=="delete" then
-			if self.selectedObject then
-				self:delete(self.selectedObject)
-			end
+	if group=="editor" and name=="delete" then
+		if self.selectedObject then
+			self:delete(self.selectedObject)
 		end
 	else
 		self.child:inputActivated(name,group, isCursorBound)
 	end
 end
-
 
 return UI
