@@ -26,7 +26,6 @@ function UI:reload(l)
 		l = self.levelFile
 	end
 	
-	self.all = bytesToHex(l.raw)
 	self.prefix = bytesToHex(l:getBytes(1,6))
 	self.campaignMarker = bytesToHex(l:getBytes(7,1))
 	self.nHeaders = bytesToHex(l:getBytes(8,1))
@@ -92,7 +91,6 @@ function UI:draw()
 	local c = self.levelFile.rawContentEntries
 	love.graphics.setColor(1,1,1)
 	textRow("Headers:",-1)
-		row("all")
 		row("prefix","Unknown: Prefix")
 		row("campaignMarker","Unknown: CampaignMarker")
 		row("nHeaders","Amount of headers")
