@@ -118,8 +118,13 @@ function UI:draw()
 		sectionRows("singleForeground","Single foreground objects")
 		sectionRows("foregroundRows","Foreground rows")
 		sectionRows("foregroundColumns","Foreground columns")
-		propertyRows("objectProperties","Object Properties")
-		propertyRows("pathProperties","Path Properties")
+		if settings.misc.hexInspector.verbosePropertiesDisplay then
+			propertyRows("objectProperties","Object Properties")
+			propertyRows("pathProperties","Path Properties")
+		else
+			sectionRows("objectProperties","Object Properties")
+			sectionRows("pathProperties","Path Properties")
+		end
 		sectionRows("repeatedPropertySets","RPS")
 		textRow("Objects in objects (ex.: a jem in a prizeblock):")
 			textRow(bytesToHex(self.levelFile.raw:sub(c.repeatedPropertySets.endOffset+1)),1)

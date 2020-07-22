@@ -8,6 +8,8 @@ local function load(name,...)
 	end
 end
 
-load("dimensions","dim")
-load("bindings","keys")
+load("dimensions", "dim")
+load("bindings", "keys")
+load("misc")
+
 return out

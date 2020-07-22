@@ -1,0 +1,5 @@
+return {
+	hexInspector = {
+		verbosePropertiesDisplay = false
+	}
+}
