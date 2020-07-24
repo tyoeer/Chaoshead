@@ -68,7 +68,7 @@ function love.keypressed(key, scancode, isrepeat)
 	--ui:keypressed(key, scancode, isrepeat)
 end
 function love.textinput(text)
-	ui:textinput(text)
+	ui:textInput(text)
 end
 function love.keyreleased(key, scancode)
 	input.keyreleased(key, scancode)
@@ -83,8 +83,8 @@ function love.mousereleased(x, y, button, isTouch, presses)
 	--ui:mousereleased(x,y, button, isTouch)
 end
 function love.mousemoved(x, y, dx, dy)
-	ui:mousemoved(x, y, dx, dy)
+	ui:mouseMoved(x, y, dx, dy)
 end
 function love.wheelmoved(x, y)
-	ui:wheelmoved(x,y)
+	ui:wheelMoved(x,y)
 end

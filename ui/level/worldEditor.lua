@@ -76,7 +76,7 @@ function UI:draw()
 	love.graphics.pop()
 end
 
-function UI:mousemoved(x,y,dx,dy)
+function UI:mouseMoved(x,y,dx,dy)
 	if input.isActive("drag","camera") then
 		self.selecting = false
 		self.x = self.x + dx/self.zoomFactor
@@ -99,7 +99,7 @@ function UI:inputDeactivated(name,group, isCursorBound)
 	end
 end
 
-function UI:wheelmoved(x,y)
+function UI:wheelMoved(x,y)
 	if y>0 then
 		self.zoomFactor = self.zoomFactor * self.zoomSpeed
 	elseif y<0 then

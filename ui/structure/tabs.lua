@@ -140,16 +140,16 @@ function UI:inputDeactivated(name,group,isCursorBound)
 	self.activeChild:inputDeactivated(name,group,isCursorBound)
 end
 
-relay("textinput")
+relay("textInput")
 
-function UI:mousemoved(x,y, dx,dy, ...)
+function UI:mouseMoved(x,y, dx,dy, ...)
 	if y > self.tabHeight or y-dy > self.tabHeight then
-		self.activeChild:mousemoved(x,y - self.tabHeight, dx,dy, ...)
+		self.activeChild:mouseMoved(x,y - self.tabHeight, dx,dy, ...)
 	end
 end
-function UI:wheelmoved(x,y)
+function UI:wheelMoved(x,y)
 	if self:getMouseY() > self.tabHeight then
-		self.activeChild:wheelmoved(x,y)
+		self.activeChild:wheelMoved(x,y)
 	end
 end
 

@@ -109,14 +109,14 @@ end
 relayInput("inputActivated")
 relayInput("inputDeactivated")
 
-relayAll("textinput")
+relayAll("textInput")
 
-function UI:mousemoved(x,y, ...)
+function UI:mouseMoved(x,y, ...)
 	local checkY = 0
 	for c in self.children:iterate() do
 		checkY = checkY + c.height
 		if y <= checkY then
-				c:mousemoved(x, y - checkY + c.height, ...)
+				c:mouseMoved(x, y - checkY + c.height, ...)
 			break
 		end
 		checkY = checkY + self.entryMargin
@@ -125,13 +125,13 @@ function UI:mousemoved(x,y, ...)
 		end
 	end
 end
-function UI:wheelmoved(...)
+function UI:wheelMoved(...)
 	local x,y = self:getMousePos()
 	local checkY = 0
 	for c in self.children:iterate() do
 		checkY = checkY + c.height
 		if y <= checkY then
-				c:wheelmoved(...)
+				c:wheelMoved(...)
 			break
 		end
 		checkY = checkY + self.entryMargin

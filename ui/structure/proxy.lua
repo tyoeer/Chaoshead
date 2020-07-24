@@ -43,10 +43,10 @@ end
 relay("inputActivated")
 relay("inputDeactivated")
 
-relay("textinput")
+relay("textInput")
 
-relay("mousemoved")
-relay("wheelmoved")
+relay("mouseMoved")
+relay("wheelMoved")
 
 
 return UI

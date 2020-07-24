@@ -60,9 +60,9 @@ end
 relay("inputActivated")
 relay("inputDeactivated")
 
-relay("textinput")
+relay("textInput")
 
-function UI:mousemoved(x,y,dx,dy)
+function UI:mouseMoved(x,y,dx,dy)
 	if input.isActive("drag","camera") then
 		self.x = self.x + dx/self.zoomFactor
 		self.y = self.y + dy/self.zoomFactor
@@ -78,10 +78,10 @@ function UI:mousemoved(x,y,dx,dy)
 		
 		dx = dx / self.zoomFactor
 		dy = dy / self.zoomFactor
-		self.child:mousemoved(x,y,dx,dy)
+		self.child:mouseMoved(x,y,dx,dy)
 	end
 end
-function UI:wheelmoved(x,y)
+function UI:wheelMoved(x,y)
 	if y>0 then
 		self.zoomFactor = self.zoomFactor * self.zoomSpeed
 	elseif y<0 then

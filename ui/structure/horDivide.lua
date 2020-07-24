@@ -130,21 +130,21 @@ end
 relayInput("inputActivated")
 relayInput("inputDeactivated")
 
-relayBoth("textinput")
+relayBoth("textInput")
 
-function UI:mousemoved(x,y, dx,dy, isTouch)
+function UI:mouseMoved(x,y, dx,dy, isTouch)
 	if x < self.leftChild.width then
-		self.leftChild:mousemoved(x,y, dx,dy, isTouch)
+		self.leftChild:mouseMoved(x,y, dx,dy, isTouch)
 	elseif x >= self.divisionX + self.divisionWidth - 1 then
-		self.rightChild:mousemoved(x - self.divisionX - self.divisionWidth, y, dx,dy, isTouch)
+		self.rightChild:mouseMoved(x - self.divisionX - self.divisionWidth, y, dx,dy, isTouch)
 	end
 end
-function UI:wheelmoved(x,y)
+function UI:wheelMoved(x,y)
 	local xx = self:getMouseX()
 	if xx < self.leftChild.width then
-		self.leftChild:wheelmoved(x, y)
+		self.leftChild:wheelMoved(x, y)
 	elseif xx >= self.divisionX + self.divisionWidth - 1 then
-		self.rightChild:wheelmoved(x, y)
+		self.rightChild:wheelMoved(x, y)
 	end
 end
 

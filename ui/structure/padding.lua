@@ -69,19 +69,19 @@ end
 relayInput("inputActivated")
 relayInput("inputDeactivated")
 
-relay("textinput")
+relay("textInput")
 
-function UI:mousemoved(x,y, ...)
+function UI:mouseMoved(x,y, ...)
 	if x < self.width - self.paddingRight and x > self.paddingLeft
 	and y < self.height - self.paddingDown and y > self.paddingUp then
-		self.child:mousemoved(x - self.paddingLeft, y - self.paddingUp, ...)
+		self.child:mouseMoved(x - self.paddingLeft, y - self.paddingUp, ...)
 	end
 end
-function UI:wheelmoved(x,y)
+function UI:wheelMoved(x,y)
 	local mx, my = self:getMousePos()
 	if mx < self.width - self.paddingRight and mx > self.paddingLeft
 	and my < self.height - self.paddingDown and my > self.paddingUp then
-		self.child:wheelmoved(x,y)
+		self.child:wheelMoved(x,y)
 	end
 end
 

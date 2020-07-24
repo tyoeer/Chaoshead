@@ -47,9 +47,9 @@ end
 function BaseUI:inputActivated(name,group,isCursorBound) end
 function BaseUI:inputDeactivated(name,group,isCursorBound) end
 
-function BaseUI:textinput(text) end
+function BaseUI:textInput(text) end
 
-function BaseUI:mousemoved(x, y, dx, dy) end
-function BaseUI:wheelmoved(x, y) end
+function BaseUI:mouseMoved(x, y, dx, dy) end
+function BaseUI:wheelMoved(x, y) end
 
 return BaseUI
