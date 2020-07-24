@@ -30,15 +30,21 @@ function OBJ:__index(key)
 		local prop = key:match("set(.+)")
 		prop = prop:gsub("([A-Z])"," %1"):trim()
 		return function(self,mapping)
+			local exists = false
 			local set = false
 			for _,id in ipairs(P:getAllIDs(prop)) do
+				exists = true
 				if P:isValidMapping(id,mapping) then
 					set = true
 					self:setProperty(id, mapping)
 				end
 			end
 			if not set then
-				error("Mapping "..mapping.." is invalid for property "..property)
+				if exists then
+					error("Mapping "..mapping.." is invalid for property "..prop)
+				else
+					error("Property "..prop.." doesn't exist")
+				end
 			end
 		end
 	elseif key:match("get") then
