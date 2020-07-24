@@ -143,7 +143,7 @@ end
 relay("textInput")
 
 function UI:mouseMoved(x,y, dx,dy, ...)
-	if y > self.tabHeight or y-dy > self.tabHeight then
+	if y > self.tabHeight then
 		self.activeChild:mouseMoved(x,y - self.tabHeight, dx,dy, ...)
 	end
 end
