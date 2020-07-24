@@ -10,6 +10,7 @@ end
 
 load("dimensions", "dim")
 load("bindings", "keys")
+load("colors", "col","colours")
 load("misc")
 
 return out

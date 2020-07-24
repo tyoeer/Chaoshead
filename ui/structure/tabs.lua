@@ -64,25 +64,31 @@ function UI:draw()
 	love.graphics.pop("all")
 	
 	--draw ui
-	love.graphics.setColor(1,1,1,1)
+	love.graphics.setColor(settings.col.tabs.divide)
 	love.graphics.line(0,self.tabHeight, self.width,self.tabHeight)
 	local i = 1
+	local y = math.round(self.tabHeight/4)
 	for child in self.children:iterate() do
 		local x = (i-1)*self.tabWidth
-		local y = math.round(self.tabHeight/4)
-		if math.isPointInRectangle(
+		local col
+		if self.activeChild == child then
+			col = settings.col.tabs.selected
+		elseif math.isPointInRectangle(
 			self:getMouseX(), self:getMouseY(),
 			x, 0,
 			x+self.tabWidth, self.tabHeight
 		) then
-			love.graphics.setColor(1,1,1,0.5)
-			love.graphics.rectangle(
-				"fill",
-				x,0,
-				self.tabWidth, self.tabHeight
-			)
+			col = settings.col.tabs.hover
+		else
+			col = settings.col.tabs.other
 		end
-		love.graphics.setColor(1,1,1,1)
+		love.graphics.setColor(col.bg)
+		love.graphics.rectangle(
+			"fill",
+			x,0.5,
+			self.tabWidth, self.tabHeight-1
+		)
+		love.graphics.setColor(col.text)
 		love.graphics.printf(child.title,math.round(x),y, self.tabWidth,"center")
 		i = i + 1
 	end

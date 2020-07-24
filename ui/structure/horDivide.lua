@@ -91,7 +91,7 @@ function UI:draw()
 	love.graphics.pop("all")
 	
 	--draw divider
-	love.graphics.setColor(1,1,1,1)
+	love.graphics.setColor(settings.col.horDivide)
 	love.graphics.line(
 		self.divisionX, 0,
 		self.divisionX, self.height

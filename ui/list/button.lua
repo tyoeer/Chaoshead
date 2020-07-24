@@ -19,13 +19,18 @@ end
 function UI:draw()
 	love.graphics.setFont(self.font)
 	local x,y = self:getMousePos()
+	local col
 	if x >= 0 and y >= 0 and x < self.width and y < self.height then
-		love.graphics.setColor(1, 1, 1, 0.5)
-		love.graphics.rectangle("fill",0.5,0.5,self.width-1,self.height-1)
-		love.graphics.setColor(1, 1, 1, 1)
+		col = settings.col.list.button.hover
+	else
+		col = settings.col.list.button.other
 	end
+	love.graphics.setColor(col.bg)
+	love.graphics.rectangle("fill",0.5,0.5,self.width-1,self.height-1)
+	love.graphics.setColor(col.text)
 	love.graphics.printf(self.text, self.padding,self.padding, self.width-2*self.padding, "left")
 	if self.drawBorder then
+		love.graphics.setColor(col.outline)
 		love.graphics.rectangle("line",0.5,0.5,self.width-1,self.height-1)
 	end
 end

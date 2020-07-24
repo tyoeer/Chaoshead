@@ -15,6 +15,7 @@ end
 
 function UI:draw()
 	love.graphics.setFont(self.font)
+	love.graphics.setColor(settings.col.list.text)
 	love.graphics.printf(self.text, self.indent,0, self.width, "left")
 end
 
