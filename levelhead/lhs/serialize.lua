@@ -55,16 +55,16 @@ function LHS:serializeForeground(level)
 						idMap[o.id] = entry
 					end
 					table.insert(idMap[o.id].objects,{
-						x = o.x-1,
-						y = level.height - o.y
+						x = level:worldToFileX(o.x),
+						y = level:worldToFileY(o.y)
 					})
 					done[x][y] = true
 				elseif rowSize >= colSize then
 					local entry = {
 						length = rowSize-1,
 						id = o.id,
-						x = o.x - 1,
-						y = level.height - o.y
+						x = level:worldToFileX(o.x),
+						y = level:worldToFileY(o.y)
 					}
 					table.insert(r.entries, entry)
 					for i=0, rowSize-1, 1 do
@@ -74,8 +74,8 @@ function LHS:serializeForeground(level)
 					local entry = {
 						length = colSize-1,
 						id = o.id,
-						x = o.x - 1,
-						y = level.height - o.y
+						x = level:worldToFileX(o.x),
+						y = level:worldToFileY(o.y)
 					}
 					table.insert(c.entries, entry)
 					for i=0, colSize-1, 1 do
@@ -123,12 +123,14 @@ function LHS:serializeObjectProperties(level)
 				if not doubleLookup[id][value] then
 					--make sure the save format can handle this value
 					--fail quietly because of aggressive property setting
+					--this part can be removed once the property names of the an element no longer overlap
+					--which they currently do because all elements share all properties (data needs to be collected)
 					local f = P:getSaveFormat(id)
 					if f=="A" and (value<0 or value>255) then
 						go = false
 					elseif f=="B" and (value<-32768 or value>32767) then
 						go = false
-					-- no C because floats are huge
+					-- no C because floats are huge, and can thus save everything
 					elseif f=="D" and (value<-128 or value>127) then
 						go = false
 					end
@@ -146,8 +148,8 @@ function LHS:serializeObjectProperties(level)
 				end
 				if go then
 					table.insert(subentry.entries,{
-						x = obj.x - 1,
-						y = level.height - obj.y
+						x = level:worldToFileX(obj.x),
+						y = level:worldToFileY(obj.y)
 					})
 				end
 			end

@@ -16,6 +16,7 @@ function Level:initialize(w,h)
 	self.foreground = DS.grid()
 end
 
+
 function Level:addObject(obj,x,y)
 	self:removeForeground(x,y)
 	obj.world = self
@@ -51,5 +52,23 @@ function Level:__index(key)
 		end
 	end
 end
+
+-- saving/loading
+-- Not Publicly Documentated because I/O shouldn't be done in user-scripts
+-- in here because some of them require the world state
+function Level:fileToWorldX(x)
+	return x + 1
+end
+function Level:fileToWorldY(y)
+	return self.height - y
+end
+
+function Level:worldToFileX(x)
+	return x - 1
+end
+function Level:worldToFileY(y)
+	return self.height - y
+end
+
 
 return Level

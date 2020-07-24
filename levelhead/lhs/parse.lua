@@ -22,7 +22,7 @@ function LHS:parseSingleForeground(w)
 		local entry = raw.entries[i]
 		for j=1,entry.amount,1 do
 			local obj = Object:new(entry.id)
-			w:addObject(obj, entry.objects[j].x + 1, w.height - entry.objects[j].y)
+			w:addObject(obj, w:fileToWorldX(entry.objects[j].x), w:fileToWorldY(entry.objects[j].y))
 		end
 	end
 end
@@ -34,7 +34,7 @@ function LHS:parseForegroundRows(w)
 		local width = E:getWidth(entry.id)
 		for x=0,entry.length,1 do
 			local obj = Object:new(entry.id)
-			w:addObject(obj, entry.x + width*x + 1, w.height - entry.y)
+			w:addObject(obj, w:fileToWorldX(entry.x + width*x), w:fileToWorldY(entry.y))
 		end
 	end
 end
@@ -46,7 +46,7 @@ function LHS:parseForegroundColumns(w)
 		local height = E:getWidth(entry.id)
 		for y=0,entry.length,1 do
 			local obj = Object:new(entry.id)
-			w:addObject(obj, entry.x + 1, w.height - entry.y - height*y)
+			w:addObject(obj, w:fileToWorldX(entry.x), w:fileToWorldY(entry.y + height*y))
 		end
 	end
 end
@@ -58,7 +58,7 @@ function LHS:parseObjectProperties(w)
 		for j=1,entry.amount,1 do
 			local subentry = entry.entries[j]
 			for _,v in ipairs(subentry.entries) do
-				local obj = w.foreground:get(v.x + 1, w.height - v.y)
+				local obj = w.foreground:get(w:fileToWorldX(v.x), w:fileToWorldY(v.y))
 				obj:setPropertyRaw(entry.id, subentry.value)
 			end
 		end
@@ -74,24 +74,24 @@ function LHS:parseRepeatedPropertySets(w)
 	local raw = self.rawContentEntries.repeatedPropertySets
 	for i=1,raw.nEntries,1 do
 		local entry = raw.entries[i]
-		local src = w.foreground[entry.sourceX + 1][w.height - entry.sourceY]
+		local src = w.foreground[w:fileToWorldX(entry.sourceX)][w:fileToWorldY(entry.sourceY)]
 		--rows
 		for _,row in ipairs(entry.rows) do
 			for j=0, row.length, 1 do
-				local target = w.foreground[row.x+1+j][w.height - row.y]
+				local target = w.foreground[w:fileToWorldX(row.x+j)][w:fileToWorldY(row.y)]
 				copyProperties(src, target)
 			end
 		end
 		--columns
 		for _,col in ipairs(entry.columns) do
 			for j=0, col.length, 1 do
-				local target = w.foreground[col.x+1][w.height - col.y - j]
+				local target = w.foreground[w:fileToWorldX(col.x)][w:fileToWorldY(col.y+j)]
 				copyProperties(src, target)
 			end
 		end
 		--single
 		for _,single in ipairs(entry.single) do
-			local target = w.foreground[single.x+1][w.height - single.y ]
+			local target = w.foreground[w:fileToWorldX(single.x)][w:fileToWorldY(single.y)]
 			copyProperties(src, target)
 		end
 	end
