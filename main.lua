@@ -6,22 +6,15 @@ function love.load(arg)
 	lovebird.update()
 	require("utils.utils")
 	
-	function Class(a,b)
-		if a==nil then
-			return require("libs.middleclass")("Unnamed")
-		elseif type(a)=="table" then
-			return require("libs.middleclass")("Unnamed",a)
-		elseif type(a)=="string" then
-			return require("libs.middleclass")(a,b)
-		end
-	end
+	local TU = require("libs.tyoeerUtils")(require("libs.middleclass"))
+	Class = TU("oop")
 	
 	--constants
 	TILE_SIZE = 71
 	
 	--globals
 	settings = require("settings")
-	input = require("input.system")
+	input = TU("input")
 	
 	--love2d state
 	love.graphics.setFont(love.graphics.newFont("font/cnr.otf",16))

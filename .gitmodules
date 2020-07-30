@@ -1,0 +1,3 @@
+[submodule "libs/tyoeerUtils"]
+	path = libs/tyoeerUtils
+	url = https://github.com/tyoeer/tyoeerUtils.git

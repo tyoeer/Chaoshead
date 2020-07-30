@@ -1,5 +1,5 @@
-local Pool = require("utils.entitypool")
-local DS = require("utils.datastructures")
+local Pool = require("libs.tyoeerUtils.entitypool")
+local DS = require("libs.tyoeerUtils.datastructures")
 local OBJ = require("levelhead.objects.propertiesBase")
 
 local Level = Class()

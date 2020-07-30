@@ -1,5 +1,5 @@
 local BaseUI = require("ui.structure.base")
-local Pool = require("utils.entitypool")
+local Pool = require("libs.tyoeerUtils.entitypool")
 
 local UI = Class("TabsUI",BaseUI)
 

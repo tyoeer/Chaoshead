@@ -1,5 +1,4 @@
 local BaseUI = require("ui.structure.base")
-local Pool = require("utils.entitypool")
 
 local UI = Class(BaseUI)
 

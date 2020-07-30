@@ -1,5 +1,4 @@
 local P = require("levelhead.data.properties")
-local DS = require("utils.datastructures")
 local LHS = {}
 
 function LHS:serializeForeground(level)
@@ -16,7 +15,10 @@ function LHS:serializeForeground(level)
 	
 	--state
 	local idMap = {}
-	local done = require("utils.datastructures").grid()
+	local done = {}
+	for x=1, level.width, 1 do
+		done[x] = {}
+	end
 	
 	--process
 	for y=level.height, 1, -1 do
@@ -103,7 +105,7 @@ function LHS:serializeObjectProperties(level)
 	c.entries = {}
 	
 	local singleLookup = {}
-	local doubleLookup = DS.grid()
+	local doubleLookup = {}
 	
 	--process
 	for obj in level.allObjects:iterate() do
@@ -116,6 +118,7 @@ function LHS:serializeObjectProperties(level)
 						entries = {}
 					}
 					table.insert(c.entries, singleLookup[id])
+					doubleLookup[id] = {}
 				end
 				local entry = singleLookup[id]
 				
