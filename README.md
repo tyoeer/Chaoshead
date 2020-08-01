@@ -12,8 +12,10 @@ A WIP scripting interface/reverse engineering tool/level editor for [Levelhead](
 ## Scripting
 Scripts have to be placed in `Appdata/Roaming/LOVE/Chaoshead/Scripts` for Chaoshead to find them.
 You might have to currently make the necessary folders yourself (I know, I should fix that).
+When it says running scripts without sandbox is dangerous, it mostly means that you shouldn't randomly trust script from others.
+Making a script yourself will most likely be alright.
 Scripts get provided access to the level trough `level` global.
-For documentation on how to use the `level` global and other stuff, have a look at the [docs/](docs/) folder.
+For documentation on how to use the `level` global and other stuff, have a look at the [docs](docs/) folder.
 
 ## Useful links
 WIP file specification:<br>
