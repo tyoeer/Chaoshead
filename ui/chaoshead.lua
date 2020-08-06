@@ -19,8 +19,9 @@ function UI:initialize()
 	UI.super.initialize(self,tabs)
 end
 
-function UI:openEditor(path)
+function UI:openEditor(path,name)
 	local editor = require("ui.level.levelRoot"):new(path)
+	editor.title = name
 	self.levels:addChild(editor)
 	self.levels:setActive(editor)
 	self.child:setActive(self.levelsProxy)
