@@ -5,10 +5,13 @@ local UI = Class(BaseUI)
 function UI:initialize(child,padding)
 	self.child = child
 	child.parent = self
-	self.paddingLeft = padding or 10
-	self.paddingRight = padding or 10
-	self.paddingUp = padding or 10
-	self.paddingDown = padding or 10
+	if not padding then
+		error("Padding not specified!")
+	end
+	self.paddingLeft = padding
+	self.paddingRight = padding
+	self.paddingUp = padding
+	self.paddingDown = padding
 	UI.super.initialize(self)
 	self.title = child.title
 end
