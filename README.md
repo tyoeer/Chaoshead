@@ -1,8 +1,12 @@
 # Chaoshead
 A WIP scripting interface/reverse engineering tool/level editor for [Levelhead](lvlhd.co) levels/stages, made using [Löve2d](http://www.love2d.org).
 
-As this is still in development it is recommended to backup all your levels before using Chaoshead
+As Chaoshead is still in development it is recommended to backup all your levels before using it
 (though so far it has only irrevocably corrupted the level it was interacting with, so perhaps only backupping the specific level you're working on is enough).
+
+Chaoshead opens a Lua console at `localhost:8000` for debugging purposes, haven't figured out how to disable it for releases yet
+(and technically we don't even really have releases yet).
+
 
 ## Terminology
 - World: the part of a level that contains all the level (world = level - metadata).
@@ -10,7 +14,7 @@ As this is still in development it is recommended to backup all your levels befo
 - (Level) element: a type of object e.g. Blasters, Armor Plates.
 - Item: Something GR-18 can grab and carry.
 - Mapping vs. Value (in the context of properties): a value is the raw number saved in the file, a mapping is what that number means.
-  E.g. value 1 for rotation is mapped to/mappnig "Up".
+  E.g. value 1 for rotation is mapping/mapped to "Up".
 
 ## Scripting
 Chasohead executes from the scripts folder, which can be opened from the Misc. tab.
@@ -24,3 +28,5 @@ WIP file specification:<br>
 https://docs.google.com/document/d/1_Nt0u3DpgLA2KHgwVdcCnMYaY6nGjZcjbRyx1hHp9rA/<br>
 Levelhead data (level elements, properties, etc.):<br>
 https://docs.google.com/spreadsheets/d/1bzASSn2FgjqUldPzX8DS66Lv-r2lk3V12jZjl51uaTk/<br>
+The Trello/todo-list for this project:<br>
+https://trello.com/b/eqxuD1A4/chaoshead
