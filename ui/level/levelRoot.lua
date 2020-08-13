@@ -50,6 +50,8 @@ function UI:runScript(path,disableSandbox)
 	else
 		error("Tried to run script in sandboxed mode, which is currently not yet implemented.")
 	end
+	--move to the levelEditor to show the scripts effects
+	self.child:setActive(self.levelEditor)
 end
 
 
