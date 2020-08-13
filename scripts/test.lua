@@ -15,11 +15,3 @@ for i=1,level.width,1 do
 	o:setSwitchRequirements("Any Active")
 	level:addObject(o, i,1)
 end
-
---conveyors
-for i=2,level.width-1,1 do
-	local o = level:placeToeSlider(i,27)
-	-- it's a whole new direction!
-	o:setDirection(0)
-	o:setSpeed(700)
-end
