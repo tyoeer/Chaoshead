@@ -1,5 +1,5 @@
 function love.conf(t)
-	t.identity = "Chaoshead"
+	t.identity = "chaoshead"
 	t.console = true
 	t.window.resizable = true
 	t.window.title = "Chaoshead"

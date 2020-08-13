@@ -2,6 +2,10 @@ local S = {}
 
 S.folder = "scripts/"
 
+if not love.filesystem.getInfo(S.folder) then
+	love.filesystem.createDirectory(S.folder)
+end
+
 function S.runDangerously(path, level)
 	local scriptText = love.filesystem.read(path)
 	local f, err = loadstring(scriptText)

@@ -2,6 +2,9 @@ return {
 	main = {
 		tabHeight = 30,
 	},
+	misc = {
+		padding = 10,
+	},
 	levelSelector = {
 		listDetailsDivisionRatio = 0.4,
 		details = {

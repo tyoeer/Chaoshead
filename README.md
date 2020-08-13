@@ -1,5 +1,8 @@
 # Chaoshead
-A WIP scripting interface/reverse engineering tool/level editor for [Levelhead](https://www.bscotch.net/games/levelhead/) levels/stages, made using [Löve2d](http://www.love2d.org).
+A WIP scripting interface/reverse engineering tool/level editor for [Levelhead](lvlhd.co) levels/stages, made using [Löve2d](http://www.love2d.org).
+
+As this is still in development it is recommended to backup all your levels before using Chaoshead
+(though so far it has only irrevocably corrupted the level it was interacting with, so perhaps only backupping the specific level you're working on is enough).
 
 ## Terminology
 - World: the part of a level that contains all the level (world = level - metadata).
@@ -10,10 +13,9 @@ A WIP scripting interface/reverse engineering tool/level editor for [Levelhead](
   E.g. value 1 for rotation is mapped to/mappnig "Up".
 
 ## Scripting
-Scripts have to be placed in `Appdata/Roaming/LOVE/Chaoshead/Scripts` for Chaoshead to find them.
-You might have to currently make the necessary folders yourself (I know, I should fix that).
-When it says running scripts without sandbox is dangerous, it mostly means that you shouldn't randomly trust script from others.
-Making a script yourself will most likely be alright.
+Chasohead executes from the scripts folder, which can be opened from the Misc. tab.
+When it says running scripts without sandbox is dangerous, it mostly means that you shouldn't randomly trust script from others,
+making a script yourself will most likely be alright.
 Scripts get provided access to the level trough `level` global.
 For documentation on how to use the `level` global and other stuff, have a look at the [docs](docs/) folder.
 

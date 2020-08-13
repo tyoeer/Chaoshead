@@ -16,6 +16,8 @@ function UI:initialize()
 	tabs:addChild(levelSelector)
 	tabs:setActive(levelSelector)
 	
+	tabs:addChild(require("ui.misc"):new())
+	
 	UI.super.initialize(self,tabs)
 end
 
