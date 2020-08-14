@@ -1,1 +1,14 @@
-Font: Code New Roman by Samiru R. using the SIL Open Font License (see font/license.txt)
+Direct contributors:
+
+tyoeer
+aradarbel10
+
+Libraries used:
+
+middleclass by Enrique García Cota, licensed under MIT (see libs/LICENSEmiddleclass.txt)
+json.lua by rxi, licensed under MIT (see libs/LICENSEjson.txt)
+tyoeerUtils by tyoeer, licensed under CC-BY 4.0 (see libs/toyeerUtils/LICENSE.md)
+
+Fonts used:
+
+Code New Roman by Samiru R., licensed under SIL Open Font License (see font/license.txt)
