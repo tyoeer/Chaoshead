@@ -1,9 +1,5 @@
---localhost:8000
-
 function love.load(arg)
 	--load stuff
-	lovebird = require("libs.lovebird")
-	lovebird.update()
 	require("utils.utils")
 	
 	local TU = require("libs.tyoeerUtils")(require("libs.middleclass"))
@@ -38,7 +34,6 @@ end
 
 
 function love.update(dt)
-	lovebird.update(dt)
 	ui:update(dt)
 end
 

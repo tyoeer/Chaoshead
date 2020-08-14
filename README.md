@@ -2,11 +2,8 @@
 A WIP scripting interface/reverse engineering tool/level editor for [Levelhead](lvlhd.co) levels/stages, made using [Löve2d](http://www.love2d.org).
 
 As Chaoshead is still in development it is recommended to backup all your levels before using it
-(though so far it has only irrevocably corrupted the level it was interacting with, so perhaps only backupping the specific level you're working on is enough).
-
-Chaoshead opens a Lua console at `localhost:8000` for debugging purposes, haven't figured out how to disable it for releases yet
-(and technically we don't even really have releases yet).
-
+(though so far it has only irrevocably corrupted the level it was interacting with,
+so perhaps only backupping the specific level you're working on is enough).
 
 ## Terminology
 - World: the part of a level that contains all the level (world = level - metadata).
