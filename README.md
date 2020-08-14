@@ -30,6 +30,6 @@ https://trello.com/b/eqxuD1A4/chaoshead
 
 ## License
 
-Chaoshead itself is licensed under the Apache 2.0 license (see LICENSE.txt)
-Copyright 2020 tyoeer and the Chaoshead contributors
-Chaoshead uses some libraries and resources from others, see credits.txt for their authors and licenses.
+Chaoshead itself is licensed under the Apache 2.0 license (see LICENSE.txt)<br>
+Copyright 2020 tyoeer and the Chaoshead contributors<br>
+Chaoshead uses some libraries and resources from others, see credits.txt for their authors and licenses.<br>
