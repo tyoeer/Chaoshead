@@ -27,3 +27,9 @@ Levelhead data (level elements, properties, etc.):<br>
 https://docs.google.com/spreadsheets/d/1bzASSn2FgjqUldPzX8DS66Lv-r2lk3V12jZjl51uaTk/<br>
 The Trello/todo-list for this project:<br>
 https://trello.com/b/eqxuD1A4/chaoshead
+
+## License
+
+Chaoshead itself is licensed under the Apache 2.0 license (see LICENSE.txt)
+Copyright 2020 tyoeer and the Chaoshead contributors
+Chaoshead uses some libraries and resources from others, see credits.txt for their authors and licenses.
