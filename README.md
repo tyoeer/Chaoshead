@@ -1,11 +1,15 @@
 # Chaoshead
+
 A WIP scripting interface/reverse engineering tool/level editor for [Levelhead](lvlhd.co) levels/stages, made using [Löve2d](http://www.love2d.org).
 
 As Chaoshead is still in development it is recommended to backup all your levels before using it
 (though so far it has only irrevocably corrupted the level it was interacting with,
 so perhaps only backupping the specific level you're working on is enough).
 
+If you have any questions, feel free to ask.
+
 ## Terminology
+
 - World: the part of a level that contains all the level (world = level - metadata).
 - Object: a single thing inside the level.
 - (Level) element: a type of object e.g. Blasters, Armor Plates.
@@ -14,6 +18,7 @@ so perhaps only backupping the specific level you're working on is enough).
   E.g. value 1 for rotation is mapping/mapped to "Up".
 
 ## Scripting
+
 Chasohead executes from the scripts folder, which can be opened from the Misc. tab.
 When it says running scripts without sandbox is dangerous, it mostly means that you shouldn't randomly trust script from others,
 making a script yourself will most likely be alright.
@@ -21,12 +26,22 @@ Scripts get provided access to the level trough `level` global.
 For documentation on how to use the `level` global and other stuff, have a look at the [docs](docs/) folder.
 
 ## Useful links
+
 WIP file specification:<br>
 https://docs.google.com/document/d/1_Nt0u3DpgLA2KHgwVdcCnMYaY6nGjZcjbRyx1hHp9rA/<br>
 Levelhead data (level elements, properties, etc.):<br>
 https://docs.google.com/spreadsheets/d/1bzASSn2FgjqUldPzX8DS66Lv-r2lk3V12jZjl51uaTk/<br>
 The Trello/todo-list for this project:<br>
 https://trello.com/b/eqxuD1A4/chaoshead
+
+## Contributing is easy
+
+There's always data that needs collecting, which just involves editing some stuff in Levelhead,
+and looking at it in Chaoshead to get the internal ID's and stuff.
+There's also still parts that need to be reverse engineered in which case the Hex Inpector is your friend.
+Though if you want to help program this thing, that's also possible.
+
+In any case, try looking at the Trello (linked above) for the tings that still need to be done.
 
 ## License
 
