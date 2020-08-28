@@ -42,6 +42,20 @@ function UI:initialize()
 					ui:openEditor(d.path,d.name)
 				end
 			)
+			list:addButtonEntry(
+				"Rehash",
+				function()
+					local f = io.open(d.path,"ab+")
+					local size = f:seek("end")
+					f:seek("set",0)
+					local notHash = f:read(size-33)
+					--local hash = f:read("*a"):sub(1,-1)
+					local hash = require("levelhead.lhs").hash(notHash)
+					f:write(hash)
+					f:write(0)
+					f:close()
+				end
+			)
 			
 			return require("ui.structure.padding"):new(list,settings.dim.levelSelector.details.padding)
 		end,
