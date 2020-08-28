@@ -28,7 +28,7 @@ end
 function OBJ:__index(key)
 	if key:match("set") then
 		local prop = key:match("set(.+)")
-		prop = prop:gsub("([A-Z])"," %1"):trim()
+		--prop = prop:gsub("([A-Z])"," %1"):trim()
 		return function(self,mapping)
 			local exists = false
 			local set = false

@@ -31,9 +31,10 @@ function DATA:getID(selector)
 end
 
 function DATA:getAllIDs(name)
+	name = name:lower():gsub(" ","")
 	local out = {}
 	for i,v in ipairs(self.data) do
-		if v[self.headers.name] == name then
+		if v[self.headers.name]:lower():gsub(" ","") == name then
 			table.insert(out, v[self.headers.id])
 		end
 	end
