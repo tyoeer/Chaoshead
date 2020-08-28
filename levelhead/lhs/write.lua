@@ -176,13 +176,23 @@ end
 
 function LHS:writeHash()
 	self:write(0x61)
-	self:write(string.rep("A",32))
+	--get current file contents
+	self.saveHandle:seek("set",0)
+	local contents = self.saveHandle:read("*all")
+	-- the cursor should be at the end again
+	self:write(self.hash(contents))
 	self:write(0)
 end
 
+function LHS.hash(input)
+	local step = love.data.encode("string","base64",input) .. "598175".."0"
+	step = love.data.encode("string","hex",love.data.hash("md5",step))
+	step = step .. "AbunchoDANGNONSENSE9plusabigpileofhashsalsytiesooooooo901587"
+	return love.data.encode("string","hex",love.data.hash("md5",step))
+end
 
 function LHS:writeAll()
-	local file, err = io.open(self.path,"wb")
+	local file, err = io.open(self.path,"wb+")
 	if err then error(err) end
 	self.saveHandle = file
 	
