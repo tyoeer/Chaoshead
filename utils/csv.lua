@@ -40,7 +40,12 @@ function csv.parseString(text,seperator)
 			current = current .. char
 		end
 	end
-	
+	-- if the file doesn't end with a newline, append what's left
+	if current then
+		current = current:trim()
+		current = tonumber(current) or current
+		out[#out][headers[column]] = current
+	end
 	return out, headers
 end
 
