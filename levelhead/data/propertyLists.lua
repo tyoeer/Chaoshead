@@ -24,7 +24,7 @@ function L:mappingToValue(list, mapping)
 	local check = mapping:gsub("%W",""):lower()
 	for i=1,#self.data,1 do
 		if self.data[i][list]:gsub("%W",""):lower() == check then
-			return i
+			return i-1
 		end
 	end
 	error("Illegal mapping for property list "..list..": "..tostring(mapping).." ("..type(mapping)..")")
