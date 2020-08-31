@@ -1,23 +1,30 @@
-Value(the number the mappnig in the lists to the right correspond to. A mapping of ! means out of range)	Jingle
-0	Reveal
-1	Surprise
-2	Long Sad
-3	Short Sad
-4	Long Happy
-5	Short Happy
-6	Crashlands Happy
-7	Crashlands Sad
-8	Crashlands Reveal
-9	Chill Reveal
-10	Chil Success
-11	Tense Reveal
-12	Tense Success
-13	Spooky Reveal
-14	Spooky Success
-15	Puzzle Success
-16	!
-17	!
-18	!
-19	!
-20	!
-21	!
+Value(the number the mappnig in the lists to the right correspond to. A mapping of ! means out of range)	Jingle	Bass Pitch	Melody Pitch
+0	Reveal	C2	C4
+1	Surprise	D2	D4
+2	Long Sad	E2	E4
+3	Short Sad	F2	F4
+4	Long Happy	G2	G4
+5	Short Happy	A2	A4
+6	Crashlands Happy	B2	B4
+7	Crashlands Sad	C3	C5
+8	Crashlands Reveal	D3	D5
+9	Chill Reveal	E3	E5
+10	Chil Success	F3	F5
+11	Tense Reveal	G3	G5
+12	Tense Success	A3	A5
+13	Spooky Reveal	B3	B5
+14	Spooky Success	C4	C6
+15	Puzzle Success	D4	D6
+16		E4	E6
+17		F4	F6
+18		G4	G6
+19		A4	A6
+20		B4	B6
+21		C5	C7
+22		A1	C3
+23		B1	D3
+24			E3
+25			F3
+26			G3
+27			A3
+28			B3

@@ -50,11 +50,11 @@ Color	47	#2F	A		2	0	3	Simple	!	Blue	Gold	Fuchsia	Green	!	!	!	!	!	Hardlight, Rift
 Projectile	48	#30	A		0	0	4	Simple	!	Steel	Fire	Rubber	Rocket	Guided Missile	!	!	!	!	(Look)cannon	
 Receiving Channel	49	#31	B	Can be set to none.	-1	-1	999	Hybrid	None	-	-	-	-	-	-	-	-	-	Prizeblock, Hardlight, ...	
 ???	50	#32																		
-Bass Pitch	51	#33	A	Also gets saved for the "melody" instrument. Called "Pitch" in-game.	7	0	21												Boombox	
+Bass Pitch	51	#33	A	Also gets saved for the "melody" instrument. Called "Pitch" in-game.	7	0	23	List	Bass Pitch										Boombox	
 ???	52	#34																		
 ???	53	#35																		
 Instrument	54	#36	A		0	0	2	Simple	!	Bass	Melody	Percussion	!	!	!	!	!	!	Boombox	
-Melody Pitch	55	#37	A	Also gets saved for the "bass" instrument. Called "Pitch" in-game.	7	0	21												Boombox	
+Melody Pitch	55	#37	A	Also gets saved for the "bass" instrument. Called "Pitch" in-game.	7	0	28	List	Melody Pitch										Boombox	
 Platform Size	56	#38	A		1	0	1	Simple	!	Short	Long	!	!	!	!	!	!	!	Spinny Platform	
 Length	57	#39	A		3	1	4	None											Spinny Platform	
 Speed	58	#3A	B	Used for circular movement (type)	60	-90	90	None											Swoopadoop, Blobfush, Whizzblade, Spinny Platform	
