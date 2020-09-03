@@ -8,6 +8,12 @@ so perhaps only backupping the specific level you're working on is enough).
 
 If you have any questions, feel free to ask.
 
+### Currently supported
+- All publicly available 1.0 foreground objects and structures
+- All publicly available 1.0 object properties except Sign icons and Boombox percussion notes
+
+Unsupported content like paths, background stuff, and stuff inside objects will get discarded.
+
 ## Terminology
 
 - World: the part of a level that contains all the level (world = level - metadata).
