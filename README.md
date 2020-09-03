@@ -10,7 +10,7 @@ If you have any questions, feel free to ask.
 
 ### Currently supported
 - All publicly available 1.0 foreground objects and structures
-- All publicly available 1.0 object properties except Sign icons and Boombox percussion notes
+- All publicly available 1.0 object properties except Sign icons
 
 Unsupported content like paths, background stuff, and stuff inside objects will get discarded.
 

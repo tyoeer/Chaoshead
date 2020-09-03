@@ -95,6 +95,6 @@ Reusable	92	#5C	A		1	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	BUDD-E
 Note Beats	93	#5D	C	The duration of the note/sound	0.25	0.25	16	None											Boombox	
 Repeat Beats	94	#5E	C		0	0	1000	Hybrid	!	No Repeat	-	-	-	-	-	-	-	-	Boombox	
 Beats Per Minute	95	#5F	A		120	60	240	None											Boombox	
-Percussion Note	96	#60	A		0	0	14												Boombox	
+Percussion Note	96	#60	A		0	0	14	List	Percussion										Boombox	
 Start Delay Beats	97	#61	C		0	0	1000	Hybrid	!	No Delay	-	-	-	-	-	-	-	-	Boombox	
 Repeat Count	98	#62	B	Always saved for some reason.	1	1	1000	Hybrid	!	!	Infinite	-	-	-	-	-	-	-	Boombox	
