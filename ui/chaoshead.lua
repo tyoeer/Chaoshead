@@ -1,7 +1,9 @@
 local UI = Class(require("ui.structure.proxy"))
 
-function UI:initialize()
+function UI:initialize(w,h)
 	local tabs = require("ui.structure.tabs"):new()
+	UI.super.initialize(self,tabs)
+	self:resize(w,h)
 	tabs.tabHeight = settings.dim.main.tabHeight
 	
 	self.nLevels = 0
@@ -18,7 +20,6 @@ function UI:initialize()
 	
 	tabs:addChild(require("ui.misc"):new())
 	
-	UI.super.initialize(self,tabs)
 end
 
 function UI:openEditor(path,name)

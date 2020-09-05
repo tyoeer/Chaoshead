@@ -19,8 +19,7 @@ function love.load(arg)
 	love.graphics.setLineStyle("rough")
 	
 	--build ui
-	ui = require("ui.chaoshead"):new()
-	ui:resize(love.graphics.getWidth(), love.graphics.getHeight())
+	ui = require("ui.chaoshead"):new(love.graphics.getWidth(), love.graphics.getHeight())
 	
 	--bind ui and input
 	input.parseActions(settings.bindings)
