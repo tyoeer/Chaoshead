@@ -5,10 +5,10 @@ aradarbel10
 
 Libraries used:
 
-middleclass by Enrique García Cota, licensed under MIT (see libs/LICENSEmiddleclass.txt)
-json.lua by rxi, licensed under MIT (see libs/LICENSEjson.txt)
-tyoeerUtils by tyoeer, licensed under CC-BY 4.0 (see libs/toyeerUtils/LICENSE.md)
+middleclass by Enrique García Cota, licensed under MIT (see libs/LICENSEmiddleclass.txt or license-lib-middleclass.txt)
+json.lua by rxi, licensed under MIT (see libs/LICENSEjson.txt or license-lib-json.txt)
+tyoeerUtils by tyoeer, licensed under CC-BY 4.0 (see libs/toyeerUtils/LICENSE.md or license-lib-tyoeerUtils.txt)
 
 Fonts used:
 
-Code New Roman by Samiru R., licensed under SIL Open Font License (see font/license.txt)
+Code New Roman by Samiru R., licensed under SIL Open Font License (see font/license.txt or license-font.txt)
