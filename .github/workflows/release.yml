@@ -33,10 +33,14 @@ jobs:
           source_dir: "."
           # Directory in the GitHub workspace where the built distributables should be located
           #result_dir: # default is release
+      # 32 bits
+      - run: cp "credits.txt" "${{ steps.love-build.outputs.win32-filename }}"
       - uses: actions/upload-artifact@v1
         with:
           name: win32-build
           path: ${{ steps.love-build.outputs.win32-filename }}
+      # 64 bits  
+      - run: cp "credits.txt" "${{ steps.love-build.outputs.win64-filename }}"
       - uses: actions/upload-artifact@v1
         with:
           name: win64-build
