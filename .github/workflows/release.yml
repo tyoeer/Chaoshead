@@ -47,6 +47,7 @@ jobs:
       - run: cp "LICENSE.txt" "release/license-Chaoshead.txt"
       - run: cp "libs/LICENSEjson.txt" "release/license-lib-json.txt"
       - run: cp "libs/LICENSEmiddleclass.txt" "release/license-lib-middleclass.txt"
+      - run: cp "font/license.txt" "release/license-font.txt"
       - run: cp "libs/tyoeerUtils/LICENSE.md" "release/license-lib-tyoeerUtils.md"
       - uses: actions/upload-artifact@v1
         with:
