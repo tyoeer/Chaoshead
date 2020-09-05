@@ -22,7 +22,7 @@ function UI:initialize(root)
 		getChildren = function(self,parent)
 			local out = {}
 			for _,fileName in ipairs(love.filesystem.getDirectoryItems(parent.path)) do
-				local path = parent.path..fileName
+				local path = parent.path.."/"..fileName
 				table.insert(out,{
 					title = fileName,
 					path = path,
