@@ -20,12 +20,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2.3.2
       - name: "Build binaries"
         id: "love-build"
         uses: nhartland/love-build@v1-beta2
         with:
           # Name of the application to be built
-          app_name: "Chaoshead-${{ github.events.inputs.version-number }}"
+          app_name: "Chaoshead-${{ github.event.inputs.version-number }}"
           # Version of LÖVE to be used in building the application
           love_version: 11.3
           # Path in the repository to the subdirectory containing `main.lua`. By default the repo root
