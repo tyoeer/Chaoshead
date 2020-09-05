@@ -35,12 +35,13 @@ jobs:
           result_dir: "binaries"
       # 32 bits
       - run: mkdir "release"
-      - run: cp "credits.txt" "release"
-      - uses: montudor/action-zip@v0.1.0
+      - uses: DuckSoft/extract-7z-action@v1.0
         with:
-          args: unzip -qq ${{ steps.love-build.outputs.win32-filename }} release
+          pathSource: ${{ steps.love-build.outputs.win32-filename }}
+          pathTarget: release
       - run: mv "release/license.txt" "release/license-love.txt"
-      - run: cp "LICENSE.txt" "license-Chaoshead.txt"
+      - run: cp "LICENSE.txt" "release/license-Chaoshead.txt"
+      - run: cp "credits.txt" "release/credits.txt"
       - uses: actions/upload-artifact@v1
         with:
           name: win32-build
