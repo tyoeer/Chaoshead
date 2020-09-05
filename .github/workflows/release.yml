@@ -30,18 +30,18 @@ jobs:
           # Version of LÖVE to be used in building the application
           love_version: 11.3
           # Path in the repository to the subdirectory containing `main.lua`. By default the repo root
-          source_dir: "."
+          # source_dir: # default is ./
           # Directory in the GitHub workspace where the built distributables should be located
-          #result_dir: # default is release
+          result_dir: "binaries"
       # 32 bits
-      - run: cp "credits.txt" "${{ steps.love-build.outputs.win32-filename }}"
+      - run: mkdir "release"
+      - run: cp "credits.txt" "release"
+      - uses: montudor/action-zip@v0.1.0
+        with:
+          args: unzip -qq ${{ steps.love-build.outputs.win32-filename }} ./release
+      - run: mv "release/license.txt" "release/license-love.txt"
+      - run: cp "LICENSE.txt" "license-Chaoshead.txt"
       - uses: actions/upload-artifact@v1
         with:
           name: win32-build
-          path: ${{ steps.love-build.outputs.win32-filename }}
-      # 64 bits  
-      - run: cp "credits.txt" "${{ steps.love-build.outputs.win64-filename }}"
-      - uses: actions/upload-artifact@v1
-        with:
-          name: win64-build
-          path: ${{ steps.love-build.outputs.win64-filename }}  
+          path: ./release
