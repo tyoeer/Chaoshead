@@ -41,9 +41,13 @@ jobs:
           pathTarget: "extract"
       - run: mv "extract/Chaoshead_win32/" "release/" 
       - run: ls "release"
+      # licenses and credits
+      - run: cp "credits.txt" "release/credits.txt"
       - run: mv "release/license.txt" "release/license-love2d.txt"
       - run: cp "LICENSE.txt" "release/license-Chaoshead.txt"
-      - run: cp "credits.txt" "release/credits.txt"
+      - run: cp "libs/LICENSEjson.txt" "release/license-lib-json.txt"
+      - run: cp "libs/LICENSEmiddleclass.txt" "release/license-lib-middleclass.txt"
+      - run: cp "libs/tyoeerUtils/LICENSE.md" "release/license-lib-tyoeerUtils.md"
       - uses: actions/upload-artifact@v1
         with:
           name: win32-build
