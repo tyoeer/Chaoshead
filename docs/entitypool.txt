@@ -1,0 +1,38 @@
+Provides fast adding/removing (in the complexity of a map) and fast iteration (no waste between entries)
+
+----constructor:
+	Pool(), Pool:new()
+----functions:
+	:has(v)
+		returns wether or not v is in the pool
+	
+	:addAtTop(v)
+		adds v at the top of the pool
+		returns true upon succes, false if v already exists
+	:addAtBottom(v)
+		adds v at the top of the pool
+		returns true upon succes, false if v already exists
+	:add(v)
+		alias for :addAtTop(v)
+	
+	:getTop()
+		returns the value at the top of the pool, return nil if there is no value there
+	:getBottom()
+		returns the value at the bottom of the pool, return nil if there is no value there
+	
+	:remove(v)
+		removes v from the pool
+		returns true upon succes, false if v wasn't in the pool in the first place
+	:removeTop()
+		removes and returns the value at the top of the pool, returns nil if there's no value there
+	:removeBottom()
+		removes and returns the value at the bottom of the pool, returns nil if there's no value there
+	
+	:iterateDownwards()
+		iterates over all values in the pool, from top to bottom
+		for use in a generic for (for v in pool:iterateDownwards() do ... end),
+	:iterateUpwards()
+		iterates over all values in the pool, from bottom to top
+		for use in a generic for (for v in pool:iterateUpwards() do ... end),
+	:iterate()
+		alias for :iterateUpwards()

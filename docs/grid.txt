@@ -1,0 +1,16 @@
+This structure is for a 2d infinitely sized grid-like datastructure.
+It doesn't check if indexes are integers, so other values will probably work to if you use the right method.
+	
+table:set(x,y,value) {uses raw access}
+	sets (x,y) to value
+table:get(x,y) {uses raw access}
+	returns the value at (x,y)
+
+table(x,y[,value]) {uses table:set/table:get}
+	returns the value at (x,y) if value==nil,
+	sets (x,y) to value otherwise
+
+table[x][y] {uses to raw access}
+	raw access redirect
+	WARNING: x will choose the values used for internals over data access, so be carefull
+	the values used for internals are: call, set, get, data
