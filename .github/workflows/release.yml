@@ -38,10 +38,10 @@ jobs:
       - run: cp "credits.txt" "release"
       - uses: montudor/action-zip@v0.1.0
         with:
-          args: unzip -qq ${{ steps.love-build.outputs.win32-filename }} ./release
+          args: unzip -qq ${{ steps.love-build.outputs.win32-filename }} release
       - run: mv "release/license.txt" "release/license-love.txt"
       - run: cp "LICENSE.txt" "license-Chaoshead.txt"
       - uses: actions/upload-artifact@v1
         with:
           name: win32-build
-          path: ./release
+          path: release
