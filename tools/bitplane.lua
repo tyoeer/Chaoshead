@@ -1,4 +1,4 @@
-local DS = require("utils.datastructures")
+local DS = require("libs.tyoeerUtils.datastructures")
 
 --the bitplane itself
 local B = Class("Bitplane")
