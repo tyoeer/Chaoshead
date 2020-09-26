@@ -27,7 +27,8 @@ end
 
 
 function DATA:getID(selector)
-	return self:getRow(selector)[self.headers.id] or "$UnknownId"
+	return self:getRow(selector)[self.headers.id] or
+		(type(selector)=="number" and selector or "$UnknownId")
 end
 
 function DATA:getAllIDs(name)

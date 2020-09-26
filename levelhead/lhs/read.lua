@@ -218,8 +218,8 @@ function LHS:readProperties(isPath)
 				offset = offset + 1
 			else
 				print("Error-------------------------------")
-				local hex = love.data.encode("string","hex",self:getBytes(offset-1,9)):upper():gsub("(..)","%1 ")
-				error("Illegal property save format: "..tostring(format).."\n"..prop.." : "..hex)
+				local hex = love.data.encode("string","hex",self:getBytes(offset,8)):upper():gsub("(..)","%1 ")
+				error("Illegal property save format: "..tostring(format).."\n"..entry.id.." : "..hex)
 			end
 			
 			subentry.amount = self:getNumber2(offset)
