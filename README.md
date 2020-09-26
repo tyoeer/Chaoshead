@@ -1,16 +1,20 @@
 # Chaoshead
 
-A WIP scripting interface/reverse engineering tool/level editor for [Levelhead](lvlhd.co) levels/stages, made using [Löve2d](http://www.love2d.org).
+A WIP scripting interface/reverse engineering tool/level editor for [Levelhead](lvlhd.co) levels/stages,
+made using [Löve2d](http://www.love2d.org).
 
 As Chaoshead is still in development it is recommended to backup all your levels before using it
 (though so far it has only irrevocably corrupted the level it was interacting with,
 so perhaps only backupping the specific level you're working on is enough).
+WARNING: Chaoshead automatiaclly reloads the current level everytime it gets focus again (for reverse-engineering),
+even if the file hasn't changed, discarding unsaved changes in the progress.
 
 If you have any questions, feel free to ask.
 
 ### Currently supported
 - All publicly available 1.0 foreground objects and structures
 - All publicly available 1.0 object properties except Sign icons
+- And input switches, except the "Players Required" property
 
 Unsupported content like paths, background stuff, and stuff inside objects will get discarded.
 
@@ -48,6 +52,13 @@ There's also still parts that need to be reverse engineered in which case the He
 Though if you want to help program this thing, that's also possible.
 
 In any case, try looking at the Trello (linked above) for the tings that still need to be done.
+
+### Data collecting tips
+
+\#1D is the hex for the top-right position in a 30 by 30 level.
+
+When CH crashes because of an invalid property save-format, it outputs the hex of the sub-entry.
+Just looks how many bytes there are before the first position to see which save-format it is.
 
 ## License
 

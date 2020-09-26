@@ -98,3 +98,7 @@ Beats Per Minute	95	#5F	A		120	60	240	None											Boombox
 Percussion Note	96	#60	A		0	0	14	List	Percussion										Boombox	
 Start Delay Beats	97	#61	C		0	0	1000	Hybrid	!	No Delay	-	-	-	-	-	-	-	-	Boombox	
 Repeat Count	98	#62	B	Always saved for some reason.	1	1	1000	Hybrid	!	!	Infinite	-	-	-	-	-	-	-	Boombox	
+???	99	#63																		
+???	100	#64																		
+???	101	#65																		
+Input	102	#66	A		0	0	7	Simple	!	Run Right	Run Left	Up	Down	Jump	Grab / Kick	Use Powerup		!	Input Switch	
