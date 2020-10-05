@@ -79,8 +79,4 @@ Bitplane:iterateFunction(func)
 	- x, y: the position of the current field
 	- value: the value of the current field
 	
-<<<<<<< HEAD
 Iterates the function over all the fields, first upwards along the x-axis, and after every row up the y-axis.
-=======
-Iterates the function over all the fields, first upwards along the x-axis, and after every row up the y-axis.
->>>>>>> 15e75389210c3ddd7efa764c3b0a5cd3f4e8f1a2
