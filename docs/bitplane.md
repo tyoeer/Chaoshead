@@ -16,7 +16,7 @@ instance = require("tools.bitplane").newFromStrings(falseMask, trueMask, strings
 ```
 - falseMask: a string containing all characters that should be considered to be a false value
 - trueMask: a string containing all characters that should be considered to be a true value
-- strings... a vararg listing all the strings
+- strings... a vararg or table listing all the strings
 
 The the characters in the strings represent the bitplane, starting at (0,0), continue further along the positive x-axis towards the end of the string.
 The next string is further along the positive y-axis.
@@ -82,5 +82,5 @@ Bitplane:iterateFunction(func)
 <<<<<<< HEAD
 Iterates the function over all the fields, first upwards along the x-axis, and after every row up the y-axis.
 =======
-Iterates the function over all the fields, first upwards along the x-axis, and after every row up the y-axis. 
+Iterates the function over all the fields, first upwards along the x-axis, and after every row up the y-axis.
 >>>>>>> 15e75389210c3ddd7efa764c3b0a5cd3f4e8f1a2

@@ -39,6 +39,9 @@ end
 
 function Bitplane.newFromStrings(falseMask,trueMask,...)
 	local input = {...}
+	if type(input[1])=="table" then
+		input = input[1]
+	end
 	local h = #input
 	local w = input[1]:len()
 	local out = B:new(w,h)
