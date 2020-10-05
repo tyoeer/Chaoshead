@@ -21,7 +21,6 @@ end
 
 
 function A:allocateObject(element)
-	print(element)
 	local obj = P:new(element)
 	if self.settings.immediate then
 		self:placeObject(obj)
