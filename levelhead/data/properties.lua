@@ -102,7 +102,7 @@ function P:valueToMapping(selector, value)
 	end
 	
 	local min, max = p[self.headers.min], p[self.headers.max]
-	if not min or not max then
+	if not min or not max or min=="" or max=="" then
 		print("Property range undefined: "..selector.." :-: "..tostring(min).." - "..tostring("max"))
 		return "$RangeUndefined"
 	end
