@@ -44,16 +44,16 @@ function UI:initialize()
 		print("----------")
 		local listCmd = "dir /a:d /b"
 		local cdCmd = "cd \""..require("levelhead.misc").getUserDataPath().."\""
-		local cmd = cdCmd.." && "..listCmd
+		local sd = love.filesystem.getSaveDirectory().."/"
+		local out1 = " 1>\""..sd.."out1.txt\" 2>\""..sd.."err1.txt\" "
+		local out2 = " 1>\""..sd.."out2.txt\" 2>\""..sd.."err2.txt\" "
+		local cmd = cdCmd..out1.." && "..listCmd..out2
 		print(cmd)
 		
 		print("----------")
 		local cli = io.popen(cmd,"r")
 		local list = cli:read("*all")
 		cli:close()
-		print(list)
-		print("----------")
-		local list = cli:read("*all")
 		print(list)
 		print("----------")
 	end)
