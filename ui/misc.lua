@@ -34,6 +34,26 @@ function UI:initialize()
 			print("No campaign.bin found!")
 		end
 	end)
+	list:addButtonEntry("Test LH folder detection",function()
+		local M = require("levelhead.misc")
+		print(M.getDataPath())
+		print(M.getUserDataPath())
+		local UD = require("levelhead.userData")
+		print("----------")
+		table.print(UD.getUserCodes())
+		print("----------")
+		print(cmd)
+		print("----------")
+		local listCmd = "dir /a:d /b"
+		local cdCmd = "cd \""..require("levelhead.misc").getUserDataPath().."\""
+		local cmd = cdCmd.." && "..listCmd
+		
+		local cli = io.popen(cmd)
+		local list = cli:read("*all")
+		cli:close()
+		print(list)
+		print("----------")
+	end)
 	
 	UI.super.initialize(self,list,settings.dim.misc.padding)
 	self.title = "Misc."
