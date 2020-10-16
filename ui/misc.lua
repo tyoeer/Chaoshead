@@ -42,12 +42,13 @@ function UI:initialize()
 		print("----------")
 		table.print(UD.getUserCodes())
 		print("----------")
-		local listCmd = "dir /a:d /b"
+		local listCmd = "dir"
 		local cdCmd = "cd \""..require("levelhead.misc").getUserDataPath().."\""
 		local sd = love.filesystem.getSaveDirectory().."/"
 		local out1 = " 1>\""..sd.."out1.txt\" 2>\""..sd.."err1.txt\" "
 		local out2 = " 1>\""..sd.."out2.txt\" 2>\""..sd.."err2.txt\" "
-		local cmd = cdCmd..out1.." && "..listCmd..out2
+		local out3 = " 1>\""..sd.."out3.txt\" 2>\""..sd.."err3.txt\" "
+		local cmd = cdCmd..out1.." && ".."cd"..out2.." && "..listCmd..out3
 		print(cmd)
 		
 		print("----------")
