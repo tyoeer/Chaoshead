@@ -1,30 +1,30 @@
-Value(the number the mappnig in the lists to the right correspond to. A mapping of ! means out of range)	Jingle	Bass Pitch	Melody Pitch	Percussion
-0	Reveal	C2	C4	Kick Deep
-1	Surprise	D2	D4	Kick Thump
-2	Long Sad	E2	E4	Snare Tough
-3	Short Sad	F2	F4	Snare Slap
-4	Long Happy	G2	G4	Snare Reverb
-5	Short Happy	A2	A4	Hi-Hat Tap
-6	Crashlands Happy	B2	B4	Hi-Hat Close
-7	Crashlands Sad	C3	C5	Hi-Hat Open
-8	Crashlands Reveal	D3	D5	Crash
-9	Chill Reveal	E3	E5	Tom Low
-10	Chil Success	F3	F5	Tom High
-11	Tense Reveal	G3	G5	Tom Low Soft
-12	Tense Success	A3	A5	Tom High Soft
-13	Spooky Reveal	B3	B5	Click
-14	Spooky Success	C4	C6	Click Soft
-15	Puzzle Success	D4	D6	
-16		E4	E6	
-17		F4	F6	
-18		G4	G6	
-19		A4	A6	
-20		B4	B6	
-21		C5	C7	
-22		A1	C3	
-23		B1	D3	
-24			E3	
-25			F3	
-26			G3	
-27			A3	
-28			B3	
+Value(the number the mappnig in the lists to the right correspond to. A mapping of ! means out of range)	Jingle	Bass Pitch	Melody Pitch	Percussion	Items
+0	Reveal	C2	C4	Kick Deep	Armor Plate
+1	Surprise	D2	D4	Kick Thump	Ripcord
+2	Long Sad	E2	E4	Snare Tough	Tiptow
+3	Short Sad	F2	F4	Snare Slap	Zipper
+4	Long Happy	G2	G4	Snare Reverb	Waylay
+5	Short Happy	A2	A4	Hi-Hat Tap	Rebound
+6	Crashlands Happy	B2	B4	Hi-Hat Close	Shade
+7	Crashlands Sad	C3	C5	Hi-Hat Open	DBot
+8	Crashlands Reveal	D3	D5	Crash	Recycler
+9	Chill Reveal	E3	E5	Tom Low	Slurb Juice
+10	Chil Success	F3	F5	Tom High	Lectroshield
+11	Tense Reveal	G3	G5	Tom Low Soft	Bomb
+12	Tense Success	A3	A5	Tom High Soft	Keycard
+13	Spooky Reveal	B3	B5	Click	Battery
+14	Spooky Success	C4	C6	Click Soft	Blopsack
+15	Puzzle Success	D4	D6		Canoodle Core
+16		E4	E6		Flapsack
+17		F4	F6		Flipegg
+18		G4	G6		Lizumi thorn
+19		A4	A6		Pop Medaillon
+20		B4	B6		Wingarang
+21		C5	C7		Vacsteak
+22		A1	C3		Squished Ocula
+23		B1	D3		Squished Scrubb
+24			E3		Stackable Armor
+25			F3		
+26			G3		
+27			A3		
+28			B3		

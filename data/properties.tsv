@@ -101,4 +101,9 @@ Repeat Count	98	#62	B	Always saved for some reason.	1	1	1000	Hybrid	!	!	Infinite
 ???	99	#63																		
 ???	100	#64																		
 ???	101	#65																		
-Input	102	#66	A		0	0	7	Simple	!	Run Right	Run Left	Up	Down	Jump	Grab / Kick	Use Powerup		!	Input Switch	
+Input	102	#66	A		0	0	6	Simple	!	Run Right	Run Left	Up	Down	Jump	Grab / Kick	Use Powerup	!	!	Input Switch	
+???	103	#67																		
+???	104	#68																		
+	105	#69																		
+	106	#6A																		
+Item	107	#6B	A		11	0	24	List	Items	-	-	-	-	-	-	-	-	-	Beamer	

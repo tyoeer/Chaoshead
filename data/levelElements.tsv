@@ -99,7 +99,7 @@ Dropblock	96	#60			No	1
 Antigrav Block	97	#61			No	1	
 Tempswitch	98	#62	1	1	No	2	
 Flapsack	99	#63	1	1	No	2	
-Bomb Beamer	100	#64	1	1	No	2	
+Beamer	100	#64	1	1	No	2	
 Robo Factory	101	#65	1	1	No	2	
 Spike Block	102	#66	1	1	No	2	
 Long Dropblock	103	#67			96		

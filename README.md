@@ -15,6 +15,7 @@ If you have any questions, feel free to ask.
 - All publicly available 1.0 foreground objects and structures
 - All publicly available 1.0 object properties except Sign icons
 - And input switches, except the "Players Required" property
+- And (item) Beamers
 
 Unsupported content like paths, background stuff, and stuff inside objects will get discarded.
 
