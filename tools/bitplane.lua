@@ -3,14 +3,34 @@ local DS = require("libs.tyoeerUtils.datastructures")
 --the bitplane itself
 local B = Class("Bitplane")
 
-function B:initialize(w,h)
+function B:initialize(w,h,default)
 	self.width = w
 	self.height = h
+	if default==nil then
+		self.default = false
+	else
+		self.default = default
+	end
 	self.grid = DS.grid()
 end
 
 function B:get(x,y)
-	return self.grid[x][y] or false
+	if self.grid[x][y]==nil then
+		return self.default
+	else
+		return self.grid[x][y]
+	end
+end
+
+function B:rectContains(x,y, w,h, value)
+	for i=x, x+w-1, 1 do
+		for j=y, y+h-1, 1 do
+			if self:get(x,y)==value then
+				return true
+			end
+		end
+	end
+	return false
 end
 
 function B:set(x,y,value)
@@ -18,6 +38,14 @@ function B:set(x,y,value)
 		value = true
 	end
 	self.grid[x][y] = value
+end
+
+function B:setRect(x,y, w,h, value)
+	for i=x, x+w-1, 1 do
+		for j=y, y+h-1, 1 do
+			self.grid[i][j] = value
+		end
+	end
 end
 
 function B:iterateFunction(func)

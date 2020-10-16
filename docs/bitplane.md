@@ -5,11 +5,11 @@ Represents a 2d fixed-size boolean grid.
 ## Creation
 
 ```Lua
-instance = require("tools.bitplane").new(width,height)
+instance = require("tools.bitplane").new(width,height[,default])
 ```
 - width, height: the size of the bitplane
+- default: the initial value of all the grid-spaces. Defaults to false.
 
-All valued are initially `nil` (which acts a bit like false)
 
 ```Lua
 instance = require("tools.bitplane").newFromStrings(falseMask, trueMask, strings...)
@@ -67,10 +67,28 @@ Bitplane:set(x,y,value)
 - value: the new value of the field
 
 ```Lua
+Bitplane:setRect(x,y, width,height, value)
+```
+- x, y: the top-left corner of the rectangle
+- width, height: the size of the rectangle
+- value: what to set it to
+
+Sets all spaces inside the rectangle to `value`
+
+```Lua
 value = Bitplane:get(x,y)
 ```
 - x, y: the position of the field
 - value: the value of the field
+
+```Lua
+doesIt = Bitplane:rectContains(x,y, width,height, value)
+```
+- x, y: the top-left corner of the rectangle
+- width, height: the size of the rectangle
+- value: what to check for
+
+Returns true if the given rectangle contains value, false otherwise.
 
 ```Lua
 Bitplane:iterateFunction(func)
