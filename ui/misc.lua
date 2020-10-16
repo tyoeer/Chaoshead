@@ -42,12 +42,12 @@ function UI:initialize()
 		print("----------")
 		table.print(UD.getUserCodes())
 		print("----------")
-		print(cmd)
-		print("----------")
 		local listCmd = "dir /a:d /b"
 		local cdCmd = "cd \""..require("levelhead.misc").getUserDataPath().."\""
 		local cmd = cdCmd.." && "..listCmd
+		print(cmd)
 		
+		print("----------")
 		local cli = io.popen(cmd)
 		local list = cli:read("*all")
 		cli:close()
