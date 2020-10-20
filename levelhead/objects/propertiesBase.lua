@@ -16,6 +16,9 @@ function OBJ:getPropertyRaw(id)
 end
 
 function OBJ:setProperty(id, value)
+	if value==nil then
+		error(string.format("Can't set property %q to nil!",id),2)
+	end
 	id = P:getID(id)
 	self:setPropertyRaw(id,P:mappingToValue(id,value))
 end
