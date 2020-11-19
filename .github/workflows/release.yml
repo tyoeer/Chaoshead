@@ -41,7 +41,7 @@ jobs:
           pathSource: ${{ steps.love-build.outputs.win32-filename }}
           pathTarget: "extract"
       - run: mv "extract/Chaoshead_win32/" "release/" 
-      - run: ls "release"
+      #- run: ls "release"
       # licenses and credits
       - run: cp "credits.txt" "release/credits.txt"
       - run: mv "release/license.txt" "release/license-love2d.txt"
@@ -51,3 +51,24 @@ jobs:
         with:
           name: win32-build
           path: release
+      - name: Create release
+        id: create-release
+        uses: actions/create-release@v1.1.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "v${{ github.events.inputs.version-number }}"
+          release_name: "Chaoshead v${{ github.events.inputs.version-number }}"
+          draft: true
+      - name: Package binaries for Github release
+        uses: vimtor/action-zip@v1
+        with:
+          files: release/
+          dest: release.zip
+      - name: Upload binaries to release
+        uses: actions/upload-release-asset@v1.0.2
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: release.zip
+          asset_name: build-win32.zip
+          asset_content_type: application/zip
