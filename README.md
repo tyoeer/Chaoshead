@@ -44,6 +44,8 @@ Levelhead data (level elements, properties, etc.):<br>
 https://docs.google.com/spreadsheets/d/1bzASSn2FgjqUldPzX8DS66Lv-r2lk3V12jZjl51uaTk/<br>
 The Trello/todo-list for this project:<br>
 https://trello.com/b/eqxuD1A4/chaoshead
+A spreadsheet about the campaign levels and their internal data:<br>
+https://docs.google.com/spreadsheets/d/1wongis8qvVj3-cHEa4HhmzpL1XkP1TXjWYjV5RobZNw
 
 ## Contributing is easy
 
