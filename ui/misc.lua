@@ -22,7 +22,7 @@ function UI:initialize()
 		end
 	end)
 	list:addButtonEntry("Compress campaign (from campaign.bin in the chaoshead data folder)",function()
-		local i =love.filesystem.getInfo("campaign.bin")
+		local i = love.filesystem.getInfo("campaign.bin")
 		if i then
 			local c = love.filesystem.read("campaign.bin")
 			print("Beginning compression...")
@@ -30,6 +30,23 @@ function UI:initialize()
 			print("Compressed! Writing to disk...")
 			love.filesystem.write("campaign_hardfile",d)
 			print("Done!")
+		else
+			print("No campaign.bin found!")
+		end
+	end)
+	list:addButtonEntry("Rehash campaign.bin",function()
+		local i = love.filesystem.getInfo("campaign.bin")
+		if i then
+			local f = love.filesystem.newFile("campaign.bin")
+			f:open("r")
+			local s = f:getSize()
+			local h = require("levelhead.lhs").hash(f:read(s-33))
+			f:close()
+			f:open("a")
+			f:seek(s-33)
+			f:write(h)
+			f:close()
+			print("Overwritten",h)
 		else
 			print("No campaign.bin found!")
 		end
