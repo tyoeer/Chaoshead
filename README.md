@@ -3,6 +3,10 @@
 A WIP scripting interface/reverse engineering tool/level editor for [Levelhead](lvlhd.co) levels/stages,
 made using [Löve2d](http://www.love2d.org).
 
+Please don't use Chaoshead for making stuff that would not be theoratically possible to be made in the normal editor
+(if it would have just require a lot more work otherwise, it's still ok),
+without express approval of the devs.
+
 As Chaoshead is still in development it is recommended to backup all your levels before using it
 (though so far it has only irrevocably corrupted the level it was interacting with,
 so perhaps only backupping the specific level you're working on is enough).
