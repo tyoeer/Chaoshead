@@ -16,9 +16,16 @@ instance = require("tools.allocator"):new(level,settings)
 	- size: table containing the size of the area in which things should be allocated in the format `{width,height}`.
 	  Use together with `setTopLeftCorner()` to limit the allocator to a specific area.
 	  Defaults to the level size.
-	- mask: wether the allocator should have a mask that limits where things can be placed.
-	  See `getMask()` for more info.
+	- objectMask: wether the allocator should have a mask that limits where objects can be placed.
+	  See `getObjectMask()` for more info.
 	  Defaults to `false`
+	- channelMask: wether the allocator should have a mask that limits which channels can be used.
+	  See `getChannelMask()` for more info.
+	  Defaults to `false`
+	- preScan: wether to automatically scan the level and mask away anything already used.
+	  Does not properly work with objects bigger than 1x1 due to data that still needs to be collected.
+	  (Objects bigegr than 1x1 will not get masked off completely, causing overlap, causing undefined behaviour in Levelhead.)
+	  Defaults to `false`.
 
 ## Allocating
 
@@ -60,11 +67,19 @@ allocator:finalize()
 Actually places all objects when the immediate setting is off/false, errors otherwise.
 
 ```Lua
-mask = allocator:getMask()
+mask = allocator:getObjectMask()
 ```
 - mask: (a reference to) the Bitplane masking where the allocator can place objects
 
 Set a position to `false` to block it off from the allocator. All spaces default to `true`.
+
+```Lua
+mask = allocator:getChannelMask()
+```
+- mask: (a reference to) the table masking which channels can be used by the allocator.
+
+Channels are the keys in the table.
+Set a channel to `false` to block it off from the allocator. All channels default to `true`.
 
 ```Lua
 allocator:setTopLeftCorner(x,y)

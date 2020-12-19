@@ -9,8 +9,14 @@ function A:initialize(level,settings)
 	if self.settings.immediate==nil then
 		self.settings.immediate=false
 	end
-	if self.settings.mask==nil then
-		self.settings.mask = false
+	if self.settings.objectMask==nil then
+		self.settings.objectMask = false
+	end
+	if self.settings.channelMask==nil then
+		self.settings.channelMask = false
+	end
+	if self.settings.preScan==nil then
+		self.settings.preScan = false
 	end
 	
 	if self.settings.size then
@@ -25,9 +31,47 @@ function A:initialize(level,settings)
 		self.objectQueue = {}
 		self.areaQueue = {}
 	end
-	if self.settings.mask then
-		self.mask = require("tools.bitplane").new(self.width, self.height, true)
+	if self.settings.objectMask then
+		self.objectMask = require("tools.bitplane").new(self.width, self.height, true)
 	end
+	if self.settings.channelMask then
+		self.channelMask = {}
+		for i=0,999,1 do
+			self.channelMask[i] = true
+		end
+	end
+	if self.settings.preScan then
+		local scan
+		local channelPorperties = {0,1,49,90}
+		if self.objectMask and self.channelMask then
+			scan = function(obj)
+				self.objectMask:set(obj.x, obj.y, false)
+				for _,propId in ipairs(channelProperties) do
+					local p = obj:getPropertyRaw(propId)
+					if p~=nil then
+						self.channelMask[p] = false
+					end
+				end
+			end
+		elseif self.objectMask then
+			scan = function(obj)
+				self.objectMask:set(obj.x, obj.y, false)
+			end
+		elseif self.channelMask then
+			scan = function(obj)
+				for _,propId in ipairs(channelProperties) do
+					local p = obj:getPropertyRaw(propId)
+					if p~=nil then
+						self.channelMask[p] = false
+					end
+				end
+			end
+		end
+		for obj in level.allObjects:iterate() do
+			scan(obj)
+		end
+	end
+	
 	
 	self:setTopLeftCorner(1,1)
 	--[[
@@ -89,8 +133,8 @@ end
 
 function A:nextFree(x,y)
 	x, y = self:nextPos(x, y)
-	if self.mask then
-		while not self.mask:get(x,y) do
+	if self.objectMask then
+		while not self.objectMask:get(x,y) do
 			x, y = self:nextPos(x, y)
 		end
 	end
@@ -99,8 +143,8 @@ end
 
 function A:placeObject(obj)
 	self.level:addObject(obj, self.freeX, self.freeY)
-	if self.mask then
-		self.mask:set(self.freeX, self.freeY, false)
+	if self.objectMask then
+		self.objectMask:set(self.freeX, self.freeY, false)
 	end
 	self.freeX, self.freeY = self:nextFree(self.freeX, self.freeY)
 end
@@ -111,9 +155,9 @@ function A:placeArea(area)
 	local y = self.freeY
 	while true do
 		--check if the area can be placed
-		if not self.mask:rectContains(x,y, area.width, area.height, false) then
+		if not self.objectMask:rectContains(x,y, area.width, area.height, false) then
 			area:setTopLeftCorner(x,y)
-			self.mask:setRect(x,y, area.width, area.height, false)
+			self.objectMask:setRect(x,y, area.width, area.height, false)
 			if not area.settings.immediate then
 				area:finalize()
 			end
@@ -147,7 +191,13 @@ end
 
 
 function A:allocateChannel()
-	self.channelCounter = self.channelCounter + 1
+	if self.channelMask then
+		while not self.channelMask[self.channelCounter] do
+			self.channelCounter = self.channelCounter + 1
+		end
+	else
+		self.channelCounter = self.channelCounter + 1
+	end
 	return self.channelCounter
 end
 
@@ -155,11 +205,19 @@ end
 -- MISC
 
 
-function A:getMask()
-	if self.mask then
-		return self.mask
+function A:getObjectMask()
+	if self.objectMask then
+		return self.objectMask
 	else
-		error("Trying to get the mask of a mask-less allocator!",2)
+		error("Trying to get the object mask of an allocator that doesn't have it!",2)
+	end
+end
+
+function A:getChannelMask()
+	if self.channelMask then
+		return self.channelMask
+	else
+		error("Trying to get the channel mask of an allocator that doesn't have it!",2)
 	end
 end
 
