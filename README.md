@@ -1,7 +1,7 @@
 # Chaoshead
 
 A WIP scripting interface/reverse engineering tool/level editor for [Levelhead](lvlhd.co) levels/stages,
-made using [Löve2d](http://www.love2d.org).
+made using [LÖVE](http://www.love2d.org).
 
 Please don't use Chaoshead for making stuff that would not be theoratically possible to be made in the normal editor
 (if it would have just require a lot more work otherwise, it's still ok),
@@ -12,6 +12,9 @@ As Chaoshead is still in development it is recommended to backup all your levels
 so perhaps only backupping the specific level you're working on is enough).
 WARNING: Chaoshead automatiaclly reloads the current level everytime it gets focus again (for reverse-engineering),
 even if the file hasn't changed, discarding unsaved changes in the progress.
+
+Binary release that can be run without manually installing LÖVE can be found
+[somewhere in that bar on the right](https://github.com/tyoeer/Chaoshead/releases).
 
 If you have any questions, feel free to ask.
 
