@@ -4,6 +4,11 @@ return {
 	},
 	misc = {
 		padding = 10,
+		scrollbar = {
+			width = 25,
+			buttonHeight = 35,
+			buttonScrollSpeed = 100,
+		},
 	},
 	levelSelector = {
 		listDetailsDivisionRatio = 0.4,

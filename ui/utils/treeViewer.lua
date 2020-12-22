@@ -1,4 +1,5 @@
 local PAD = require("ui.structure.padding")
+local SCROLL = require("ui.utils.scrollbar")
 
 local UI = Class("TreeViewerUI",require("ui.structure.proxy"))
 
@@ -26,7 +27,7 @@ function UI:initialize(dataHandler)
 	end)
 	self.details = require("ui.structure.base"):new()
 	
-	UI.super.initialize(self,require("ui.structure.horDivide"):new(self.list, self.details))
+	UI.super.initialize(self,require("ui.structure.horDivide"):new(SCROLL:new(self.list), self.details))
 	self.title = "Tree Viewer"
 end
 

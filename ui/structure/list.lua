@@ -48,6 +48,14 @@ function UI:getPropagatedMouseY(target)
 	end
 end
 
+function UI:getMinimumHeight()
+	local out = 0
+	for c in self.children:iterate() do
+		out = out + c.height
+	end
+	return out + self.entryMargin * (self.nChildren-1)
+end
+
 -- events
 
 local relayAll = function(index)
