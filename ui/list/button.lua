@@ -5,7 +5,7 @@ function UI:initialize(text,onClick,padding,drawBorder)
 	self.onClick = onClick
 	self.padding = padding or 5
 	-- ==false because it should be true if it's nil, not when it's false
-	self.drawBorder = (drawBorder==nil) and true or false
+	self.drawBorder = (drawBorder==nil) and true or drawBorder
 	self.font = love.graphics.getFont()
 	UI.super.initialize(self)
 end
@@ -26,7 +26,7 @@ function UI:draw()
 		col = settings.col.list.button.other
 	end
 	love.graphics.setColor(col.bg)
-	love.graphics.rectangle("fill",0.5,0.5,self.width-1,self.height-1)
+	love.graphics.rectangle("fill",0,0,self.width,self.height)
 	love.graphics.setColor(col.text)
 	love.graphics.printf(self.text, self.padding,self.padding, self.width-2*self.padding, "left")
 	if self.drawBorder then

@@ -85,8 +85,8 @@ function UI:draw()
 		love.graphics.setColor(col.bg)
 		love.graphics.rectangle(
 			"fill",
-			x,0.5,
-			self.tabWidth, self.tabHeight-1
+			x,0,
+			self.tabWidth, self.tabHeight
 		)
 		love.graphics.setColor(col.text)
 		love.graphics.printf(child.title,math.round(x),y, self.tabWidth,"center")
