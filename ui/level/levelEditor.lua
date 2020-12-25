@@ -40,7 +40,8 @@ end
 function UI:reload(level)
 	self.level = level
 	self.viewer:reload(level)
-	for v in self.detailsUI.children:iterate() do
+	for c in self.detailsUI.children:iterate() do
+		local v = c.child
 		if v.reload then v:reload(level) end
 	end
 end

@@ -1,4 +1,4 @@
-local UI = Class(require("ui.structure.list"))
+local UI = Class("LevelDetails",require("ui.structure.list"))
 
 function UI:initialize(level,editor)
 	self.editor = editor
