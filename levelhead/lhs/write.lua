@@ -33,11 +33,10 @@ function LHS:writeHeaders()
 	local h = self.rawHeaders
 	--Prefix (unknown) taken from my own code test level
 	self:write(deHex("F82AD32C010000"))
-	--TitleDivider (unknown) is always this value
-	self:write(0x08)
 	
-	--stuff we know, the values in between appear to be fixed,
-	-- but still need to be properly investigated (and added to the lhs doc)
+	--Level Settings: need to have some serialization,
+	-- and maybe options for not having all 8 of them
+	self:write(0x08)
 	self:write(0x00)
 	self:write(h.music)
 	self:write(0x01)

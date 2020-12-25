@@ -1,6 +1,11 @@
 local P = require("levelhead.data.properties")
 local LHS = {}
 
+function LHS:serializeHeaders(level)
+	self.rawHeaders.width = level.width
+	self.rawHeaders.height = level.height
+end
+
 function LHS:serializeForeground(level)
 	--init
 	local s = {}
@@ -171,6 +176,7 @@ end
 
 function LHS:serializeAll(level)
 	self.rawContentEntries = {}
+	self:serializeHeaders(level)
 	self:serializeForeground(level)
 	self:serializeObjectProperties(level)
 end
