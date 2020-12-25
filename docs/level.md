@@ -49,3 +49,8 @@ Read-only __EntityPool__ with all the objects.
 level.foreground
 ```
 Read-only __Grid__ with all the objects on the foreground layer.
+
+```Lua
+level.width, level.height
+```
+The width and height of the level.
