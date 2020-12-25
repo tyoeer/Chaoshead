@@ -123,10 +123,11 @@ function UI:draw()
 			sectionRows("objectProperties","Object Properties")
 			sectionRows("pathProperties","Path Properties")
 		end
-		sectionRows("repeatedPropertySets","RPS")
-		textRow("Objects in objects (ex.: a jem in a prizeblock):")
-			textRow(bytesToHex(self.levelFile.raw:sub(c.repeatedPropertySets.endOffset+1)),1)
-			textRow(bytesToHex(self.levelFile.raw:sub(c.repeatedPropertySets.endOffset+2)),1)
+		sectionRows("repeatedPropertySets","Repeated Property Sets")
+		sectionRows("containedObjects","Contained Objects")
+		textRow("Paths:")
+			textRow(bytesToHex(self.levelFile.raw:sub(c.containedObjects.endOffset+1)),1)
+			textRow(bytesToHex(self.levelFile.raw:sub(c.containedObjects.endOffset+2)),1)
 end
 
 function UI:inputActivated(name,group, isCursorBound)
