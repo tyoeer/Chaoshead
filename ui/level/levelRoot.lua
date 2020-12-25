@@ -8,6 +8,7 @@ function UI:initialize(levelPath)
 	self.levelPath = levelPath
 	self.levelFile = LHS:new(levelPath)
 	self.levelFile:readAll()
+	self.latestHash = self.levelFile:getHash()
 	self.level = self.levelFile:parseAll()
 	
 	tabs = require("ui.structure.tabs"):new()
@@ -32,6 +33,7 @@ function UI:reload(level)
 	else
 		self.levelFile:reload()
 		self.levelFile:readAll()
+		self.latestHash = self.levelFile:getHash()
 		self.level = self.levelFile:parseAll()
 	end
 	self.levelEditor:reload(self.level)
@@ -62,7 +64,10 @@ end
 
 function UI:focus(focus)
 	if focus then
-		self:reload()
+		self.levelFile:reload()
+		if self.latestHash ~= self.levelFile:getHash() then
+			self:reload()
+		end
 	end
 	self.child:focus(focus)
 end

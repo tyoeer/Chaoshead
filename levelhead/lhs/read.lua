@@ -299,6 +299,7 @@ function LHS:readRepeatedPropertySets()
 	c.endOffset = offset - 1
 end
 
+
 function LHS:readAll()
 	self:readHeaders()
 	self.rawContentEntries = {}
@@ -308,6 +309,10 @@ function LHS:readAll()
 	self:readProperties(false)
 	self:readProperties(true)
 	self:readRepeatedPropertySets()
+end
+
+function LHS:getHash()
+	return self:getBytes(self.raw:len()-32,32)
 end
 
 return LHS
