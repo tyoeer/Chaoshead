@@ -173,6 +173,38 @@ function LHS:writeProperties()
 	self:write(0x00)
 end
 
+function LHS:writeSingleBackground()
+	local c = self.rawContentEntries.singleBackground
+	self:write(0x0D)
+	self:write2(c.nEntries)
+	for _,v in ipairs(c.entries) do
+		self:write2(v.id)
+		self:write2(v.amount)
+		for _,o in ipairs(v.objects) do
+			self:write(o.x)
+			self:write(o.y)
+		end
+	end
+end
+
+function LHS:writeBackgroundStructures(isColumn)
+	local c
+	if isColumn then
+		c = self.rawContentEntries.backgroundColumns
+		self:write(0x0B)
+	else
+		c = self.rawContentEntries.backgroundRows
+		self:write(0x13)
+	end
+	self:write2(c.nEntries)
+	for _,v in ipairs(c.entries) do
+		self:write(v.x)
+		self:write(v.y)
+		self:write2(v.id)
+		self:write(v.length)
+	end
+end
+
 function LHS:writeHash()
 	self:write(0x61)
 	--get current file contents
@@ -183,12 +215,14 @@ function LHS:writeHash()
 	self:write(0)
 end
 
+
 function LHS.hash(input)
 	local step = love.data.encode("string","base64",input) .. "598175".."0"
 	step = love.data.encode("string","hex",love.data.hash("md5",step))
 	step = step .. "AbunchoDANGNONSENSE9plusabigpileofhashsalsytiesooooooo901587"
 	return love.data.encode("string","hex",love.data.hash("md5",step))
 end
+
 
 function LHS:writeAll()
 	local file, err = io.open(self.path,"wb+")
@@ -201,19 +235,21 @@ function LHS:writeAll()
 	self:writeForegroundStructures(false)
 	self:writeForegroundStructures(true)
 	self:writeProperties()
+	--RPS
+	self:write(0x43)
+	self:write2(0x00)
 	--add empty categories to be reverse engineered
 	do
 		local w = function(d)
 			self:write(d)
 			self:write2(0x00)
 		end
-		w(0x43)
 		w(0x3A)
 		w(0x15)
-		w(0x19)
-		w(0x1B)
-		w(0x0D)
 	end
+	self:writeSingleBackground()
+	self:writeBackgroundStructures(false)
+	self:writeBackgroundStructures(true)
 	self:writeHash()
 	
 	self.saveHandle:close()
