@@ -17,28 +17,34 @@ function Level:initialize(w,h)
 	self.background = DS.grid()
 end
 
+--foreground & background
+
+function Level:removeObject(obj)
+	self[obj.layer][obj.x][obj.y] = nil
+	self.allObjects:remove(obj)
+	obj.world = nil
+	obj.layer = nil
+	obj.x = nil
+	obj.y = nil
+end
+
 --foreground
 
-function Level:addObject(obj,x,y)
+function Level:addForegroundObject(obj,x,y)
 	self:removeForeground(x,y)
 	obj.world = self
+	obj.layer = "foreground"
 	obj.x = x
 	obj.y = y
 	self.allObjects:add(obj)
 	self.foreground[x][y] = obj
 end
+Level.addObject = Level.addForegroundObject
 function Level:removeForeground(x,y)
 	local obj = self.foreground[x][y]
 	if obj then
 		self:removeObject(obj)
 	end
-end
-function Level:removeObject(obj)
-	self.foreground[obj.x][obj.y] = nil
-	self.allObjects:remove(obj)
-	obj.world = nil
-	obj.x = nil
-	obj.y = nil
 end
 
 --background
@@ -46,6 +52,7 @@ end
 function Level:addBackgroundObject(obj,x,y)
 	self:removeBackground(x,y)
 	obj.world = self
+	obj.layer = "background"
 	obj.x = x
 	obj.y = y
 	self.allObjects:add(obj)
@@ -56,13 +63,6 @@ function Level:removeBackground(x,y)
 	if obj then
 		self:removeBackgroundObject(obj)
 	end
-end
-function Level:removeBackgroundObject(obj)
-	self.background[obj.x][obj.y] = nil
-	self.allObjects:remove(obj)
-	obj.world = nil
-	obj.x = nil
-	obj.y = nil
 end
 
 function Level:__index(key)

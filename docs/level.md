@@ -14,13 +14,25 @@ instance = require("levelhead.level"):new(width,height)
 
 ## Editing the world
 
+### Foreground & Background
+
+```Lua
+Level:removeObject(object)
+```
+- object: the __Object__ to remove from the world
+
 ### Foreground
 
 ```Lua
-Level:addObject(object,x,y)
+Level:addForegroundObject(object,x,y)
 ```
 - object: the foreground __Object__ to add to the world
 - x, y: the position where to place the object
+
+```Lua
+Level:addObject(...)
+```
+Currently an alias for `Level:addForegroundObject(...)`
 
 ```Lua
 obj = Level:place[element](x,y)
@@ -30,11 +42,6 @@ obj = Level:place[element](x,y)
 - obj: the __Object__ that has been placed
 
 Currently always places stuff on the foreground.
-
-```Lua
-Level:removeObject(object)
-```
-- object: the foreground __Object__ to remove from the world
 
 ```Lua
 Level:removeForeground(x,y)
@@ -50,11 +57,6 @@ Level:addBackgroundObject(object,x,y)
 ```
 - object: the background __Object__ to add to the world
 - x, y: the position where to place the object
-
-```Lua
-Level:removeBackgroundObject(object)
-```
-- object: the background __Object__ to remove from the world
 
 ```Lua
 Level:removeBackground(x,y)

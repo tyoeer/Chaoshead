@@ -6,6 +6,8 @@ function Base:initialize(id)
 	self.id = E:getID(id)
 	--self.x = nil
 	--self.y = nil
+	--self.world = nil
+	--self.layer = nil
 end
 
 function Base:drawAsForeground()

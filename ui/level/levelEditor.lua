@@ -52,7 +52,7 @@ function UI:selectObject(tileX,tileY)
 	if self.selectedObject then
 		self:deselect()
 	end
-	local obj = self.level.foreground:get(tileX,tileY)
+	local obj = self.level.foreground:get(tileX,tileY) or self.level.background:get(tileX,tileY)
 	if obj then
 		self.selectedObject = obj
 		self.selectionDetails = DET_OBJ:new(obj)

@@ -23,6 +23,7 @@ function UI:reload()
 	if self.object then
 		local o = self.object
 		self:addTextEntry("Element: "..E:getName(o.id).." ("..o.id..")")
+		self:addTextEntry("Layer: ".. o.layer:sub(1,1):upper() .. o.layer:sub(2,-1) )
 		self:addTextEntry("X: "..o.x)
 		self:addTextEntry("Y: "..o.y)
 		self:addButtonEntry(
