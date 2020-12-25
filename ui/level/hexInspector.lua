@@ -73,7 +73,7 @@ local function sectionRows(section, label)
 		textRow(hex,2)
 	end
 end
-local function propertyRows(section, label)
+local function propertyRows(section, label, isPath)
 	textRow(label..": ".. this.levelFile.rawContentEntries[section].nEntries)
 	for _,v in ipairs(this.levelFile.rawContentEntries[section].entries) do
 		local hex = bytesToHex(this.levelFile.raw:sub(v.startOffset,v.endOffset))
@@ -81,7 +81,11 @@ local function propertyRows(section, label)
 		for _,w in ipairs(v.entries) do
 			textRow("-> "..w.value,2)
 			for _,u in ipairs(w.entries) do
-				textRow("("..(u.x+1)..","..(u.y+1)..")",3)
+				if isPath then
+					textRow("("..u..")",3)
+				else
+					textRow("("..(u.x+1)..","..(u.y+1)..")",3)
+				end
 			end
 		end
 	end
@@ -117,15 +121,16 @@ function UI:draw()
 		sectionRows("foregroundRows","Foreground rows")
 		sectionRows("foregroundColumns","Foreground columns")
 		if settings.misc.hexInspector.verbosePropertiesDisplay then
-			propertyRows("objectProperties","Object Properties")
-			propertyRows("pathProperties","Path Properties")
+			propertyRows("objectProperties","Object Properties",false)
+			propertyRows("pathProperties","Path Properties",true)
 		else
 			sectionRows("objectProperties","Object Properties")
 			sectionRows("pathProperties","Path Properties")
 		end
 		sectionRows("repeatedPropertySets","Repeated Property Sets")
 		sectionRows("containedObjects","Contained Objects")
-		textRow("Paths:")
+		sectionRows("paths","Paths")
+		textRow("Other stuff:")
 			textRow(bytesToHex(self.levelFile.raw:sub(c.containedObjects.endOffset+1)),1)
 			textRow(bytesToHex(self.levelFile.raw:sub(c.containedObjects.endOffset+2)),1)
 end
