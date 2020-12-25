@@ -97,6 +97,45 @@ function LHS:parseRepeatedPropertySets(w)
 	end
 end
 
+-- contained objects
+
+-- paths
+
+function LHS:parseSingleBackground(w)
+	local raw = self.rawContentEntries.singleBackground
+	for i=1,raw.nEntries,1 do
+		local entry = raw.entries[i]
+		for j=1,entry.amount,1 do
+			local obj = Object:new(entry.id)
+			w:addBackgroundObject(obj, w:fileToWorldX(entry.objects[j].x), w:fileToWorldY(entry.objects[j].y))
+		end
+	end
+end
+
+function LHS:parseBackgroundRows(w)
+	local raw = self.rawContentEntries.backgroundRows
+	for i=1,raw.nEntries,1 do
+		local entry = raw.entries[i]
+		local width = E:getWidth(entry.id)
+		for x=0,entry.length,1 do
+			local obj = Object:new(entry.id)
+			w:addBackgroundObject(obj, w:fileToWorldX(entry.x + width*x), w:fileToWorldY(entry.y))
+		end
+	end
+end
+
+function LHS:parseBackgroundColumns(w)
+	local raw = self.rawContentEntries.backgroundColumns
+	for i=1,raw.nEntries,1 do
+		local entry = raw.entries[i]
+		local height = E:getWidth(entry.id)
+		for y=0,entry.length,1 do
+			local obj = Object:new(entry.id)
+			w:addBackgroundObject(obj, w:fileToWorldX(entry.x), w:fileToWorldY(entry.y + height*y))
+		end
+	end
+end
+
 function LHS:parseAll()
 	local w = self:parseHeaders()
 	self:parseSingleForeground(w)
@@ -104,6 +143,11 @@ function LHS:parseAll()
 	self:parseForegroundColumns(w)
 	self:parseObjectProperties(w)
 	self:parseRepeatedPropertySets(w)
+	--contained objects
+	--paths
+	self:parseSingleBackground(w)
+	self:parseBackgroundRows(w)
+	self:parseBackgroundColumns(w)
 	return w
 end
 

@@ -61,8 +61,10 @@ function UI:draw()
 		endX, endY = math.ceil(endX/TILE_SIZE), math.ceil(endY/TILE_SIZE)
 		for x = startX, endX, 1 do
 			for y = startY, endY, 1 do
+				local bobj = self.level.background:get(x,y)
+				if bobj then bobj:drawAsBackground() end
 				local obj = self.level.foreground:get(x,y)
-				if obj then obj:draw() end
+				if obj then obj:drawAsForeground() end
 			end
 		end
 		--hover

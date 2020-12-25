@@ -8,7 +8,7 @@ function Base:initialize(id)
 	--self.y = nil
 end
 
-function Base:draw()
+function Base:drawAsForeground()
 	local drawX = (self.x-1)*TILE_SIZE
 	local drawY = (self.y-1)*TILE_SIZE
 	love.graphics.setColor(0,1,0,0.5)
@@ -18,5 +18,17 @@ function Base:draw()
 	love.graphics.setColor(0,1,0,1)
 	love.graphics.rectangle("line",drawX+0.5,drawY+0.5,TILE_SIZE-1,TILE_SIZE-1)
 end
+
+function Base:drawAsBackground()
+	local drawX = (self.x-1)*TILE_SIZE
+	local drawY = (self.y-1)*TILE_SIZE
+	love.graphics.setColor(1,0,0,0.5)
+	love.graphics.rectangle("fill",drawX,drawY,TILE_SIZE,TILE_SIZE)
+	love.graphics.setColor(0,0,0,1)
+	love.graphics.print(self.id,drawX+2,drawY+51)
+	love.graphics.setColor(1,0,0,1)
+	love.graphics.rectangle("line",drawX+0.5,drawY+0.5,TILE_SIZE-1,TILE_SIZE-1)
+end
+
 
 return Base

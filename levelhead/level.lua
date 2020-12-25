@@ -14,8 +14,10 @@ function Level:initialize(w,h)
 	self.height = h
 	self.allObjects = Pool:new()
 	self.foreground = DS.grid()
+	self.background = DS.grid()
 end
 
+--foreground
 
 function Level:addObject(obj,x,y)
 	self:removeForeground(x,y)
@@ -25,16 +27,38 @@ function Level:addObject(obj,x,y)
 	self.allObjects:add(obj)
 	self.foreground[x][y] = obj
 end
-
 function Level:removeForeground(x,y)
 	local obj = self.foreground[x][y]
 	if obj then
 		self:removeObject(obj)
 	end
 end
-
 function Level:removeObject(obj)
 	self.foreground[obj.x][obj.y] = nil
+	self.allObjects:remove(obj)
+	obj.world = nil
+	obj.x = nil
+	obj.y = nil
+end
+
+--background
+
+function Level:addBackgroundObject(obj,x,y)
+	self:removeBackground(x,y)
+	obj.world = self
+	obj.x = x
+	obj.y = y
+	self.allObjects:add(obj)
+	self.background[x][y] = obj
+end
+function Level:removeBackground(x,y)
+	local obj = self.background[x][y]
+	if obj then
+		self:removeBackgroundObject(obj)
+	end
+end
+function Level:removeBackgroundObject(obj)
+	self.background[obj.x][obj.y] = nil
 	self.allObjects:remove(obj)
 	obj.world = nil
 	obj.x = nil
