@@ -356,6 +356,74 @@ function LHS:readPaths()
 	c.endOffset = offset-1
 end
 
+function LHS:readSingleBackground()
+	local c = {}
+	self.rawContentEntries.singleBackground = c
+	c.startOffset = self.rawContentEntries.paths.endOffset + 1
+	c.nEntries = self:getNumber2(c.startOffset+1)
+	c.entries = {}
+	local offset = c.startOffset+3
+	for i=1,c.nEntries,1 do
+		local entry = {}
+		entry.startOffset = offset
+		entry.id = self:getNumber2(offset)
+		entry.amount = self:getNumber2(offset+2)
+		entry.objects={}
+		for j=1,entry.amount,1 do
+			local object = {}
+			object.x = self:getNumber1(offset+2+j*2)
+			object.y = self:getNumber1(offset+3+j*2)
+			entry.objects[j] = object
+		end
+		offset = offset + entry.amount*2 + 4
+		entry.endOffset = offset - 1
+		c.entries[i] = entry
+	end
+	c.endOffset = offset-1
+end
+
+function LHS:readBackgroundRows()
+	local c = {}
+	self.rawContentEntries.backgroundRows = c
+	c.startOffset = self.rawContentEntries.singleBackground.endOffset+1
+	c.nEntries = self:getNumber2(c.startOffset+1)
+	c.entries = {}
+	local offset = c.startOffset+3
+	for i=1,c.nEntries,1 do
+		local entry = {}
+		entry.startOffset = offset
+		entry.x = self:getNumber1(offset)
+		entry.y = self:getNumber1(offset+1)
+		entry.id = self:getNumber2(offset+2)
+		entry.length = self:getNumber1(offset+4)
+		offset = offset + 5
+		entry.endOffset = offset - 1
+		c.entries[i] = entry
+	end
+	c.endOffset = offset-1
+end
+
+function LHS:readBackgroundColumns()
+	local c = {}
+	self.rawContentEntries.backgroundColumns = c
+	c.startOffset = self.rawContentEntries.backgroundRows.endOffset+1
+	c.nEntries = self:getNumber2(c.startOffset+1)
+	c.entries = {}
+	local offset = c.startOffset+3
+	for i=1,c.nEntries,1 do
+		local entry = {}
+		entry.startOffset = offset
+		entry.x = self:getNumber1(offset)
+		entry.y = self:getNumber1(offset+1)
+		entry.id = self:getNumber2(offset+2)
+		entry.length = self:getNumber1(offset+4)
+		offset = offset + 5
+		entry.endOffset = offset - 1
+		c.entries[i] = entry
+	end
+	c.endOffset = offset-1
+end
+
 function LHS:readAll()
 	self:readHeaders()
 	self.rawContentEntries = {}
@@ -367,6 +435,9 @@ function LHS:readAll()
 	self:readRepeatedPropertySets()
 	self:readContainedObjects()
 	self:readPaths()
+	self:readSingleBackground()
+	self:readBackgroundRows()
+	self:readBackgroundColumns()
 end
 
 function LHS:getHash()
