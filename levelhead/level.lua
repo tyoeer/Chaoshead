@@ -61,7 +61,7 @@ end
 function Level:removeBackground(x,y)
 	local obj = self.background[x][y]
 	if obj then
-		self:removeBackgroundObject(obj)
+		self:removeObject(obj)
 	end
 end
 
