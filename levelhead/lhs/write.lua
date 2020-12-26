@@ -175,7 +175,7 @@ end
 
 function LHS:writeSingleBackground()
 	local c = self.rawContentEntries.singleBackground
-	self:write(0x0D)
+	self:write(0x19)
 	self:write2(c.nEntries)
 	for _,v in ipairs(c.entries) do
 		self:write2(v.id)
@@ -191,10 +191,10 @@ function LHS:writeBackgroundStructures(isColumn)
 	local c
 	if isColumn then
 		c = self.rawContentEntries.backgroundColumns
-		self:write(0x0B)
+		self:write(0x0D)
 	else
 		c = self.rawContentEntries.backgroundRows
-		self:write(0x13)
+		self:write(0x1B)
 	end
 	self:write2(c.nEntries)
 	for _,v in ipairs(c.entries) do
