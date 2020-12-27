@@ -1,6 +1,7 @@
 local Pool = require("libs.tyoeerUtils.entitypool")
 local DS = require("libs.tyoeerUtils.datastructures")
 local OBJ = require("levelhead.objects.propertiesBase")
+local P = require("levelhead.paths")
 
 local Level = Class()
 --[[
@@ -15,6 +16,8 @@ function Level:initialize(w,h)
 	self.allObjects = Pool:new()
 	self.foreground = DS.grid()
 	self.background = DS.grid()
+	self.pathNodes = DS.grid()
+	self.paths = Pool:new()
 end
 
 --foreground & background
@@ -74,6 +77,32 @@ function Level:__index(key)
 			self:addObject(o, x,y)
 			return o
 		end
+	end
+end
+
+-- paths
+
+function Level:newPath()
+	local p = P:new()
+	self:addPath(p)
+	return p
+end
+
+function Level:addPath(p)
+	self.paths:add(p)
+	p.world = self
+end
+
+--doesn't properly connect, private use only
+function Level:addPathNode(n)
+	self:removePathNode(n.x,n.y)
+	self.pathNodes[n.x][n.y] = n
+end
+
+function Level:removePathNode(x,y)
+	local pn = self.pathNodes[x][y]
+	if pn then
+		pn.path:removeNode(pn)
 	end
 end
 

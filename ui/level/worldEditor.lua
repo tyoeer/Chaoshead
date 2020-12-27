@@ -63,6 +63,22 @@ function UI:draw()
 			for y = startY, endY, 1 do
 				local bobj = self.level.background:get(x,y)
 				if bobj then bobj:drawAsBackground() end
+				
+				local pn = self.level.pathNodes:get(x,y)
+				if pn then
+					pn:draw()
+					if pn.next then
+						pn:drawConnection()
+					end
+					if
+						pn.prev and
+						(pn.prev.x < startX or pn.prev.x > endX or
+						pn.prev.y < startY or pn.prev.y > endY)
+					then
+						pn.prev:drawConnection()
+					end
+				end
+				
 				local obj = self.level.foreground:get(x,y)
 				if obj then obj:drawAsForeground() end
 			end
