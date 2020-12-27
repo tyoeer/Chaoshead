@@ -48,7 +48,7 @@ function UI:draw()
 		love.graphics.scale(self.zoomFactor)
 		love.graphics.translate(self.x, self.y)
 		--bg
-		love.graphics.setColor(0,0.5,1,1)
+		love.graphics.setColor(0,0.5,0.8,1)
 		love.graphics.rectangle(
 			"fill",
 			0, 0,
