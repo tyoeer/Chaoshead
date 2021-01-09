@@ -99,7 +99,16 @@ end
 
 -- contained objects
 
--- paths
+function LHS:parsePaths(w)
+	local raw = self.rawContentEntries.paths
+	for i=1,raw.nEntries,1 do
+		local entry = raw.entries[i]
+		local p = w:newPath()
+		for j=1,entry.amount,1 do
+			p:append(w:fileToWorldX(entry.nodes[j].x), w:fileToWorldY(entry.nodes[j].y))
+		end
+	end
+end
 
 function LHS:parseSingleBackground(w)
 	local raw = self.rawContentEntries.singleBackground
@@ -144,7 +153,7 @@ function LHS:parseAll()
 	self:parseObjectProperties(w)
 	self:parseRepeatedPropertySets(w)
 	--contained objects
-	--paths
+	self:parsePaths(w)
 	self:parseSingleBackground(w)
 	self:parseBackgroundRows(w)
 	self:parseBackgroundColumns(w)

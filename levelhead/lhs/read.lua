@@ -342,12 +342,12 @@ function LHS:readPaths()
 		entry.startOffset = offset
 		entry.id = self:getNumber2(offset)
 		entry.amount = self:getNumber2(offset+2)
-		entry.objects={}
+		entry.nodes={}
 		for j=1,entry.amount,1 do
-			local object = {}
-			object.x = self:getNumber1(offset+2+j*2)
-			object.y = self:getNumber1(offset+3+j*2)
-			entry.objects[j] = object
+			local node = {}
+			node.x = self:getNumber1(offset+2+j*2)
+			node.y = self:getNumber1(offset+3+j*2)
+			entry.nodes[j] = node
 		end
 		offset = offset + entry.amount*2 + 4
 		entry.endOffset = offset - 1
