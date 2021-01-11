@@ -56,6 +56,7 @@ end
 function P:addNodeBefore(n,t)
 	self:addNodeBetween(n,t.prev,t)
 end
+-- internal use only, use P:addNodeAfter/Before
 function P:addNodeBetween(n,prev,next)
 	self:addNode(n)
 	n.next = next
@@ -68,6 +69,7 @@ function P:addNodeBetween(n,prev,next)
 	end
 end
 
+--doesn't properly update world, use Level:removePathNode(x,y)
 function P:removeNode(n)
 	local prev = n.prev
 	local next = n.next
@@ -88,4 +90,4 @@ function P:addNode(n)
 	end
 end
 
-return P
+return P, PN

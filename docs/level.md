@@ -65,12 +65,37 @@ Level:removeBackground(x,y)
 
 In case there's no background object at the specified coördinates, nothing will happen.
 
+### Paths
+
+```Lua
+path = Level:newPath()
+```
+- path: a new __Path__ added to this level
+
+```Lua
+Level:addPath(path)
+```
+- path: the __Path__ to add to this level
+
+```Lua
+Level:removePathNode(x,y)
+```
+- x,y: the position of the path node to remove
+
+In case there's no path node at the specified coördinates, nothing will happen.
+
+
 ## Getting information from the world
 
 ```Lua
 level.allObjects
 ```
 Read-only __EntityPool__ with all the objects.
+
+```Lua
+level.allPaths
+```
+Read-only __EntityPool__ with all the paths.
 
 ```Lua
 level.foreground
