@@ -34,6 +34,13 @@ path:addNodeBefore(new,anchor)
 - new: the __PathNode__ to add to the path
 - anchor: the __PathNode__ before which `new` should be placed
 
+## Info
+
+```Lua
+path.head, pathNode.tail
+```
+The Read-only first and last __PathNode__s of this path respectively.
+
 # PathNode
 
 Nodes contain some internal drawing code, which is why they're a whole datastructure.
@@ -49,16 +56,16 @@ instance = PN:new(x,y)
 ## Info
 
 ```Lua
-x, y = pathNode.x, pathNode.y
+pathNode.x, pathNode.y
 ```
-- x, y: the Read-only position of this node
+The Read-only position of this node
 
 ```Lua
-prev, next = pathNode.prev, pathNode.next
+pathNode.prev, pathNode.next
 ```
-- prev, next: the Read-only nodes before and after this one repsectively. Nil if those don't exist.
+The Read-only nodes before and after this one repsectively. Nil if those don't exist.
 
 ```Lua
-path = pathNode.path
+pathNode.path
 ```
-- path: the __Path__ this node belongs to. Nil if it's not bound to a path.
+The __Path__ this node belongs to. Nil if it's not bound to a path.

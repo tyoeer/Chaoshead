@@ -35,6 +35,7 @@ local P = Class()
 
 function P:initialize()
 	--self.tail = nil
+	--self.head = nil
 	--self.world = nil
 end
 
@@ -42,11 +43,11 @@ function P:append(x,y)
 	local n = PN:new(x,y)
 	if self.tail then
 		self:addNodeAfter(n,self.tail)
-		self.tail = n
 	else
 		--no nodes yet
 		self:addNode(n)
 		self.tail = n
+		self.head = n
 	end
 end
 
@@ -63,9 +64,15 @@ function P:addNodeBetween(n,prev,next)
 	n.prev = prev
 	if prev then
 		prev.next = n
+	else
+		--no prev means this is the head
+		self.head = n
 	end
 	if next then
 		next.prev = n
+	else
+		--no next means this is the tail
+		self.tail = n
 	end
 end
 
@@ -76,9 +83,15 @@ function P:removeNode(n)
 	self.nodes:remove(n)
 	if next then
 		next.prev = prev
+	else
+		--no next means this was the tail
+		self.tail = prev
 	end
 	if prev then
 		prev.next = next
+	else
+		--no prev means this was the head
+		self.head = next
 	end
 end
 
