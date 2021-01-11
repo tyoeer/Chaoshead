@@ -173,6 +173,20 @@ function LHS:writeProperties()
 	self:write(0x00)
 end
 
+function LHS:writePaths()
+	local c = self.rawContentEntries.paths
+	self:write(0x0D)
+	self:write2(c.nEntries)
+	for _,v in ipairs(c.entries) do
+		self:write2(v.id)
+		self:write2(v.amount)
+		for _,o in ipairs(v.nodes) do
+			self:write(o.x)
+			self:write(o.y)
+		end
+	end
+end
+
 function LHS:writeSingleBackground()
 	local c = self.rawContentEntries.singleBackground
 	self:write(0x19)
@@ -238,15 +252,11 @@ function LHS:writeAll()
 	--RPS
 	self:write(0x43)
 	self:write2(0x00)
-	--add empty categories to be reverse engineered
-	do
-		local w = function(d)
-			self:write(d)
-			self:write2(0x00)
-		end
-		w(0x3A)
-		w(0x15)
-	end
+	--Contained Objects
+	self:write(0x3A)
+	self:write2(0x00)
+	
+	self:writePaths()
 	self:writeSingleBackground()
 	self:writeBackgroundStructures(false)
 	self:writeBackgroundStructures(true)

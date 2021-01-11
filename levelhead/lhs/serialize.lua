@@ -174,6 +174,36 @@ function LHS:serializeObjectProperties(level)
 	c.nEntries = #c.entries
 end
 
+function LHS:serializePaths(level)
+	local c = {
+		entries = {},
+	}
+	self.rawContentEntries.paths = c
+	
+	local idCounter = 0x5A76
+	for path in level.paths:iterate() do
+		local entry = {
+			id = idCounter,
+			nodes = {}
+		}
+		idCounter = idCounter + 1
+		
+		local n = path.head
+		while n do
+			table.insert(entry.nodes,{
+				x = level:worldToFileX(n.x),
+				y = level:worldToFileY(n.y),
+			})
+			n = n.next
+		end
+		
+		entry.amount = #entry.nodes
+		table.insert(c.entries,entry)
+	end
+	
+	c.nEntries = #c.entries
+end
+
 function LHS:serializeBackground(level)
 	--init
 	local s = {}
@@ -277,6 +307,7 @@ function LHS:serializeAll(level)
 	self:serializeHeaders(level)
 	self:serializeForeground(level)
 	self:serializeObjectProperties(level)
+	self:serializePaths(level)
 	self:serializeBackground(level)
 end
 
