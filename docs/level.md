@@ -93,7 +93,7 @@ level.allObjects
 Read-only __EntityPool__ with all the objects.
 
 ```Lua
-level.allPaths
+level.paths
 ```
 Read-only __EntityPool__ with all the paths.
 
