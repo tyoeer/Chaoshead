@@ -9,22 +9,15 @@ Objects created by the LHS system are always property objects.
 
 #### For objects without properties:
 ```Lua
-instance = require("levelhead.objects.base"):new(id)
+object = require("levelhead.objects.base"):new(id)
 ```
 - id: the id or name of the level element this object is.
 
 #### For objects with properties:
 ```Lua
-instance = require("levelhead.objects.propertiesBase"):new(id)
+object = require("levelhead.objects.propertiesBase"):new(id)
 ```
 - id: the id or name of the level element this object is.
-
-## Base
-
-```Lua
-object:draw()
-```
-It errors if the object isn't in a world.
 
 ## Properties
 

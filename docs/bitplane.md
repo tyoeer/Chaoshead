@@ -5,14 +5,14 @@ Represents a 2d fixed-size boolean grid.
 ## Creation
 
 ```Lua
-instance = require("tools.bitplane").new(width,height[,default])
+bitplane = require("tools.bitplane").new(width,height[,default])
 ```
 - width, height: the size of the bitplane
 - default: the initial value of all the grid-spaces. Defaults to false.
 
 
 ```Lua
-instance = require("tools.bitplane").newFromStrings(falseMask, trueMask, strings...)
+bitplane = require("tools.bitplane").newFromStrings(falseMask, trueMask, strings...)
 ```
 - falseMask: a string containing all characters that should be considered to be a false value
 - trueMask: a string containing all characters that should be considered to be a true value
@@ -26,15 +26,15 @@ The falseMask takes precedence over the trueMask, and if a character is in neith
 If the strings don't form a rectangle the behavior is undefined
 
 ```Lua
-instance = require("tools.bitplane").invert(source)
-instance = require("tools.bitplane").bnot(source)
+bitplane = require("tools.bitplane").invert(source)
+bitplane = require("tools.bitplane").bnot(source)
 ```
 source: the bitplane to invert
 
 Returns a new bitplane with the same size as source, but with all values inverted (aka the binary not). (Without changed the source bitplane.)
 
 ```Lua
-instance = require("tools.bitplane").bor(sourceA, sourceB)
+bitplane = require("tools.bitplane").bor(sourceA, sourceB)
 ```
 sourceA, sourceB: the bitplanes to create the binary OR of.
 
@@ -42,7 +42,7 @@ Returns a bitplane with the same size as the sources, of which all the values ar
 Errors if the sources are different sizes.
 
 ```Lua
-instance = require("tools.bitplane").band(sourceA, sourceB)
+bitplane = require("tools.bitplane").band(sourceA, sourceB)
 ```
 sourceA, sourceB: the bitplanes to create the binary AND of.
 
@@ -50,8 +50,8 @@ Returns a bitplane with the same size as the sources, of which all the values ar
 Errors if the sources are different sizes.
 
 ```Lua
-instance = require("tools.bitplane").xor(sourceA, sourceB)
-instance = require("tools.bitplane").bxor(sourceA, sourceB)
+bitplane = require("tools.bitplane").xor(sourceA, sourceB)
+bitplane = require("tools.bitplane").bxor(sourceA, sourceB)
 ```
 sourceA, sourceB: the bitplanes to create the binary XOR of.
 
@@ -61,13 +61,13 @@ Errors if the sources are different sizes.
 ## The bitplane itself
 
 ```Lua
-Bitplane:set(x,y,value)
+bitplane:set(x,y,value)
 ```
 - x, y: the position of the field to change
 - value: the new value of the field
 
 ```Lua
-Bitplane:setRect(x,y, width,height, value)
+bitplane:setRect(x,y, width,height, value)
 ```
 - x, y: the top-left corner of the rectangle
 - width, height: the size of the rectangle
@@ -76,13 +76,13 @@ Bitplane:setRect(x,y, width,height, value)
 Sets all spaces inside the rectangle to `value`
 
 ```Lua
-value = Bitplane:get(x,y)
+value = bitplane:get(x,y)
 ```
 - x, y: the position of the field
 - value: the value of the field
 
 ```Lua
-doesIt = Bitplane:rectContains(x,y, width,height, value)
+doesIt = bitplane:rectContains(x,y, width,height, value)
 ```
 - x, y: the top-left corner of the rectangle
 - width, height: the size of the rectangle
@@ -91,7 +91,7 @@ doesIt = Bitplane:rectContains(x,y, width,height, value)
 Returns true if the given rectangle contains value, false otherwise.
 
 ```Lua
-Bitplane:iterateFunction(func)
+bitplane:iterateFunction(func)
 ```
 - func(x,y,value): the function to iterate over all the fields in the bitplane.
 	- x, y: the position of the current field

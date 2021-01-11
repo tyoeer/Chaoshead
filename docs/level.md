@@ -8,7 +8,7 @@ See the scripting documentation (in the README) for how to access the existing l
 ## Creation
 
 ```Lua
-instance = require("levelhead.level"):new(width,height)
+level = require("levelhead.level"):new(width,height)
 ```
 - width, height: the size of the level
 
@@ -17,25 +17,25 @@ instance = require("levelhead.level"):new(width,height)
 ### Foreground & Background
 
 ```Lua
-Level:removeObject(object)
+level:removeObject(object)
 ```
 - object: the __Object__ to remove from the world
 
 ### Foreground
 
 ```Lua
-Level:addForegroundObject(object,x,y)
+level:addForegroundObject(object,x,y)
 ```
 - object: the foreground __Object__ to add to the world
 - x, y: the position where to place the object
 
 ```Lua
-Level:addObject(...)
+level:addObject(...)
 ```
 Currently an alias for `Level:addForegroundObject(...)`
 
 ```Lua
-obj = Level:place[element](x,y)
+object = level:place[element](x,y)
 ```
 - element: concatanated name of the level element you're placing, where each word starts with with an uppercase letter
 - x, y: the position where to place the object
@@ -44,7 +44,7 @@ obj = Level:place[element](x,y)
 Currently always places stuff on the foreground.
 
 ```Lua
-Level:removeForeground(x,y)
+level:removeForeground(x,y)
 ```
 - x, y: the position of the foreground __Object__ to remove
 
@@ -53,13 +53,13 @@ In case there's no foreground object at the specified coördinates, nothing will
 ### Background
 
 ```Lua
-Level:addBackgroundObject(object,x,y)
+level:addBackgroundObject(object,x,y)
 ```
 - object: the background __Object__ to add to the world
 - x, y: the position where to place the object
 
 ```Lua
-Level:removeBackground(x,y)
+level:removeBackground(x,y)
 ```
 - x, y: the position of the foreground __Object__ to remove
 
@@ -73,12 +73,12 @@ path = Level:newPath()
 - path: a new __Path__ added to this level
 
 ```Lua
-Level:addPath(path)
+level:addPath(path)
 ```
 - path: the __Path__ to add to this level
 
 ```Lua
-Level:removePathNode(x,y)
+level:removePathNode(x,y)
 ```
 - x,y: the position of the path node to remove
 

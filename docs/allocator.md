@@ -7,7 +7,7 @@ Currently expects an empty level, and has no support for appending an existing l
 ## Creation
 
 ```Lua
-instance = require("tools.allocator"):new(level,settings)
+allocator = require("tools.allocator"):new(level,settings)
 ```
 - level: the level to allocate stuff in
 - settings: a table containing the settings:
