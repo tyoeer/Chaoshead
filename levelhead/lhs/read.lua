@@ -94,12 +94,12 @@ function LHS:readHeaders()
 	h.height = self:getNumber1(self.titleEndOffset+3)
 end
 
-function LHS:readSingleForeground()
-	self.contentStartOffset = self.titleEndOffset+8
+function LHS:readSingle(section,prev)
 	local c = {}
-	self.rawContentEntries.singleForeground = c
-	c.nEntries = self:getNumber2(self.contentStartOffset+1)
-	c.startOffset = self.contentStartOffset
+	self.rawContentEntries[section] = c
+	--use prev as the name for the previous layer if it's a string, and as the direct start offset otherwise
+	c.startOffset = type(prev)=="string" and (self.rawContentEntries[prev].endOffset + 1) or prev
+	c.nEntries = self:getNumber2(c.startOffset+1)
 	c.entries = {}
 	local offset = c.startOffset+3
 	for i=1,c.nEntries,1 do
@@ -107,14 +107,35 @@ function LHS:readSingleForeground()
 		entry.startOffset = offset
 		entry.id = self:getNumber2(offset)
 		entry.amount = self:getNumber2(offset+2)
-		entry.objects={}
+		entry.subentries={}
 		for j=1,entry.amount,1 do
 			local object = {}
 			object.x = self:getNumber1(offset+2+j*2)
 			object.y = self:getNumber1(offset+3+j*2)
-			entry.objects[j] = object
+			entry.subentries[j] = object
 		end
 		offset = offset + entry.amount*2 + 4
+		entry.endOffset = offset - 1
+		c.entries[i] = entry
+	end
+	c.endOffset = offset-1
+end
+
+function LHS:readStructure(section,prev)
+	local c = {}
+	self.rawContentEntries[section] = c
+	c.startOffset = self.rawContentEntries[prev].endOffset+1
+	c.nEntries = self:getNumber2(c.startOffset+1)
+	c.entries = {}
+	local offset = c.startOffset+3
+	for i=1,c.nEntries,1 do
+		local entry = {}
+		entry.startOffset = offset
+		entry.x = self:getNumber1(offset)
+		entry.y = self:getNumber1(offset+1)
+		entry.id = self:getNumber2(offset+2)
+		entry.length = self:getNumber1(offset+4)
+		offset = offset + 5
 		entry.endOffset = offset - 1
 		c.entries[i] = entry
 	end
@@ -304,84 +325,6 @@ function LHS:readRepeatedPropertySets()
 	c.endOffset = offset - 1
 end
 
-function LHS:readContainedObjects()
-	local c = {}
-	self.rawContentEntries.containedObjects = c
-	c.startOffset = self.rawContentEntries.repeatedPropertySets.endOffset + 1
-	c.nEntries = self:getNumber2(c.startOffset+1)
-	c.entries = {}
-	local offset = c.startOffset+3
-	for i=1,c.nEntries,1 do
-		local entry = {}
-		entry.startOffset = offset
-		entry.id = self:getNumber2(offset)
-		entry.amount = self:getNumber2(offset+2)
-		entry.objects={}
-		for j=1,entry.amount,1 do
-			local object = {}
-			object.x = self:getNumber1(offset+2+j*2)
-			object.y = self:getNumber1(offset+3+j*2)
-			entry.objects[j] = object
-		end
-		offset = offset + entry.amount*2 + 4
-		entry.endOffset = offset - 1
-		c.entries[i] = entry
-	end
-	c.endOffset = offset-1
-end
-
-function LHS:readPaths()
-	local c = {}
-	self.rawContentEntries.paths = c
-	c.startOffset = self.rawContentEntries.containedObjects.endOffset + 1
-	c.nEntries = self:getNumber2(c.startOffset+1)
-	c.entries = {}
-	local offset = c.startOffset+3
-	for i=1,c.nEntries,1 do
-		local entry = {}
-		entry.startOffset = offset
-		entry.id = self:getNumber2(offset)
-		entry.amount = self:getNumber2(offset+2)
-		entry.nodes={}
-		for j=1,entry.amount,1 do
-			local node = {}
-			node.x = self:getNumber1(offset+2+j*2)
-			node.y = self:getNumber1(offset+3+j*2)
-			entry.nodes[j] = node
-		end
-		offset = offset + entry.amount*2 + 4
-		entry.endOffset = offset - 1
-		c.entries[i] = entry
-	end
-	c.endOffset = offset-1
-end
-
-function LHS:readSingleBackground()
-	local c = {}
-	self.rawContentEntries.singleBackground = c
-	c.startOffset = self.rawContentEntries.paths.endOffset + 1
-	c.nEntries = self:getNumber2(c.startOffset+1)
-	c.entries = {}
-	local offset = c.startOffset+3
-	for i=1,c.nEntries,1 do
-		local entry = {}
-		entry.startOffset = offset
-		entry.id = self:getNumber2(offset)
-		entry.amount = self:getNumber2(offset+2)
-		entry.objects={}
-		for j=1,entry.amount,1 do
-			local object = {}
-			object.x = self:getNumber1(offset+2+j*2)
-			object.y = self:getNumber1(offset+3+j*2)
-			entry.objects[j] = object
-		end
-		offset = offset + entry.amount*2 + 4
-		entry.endOffset = offset - 1
-		c.entries[i] = entry
-	end
-	c.endOffset = offset-1
-end
-
 function LHS:readBackgroundRows()
 	local c = {}
 	self.rawContentEntries.backgroundRows = c
@@ -426,18 +369,19 @@ end
 
 function LHS:readAll()
 	self:readHeaders()
+	self.contentStartOffset = self.titleEndOffset+8
 	self.rawContentEntries = {}
-	self:readSingleForeground()
-	self:readForegroundRows()
-	self:readForegroundColumns()
+	self:readSingle("singleForeground", self.contentStartOffset)
+	self:readStructure("foregroundRows","singleForeground")
+	self:readStructure("foregroundColumns","foregroundRows")
 	self:readProperties(false)
 	self:readProperties(true)
 	self:readRepeatedPropertySets()
-	self:readContainedObjects()
-	self:readPaths()
-	self:readSingleBackground()
-	self:readBackgroundRows()
-	self:readBackgroundColumns()
+	self:readSingle("containedObjects","repeatedPropertySets")
+	self:readSingle("paths","containedObjects")
+	self:readSingle("singleBackground","paths")
+	self:readStructure("backgroundRows","singleBackground")
+	self:readStructure("backgroundColumns","backgroundRows")
 end
 
 function LHS:getHash()

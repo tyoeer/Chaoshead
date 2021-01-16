@@ -7,7 +7,6 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 ]]--
 
 function LHS:initialize(path)
-	local t = type(level)
 	if path then
 		self:loadFile(path)
 	else

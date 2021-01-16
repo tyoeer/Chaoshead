@@ -72,29 +72,23 @@ function LHS:writeHeaders()
 	self:write(deHex("0000803F"))
 end
 
-function LHS:writeSingleForeground()
-	local c = self.rawContentEntries.singleForeground
-	self:write(0x0D)
+function LHS:writeSingle(section,id)
+	local c = self.rawContentEntries[section]
+	self:write(id)
 	self:write2(c.nEntries)
 	for _,v in ipairs(c.entries) do
 		self:write2(v.id)
 		self:write2(v.amount)
-		for _,o in ipairs(v.objects) do
+		for _,o in ipairs(v.subentries) do
 			self:write(o.x)
 			self:write(o.y)
 		end
 	end
 end
 
-function LHS:writeForegroundStructures(isColumn)
-	local c
-	if isColumn then
-		c = self.rawContentEntries.foregroundColumns
-		self:write(0x0B)
-	else
-		c = self.rawContentEntries.foregroundRows
-		self:write(0x13)
-	end
+function LHS:writeStructure(section,id)
+	local c =self.rawContentEntries[section]
+	self:write(id)
 	self:write2(c.nEntries)
 	for _,v in ipairs(c.entries) do
 		self:write(v.x)
@@ -173,52 +167,6 @@ function LHS:writeProperties()
 	self:write(0x00)
 end
 
-function LHS:writePaths()
-	local c = self.rawContentEntries.paths
-	self:write(0x15)
-	self:write2(c.nEntries)
-	for _,v in ipairs(c.entries) do
-		self:write2(v.id)
-		self:write2(v.amount)
-		for _,o in ipairs(v.nodes) do
-			self:write(o.x)
-			self:write(o.y)
-		end
-	end
-end
-
-function LHS:writeSingleBackground()
-	local c = self.rawContentEntries.singleBackground
-	self:write(0x19)
-	self:write2(c.nEntries)
-	for _,v in ipairs(c.entries) do
-		self:write2(v.id)
-		self:write2(v.amount)
-		for _,o in ipairs(v.objects) do
-			self:write(o.x)
-			self:write(o.y)
-		end
-	end
-end
-
-function LHS:writeBackgroundStructures(isColumn)
-	local c
-	if isColumn then
-		c = self.rawContentEntries.backgroundColumns
-		self:write(0x0D)
-	else
-		c = self.rawContentEntries.backgroundRows
-		self:write(0x1B)
-	end
-	self:write2(c.nEntries)
-	for _,v in ipairs(c.entries) do
-		self:write(v.x)
-		self:write(v.y)
-		self:write2(v.id)
-		self:write(v.length)
-	end
-end
-
 function LHS:writeHash()
 	self:write(0x61)
 	--get current file contents
@@ -245,9 +193,9 @@ function LHS:writeAll()
 	
 	self:writeHeaders()
 	
-	self:writeSingleForeground()
-	self:writeForegroundStructures(false)
-	self:writeForegroundStructures(true)
+	self:writeSingle("singleForeground",0x0D)
+	self:writeStructure("foregroundRows",0x13)
+	self:writeStructure("foregroundColumns",0x0B)
 	self:writeProperties()
 	--RPS
 	self:write(0x43)
@@ -256,10 +204,10 @@ function LHS:writeAll()
 	self:write(0x3A)
 	self:write2(0x00)
 	
-	self:writePaths()
-	self:writeSingleBackground()
-	self:writeBackgroundStructures(false)
-	self:writeBackgroundStructures(true)
+	self:writeSingle("paths",0x15)
+	self:writeSingle("singleBackground",0x19)
+	self:writeStructure("backgroundRows",0x1B)
+	self:writeStructure("backgroundColumns",0x0D)
 	self:writeHash()
 	
 	self.saveHandle:close()

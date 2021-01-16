@@ -6,16 +6,16 @@ function LHS:serializeHeaders(level)
 	self.rawHeaders.height = level.height
 end
 
-function LHS:serializeForeground(level)
+function LHS:serializeObjects(level,layer)
 	--init
 	local s = {}
-	self.rawContentEntries.singleForeground = s
+	self.rawContentEntries["single"..layer:sub(1,1):upper()..layer:sub(2)] = s
 	s.entries = {}
 	local r = {}
-	self.rawContentEntries.foregroundRows = r
+	self.rawContentEntries[layer.."Rows"] = r
 	r.entries = {}
 	local c = {}
-	self.rawContentEntries.foregroundColumns = c
+	self.rawContentEntries[layer.."Columns"] = c
 	c.entries = {}
 	
 	--state
@@ -28,12 +28,12 @@ function LHS:serializeForeground(level)
 	--process
 	for y=level.height, 1, -1 do
 		for x=1, level.width, 1 do
-			local o = level.foreground[x][y]
+			local o = level[layer][x][y]
 			if o and not done[x][y] then
 				--check the max size of a possible row/column
 				local rowSize = 1
 				while rowSize + x <= level.width do
-					local oo = level.foreground[x+rowSize][y]
+					local oo = level[layer][x+rowSize][y]
 					if oo and oo.id==o.id and not done[x+rowSize][y]  then
 						rowSize = rowSize + 1
 					else
@@ -43,7 +43,7 @@ function LHS:serializeForeground(level)
 				
 				local colSize = 1
 				while y - colSize >= 0 do
-					local oo = level.foreground[x][y-colSize]
+					local oo = level[layer][x][y-colSize]
 					if oo and oo.id==o.id and not done[x][y-colSize] then
 						colSize = colSize + 1
 					else
@@ -57,11 +57,11 @@ function LHS:serializeForeground(level)
 					if not idMap[o.id] then
 						local entry = {}
 						entry.id = o.id
-						entry.objects = {}
+						entry.subentries = {}
 						table.insert(s.entries, entry)
 						idMap[o.id] = entry
 					end
-					table.insert(idMap[o.id].objects,{
+					table.insert(idMap[o.id].subentries,{
 						x = level:worldToFileX(o.x),
 						y = level:worldToFileY(o.y)
 					})
@@ -97,7 +97,7 @@ function LHS:serializeForeground(level)
 	
 	--finalize
 	for _,v in ipairs(s.entries) do
-		v.amount = #v.objects
+		v.amount = #v.subentries
 	end
 	s.nEntries = #s.entries
 	r.nEntries = #r.entries
@@ -184,131 +184,33 @@ function LHS:serializePaths(level)
 	for path in level.paths:iterate() do
 		local entry = {
 			id = idCounter,
-			nodes = {}
+			subentries = {}
 		}
 		idCounter = idCounter + 1
 		
 		local n = path.head
 		while n do
-			table.insert(entry.nodes,{
+			table.insert(entry.subentries,{
 				x = level:worldToFileX(n.x),
 				y = level:worldToFileY(n.y),
 			})
 			n = n.next
 		end
 		
-		entry.amount = #entry.nodes
+		entry.amount = #entry.subentries
 		table.insert(c.entries,entry)
 	end
 	
 	c.nEntries = #c.entries
 end
 
-function LHS:serializeBackground(level)
-	--init
-	local s = {}
-	self.rawContentEntries.singleBackground = s
-	s.entries = {}
-	local r = {}
-	self.rawContentEntries.backgroundRows = r
-	r.entries = {}
-	local c = {}
-	self.rawContentEntries.backgroundColumns = c
-	c.entries = {}
-	
-	--state
-	local idMap = {}
-	local done = {}
-	for x=1, level.width, 1 do
-		done[x] = {}
-	end
-	
-	--process
-	for y=level.height, 1, -1 do
-		for x=1, level.width, 1 do
-			local o = level.background[x][y]
-			if o and not done[x][y] then
-				--check the max size of a possible row/column
-				local rowSize = 1
-				while rowSize + x <= level.width do
-					local oo = level.background[x+rowSize][y]
-					if oo and oo.id==o.id and not done[x+rowSize][y]  then
-						rowSize = rowSize + 1
-					else
-						break
-					end
-				end
-				
-				local colSize = 1
-				while y - colSize >= 0 do
-					local oo = level.background[x][y-colSize]
-					if oo and oo.id==o.id and not done[x][y-colSize] then
-						colSize = colSize + 1
-					else
-						break
-					end
-				end
-				
-				--select the biggest one, row on ties, single object when they're both 1
-				if rowSize == 1 and colSize == 1 then
-					--make it a single foreground object
-					if not idMap[o.id] then
-						local entry = {}
-						entry.id = o.id
-						entry.objects = {}
-						table.insert(s.entries, entry)
-						idMap[o.id] = entry
-					end
-					table.insert(idMap[o.id].objects,{
-						x = level:worldToFileX(o.x),
-						y = level:worldToFileY(o.y)
-					})
-					done[x][y] = true
-				elseif rowSize >= colSize then
-					local entry = {
-						length = rowSize-1,
-						id = o.id,
-						x = level:worldToFileX(o.x),
-						y = level:worldToFileY(o.y)
-					}
-					table.insert(r.entries, entry)
-					for i=0, rowSize-1, 1 do
-						done[x+i][y] = true
-					end
-				elseif colSize > rowSize then
-					local entry = {
-						length = colSize-1,
-						id = o.id,
-						x = level:worldToFileX(o.x),
-						y = level:worldToFileY(o.y)
-					}
-					table.insert(c.entries, entry)
-					for i=0, colSize-1, 1 do
-						done[x][y-i] = true
-					end
-				else
-					error("Col./row comparison went wrong: "..colSize.." c/r "..rowSize)
-				end
-			end
-		end
-	end
-	
-	--finalize
-	for _,v in ipairs(s.entries) do
-		v.amount = #v.objects
-	end
-	s.nEntries = #s.entries
-	r.nEntries = #r.entries
-	c.nEntries = #c.entries
-end
-
 function LHS:serializeAll(level)
-	self.rawContentEntries = {}
 	self:serializeHeaders(level)
-	self:serializeForeground(level)
+	self.rawContentEntries = {}
+	self:serializeObjects(level,"foreground")
 	self:serializeObjectProperties(level)
 	self:serializePaths(level)
-	self:serializeBackground(level)
+	self:serializeObjects(level,"background")
 end
 
 return LHS
