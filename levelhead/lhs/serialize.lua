@@ -113,7 +113,7 @@ function LHS:serializeObjectProperties(level)
 	local doubleLookup = {}
 	
 	--process
-	for obj in level.allObjects:iterate() do
+	for obj in level.objects:iterate() do
 		if obj.properties then
 			for id,value in pairs(obj.properties) do
 				local go = true

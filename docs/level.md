@@ -44,7 +44,7 @@ object = level:place[element](x,y)
 Currently always places stuff on the foreground.
 
 ```Lua
-level:removeForeground(x,y)
+level:removeForegroundAt(x,y)
 ```
 - x, y: the position of the foreground __Object__ to remove
 
@@ -59,7 +59,7 @@ level:addBackgroundObject(object,x,y)
 - x, y: the position where to place the object
 
 ```Lua
-level:removeBackground(x,y)
+level:removeBackgroundAt(x,y)
 ```
 - x, y: the position of the foreground __Object__ to remove
 
@@ -83,7 +83,7 @@ level:removePath(path)
 - path: the __Path__ to remove from this level
 
 ```Lua
-level:removePathNode(x,y)
+level:removePathNodeAt(x,y)
 ```
 - x,y: the position of the path node to remove
 
@@ -93,7 +93,7 @@ In case there's no path node at the specified coördinates, nothing will happen.
 ## Getting information from the world
 
 ```Lua
-level.allObjects
+level.objects
 ```
 Read-only __EntityPool__ with all the objects.
 

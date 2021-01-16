@@ -67,7 +67,7 @@ function A:initialize(level,settings)
 				end
 			end
 		end
-		for obj in level.allObjects:iterate() do
+		for obj in level.objects:iterate() do
 			scan(obj)
 		end
 	end
