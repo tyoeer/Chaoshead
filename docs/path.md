@@ -2,7 +2,7 @@
 
 Represents a path.
 Nodes are their own datastructure, they're described further down.
-Paths should be bound to a level (see Level:addPath) BEFORE nodes are added.
+Paths don't require be bound to a level (see Level:addPath) before nodes are added.
 
 ## Creation
 
@@ -13,7 +13,7 @@ Creates a new path.
 
 Also see `Level:newPath()`
 
-## Adding nodes
+## Editing nodes
 
 ```Lua
 path:append(x,y)
@@ -33,6 +33,11 @@ path:addNodeBefore(new,anchor)
 ```
 - new: the __PathNode__ to add to the path
 - anchor: the __PathNode__ before which `new` should be placed
+
+```Lua
+path:removeNode(node)
+```
+- node: the __PathNode__ to remove
 
 ## Info
 

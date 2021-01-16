@@ -76,8 +76,14 @@ function P:addNodeBetween(n,prev,next)
 	end
 end
 
---doesn't properly update world, use Level:removePathNode(x,y)
 function P:removeNode(n)
+	self:removeNodeRaw(n)
+	if self.world then
+		self.world:removePathNodeRaw(n)
+	end
+end
+--doesn't properly update world, use Level:removePathNode(x,y)
+function P:removeNodeRaw(n)
 	local prev = n.prev
 	local next = n.next
 	self.nodes:remove(n)
@@ -99,7 +105,7 @@ end
 function P:addNode(n)
 	n.path = self
 	if self.world then
-		self.world:addPathNode(n)
+		self.world:addPathNodeRaw(n)
 	end
 end
 

@@ -91,10 +91,28 @@ end
 function Level:addPath(p)
 	self.paths:add(p)
 	p.world = self
+	--add all the path's nodes to the world
+	local n = p.head
+	while n do
+		self:addPathNodeRaw(n)
+		n = n.next
+	end
+end
+
+function Level:removePath(p)
+	p.world = nil
+	self.paths:remove(p)
+	--remove all nodes
+	local n = p.head
+	while n do
+		self:removePathNodeRaw(n)
+		n = n.next
+	end
 end
 
 --doesn't properly connect, private use only
-function Level:addPathNode(n)
+function Level:addPathNodeRaw(n)
+	--remove previous node at this position
 	self:removePathNode(n.x,n.y)
 	self.pathNodes[n.x][n.y] = n
 end
@@ -102,8 +120,14 @@ end
 function Level:removePathNode(x,y)
 	local pn = self.pathNodes[x][y]
 	if pn then
-		pn.path:removeNode(pn)
+		self:removePathNodeRaw(pn)
+		pn.path:removeNodeRaw(pn)
 	end
+end
+
+--doesn't properly disconnect everything, internal use only
+function Level:removePathNodeRaw(pn)
+	self.pathNodes[pn.x][pn.y] = nil
 end
 
 -- saving/loading

@@ -78,6 +78,11 @@ level:addPath(path)
 - path: the __Path__ to add to this level
 
 ```Lua
+level:removePath(path)
+```
+- path: the __Path__ to remove from this level
+
+```Lua
 level:removePathNode(x,y)
 ```
 - x,y: the position of the path node to remove
