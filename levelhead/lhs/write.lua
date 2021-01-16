@@ -175,7 +175,7 @@ end
 
 function LHS:writePaths()
 	local c = self.rawContentEntries.paths
-	self:write(0x0D)
+	self:write(0x15)
 	self:write2(c.nEntries)
 	for _,v in ipairs(c.entries) do
 		self:write2(v.id)
