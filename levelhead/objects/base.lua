@@ -1,6 +1,6 @@
 local E = require("levelhead.data.elements")
 
-local Base = Class()
+local Base = Class("Object")
 
 function Base:initialize(id)
 	self.id = E:getID(id)

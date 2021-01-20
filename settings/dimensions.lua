@@ -34,6 +34,11 @@ return {
 				textEntryIndentSize = 15,
 				buttonPadding = 5,
 			},
+			pathNode = {
+				entryMargin = 6,
+				textEntryIndentSize = 15,
+				buttonPadding = 5,
+			},
 		},
 	},
 	hexInspector = {

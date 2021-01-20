@@ -57,3 +57,15 @@ value = object:getPropertyRaw(id)
 ```
 - id: the id/name of the property to retrieve
 - value: the raw value of said property
+
+## Base Info
+
+```Lua
+object.world
+```
+The __Level__ this object belongs to. Nil if it's not bound to a level. DO NOT edit this directly.
+
+```Lua
+object.layer
+```
+Whether this object is on the "foreground" or "background" layer of a __Level__. Nil if it's not bound to a level. DO NOT edit this directly.

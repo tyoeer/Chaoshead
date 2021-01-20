@@ -113,6 +113,11 @@ level.background
 Read-only __Grid__ with all the objects on the background layer.
 
 ```Lua
+level.pathNodes
+```
+Read-only __Grid__ with all the path nodes.
+
+```Lua
 level.width, level.height
 ```
 The width and height of the level.

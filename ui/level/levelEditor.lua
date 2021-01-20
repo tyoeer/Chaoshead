@@ -1,6 +1,7 @@
 local PAD = require("ui.structure.padding")
 local DET_LEVEL = require("ui.level.details.level")
 local DET_OBJ = require("ui.level.details.object")
+local DET_PN = require("ui.level.details.pathNode")
 
 local UI = Class("LevelEditorUI",require("ui.structure.proxy"))
 
@@ -47,6 +48,9 @@ function UI:reload(level)
 end
 
 -- editor stuff
+local OBJ = require("levelhead.objects.base")
+local PATH = require("levelhead.paths")
+local PN = require("levelhead.pathNodes")
 
 function UI:selectObject(tileX,tileY)
 	if self.selectedObject then
@@ -57,6 +61,13 @@ function UI:selectObject(tileX,tileY)
 		self.selectedObject = obj
 		self.selectionDetails = DET_OBJ:new(obj)
 		self:addTab(self.selectionDetails)
+	else
+		obj = self.level.pathNodes[tileX][tileY]
+		if obj then
+			self.selectedObject = obj
+			self.selectionDetails = DET_PN:new(obj)
+			self:addTab(self.selectionDetails)
+		end
 	end
 end
 
@@ -67,7 +78,16 @@ function UI:deselect()
 end
 
 function UI:delete(obj)
-	self.level:removeObject(obj)
+	if obj:isInstanceOf(OBJ) then
+		self.level:removeObject(obj)
+	elseif obj:isInstanceOf(PN) then
+		local p = obj.path
+		p:removeNode(obj)
+		--removed all nodes?
+		if not p.tail then
+			self.level:removePath(p)
+		end
+	end
 	if obj == self.selectedObject then
 		self:deselect()
 	end
