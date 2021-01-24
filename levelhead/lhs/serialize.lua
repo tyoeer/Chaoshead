@@ -104,18 +104,29 @@ function LHS:serializeObjects(level,layer)
 	c.nEntries = #c.entries
 end
 
-function LHS:serializeObjectProperties(level)
-	local c = {}
-	self.rawContentEntries.objectProperties = c
-	c.entries = {}
+function LHS:serializeProperties(level,pathIdMap)
+	local c = {
+		entries = {}
+	}
+	if pathIdMap then
+		self.rawContentEntries.pathProperties = c
+	else
+		self.rawContentEntries.objectProperties = c
+	end
 	
 	local singleLookup = {}
 	local doubleLookup = {}
 	
 	--process
-	for obj in level.objects:iterate() do
-		if obj.properties then
-			for id,value in pairs(obj.properties) do
+	local toIterate
+	if pathIdMap then
+		toIterate = level.paths
+	else
+		toIterate = level.objects
+	end
+	for thing in toIterate:iterate() do
+		if thing.properties then
+			for id,value in pairs(thing.properties) do
 				local go = true
 				if not singleLookup[id] then
 					singleLookup[id] = {
@@ -155,10 +166,14 @@ function LHS:serializeObjectProperties(level)
 					subentry = doubleLookup[id][value]
 				end
 				if go then
-					table.insert(subentry.entries,{
-						x = level:worldToFileX(obj.x),
-						y = level:worldToFileY(obj.y)
-					})
+					if pathIdMap then
+						table.insert(subentry.entries,pathIdMap[thing])
+					else
+						table.insert(subentry.entries,{
+							x = level:worldToFileX(thing.x),
+							y = level:worldToFileY(thing.y)
+						})
+					end
 				end
 			end
 		end
@@ -175,17 +190,19 @@ function LHS:serializeObjectProperties(level)
 end
 
 function LHS:serializePaths(level)
+	local idMap = {}
 	local c = {
 		entries = {},
 	}
 	self.rawContentEntries.paths = c
 	
-	local idCounter = 0x5A76
+	local idCounter = 0x0000
 	for path in level.paths:iterate() do
 		local entry = {
 			id = idCounter,
 			subentries = {}
 		}
+		idMap[path] = entry.id
 		idCounter = idCounter + 1
 		
 		local n = path.head
@@ -202,14 +219,17 @@ function LHS:serializePaths(level)
 	end
 	
 	c.nEntries = #c.entries
+	return idMap
 end
+
 
 function LHS:serializeAll(level)
 	self:serializeHeaders(level)
 	self.rawContentEntries = {}
 	self:serializeObjects(level,"foreground")
-	self:serializeObjectProperties(level)
-	self:serializePaths(level)
+	self:serializeProperties(level)
+	local idMap = self:serializePaths(level)
+	self:serializeProperties(level,idMap)
 	self:serializeObjects(level,"background")
 end
 

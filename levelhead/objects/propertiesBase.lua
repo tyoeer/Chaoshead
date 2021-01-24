@@ -24,6 +24,7 @@ function OBJ:setProperty(id, value)
 end
 
 function OBJ:getProperty(id)
+	--LH doesn't set all the properties, so this is currently a bit broken
 	id = P:getID(id)
 	return P:valueToMapping(id,self:getPropertyRaw(id))
 end
@@ -54,7 +55,6 @@ function OBJ:__index(key)
 		local prop = key:match("get(.+)")
 		prop = prop:gsub("([A-Z])"," %1"):trim()
 		return function(self)
-			--LH doesn't set all the properties, so this is currently a bit broken
 			return self:getProperty(prop)
 		end
 	end

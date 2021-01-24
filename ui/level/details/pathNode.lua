@@ -31,6 +31,14 @@ function UI:reload()
 			end,
 			settings.dim.editor.details.object.buttonPadding
 		)
+		local p = n.path
+		self:addTextEntry("Properties:")
+		for prop,value in pairs(p.properties) do
+			local success, map = pcall(function()
+				return P:valueToMapping(prop,value)
+			end)
+			self:addTextEntry(P:getName(prop).." ("..prop.."): "..tostring(map).." ("..value..")",1)
+		end
 	end
 end
 

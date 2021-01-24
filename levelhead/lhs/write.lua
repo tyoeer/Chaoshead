@@ -98,9 +98,14 @@ function LHS:writeStructure(section,id)
 	end
 end
 
-function LHS:writeProperties()
-	local c = self.rawContentEntries.objectProperties
-	self:write(0x63)
+function LHS:writeProperties(isPath)
+	local c
+	if isPath then
+		c = self.rawContentEntries.pathProperties
+	else
+		c = self.rawContentEntries.objectProperties
+		self:write(0x63)
+	end
 	self:write(c.nEntries)
 	for _,entry in ipairs(c.entries) do
 		self:write(entry.id)
@@ -157,14 +162,15 @@ function LHS:writeProperties()
 			end
 			self:write2(subentry.amount)
 			for _, subsubentry in ipairs(subentry.entries) do
-				self:write(subsubentry.x)
-				self:write(subsubentry.y)
+				if isPath then
+					self:write2(subsubentry)
+				else
+					self:write(subsubentry.x)
+					self:write(subsubentry.y)
+				end
 			end
 		end
 	end
-	--path properties
-	--not supported yet
-	self:write(0x00)
 end
 
 function LHS:writeHash()
@@ -196,7 +202,8 @@ function LHS:writeAll()
 	self:writeSingle("singleForeground",0x0D)
 	self:writeStructure("foregroundRows",0x13)
 	self:writeStructure("foregroundColumns",0x0B)
-	self:writeProperties()
+	self:writeProperties(false)
+	self:writeProperties(true)
 	--RPS
 	self:write(0x43)
 	self:write2(0x00)

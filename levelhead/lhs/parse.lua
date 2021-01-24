@@ -101,12 +101,28 @@ end
 -- contained objects
 
 function LHS:parsePaths(w)
+	local idMap = {}
 	local raw = self.rawContentEntries.paths
 	for i=1,raw.nEntries,1 do
 		local entry = raw.entries[i]
 		local p = w:newPath()
 		for j=1,entry.amount,1 do
 			p:append(w:fileToWorldX(entry.subentries[j].x), w:fileToWorldY(entry.subentries[j].y))
+		end
+		idMap[entry.id] = p
+	end
+	return idMap
+end
+
+function LHS:parsePathProperties(idMap)
+	local raw = self.rawContentEntries.pathProperties
+	for i=1,raw.nEntries,1 do
+		local entry = raw.entries[i]
+		for j=1,entry.amount,1 do
+			local subentry = entry.entries[j]
+			for _,v in ipairs(subentry.entries) do
+				idMap[v]:setPropertyRaw(entry.id, subentry.value)
+			end
 		end
 	end
 end
@@ -154,7 +170,8 @@ function LHS:parseAll()
 	self:parseObjectProperties(w)
 	self:parseRepeatedPropertySets(w)
 	--contained objects
-	self:parsePaths(w)
+	local idMap = self:parsePaths(w)
+	self:parsePathProperties(idMap)
 	self:parseSingleBackground(w)
 	self:parseBackgroundRows(w)
 	self:parseBackgroundColumns(w)
