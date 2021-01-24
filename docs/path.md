@@ -39,6 +39,44 @@ path:removeNode(node)
 ```
 - node: the __PathNode__ to remove
 
+## Properties
+
+```Lua
+path:set[property name](value)
+```
+- property name: concatanated name of the poperty you're setting, where each new word starts with with an uppercase letter
+- value: the new value of said property
+
+```Lua
+value = path:get[property name]()
+```
+- property name: concatanated name of the poperty you're getting, where each new word starts with with an uppercase letter
+- value: the value of said property
+
+```Lua
+path:setProperty(id, mapping)
+```
+- id: the id/name of the property to change
+- mapping: the new mapped value of said property
+
+```Lua
+mapping = path:getProperty(id)
+```
+- id: the id/name of the property to retrieve
+- mapping: the mapped value of said property
+
+```Lua
+path:setPropertyRaw(id, value)
+```
+- id: the id/name of the property to change
+- value: the new raw value of said property
+
+```Lua
+value = path:getPropertyRaw(id)
+```
+- id: the id/name of the property to retrieve
+- value: the raw value of said property
+
 ## Info
 
 ```Lua

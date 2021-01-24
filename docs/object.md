@@ -33,7 +33,6 @@ value = object:get[property name]()
 - property name: concatanated name of the poperty you're getting, where each word starts with with an uppercase letter
 - value: the value of said property
 
-
 ```Lua
 object:setProperty(id, mapping)
 ```
