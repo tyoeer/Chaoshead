@@ -11,14 +11,26 @@ function PN:initialize(x,y)
 end
 
 function PN:draw()
-	local drawX = (self.x-1)*TILE_SIZE
-	local drawY = (self.y-1)*TILE_SIZE
+	local x = (self.x-1)*TILE_SIZE
+	local y = (self.y-1)*TILE_SIZE
 	love.graphics.setColor(0,0,1,0.4)
-	love.graphics.rectangle("fill",drawX,drawY,TILE_SIZE,TILE_SIZE)
-	--love.graphics.setColor(0,0,0,1)
-	--love.graphics.print(self.id,drawX+2,drawY+2)
+	--it might have been useful to express this using TILE_SIZE
+	-- but the shape has been tweaked to be pixel-perfect, upon changing the tile size
+	-- it should be re-tweaked anyway
+	love.graphics.polygon("fill",
+		x+ 35.5, y+ 0.5,
+		x+ 70.5, y+ 35.5,
+		x+ 35.5, y+ 70.5,
+		x+ 0.5,  y+ 35.5
+	)
 	love.graphics.setColor(0,0,1,1)
-	love.graphics.rectangle("line",drawX+0.5,drawY+0.5,TILE_SIZE-1,TILE_SIZE-1)
+	love.graphics.setLineWidth(math.sqrt(2)/2)
+	love.graphics.polygon("line",
+		x+ 35.5, y+ 0.5,
+		x+ 70.5, y+ 35.5,
+		x+ 35.5, y+ 70.5,
+		x+ 0.5,  y+ 35.5
+	)
 end
 function PN:drawConnection()
 	local drawX = (self.x-0.5)*TILE_SIZE
@@ -28,7 +40,6 @@ function PN:drawConnection()
 	love.graphics.setColor(0,0,1,0.6)
 	love.graphics.setLineWidth(5)
 	love.graphics.line(drawX,drawY, toX,toY)
-	love.graphics.setLineWidth(1)
 end
 
 
