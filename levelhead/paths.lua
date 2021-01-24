@@ -96,7 +96,7 @@ function P:setProperty(id, value)
 		error(string.format("Can't set property %q to nil!",id),2)
 	end
 	id = PROP:getID(id)
-	self:setPropertyRaw(id,P:mappingToValue(id,value))
+	self:setPropertyRaw(id,PROP:mappingToValue(id,value))
 end
 
 function P:getProperty(id)
