@@ -21,9 +21,10 @@ If you have any questions, feel free to ask.
 - All publicly available 1.0 object properties except Sign icons
 - And input switches, except the "Players Required" property
 - And (item) Beamers
-- Background objects and structures
+- All background objects and structures
+- Paths and path properties
 
-Unsupported content like paths, and stuff inside objects will get discarded.
+CONTAINED OBJECTS WILL GET DISCARDED
 
 ## Terminology
 
