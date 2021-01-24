@@ -36,9 +36,9 @@ Time Offset	33	#21	C		0	0	4	None											(Look)cannon
 ???	34	#22																		
 Distance	35	#23	A		2	1	4	None											Swoopadoop, Blobfush, Whizzblade, Fireball	
 Speed	36	#24	A	Used for horizontal and vertical movement (types)	2	1	3	Simple	!	!	Slow	Medium	Fast	!	!	!	!	!	Swoopadoop, Blobfush, Whizzblade, Fireball	
-Active Speed	37	#25	B																Path	
-Closed	38	#26	A																Path	
-End Action	39	#27	A																Path	
+Active Speed	37	#25	B		200	-600	600	None											Path	
+Closed	38	#26	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Path	
+End Action	39	#27	D		-1	-1	2	Simple	Reverse	Stop	Restart	2	!	!	!	!	!	!	Path	
 Start Direction	40	#28	B		90	-180	180	None											Swoopadoop, Blobfush, Whizzblade, Burny Whirler, Spike Chainer, Fireball, Spinny Platform	
 Speed	41	#29	B	In case of fireball only used for circular movement (type)	90	-180	180	None											Burny Whirler, Spike Chainer, Fireball	
 Length	42	#2A	A		4	1	5	None											Burny Whirler, Spike Chainer	
@@ -60,7 +60,7 @@ Length	57	#39	A		3	1	4	None											Spinny Platform
 Speed	58	#3A	B	Used for circular movement (type)	60	-90	90	None											Swoopadoop, Blobfush, Whizzblade, Spinny Platform	
 Icon	59	#3B	A		0	0	37												Sign	
 Switch Requirements	60	#3C	A		2	0	5	Simple	!	One Active	Any Active	All Active	One Inactive	Any Inactive	All Inactive	!	!	!	Prizeblock, Hardlight, ...	
-Visuals	61	#3D	A																Path	
+Visuals	61	#3D	A		2	0	16	List	Path Visuals										Path	
 ???	62	#3E																		
 Song	63	#3F	A		9	0	30	Music											Jukebox	
 Sharp	64	#40	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Boombox	
@@ -70,7 +70,7 @@ Delay Seconds	65	#41	C		3	0.25	600	None											Waitswitch
 Volume	68	#44	A		100	0	100	None											Boombox	
 Zoom Level	69	#45	A		100	80	140	None											ZOOM-R	
 Gate Style	70	#46	A		0	0	2	Simple	!	Purge Powerups	Purge Items	Purge All	!	!	!	!	!	!	Purge Gate	
-Inactive Speed	71	#47	B																Path	
+Inactive Speed	71	#47	B		0	-600	600	None											Path	
 Rotation Style	72	#48	A		0	0	1	Simple	!	Spin	Swing	!	!	!	!	!	!	!	(Trig)blaster, Burny Whirler, Spike Chainer	
 Swing Degrees	73	#49	B		90	0	90	None											(Trig)blaster, Burny Whirler, Spike Chainer	
 Swing Speed	74	#4A	A		-100	50	100	None											Burny Whirler, Spike Chainer	
