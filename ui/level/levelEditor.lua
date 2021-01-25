@@ -48,9 +48,9 @@ function UI:reload(level)
 end
 
 -- editor stuff
-local OBJ = require("levelhead.objects.base")
-local PATH = require("levelhead.paths")
-local PN = require("levelhead.pathNodes")
+local OBJ = require("levelhead.object")
+local PATH = require("levelhead.path")
+local PN = require("levelhead.pathNode")
 
 function UI:selectObject(tileX,tileY)
 	if self.selectedObject then

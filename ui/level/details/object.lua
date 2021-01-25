@@ -34,14 +34,12 @@ function UI:reload()
 			settings.dim.editor.details.object.buttonPadding
 		)
 		--properties
-		if o.properties then
-			self:addTextEntry("Properties:")
-			for prop,value in pairs(o.properties) do
-				local success, map = pcall(function()
-					return P:valueToMapping(prop,value)
-				end)
-				self:addTextEntry(P:getName(prop).." ("..prop.."): "..tostring(map).." ("..value..")",1)
-			end
+		self:addTextEntry("Properties:")
+		for prop,value in pairs(o.properties) do
+			local success, map = pcall(function()
+				return P:valueToMapping(prop,value)
+			end)
+			self:addTextEntry(P:getName(prop).." ("..prop.."): "..tostring(map).." ("..value..")",1)
 		end
 	end
 end

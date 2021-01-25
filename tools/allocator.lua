@@ -1,4 +1,4 @@
-local P = require("levelhead.objects.propertiesBase")
+local OBJ = require("levelhead.object")
 
 local A = Class()
 
@@ -90,7 +90,7 @@ end
 
 
 function A:allocateObject(element)
-	local obj = P:new(element)
+	local obj = OBJ:new(element)
 	if self.settings.immediate then
 		self:placeObject(obj)
 	else

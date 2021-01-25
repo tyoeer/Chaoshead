@@ -1,21 +1,13 @@
 # Object
 
 Represents an object.
-There're two different versions: with or without properties.
-Property objects extend base objects (they can do everything a base object can do).
-Objects created by the LHS system are always property objects.
+An object can have properties set or can contain object even if it can't in Levelhead,
+in which case Levelhead tends to ignore it.
 
 ## Creation
 
-#### For objects without properties:
 ```Lua
-object = require("levelhead.objects.base"):new(id)
-```
-- id: the id or name of the level element this object is.
-
-#### For objects with properties:
-```Lua
-object = require("levelhead.objects.propertiesBase"):new(id)
+object = require("levelhead.object"):new(id)
 ```
 - id: the id or name of the level element this object is.
 
@@ -57,7 +49,7 @@ value = object:getPropertyRaw(id)
 - id: the id/name of the property to retrieve
 - value: the raw value of said property
 
-## Base Info
+## Info
 
 ```Lua
 object.world

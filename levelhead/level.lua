@@ -1,7 +1,7 @@
 local Pool = require("libs.tyoeerUtils.entitypool")
 local DS = require("libs.tyoeerUtils.datastructures")
-local OBJ = require("levelhead.objects.propertiesBase")
-local P = require("levelhead.paths")
+local OBJ = require("levelhead.object")
+local P = require("levelhead.path")
 
 local Level = Class()
 --[[

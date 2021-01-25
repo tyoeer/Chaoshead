@@ -7,7 +7,7 @@ Paths don't require be bound to a level (see Level:addPath) before nodes are add
 ## Creation
 
 ```Lua
-instance = require("levelhead.paths"):new()
+instance = require("levelhead.path"):new()
 ```
 Creates a new path.
 
@@ -96,7 +96,7 @@ Nodes contain some internal drawing code, which is why they're a whole datastruc
 ## Creation
 
 ```Lua
-instance = require("levelhead.pathNodes"):new(x,y)
+instance = require("levelhead.pathNode"):new(x,y)
 ```
 - x, y: the position to create tha path node at
 
