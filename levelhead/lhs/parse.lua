@@ -98,7 +98,16 @@ function LHS:parseRepeatedPropertySets(w)
 	end
 end
 
--- contained objects
+function LHS:parseContainedObjects(w)
+	local raw = self.rawContentEntries.containedObjects
+	for i=1,raw.nEntries,1 do
+		local entry = raw.entries[i]
+		for j=1,entry.amount,1 do
+			--directly set internal value for performance
+			w.foreground[ w:fileToWorldX(entry.subentries[j].x) ][ w:fileToWorldY(entry.subentries[j].y) ].contents = entry.id
+		end
+	end
+end
 
 function LHS:parsePaths(w)
 	local idMap = {}
@@ -169,7 +178,7 @@ function LHS:parseAll()
 	self:parseForegroundColumns(w)
 	self:parseObjectProperties(w)
 	self:parseRepeatedPropertySets(w)
-	--contained objects
+	self:parseContainedObjects(w)
 	local idMap = self:parsePaths(w)
 	self:parsePathProperties(idMap)
 	self:parseSingleBackground(w)

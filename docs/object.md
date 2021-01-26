@@ -52,6 +52,22 @@ value = object:getPropertyRaw(id)
 - value: the raw value of said property
 
 
+## Contained Objects
+
+```Lua
+object:setContents(element)
+object:setContainedObject(element)
+object:setThingInsideThisThing(element)
+```
+- element: the name/id of the element to become this object's contents/contained object
+
+```Lua
+element = object:getContents()
+element = object:getContainedObject()
+element = object:getThingInsideThisThing()
+```
+- element: the name of the element that this object contains
+
 ## Info
 
 ```Lua

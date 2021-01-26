@@ -16,15 +16,15 @@ Binary release that can be run without manually installing LÖVE can be found
 
 If you have any questions, feel free to ask.
 
-### Currently supported
-- All publicly available 1.0 foreground objects and structures
-- All publicly available 1.0 object properties except Sign icons
-- And input switches, except the "Players Required" property
-- And (item) Beamers
-- All background objects and structures
-- Paths and path properties
+### Currently not supported
+- Void Update objects and properties
+  - except (item) Beamers and input switches (except the "Players Required" property)
+  - Unsupported properties will crash Chaoshead (because the .lhs is can't be loaded)
+  - Unsupported objects will only crash when placed in a row or column, otherwise they will simply show up with only their internal ID.
+- Headers:
+  - No API support except for level size
+  - Headers saved are the ones that were read from the file
 
-CONTAINED OBJECTS WILL GET DISCARDED
 
 ## Terminology
 
@@ -34,6 +34,7 @@ CONTAINED OBJECTS WILL GET DISCARDED
 - Item: Something GR-18 can grab and carry.
 - Mapping vs. Value (in the context of properties): a value is the raw number saved in the file, a mapping is what that number means.
   E.g. value 1 for rotation is mapping/mapped to "Up".
+- Contained object/object contents: Example: A Jem inside a Brittle Rock is that Brittle Rocks contained object/contents.
 
 ## Scripting
 

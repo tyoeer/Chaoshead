@@ -10,6 +10,7 @@ function OBJ:initialize(id)
 	--self.y = nil
 	--self.world = nil
 	--self.layer = nil
+	--self.contents
 end
 
 -- MISC
@@ -17,6 +18,18 @@ end
 
 function OBJ:getName()
 	return E:getName(self.id)
+end
+
+
+-- CONTAINED OBJECTS
+
+
+function OBJ:setContents(element)
+	self.contents = E:getID(element)
+end
+
+function OBJ:getContents()
+	return self.contents and E:getName(self.contents)
 end
 
 

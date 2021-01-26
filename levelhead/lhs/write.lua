@@ -208,8 +208,7 @@ function LHS:writeAll()
 	self:write(0x43)
 	self:write2(0x00)
 	--Contained Objects
-	self:write(0x3A)
-	self:write2(0x00)
+	self:writeSingle("containedObjects",0x3A)
 	
 	self:writeSingle("paths",0x15)
 	self:writeSingle("singleBackground",0x19)

@@ -189,6 +189,40 @@ function LHS:serializeProperties(level,pathIdMap)
 	c.nEntries = #c.entries
 end
 
+function LHS:serializeContainedObjects(level)
+	--init
+	local c = {
+		entries = {}
+	}
+	self.rawContentEntries.containedObjects = c
+	
+	--state
+	local idMap = {}
+	
+	--process
+	for obj in level.objects:iterate() do
+		if obj.contents then
+			if not idMap[obj.id] then
+				local entry = {}
+				entry.id = obj.contents
+				entry.subentries = {}
+				table.insert(c.entries, entry)
+				idMap[obj.contents] = entry
+			end
+			table.insert(idMap[obj.contents].subentries,{
+				x = level:worldToFileX(obj.x),
+				y = level:worldToFileY(obj.y)
+			})
+		end
+	end
+	
+	--finalize
+	for _,v in ipairs(c.entries) do
+		v.amount = #v.subentries
+	end
+	c.nEntries = #c.entries
+end
+
 function LHS:serializePaths(level)
 	local idMap = {}
 	local c = {
@@ -228,6 +262,7 @@ function LHS:serializeAll(level)
 	self.rawContentEntries = {}
 	self:serializeObjects(level,"foreground")
 	self:serializeProperties(level)
+	self:serializeContainedObjects(level)
 	local idMap = self:serializePaths(level)
 	self:serializeProperties(level,idMap)
 	self:serializeObjects(level,"background")

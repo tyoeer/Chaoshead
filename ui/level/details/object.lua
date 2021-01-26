@@ -26,6 +26,11 @@ function UI:reload()
 		self:addTextEntry("Layer: ".. o.layer:sub(1,1):upper() .. o.layer:sub(2,-1) )
 		self:addTextEntry("X: "..o.x)
 		self:addTextEntry("Y: "..o.y)
+		if o.contents then
+			self:addTextEntry("Contents: "..o:getContents().." ("..o.contents..")")
+		else
+			self:addTextEntry("Contents: None")
+		end
 		self:addButtonEntry(
 			"Delete",
 			function()
