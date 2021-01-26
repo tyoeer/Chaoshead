@@ -27,11 +27,14 @@ end
 function OBJ:setContents(element)
 	self.contents = E:getID(element)
 end
+OBJ.setContainedObject = OBJ.setContents
+OBJ.setThingInsideThisThing = OBJ.setContents
 
 function OBJ:getContents()
 	return self.contents and E:getName(self.contents)
 end
-
+OBJ.getContainedObject = OBJ.getContents
+OBJ.getThingInsideThisThing = OBJ.getContents
 
 -- DRAWING
 
