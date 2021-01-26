@@ -4,12 +4,14 @@ Represents an object.
 An object can have properties set or can contain object even if it can't in Levelhead,
 in which case Levelhead tends to ignore it.
 
+
 ## Creation
 
 ```Lua
 object = require("levelhead.object"):new(id)
 ```
 - id: the id or name of the level element this object is.
+
 
 ## Properties
 
@@ -49,7 +51,13 @@ value = object:getPropertyRaw(id)
 - id: the id/name of the property to retrieve
 - value: the raw value of said property
 
+
 ## Info
+
+```Lua
+name = object:getName()
+```
+The name of the level element this object is.
 
 ```Lua
 object.world

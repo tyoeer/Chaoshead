@@ -12,6 +12,13 @@ function OBJ:initialize(id)
 	--self.layer = nil
 end
 
+-- MISC
+
+
+function OBJ:getName()
+	return E:getName(self.id)
+end
+
 
 -- DRAWING
 
