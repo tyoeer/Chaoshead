@@ -16,6 +16,13 @@ function UI:initialize(levelFile)
 	UI.super.initialize(self)
 	self.title = "Hex Inspector"
 	
+	self.indentSize = settings.dim.hexInspector.indentSize
+	self.rowHeight = settings.dim.hexInspector.rowHeight
+	self.xPadding = settings.dim.hexInspector.xPadding
+	self.yPadding = settings.dim.hexInspector.yPadding
+	--self.i = 0
+	--self.indent = 1
+	
 	self:reload()
 end
 
@@ -25,116 +32,87 @@ function UI:reload(l)
 	else
 		l = self.levelFile
 	end
-	
-	self.prefix = bytesToHex(l:getBytes(1,6))
-	self.campaignMarker = bytesToHex(l:getBytes(7,1))
-	self.nHeaders = bytesToHex(l:getBytes(8,1))
-	self.bgm = bytesToHex(l:getBytes(9,2))
-	self.mode = bytesToHex(l:getBytes(11,2))
-	self.minPlayers = bytesToHex(l:getBytes(13,2))
-	self.powerups = bytesToHex(l:getBytes(15,2))
-	self.weather = bytesToHex(l:getBytes(17,2))
-	self.language = bytesToHex(l:getBytes(19,2))
-	self.respawn = bytesToHex(l:getBytes(21,2))
-	self.camera = bytesToHex(l:getBytes(23,2))
-	self.zone = bytesToHex(l:getBytes(l.titleEndOffset+1,1))
-	self.lWidth = bytesToHex(l:getBytes(l.titleEndOffset+2,1))
-	self.lHeight = bytesToHex(l:getBytes(l.titleEndOffset+3,1))
-	self.unknown = bytesToHex(l:getBytes(l.titleEndOffset+4,4))
 end
 
-local indentSize = settings.dim.hexInspector.indentSize
-local rowHeight = settings.dim.hexInspector.rowHeight
-local xPadding = settings.dim.hexInspector.xPadding
-local yPadding = settings.dim.hexInspector.yPadding
-local i = 0
-local indent = 0
-local this
-local function resetRows(self)
-	this = self
-	i = 0
-	indent = 1
+
+
+function UI:resetRows()
+	self.i = 0
+	self.indent = 1
 end
-local function textRow(text,extraIndent)
+
+function UI:textRow(text,extraIndent)
 	extraIndent = extraIndent or 0
-	love.graphics.print(text, (indent+extraIndent)*indentSize +xPadding, i*rowHeight +yPadding)
-	i = i +1
+	love.graphics.print(text, (self.indent+extraIndent)*self.indentSize +self.xPadding, self.i*self.rowHeight +self.yPadding)
+	self.i = self.i +1
 end
-local function row(display,label,extraIndent)
-	local text = label or display:gsub("^.",string.upper)
+function UI:headerRow(label,offset,length,extraIndent)
+	length = length or 1
+	local text = label
 	text = text .. ": "
-	text = text .. this[display]
-	textRow(text,extraIndent)
+	text = text .. bytesToHex(self.levelFile:getBytes(offset,length))
+	self:textRow(text,2+(extraIndent or 0))
 end
-local function sectionRows(section, label)
-	textRow(label..": ".. this.levelFile.rawContentEntries[section].nEntries)
-	for _,v in ipairs(this.levelFile.rawContentEntries[section].entries) do
-		local hex = bytesToHex(this.levelFile.raw:sub(v.startOffset,v.endOffset))
-		textRow(hex,2)
+
+function UI:sectionRows(section, label)
+	self:textRow(label..": ".. self.levelFile.rawContentEntries[section].nEntries)
+	for _,v in ipairs(self.levelFile.rawContentEntries[section].entries) do
+		local hex = bytesToHex(self.levelFile.raw:sub(v.startOffset,v.endOffset))
+		self:textRow(hex,2)
 	end
 end
-local function propertyRows(section, label, isPath)
-	textRow(label..": ".. this.levelFile.rawContentEntries[section].nEntries)
-	for _,v in ipairs(this.levelFile.rawContentEntries[section].entries) do
-		local hex = bytesToHex(this.levelFile.raw:sub(v.startOffset,v.endOffset))
-		textRow(hex,2)
+function UI:propertyRows(section, label, isPath)
+	self:textRow(label..": ".. self.levelFile.rawContentEntries[section].nEntries)
+	for _,v in ipairs(self.levelFile.rawContentEntries[section].entries) do
+		local hex = bytesToHex(self.levelFile.raw:sub(v.startOffset,v.endOffset))
+		self:textRow(hex,2)
 		for _,w in ipairs(v.entries) do
-			textRow("-> "..w.value,2)
+			self:textRow("-> "..w.value,2)
 			for _,u in ipairs(w.entries) do
 				if isPath then
-					textRow("("..u..")",3)
+					self:textRow("("..u..")",3)
 				else
-					textRow("("..(u.x+1)..","..(u.y+1)..")",3)
+					self:textRow("("..(u.x+1)..","..(u.y+1)..")",3)
 				end
 			end
 		end
 	end
 end
 function UI:draw()
-	resetRows(self)
-	local c = self.levelFile.rawContentEntries
+	self:resetRows(self)
 	love.graphics.setColor(1,1,1)
-	textRow("Headers:",-1)
-		row("prefix","Unknown: Prefix")
-		row("campaignMarker","Unknown: CampaignMarker")
-		row("nHeaders","Amount of headers")
-		row("bgm")
-		row("mode")
-		row("minPlayers")
-		row("powerups","Player share powerups")
-		row("weather")
-		row("language")
-		row("respawn","MP respawn style")
-		row("camera","Camera hor. boundary")
-		textRow("Title: "..#(self.levelFile.rawHeaders.title))
-			for _,v in ipairs(self.levelFile.rawHeaders.title) do
-				textRow(v,1)
-			end
-		row("zone")
-		row("lWidth","Level width")
-			textRow("-> "..self.levelFile.rawHeaders.width,1)
-		row("lHeight","Level height")
-			textRow("-> "..self.levelFile.rawHeaders.height,1)
-		row("unknown")
-	textRow("Content:",-1)
-		sectionRows("singleForeground","Single Foreground Objects")
-		sectionRows("foregroundRows","Foreground Rows")
-		sectionRows("foregroundColumns","Foreground Columns")
-		if settings.misc.hexInspector.verbosePropertiesDisplay then
-			propertyRows("objectProperties","Object Properties",false)
-			propertyRows("pathProperties","Path Properties",true)
-		else
-			sectionRows("objectProperties","Object Properties")
-			sectionRows("pathProperties","Path Properties")
+	self:textRow("Headers:",-1)
+		local h = self.levelFile.rawHeaders
+		self:headerRow("Prefix",1,6)
+		self:headerRow("CampaignMarker",7)
+		self:headerRow("Settings List",8)
+		for i=1, h.settingsList.amount, 1 do
+			self:textRow(bytesToHex(self.levelFile:getBytes(h.settingsList.startOffset+(i-1)*2,2)),3)
 		end
-		sectionRows("repeatedPropertySets","Repeated Property Sets")
-		sectionRows("containedObjects","Contained Objects")
-		sectionRows("paths","Paths")
-		sectionRows("singleBackground","Single Background Objects")
-		sectionRows("backgroundRows","Background Rows")
-		sectionRows("backgroundColumns","Background Columns")
-		textRow("Hash:")
-			textRow(bytesToHex(self.levelFile.raw:sub(c.backgroundColumns.endOffset+1)),1)
+		self:headerRow("Title", h.titleStartOffset, h.titleEndOffset-h.titleStartOffset+1)
+		self:headerRow("Zone", h.titleEndOffset+1)
+		self:headerRow("Width", h.titleEndOffset+2)
+		self:headerRow("Height", h.titleEndOffset+3)
+		self:headerRow("DividerConstant", h.titleEndOffset+4,4)
+	self:textRow("Content:",-1)
+		self:sectionRows("singleForeground","Single Foreground Objects")
+		self:sectionRows("foregroundRows","Foreground Rows")
+		self:sectionRows("foregroundColumns","Foreground Columns")
+		if settings.misc.hexInspector.verbosePropertiesDisplay then
+			self:propertyRows("objectProperties","Object Properties",false)
+			self:propertyRows("pathProperties","Path Properties",true)
+		else
+			self:sectionRows("objectProperties","Object Properties")
+			self:sectionRows("pathProperties","Path Properties")
+		end
+		self:sectionRows("repeatedPropertySets","Repeated Property Sets")
+		self:sectionRows("containedObjects","Contained Objects")
+		self:sectionRows("paths","Paths")
+		self:sectionRows("singleBackground","Single Background Objects")
+		self:sectionRows("backgroundRows","Background Rows")
+		self:sectionRows("backgroundColumns","Background Columns")
+		self:textRow("Hash:")
+			self:textRow(bytesToHex(self.levelFile.raw:sub(self.levelFile.rawContentEntries.backgroundColumns.endOffset+1)),1)
 end
 
 function UI:inputActivated(name,group, isCursorBound)

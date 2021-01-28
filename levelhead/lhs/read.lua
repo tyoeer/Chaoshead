@@ -59,25 +59,38 @@ end
 --data reading
 
 function LHS:readHeaders()
-	local h = {}
+	local h = {
+		settingsList = {
+			entries = {},
+		},
+	}
 	self.rawHeaders = h
-	--misc before title
-	h.music = self:getNumber1(10)
-	h.mode = self:getNumber1(12)
-	h.minPlayers = self:getNumber1(14)
-	h.sharePowerups = self:getNumber1(16)>=1
-	h.weather = self:getNumber1(18)>=1
-	h.language = self:getNumber1(20)
-	h.mpRespawnStyle = self:getNumber1(22)
-	h.horCameraBoundary = self:getNumber1(24)>=1 -- true means it is bound by the level bounderies
+	
+	--unknowns
+	h.prefix = self:getBytes(1,6)
+	h.campaignMarker = self:getNumber1(7)
+	
+	--settingsList
+	h.settingsList.amount = self:getNumber1(8)
+	local offset = 9
+	h.settingsList.startOffset = offset
+	for i=1,h.settingsList.amount,1 do
+		table.insert(h.settingsList.entries,{
+			id = self:getNumber1(offset),
+			value = self:getNumber1(offset+1),
+		})
+		offset = offset + 2
+	end
+	h.settingsList.endOffset = offset-1
+	
 	--title
-	local i = 25
-	local segment = 1
+	h.titleStartOffset = offset
 	h.title = {""}
+	local segment = 1
 	while true do
-		local byte = self:getNumber1(i)
+		local byte = self:getNumber1(offset)
 		if byte == 0x00 then
-			self.titleEndOffset = i
+			h.titleEndOffset = offset
 			break
 		elseif byte == 0x7C then
 			segment = segment + 1
@@ -85,13 +98,15 @@ function LHS:readHeaders()
 		else
 			h.title[segment] = h.title[segment] .. string.char(byte)
 		end
-		i = i + 1
+		offset = offset + 1
 	end
 	--zone
-	h.zone = self:getNumber1(self.titleEndOffset+1)
+	h.zone = self:getNumber1(h.titleEndOffset+1)
 	--level dimensions
-	h.width = self:getNumber1(self.titleEndOffset+2)
-	h.height = self:getNumber1(self.titleEndOffset+3)
+	h.width = self:getNumber1(h.titleEndOffset+2)
+	h.height = self:getNumber1(h.titleEndOffset+3)
+	--an unknown
+	h.dividerConstant = self:getBytes(h.titleEndOffset+4,4)
 end
 
 function LHS:readSingle(section,prev)
@@ -369,7 +384,7 @@ end
 
 function LHS:readAll()
 	self:readHeaders()
-	self.contentStartOffset = self.titleEndOffset+8
+	self.contentStartOffset = self.rawHeaders.titleEndOffset+8
 	self.rawContentEntries = {}
 	self:readSingle("singleForeground", self.contentStartOffset)
 	self:readStructure("foregroundRows","singleForeground")

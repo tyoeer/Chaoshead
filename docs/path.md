@@ -7,7 +7,7 @@ Paths don't require be bound to a level (see Level:addPath) before nodes are add
 ## Creation
 
 ```Lua
-instance = require("levelhead.path"):new()
+instance = require("levelhead.level.path"):new()
 ```
 Creates a new path.
 
@@ -87,7 +87,7 @@ The Read-only first and last __PathNode__s of this path respectively.
 ```Lua
 path.world
 ```
-The __Level__ this path belongs to. Nil if it's not bound to a level. DO NOT edit this directly.
+The __World__ this path belongs to. Nil if it's not bound to a level. DO NOT edit this directly.
 
 # PathNode
 
@@ -96,7 +96,7 @@ Nodes contain some internal drawing code, which is why they're a whole datastruc
 ## Creation
 
 ```Lua
-instance = require("levelhead.pathNode"):new(x,y)
+instance = require("levelhead.level.pathNode"):new(x,y)
 ```
 - x, y: the position to create tha path node at
 

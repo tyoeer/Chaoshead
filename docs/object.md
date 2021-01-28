@@ -8,7 +8,7 @@ in which case Levelhead tends to ignore it.
 ## Creation
 
 ```Lua
-object = require("levelhead.object"):new(id)
+object = require("levelhead.level.object"):new(id)
 ```
 - id: the id or name of the level element this object is.
 
@@ -78,7 +78,7 @@ The name of the level element this object is.
 ```Lua
 object.world
 ```
-The __Level__ this object belongs to. Nil if it's not bound to a level. DO NOT edit this directly.
+The __World__ this object belongs to. Nil if it's not bound to a level. DO NOT edit this directly.
 
 ```Lua
 object.layer

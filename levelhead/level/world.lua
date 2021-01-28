@@ -1,16 +1,16 @@
 local Pool = require("libs.tyoeerUtils.entitypool")
 local DS = require("libs.tyoeerUtils.datastructures")
-local OBJ = require("levelhead.object")
-local P = require("levelhead.path")
+local OBJ = require("levelhead.level.object")
+local P = require("levelhead.level.path")
 
-local Level = Class()
+local World = Class()
 --[[
 
 Top left corner is (1,1), to be consistent with Lua and Löve2d
 
 ]]--
 
-function Level:initialize(w,h)
+function World:initialize(w,h)
 	self.width = w
 	self.height = h
 	
@@ -24,7 +24,7 @@ end
 
 --foreground & background
 
-function Level:removeObject(obj)
+function World:removeObject(obj)
 	self[obj.layer][obj.x][obj.y] = nil
 	self.objects:remove(obj)
 	obj.world = nil
@@ -35,7 +35,7 @@ end
 
 --foreground
 
-function Level:addForegroundObject(obj,x,y)
+function World:addForegroundObject(obj,x,y)
 	self:removeForegroundAt(x,y)
 	obj.world = self
 	obj.layer = "foreground"
@@ -44,8 +44,8 @@ function Level:addForegroundObject(obj,x,y)
 	self.objects:add(obj)
 	self.foreground[x][y] = obj
 end
-Level.addObject = Level.addForegroundObject
-function Level:removeForegroundAt(x,y)
+World.addObject = World.addForegroundObject
+function World:removeForegroundAt(x,y)
 	local obj = self.foreground[x][y]
 	if obj then
 		self:removeObject(obj)
@@ -54,7 +54,7 @@ end
 
 --background
 
-function Level:addBackgroundObject(obj,x,y)
+function World:addBackgroundObject(obj,x,y)
 	self:removeBackgroundAt(x,y)
 	obj.world = self
 	obj.layer = "background"
@@ -63,14 +63,14 @@ function Level:addBackgroundObject(obj,x,y)
 	self.objects:add(obj)
 	self.background[x][y] = obj
 end
-function Level:removeBackgroundAt(x,y)
+function World:removeBackgroundAt(x,y)
 	local obj = self.background[x][y]
 	if obj then
 		self:removeObject(obj)
 	end
 end
 
-function Level:__index(key)
+function World:__index(key)
 	if key:match("place") then
 		local elem = key:match("place(.+)")
 		elem = elem:gsub("([A-Z])"," %1"):trim()
@@ -84,13 +84,13 @@ end
 
 -- paths
 
-function Level:newPath()
+function World:newPath()
 	local p = P:new()
 	self:addPath(p)
 	return p
 end
 
-function Level:addPath(p)
+function World:addPath(p)
 	self.paths:add(p)
 	p.world = self
 	--add all the path's nodes to the world
@@ -101,7 +101,7 @@ function Level:addPath(p)
 	end
 end
 
-function Level:removePath(p)
+function World:removePath(p)
 	p.world = nil
 	self.paths:remove(p)
 	--remove all nodes
@@ -113,13 +113,13 @@ function Level:removePath(p)
 end
 
 --doesn't properly connect, private use only
-function Level:addPathNodeRaw(n)
+function World:addPathNodeRaw(n)
 	--remove previous node at this position
 	self:removePathNodeAt(n.x,n.y)
 	self.pathNodes[n.x][n.y] = n
 end
 
-function Level:removePathNodeAt(x,y)
+function World:removePathNodeAt(x,y)
 	local pn = self.pathNodes[x][y]
 	if pn then
 		self:removePathNodeRaw(pn)
@@ -128,26 +128,26 @@ function Level:removePathNodeAt(x,y)
 end
 
 --doesn't properly disconnect everything, internal use only
-function Level:removePathNodeRaw(pn)
+function World:removePathNodeRaw(pn)
 	self.pathNodes[pn.x][pn.y] = nil
 end
 
 -- saving/loading
 -- Not Publicly Documentated because I/O shouldn't be done in user-scripts
 -- in here because some of them require the world state
-function Level:fileToWorldX(x)
+function World:fileToWorldX(x)
 	return x + 1
 end
-function Level:fileToWorldY(y)
+function World:fileToWorldY(y)
 	return self.height - y
 end
 
-function Level:worldToFileX(x)
+function World:worldToFileX(x)
 	return x - 1
 end
-function Level:worldToFileY(y)
+function World:worldToFileY(y)
 	return self.height - y
 end
 
 
-return Level
+return World

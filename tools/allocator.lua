@@ -1,4 +1,4 @@
-local OBJ = require("levelhead.object")
+local OBJ = require("levelhead.level.object")
 
 local A = Class()
 

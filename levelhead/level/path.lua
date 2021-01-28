@@ -1,5 +1,5 @@
 local PROP = require("levelhead.data.properties")
-local PN = require("levelhead.pathNode")
+local PN = require("levelhead.level.pathNode")
 
 local P = Class("Path")
 

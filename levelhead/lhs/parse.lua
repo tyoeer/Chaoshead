@@ -1,5 +1,5 @@
-local Level = require("levelhead.level")
-local Object = require("levelhead.object")
+local Level = require("levelhead.level.level")
+local Object = require("levelhead.level.object")
 local E = require("levelhead.data.elements")
 
 local LHS = {}
