@@ -19,7 +19,7 @@ function Settings:initialize()
 	self.weather = false
 	self.language = 0 -- English
 	self.multiplayerRespawnStyle = 0 -- Bubble
-	self.cameraHorizontalBoundary = false
+	self.stopCameraAtLevelSides = false
 	self.title = {} -- empty title
 end
 

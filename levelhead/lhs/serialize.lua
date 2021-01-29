@@ -10,7 +10,7 @@ local settingsList = {
 	"weather",
 	"language",
 	"multiplayerRespawnStyle",
-	"cameraHorizontalBoundary"
+	"stopCameraAtLevelSides"
 }
 function LHS:serializeHeaders(level)
 	local s = level.settings

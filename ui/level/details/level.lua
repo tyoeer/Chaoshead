@@ -10,7 +10,7 @@ local levelSettings = {
 	{"minimumPlayers","Minimum Players"},
 	{"playerSharePowerups","Player Share Powerups"},
 	{"multiplayerRespawnStyle","Multiplayer Respawn Style"},
-	{"cameraHorizontalBoundary","Horizontal Camera Boundary"},
+	{"stopCameraAtLevelSides","Stop Camera At Level Sides"},
 	{"getLanguage","Language"},
 }
 

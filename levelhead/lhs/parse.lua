@@ -20,7 +20,7 @@ local settingsListMap = {
 	"weather",
 	"language",
 	"multiplayerRespawnStyle",
-	"cameraHorizontalBoundary"
+	"stopCameraAtLevelSides"
 }
 --whether or not a certain settings list id has a boolean value
 local settingsListBooleans = {

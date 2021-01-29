@@ -68,9 +68,9 @@ style = settings:getMultiplayerRespawnStyle()
 Which style of multiplayer respawning to use.
 
 ```Lua
-settings.cameraHorizontalBoundary
+settings.stopCameraAtLevelSides
 ```
-Whether or not the camera should stay between the horizontal level boundaries. Is a boolean.
+Whether or not the camera should stay between the _horizontal_ level sides. Is a boolean. Corresponds to "Horizontal Camera Boundary" in Levelhead.
 
 ```Lua
 title = settings:getTitle()
