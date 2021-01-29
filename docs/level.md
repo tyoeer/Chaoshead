@@ -1,8 +1,9 @@
 # Level
 
 Represents a level or world.
-Two variations exist __Level__ and __World__: level = world + misc. settings.
+Two variations exist __Level__ and __World__: level = world + settings.
 Foreground and backgrounds objects can overlap, and are therefore split accross different 'layers'.
+Worlds allow objects to be temporarily placed outside their bounds, but those can't be saved.
 See the scripting documentation (in the README) for how to access the existing level when in a script
 (TL;DR use the level global).
 
@@ -96,7 +97,7 @@ world:removePathNodeAt(x,y)
 In case there's no path node at the specified coördinates, nothing will happen.
 
 
-## Getting information from the world
+## Misc
 
 ```Lua
 world.objects
@@ -127,3 +128,8 @@ Read-only __Grid__ with all the path nodes.
 world.width, world.height
 ```
 The width and height of the world.
+
+```Lua
+level.settings
+```
+The __Settings__ of this level. Not available for __World__s.

@@ -1,9 +1,46 @@
 local P = require("levelhead.data.properties")
 local LHS = {}
 
+
+local settingsList = {
+	[0] = "music",
+	"mode",
+	"minimumPlayers",
+	"playerSharePowerups",
+	"weather",
+	"language",
+	"multiplayerRespawnStyle",
+	"cameraHorizontalBoundary"
+}
 function LHS:serializeHeaders(level)
-	self.rawHeaders.width = level.width
-	self.rawHeaders.height = level.height
+	local s = level.settings
+	local h = self.rawHeaders
+	
+	h.prefix = s.prefix
+	h.zone = s.zone
+	h.campaignMarker = s.campaignMarker
+	
+	h.width = level.width
+	h.height = level.height
+	
+	--title
+	for k,v in pairs(s.title) do
+		h.title[k] = v
+	end
+	
+	h.settingsList.entries = {}
+	for id, setting in pairs(settingsList) do
+		local value = s[setting]
+		if type(value)=="boolean" then
+			value = value and 1 or 0
+		end
+		table.insert(h.settingsList.entries,{
+			id = id,
+			value = value,
+		})
+	end
+	h.settingsList.amount = #h.settingsList.entries
+	
 end
 
 function LHS:serializeObjects(level,layer)

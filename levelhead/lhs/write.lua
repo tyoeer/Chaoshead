@@ -31,33 +31,21 @@ end
 
 function LHS:writeHeaders()
 	local h = self.rawHeaders
-	--Prefix (unknown) taken from my own code test level
-	self:write(deHex("F82AD32C010000"))
 	
-	--Level Settings: need to have some serialization,
-	-- and maybe options for not having all 8 of them
-	self:write(0x08)
-	self:write(0x00)
-	self:write(h.music)
-	self:write(0x01)
-	self:write(h.mode)
-	self:write(0x02)
-	self:write(h.minPlayers)
-	self:write(0x03)
-	self:write(h.sharePowerups and 0x01 or 0x00)
-	self:write(0x04)
-	self:write(h.weather and 0x01 or 0x00)
-	self:write(0x05)
-	self:write(h.language)
-	self:write(0x06)
-	self:write(h.mpRespawnStyle)
-	self:write(0x07)
-	self:write(h.horCameraBoundary and 0x01 or 0x00)
+	self:write(h.prefix)
+	self:write(h.campaignMarker)
+	
+	--settings list
+	self:write(h.settingsList.amount)
+	for _,entry in ipairs(h.settingsList.entries) do
+		self:write(entry.id)
+		self:write(entry.value)
+	end
 	
 	--title
-	for i=1,8,1 do
+	for i=1,#h.title,1 do
 		self:write(h.title[i])
-		if i ~= 8 then
+		if i ~= #h.title then
 			self:write("|")
 		end
 	end

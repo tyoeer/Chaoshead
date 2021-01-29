@@ -1,0 +1,13 @@
+Name (English)	Name (native)	ID(decimal)	ID(hex)
+English	English	0	#00
+German	Deutsch	1	#01
+French	Français	2	#02
+Italian	Italiano	3	#03
+Spanish (Latin America)	Español (Latinoamérica)	4	#04
+Spanish (Spain)	Español (España)	5	#05
+Russian	русский	6	#06
+Portuguese	Português	7	#07
+Chinse (Simplified)	简体中文	8	#08
+Japanese	日本語	9	#09
+Korean	한국어	10	#0A
+Chinese (Traditional)	繁體中文	11	#0B

@@ -17,14 +17,11 @@ Binary release that can be run without manually installing LÖVE can be found
 If you have any questions, feel free to ask.
 
 ### Currently not supported
+
 - Void Update objects and properties
   - except (item) Beamers and input switches (except the "Players Required" property)
   - Unsupported properties will crash Chaoshead (because the .lhs is can't be loaded)
   - Unsupported objects will only crash when placed in a row or column, otherwise they will simply show up with only their internal ID.
-- Headers:
-  - No API support except for level size
-  - Headers saved are the ones that were read from the file
-
 
 ## Terminology
 

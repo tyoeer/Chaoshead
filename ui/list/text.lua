@@ -1,6 +1,6 @@
 local UI = Class(require("ui.structure.base"))
 
-function UI:initialize(text,padding,indent)
+function UI:initialize(text,indent)
 	self.text = text
 	self.font = love.graphics.getFont()
 	self.indent = indent or 0

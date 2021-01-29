@@ -13,11 +13,11 @@ because levelhead has stupid rules where a digit is prepended by a space,
 unless a digit, "-", ".", or "..." are before the digit
 not going to bother with all the complicated rules now
 ]]--
-function m.parseLevelName(name)
-	if type(name)=="table" then
+function m.parseLevelName(parts)
+	if type(parts)=="table" then
 		local out = ""
 		local previous
-		for _,part in ipairs(name) do
+		for _,part in ipairs(parts) do
 			if part:match("%_") then
 				local le = part:match("iin%_(.+)")
 				if le then

@@ -1,4 +1,5 @@
 local Level = require("levelhead.level.level")
+local Settings = require("levelhead.level.settings")
 local Object = require("levelhead.level.object")
 local E = require("levelhead.data.elements")
 
@@ -10,9 +11,52 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 
 ]]--
 
+--which id corresponds to which setting
+local settingsListMap = {
+	[0] = "music",
+	"mode",
+	"minimumPlayers",
+	"playerSharePowerups",
+	"weather",
+	"language",
+	"multiplayerRespawnStyle",
+	"cameraHorizontalBoundary"
+}
+--whether or not a certain settings list id has a boolean value
+local settingsListBooleans = {
+	[0] = false,
+	false,
+	false,
+	true,
+	true,
+	false,
+	false,
+	true,
+}
+
 function LHS:parseHeaders()
 	local raw = self.rawHeaders
 	local w = Level:new(raw.width, raw.height)
+	
+	local set = w.settings
+	set.zone = raw.zone
+	set.prefix = raw.prefix
+	set.campaignMarker = raw.campaignMarker
+	
+	--title
+	for k,v in pairs(raw.title) do
+		set.title[k] = v
+	end
+	
+	--settings list
+	for _,v in ipairs(raw.settingsList.entries) do
+		if settingsListBooleans[v.id] then
+			set[settingsListMap[v.id]] = v.value>=1
+		else
+			set[settingsListMap[v.id]] = v.value
+		end
+	end
+	
 	return w
 end
 
