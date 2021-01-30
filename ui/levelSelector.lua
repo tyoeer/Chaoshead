@@ -20,6 +20,7 @@ function UI:initialize()
 			for _,level in ipairs(UserData.getUserData(parent.code):getWorkshopLevels()) do
 				table.insert(out,{
 					raw = level,
+					user = parent.code,
 					title = level.name,
 					folder = false,
 				})
@@ -58,6 +59,13 @@ function UI:initialize()
 					f:write(hash)
 					f:write(string.char(0))
 					f:close()
+				end
+			)
+			list:addButtonEntry(
+				"Explore user data",
+				function()
+					local dv = require("ui.utils.dataViewer"):new(UserData.getUserData(data.user).raw)
+					ui.child:addChild(dv)
 				end
 			)
 			
