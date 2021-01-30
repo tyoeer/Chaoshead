@@ -8,6 +8,7 @@ return {
 			width = 25,
 			buttonHeight = 35,
 			buttonScrollSpeed = 100,
+			mouseWheelScrollSpeed = 100,
 		},
 	},
 	levelSelector = {

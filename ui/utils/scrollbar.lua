@@ -168,6 +168,8 @@ function UI:mouseMoved(x,y,dx,dy)
 	end
 end
 
---UI:wheelMoved TODO
+function UI:wheelMoved(dx,dy)
+	self:scrollToOffset(self.childOffset + -dy*settings.dim.misc.scrollbar.mouseWheelScrollSpeed)
+end
 
 return UI
