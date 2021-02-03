@@ -80,7 +80,7 @@ value = path:getPropertyRaw(id)
 ## Info
 
 ```Lua
-path.head, pathNode.tail
+path.head, path.tail
 ```
 The Read-only first and last __PathNode__s of this path respectively.
 
