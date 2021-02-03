@@ -165,6 +165,8 @@ end
 function UI:mouseMoved(x,y,dx,dy)
 	if self.dragging then
 		self:scroll(self.scrollButtonY + dy)
+	else
+		self.child:mouseMoved(x,y, dx,dy)
 	end
 end
 
