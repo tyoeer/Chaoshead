@@ -140,10 +140,10 @@ end
 
 function World:movePathNode(node,x,y)
 	self.pathNodes[node.x][node.y] = nil
-	self:removepathNodeAt(x,y)
+	self:removePathNodeAt(x,y)
 	node.x = x
 	node.y = y
-	self.pathNodes[x][y] = obj
+	self.pathNodes[x][y] = node
 end
 
 function World:removePathNodeAt(x,y)
