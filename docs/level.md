@@ -24,6 +24,14 @@ world = require("levelhead.level.world"):new(width,height)
 ### Foreground & Background
 
 ```Lua
+world:moveObject(obj,x,y)
+```
+- obj: the __Object__ to move.
+- x, y: the position to move it to.
+
+Automatically selects the right function to use depending on whether the object is on the foreground or background layer.
+
+```Lua
 world:removeObject(object)
 ```
 - object: the __Object__ to remove from the world
@@ -51,6 +59,14 @@ object = world:place[element](x,y)
 Currently always places stuff on the foreground.
 
 ```Lua
+world:moveForegroundObject(obj,x,y)
+```
+- obj: the foreground __Object__ to move.
+- x, y: the position to move it to..
+
+Should not be with on background objects.
+
+```Lua
 world:removeForegroundAt(x,y)
 ```
 - x, y: the position of the foreground __Object__ to remove
@@ -64,6 +80,14 @@ world:addBackgroundObject(object,x,y)
 ```
 - object: the background __Object__ to add to the world
 - x, y: the position where to place the object
+
+```Lua
+world:movebackgroundObject(obj,x,y)
+```
+- obj: the background __Object__ to move.
+- x, y: the position to move it to..
+
+Should not be with on foreground objects.
 
 ```Lua
 world:removeBackgroundAt(x,y)
@@ -88,6 +112,12 @@ world:addPath(path)
 world:removePath(path)
 ```
 - path: the __Path__ to remove from this world
+
+```Lua
+world:movePathNode(node,x,y)
+```
+- node: the __PathNode__ to move.
+- x, y: the position to move it to.
 
 ```Lua
 world:removePathNodeAt(x,y)

@@ -24,6 +24,14 @@ end
 
 --foreground & background
 
+function World:moveObject(obj,x,y)
+	if obj.layer=="foreground" then
+		self:moveForegroundObject(obj,x,y)
+	else -- background
+		self:moveBackgroundObject(obj,x,y)
+	end
+end
+
 function World:removeObject(obj)
 	self[obj.layer][obj.x][obj.y] = nil
 	self.objects:remove(obj)
@@ -45,26 +53,17 @@ function World:addForegroundObject(obj,x,y)
 	self.foreground[x][y] = obj
 end
 World.addObject = World.addForegroundObject
-function World:removeForegroundAt(x,y)
-	local obj = self.foreground[x][y]
-	if obj then
-		self:removeObject(obj)
-	end
-end
 
---background
-
-function World:addBackgroundObject(obj,x,y)
-	self:removeBackgroundAt(x,y)
-	obj.world = self
-	obj.layer = "background"
+function World:moveForegroundObject(obj,x,y)
+	self.foreground[obj.x][obj.y] = nil
+	self:removeForegroundAt(x,y)
 	obj.x = x
 	obj.y = y
-	self.objects:add(obj)
-	self.background[x][y] = obj
+	self.foreground[x][y] = obj
 end
-function World:removeBackgroundAt(x,y)
-	local obj = self.background[x][y]
+
+function World:removeForegroundAt(x,y)
+	local obj = self.foreground[x][y]
 	if obj then
 		self:removeObject(obj)
 	end
@@ -79,6 +78,33 @@ function World:__index(key)
 			self:addObject(o, x,y)
 			return o
 		end
+	end
+end
+
+--background
+
+function World:addBackgroundObject(obj,x,y)
+	self:removeBackgroundAt(x,y)
+	obj.world = self
+	obj.layer = "background"
+	obj.x = x
+	obj.y = y
+	self.objects:add(obj)
+	self.background[x][y] = obj
+end
+
+function World:moveBackgroundObject(obj,x,y)
+	self.background[obj.x][obj.y] = nil
+	self:removeBackgroundAt(x,y)
+	obj.x = x
+	obj.y = y
+	self.background[x][y] = obj
+end
+
+function World:removeBackgroundAt(x,y)
+	local obj = self.background[x][y]
+	if obj then
+		self:removeObject(obj)
 	end
 end
 
@@ -112,11 +138,12 @@ function World:removePath(p)
 	end
 end
 
---doesn't properly connect, private use only
-function World:addPathNodeRaw(n)
-	--remove previous node at this position
-	self:removePathNodeAt(n.x,n.y)
-	self.pathNodes[n.x][n.y] = n
+function World:movePathNode(node,x,y)
+	self.pathNodes[node.x][node.y] = nil
+	self:removepathNodeAt(x,y)
+	node.x = x
+	node.y = y
+	self.pathNodes[x][y] = obj
 end
 
 function World:removePathNodeAt(x,y)
@@ -125,6 +152,13 @@ function World:removePathNodeAt(x,y)
 		self:removePathNodeRaw(pn)
 		pn.path:removeNodeRaw(pn)
 	end
+end
+
+--doesn't properly connect, private use only
+function World:addPathNodeRaw(n)
+	--remove previous node at this position
+	self:removePathNodeAt(n.x,n.y)
+	self.pathNodes[n.x][n.y] = n
 end
 
 --doesn't properly disconnect everything, internal use only
