@@ -39,6 +39,10 @@ return {
 				"key: backspace",
 			}
 		},
+		resize = {
+			isCursorBound = true,
+			trigger = "mouse: left"
+		}
 	},
 	camera = {
 		drag = {

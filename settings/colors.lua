@@ -1,4 +1,7 @@
 return {
+	editor = {
+		resizeCircles = {0.5,0.5,0.5,0.5},
+	},
 	tabs = {
 		divide = {1,1,1, 1},
 		hover = {

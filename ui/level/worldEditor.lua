@@ -1,5 +1,6 @@
-local UI = Class(require("ui.structure.base"))
+local UTILS = require("tools.utils")
 
+local UI = Class(require("ui.structure.base"))
 
 function UI:initialize(editor)
 	self.editor = editor
@@ -11,6 +12,12 @@ function UI:initialize(editor)
 	self.zoomSpeed = math.sqrt(2)
 	--state stuff
 	self.selecting = false
+	self.resizing = false
+	self.resizeCornerX = 0
+	self.resizeCornerY = 0
+	--misc
+	self.resizeCircleRadius = TILE_SIZE/2
+	
 	
 	--UI stuff
 	UI.super.initialize(self)
@@ -25,6 +32,20 @@ function UI:getMouseTile(x,y)
 	x = self:toWorldX(x or self:getMouseX())
 	y = self:toWorldY(y or self:getMouseY())
 	return math.ceil(x/TILE_SIZE), math.ceil(y/TILE_SIZE)
+end
+
+function UI:posNearCorner(worldX,worldY)
+	local endX,endY = self.level.width*TILE_SIZE, self.level.height*TILE_SIZE
+	for cornerX=0, endX, endX do
+		for cornerY=0, endY, endY do
+			local dx = worldX - cornerX
+			local dy = worldY - cornerY
+			if dx*dx + dy*dy <= self.resizeCircleRadius * self.resizeCircleRadius then
+				return cornerX==0 and -1 or 1, cornerY==0 and -1 or 1
+			end
+		end
+	end
+	return false
 end
 
 function UI:toWorldX(x)
@@ -47,18 +68,45 @@ function UI:draw()
 		love.graphics.translate(self.width/2, self.height/2)
 		love.graphics.scale(self.zoomFactor)
 		love.graphics.translate(self.x, self.y)
+		
 		--bg
+		
 		love.graphics.setColor(0,0.5,1,1)
+		local startX,startY = 0, 0
+		local endX,endY = self.level.width*TILE_SIZE, self.level.height*TILE_SIZE
+		if self.resizing then
+			if self.resizeCornerX==1 then
+				endX = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5) * TILE_SIZE
+			else
+				startX = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5) * TILE_SIZE
+			end
+			if self.resizeCornerY==1 then
+				endY = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5) * TILE_SIZE
+			else
+				startY = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5) * TILE_SIZE
+			end
+		end
 		love.graphics.rectangle(
 			"fill",
-			0, 0,
-			self.level.width*TILE_SIZE, self.level.height*TILE_SIZE
+			startX, startY,
+			endX-startX, endY-startY
 		)
+		--resize circles
+		love.graphics.setColor(settings.col.editor.resizeCircles)
+		for cornerX=startX, endX, endX-startX do
+			for cornerY=startY, endY, endY-startY do
+				love.graphics.circle("fill",cornerX,cornerY,self.resizeCircleRadius)
+			end
+		end
+		
 		--objects
-		local startX, startY = self:toWorldX(0), self:toWorldY(0)
-		local endX, endY = self:toWorldX(self.width), self:toWorldY(self.height)
+		
+		--get psoition of objects at the screen edges
+		startX, startY = self:toWorldX(0), self:toWorldY(0)
+		endX, endY = self:toWorldX(self.width), self:toWorldY(self.height)
 		startX, startY = math.ceil(startX/TILE_SIZE), math.ceil(startY/TILE_SIZE)
 		endX, endY = math.ceil(endX/TILE_SIZE), math.ceil(endY/TILE_SIZE)
+		--and draw all objects between
 		for x = startX, endX, 1 do
 			for y = startY, endY, 1 do
 				local bobj = self.level.background:get(x,y)
@@ -95,24 +143,89 @@ function UI:draw()
 end
 
 function UI:mouseMoved(x,y,dx,dy)
-	if input.isActive("drag","camera") then
-		self.selecting = false
-		self.x = self.x + dx/self.zoomFactor
-		self.y = self.y + dy/self.zoomFactor
+	if self.resizing then
+		-- move camera when at border
+	else
+		if input.isActive("drag","camera") then
+			self.selecting = false
+			self.x = self.x + dx/self.zoomFactor
+			self.y = self.y + dy/self.zoomFactor
+		else
+			local cx,cy = self:posNearCorner(self:toWorldX(x),self:toWorldY(y))
+			if cx then
+				if cx*cy==1 then
+					love.mouse.setCursor(love.mouse.getSystemCursor("sizenwse"))
+				else
+					love.mouse.setCursor(love.mouse.getSystemCursor("sizenesw"))
+				end
+			else
+				love.mouse.setCursor()
+			end
+		end
 	end
 end
 
 function UI:inputActivated(name,group, isCursorBound)
-	if name=="select" and group=="editor" then
-		self.selecting = true
+	if group=="editor" then
+		if name=="select" then
+			self.selecting = true
+		elseif name=="resize" then
+			local cx,cy = self:posNearCorner(self:toWorldX(self:getMouseX()),self:toWorldY(self:getMouseY()))
+			if cx then
+				self.resizing = true
+				self.resizeCornerX = cx
+				self.resizeCornerY = cy
+			end
+		end
 	end
 end
 
 function UI:inputDeactivated(name,group, isCursorBound)
-	if name=="select" and group=="editor" then
-		if self.selecting then
-			self.selecting = false
-			self.editor:selectObject(self:getMouseTile(x,y))
+	if group=="editor" then
+		if name=="select" then
+			if self.selecting then
+				self.selecting = false
+				self.editor:selectObject(self:getMouseTile())
+			end
+		elseif name=="resize" then
+			if self.resizing then
+				self.resizing = false
+				--actually resize
+				local startX,startY = 0, 0
+				local endX,endY = self.level.width, self.level.height
+				if self.resizeCornerX==1 then
+					endX = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5)
+					
+					if self.resizeCornerY==1 then
+						endY = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
+						--top-right: no movement required
+					else
+						startY = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
+						--bottom-right: only Y should be compensated
+						UTILS.offsetEverything(self.level,0,-startY)
+						self.y = self.y + startY*TILE_SIZE
+					end
+				else
+					startX = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5)
+					self.level.width = endX - startX
+					if self.resizeCornerY==1 then
+						endY = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
+						--top-left: only X should be compensated
+						UTILS.offsetEverything(self.level,-startX,0)
+						self.x = self.x + startX*TILE_SIZE
+					else
+						startY = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
+						--bottom-left: both X and Y should be compensated
+						UTILS.offsetEverything(self.level,-startX,-startY)
+						self.x = self.x + startX*TILE_SIZE
+						self.y = self.y + startY*TILE_SIZE
+					end
+				end
+				self.level.width = endX - startX
+				self.level.height = endY - startY
+				--get the level details UI reloaded so it displays the right size
+				self.editor:reload(self.level)
+			end
 		end
 	end
 end
