@@ -1,4 +1,4 @@
-local UTILS = require("tools.utils")
+local UTILS = require("utils.levelUtils")
 
 local UI = Class(require("ui.structure.base"))
 
