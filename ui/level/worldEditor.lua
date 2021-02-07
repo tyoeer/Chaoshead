@@ -6,8 +6,8 @@ function UI:initialize(editor)
 	self.editor = editor
 	self.level = editor.level
 	--camera stuff
-	self.x = 0
-	self.y = 0
+	self.cameraX = 0
+	self.cameraY = 0
 	self.zoomFactor = 1
 	self.zoomSpeed = math.sqrt(2)
 	--state stuff
@@ -51,13 +51,13 @@ end
 function UI:toWorldX(x)
 	x = x - self.width/2
 	x = x / self.zoomFactor
-	x = x - self.x
+	x = x - self.cameraX
 	return x
 end
 function UI:toWorldY(y)
 	y = y - self.height/2
 	y = y / self.zoomFactor
-	y = y - self.y
+	y = y - self.cameraY
 	return y
 end
 
@@ -67,7 +67,7 @@ function UI:draw()
 	--camera
 		love.graphics.translate(self.width/2, self.height/2)
 		love.graphics.scale(self.zoomFactor)
-		love.graphics.translate(self.x, self.y)
+		love.graphics.translate(self.cameraX, self.cameraY)
 		
 		--bg
 		
@@ -148,8 +148,8 @@ function UI:mouseMoved(x,y,dx,dy)
 	else
 		if input.isActive("drag","camera") then
 			self.selecting = false
-			self.x = self.x + dx/self.zoomFactor
-			self.y = self.y + dy/self.zoomFactor
+			self.cameraX = self.cameraX + dx/self.zoomFactor
+			self.cameraY = self.cameraY + dy/self.zoomFactor
 		else
 			local cx,cy = self:posNearCorner(self:toWorldX(x),self:toWorldY(y))
 			if cx then
@@ -203,7 +203,7 @@ function UI:inputDeactivated(name,group, isCursorBound)
 						startY = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
 						--bottom-right: only Y should be compensated
 						UTILS.offsetEverything(self.level,0,-startY)
-						self.y = self.y + startY*TILE_SIZE
+						self.cameraY = self.cameraY + startY*TILE_SIZE
 					end
 				else
 					startX = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5)
@@ -212,13 +212,13 @@ function UI:inputDeactivated(name,group, isCursorBound)
 						endY = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
 						--top-left: only X should be compensated
 						UTILS.offsetEverything(self.level,-startX,0)
-						self.x = self.x + startX*TILE_SIZE
+						self.cameraX = self.cameraX + startX*TILE_SIZE
 					else
 						startY = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
 						--bottom-left: both X and Y should be compensated
 						UTILS.offsetEverything(self.level,-startX,-startY)
-						self.x = self.x + startX*TILE_SIZE
-						self.y = self.y + startY*TILE_SIZE
+						self.cameraX = self.cameraX + startX*TILE_SIZE
+						self.cameraY = self.cameraY + startY*TILE_SIZE
 					end
 				end
 				self.level.width = endX - startX
@@ -236,8 +236,8 @@ function UI:wheelMoved(x,y)
 	elseif y<0 then
 		self.zoomFactor = self.zoomFactor / self.zoomSpeed
 	end
-	self.x = math.roundPrecision(self.x,self.zoomFactor)
-	self.y = math.roundPrecision(self.y,self.zoomFactor)
+	self.cameraX = math.roundPrecision(self.cameraX,self.zoomFactor)
+	self.cameraY = math.roundPrecision(self.cameraY,self.zoomFactor)
 end
 
 return UI
