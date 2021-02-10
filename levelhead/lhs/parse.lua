@@ -88,7 +88,7 @@ function LHS:parseForegroundColumns(w)
 	local raw = self.rawContentEntries.foregroundColumns
 	for i=1,raw.nEntries,1 do
 		local entry = raw.entries[i]
-		local height = E:getWidth(entry.id)
+		local height = E:getHeight(entry.id)
 		for y=0,entry.length,1 do
 			local obj = Object:new(entry.id)
 			w:addObject(obj, w:fileToWorldX(entry.x), w:fileToWorldY(entry.y + height*y))
@@ -207,7 +207,7 @@ function LHS:parseBackgroundColumns(w)
 	local raw = self.rawContentEntries.backgroundColumns
 	for i=1,raw.nEntries,1 do
 		local entry = raw.entries[i]
-		local height = E:getWidth(entry.id)
+		local height = E:getHeight(entry.id)
 		for y=0,entry.length,1 do
 			local obj = Object:new(entry.id)
 			w:addBackgroundObject(obj, w:fileToWorldX(entry.x), w:fileToWorldY(entry.y + height*y))
