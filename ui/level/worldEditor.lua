@@ -31,17 +31,17 @@ end
 function UI:getMouseTile(x,y)
 	x = self:toWorldX(x or self:getMouseX())
 	y = self:toWorldY(y or self:getMouseY())
-	return math.ceil(x/TILE_SIZE), math.ceil(y/TILE_SIZE)
+	return math.floor(x/TILE_SIZE), math.floor(y/TILE_SIZE)
 end
 
 function UI:posNearCorner(worldX,worldY)
-	local endX,endY = self.level.width*TILE_SIZE, self.level.height*TILE_SIZE
-	for cornerX=0, endX, endX do
-		for cornerY=0, endY, endY do
-			local dx = worldX - cornerX
-			local dy = worldY - cornerY
+	--ipairs used because for-looping with the difference as step size gets stuck when the difference is 0
+	for _,cornerX in ipairs({ self.level.left, self.level.right+1}) do
+		for _,cornerY in ipairs({self.level.top, self.level.bottom+1}) do
+			local dx = worldX - cornerX*TILE_SIZE
+			local dy = worldY - cornerY*TILE_SIZE
 			if dx*dx + dy*dy <= self.resizeCircleRadius * self.resizeCircleRadius then
-				return cornerX==0 and -1 or 1, cornerY==0 and -1 or 1
+				return cornerX==self.level.left and -1 or 1, cornerY==self.level.top and -1 or 1
 			end
 		end
 	end
@@ -72,30 +72,17 @@ function UI:draw()
 		--bg
 		
 		love.graphics.setColor(0,0.5,1,1)
-		local startX,startY = 0, 0
-		local endX,endY = self.level.width*TILE_SIZE, self.level.height*TILE_SIZE
-		if self.resizing then
-			if self.resizeCornerX==1 then
-				endX = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5) * TILE_SIZE
-			else
-				startX = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5) * TILE_SIZE
-			end
-			if self.resizeCornerY==1 then
-				endY = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5) * TILE_SIZE
-			else
-				startY = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5) * TILE_SIZE
-			end
-		end
 		love.graphics.rectangle(
 			"fill",
-			startX, startY,
-			endX-startX, endY-startY
+			self.level.left *TILE_SIZE, self.level.top *TILE_SIZE,
+			self.level:getWidth() *TILE_SIZE, self.level:getHeight() *TILE_SIZE
 		)
 		--resize circles
 		love.graphics.setColor(settings.col.editor.resizeCircles)
-		for cornerX=startX, endX, endX-startX do
-			for cornerY=startY, endY, endY-startY do
-				love.graphics.circle("fill",cornerX,cornerY,self.resizeCircleRadius)
+		--ipairs used because for-looping with the difference as step size gets stuck when the difference is 0
+		for _,cornerX in ipairs({ self.level.left, self.level.right+1}) do
+			for _,cornerY in ipairs({self.level.top, self.level.bottom+1}) do
+				love.graphics.circle("fill",cornerX*TILE_SIZE,cornerY*TILE_SIZE,self.resizeCircleRadius)
 			end
 		end
 		
@@ -136,7 +123,7 @@ function UI:draw()
 		love.graphics.setColor(1,1,1,0.5)
 		love.graphics.rectangle(
 			"fill",
-			(x-1)*TILE_SIZE, (y-1)*TILE_SIZE,
+			x*TILE_SIZE, y*TILE_SIZE,
 			TILE_SIZE, TILE_SIZE
 		)
 	love.graphics.pop()
@@ -144,7 +131,24 @@ end
 
 function UI:mouseMoved(x,y,dx,dy)
 	if self.resizing then
-		-- move camera when at border
+		--resize level
+		if self.resizeCornerX==1 then
+			self.level.right = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5)
+			if self.resizeCornerY==1 then
+				self.level.bottom = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
+			else
+				self.level.top = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
+			end
+		else
+			self.level.left = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5)
+			if self.resizeCornerY==1 then
+				self.level.bottom = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
+			else
+				self.level.top = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
+			end
+		end
+		--get the level details UI reloaded so it displays the right size
+		self.editor:reload(self.level)
 	else
 		if input.isActive("drag","camera") then
 			self.selecting = false
@@ -190,41 +194,6 @@ function UI:inputDeactivated(name,group, isCursorBound)
 		elseif name=="resize" then
 			if self.resizing then
 				self.resizing = false
-				--actually resize
-				local startX,startY = 0, 0
-				local endX,endY = self.level.width, self.level.height
-				if self.resizeCornerX==1 then
-					endX = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5)
-					
-					if self.resizeCornerY==1 then
-						endY = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
-						--top-right: no movement required
-					else
-						startY = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
-						--bottom-right: only Y should be compensated
-						UTILS.offsetEverything(self.level,0,-startY)
-						self.cameraY = self.cameraY + startY*TILE_SIZE
-					end
-				else
-					startX = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5)
-					self.level.width = endX - startX
-					if self.resizeCornerY==1 then
-						endY = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
-						--top-left: only X should be compensated
-						UTILS.offsetEverything(self.level,-startX,0)
-						self.cameraX = self.cameraX + startX*TILE_SIZE
-					else
-						startY = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
-						--bottom-left: both X and Y should be compensated
-						UTILS.offsetEverything(self.level,-startX,-startY)
-						self.cameraX = self.cameraX + startX*TILE_SIZE
-						self.cameraY = self.cameraY + startY*TILE_SIZE
-					end
-				end
-				self.level.width = endX - startX
-				self.level.height = endY - startY
-				--get the level details UI reloaded so it displays the right size
-				self.editor:reload(self.level)
 			end
 		end
 	end

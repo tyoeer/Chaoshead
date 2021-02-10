@@ -1,21 +1,22 @@
 # Level
 
 Represents a level or world.
-Two variations exist __Level__ and __World__: level = world + settings.
+Two variations exist: __Level__ and __World__: level = world + settings.
 Foreground and backgrounds objects can overlap, and are therefore split accross different 'layers'.
-Worlds allow objects to be temporarily placed outside their bounds, but those can't be saved.
+Worlds allow objects to be placed outside their bounds, but those can't be saved.
+The x and y axes increase towards the right and bottom respectively.
 See the scripting documentation (in the README) for how to access the existing level when in a script
 (TL;DR use the level global).
 
 ## Creation
 
 ```Lua
-level = require("levelhead.level.level"):new(width,height)
+level = require("levelhead.level.level"):new()
 ```
 - width, height: the size of the level
 
 ```Lua
-world = require("levelhead.level.world"):new(width,height)
+world = require("levelhead.level.world"):new()
 ```
 - width, height: the size of the world
 
@@ -155,9 +156,19 @@ world.pathNodes
 Read-only __Grid__ with all the path nodes.
 
 ```Lua
-world.width, world.height
+world.left, world.top, world.right, world.bottom
 ```
-The width and height of the world.
+The boundaries of the world (inclusive). Are only relevant for saving. Left should always be less than right, and top should always be less than bottom.
+
+```Lua
+width = world:getWidth()
+```
+- width: how many tiles fit within this worlds bounds along the x axis.
+
+```Lua
+height = world:getHeight()
+```
+- height: how many tiles fit within this worlds bounds along the y axis.
 
 ```Lua
 level.settings

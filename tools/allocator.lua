@@ -23,8 +23,8 @@ function A:initialize(level,settings)
 		self.width = self.settings.size[1]
 		self.height = self.settings.size[2]
 	else
-		self.width = self.level.width
-		self.height = self.level.height
+		self.width = self.level:getWidth()
+		self.height = self.level:getHeight()
 	end
 	
 	if not self.settings.immediate then
@@ -73,7 +73,7 @@ function A:initialize(level,settings)
 	end
 	
 	
-	self:setTopLeftCorner(1,1)
+	self:setTopLeftCorner(level.left,level.top)
 	--[[
 	self.minX
 	self.minY

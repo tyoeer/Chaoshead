@@ -10,9 +10,11 @@ Top left corner is (1,1), to be consistent with Lua and Löve2d
 
 ]]--
 
-function World:initialize(w,h)
-	self.width = w
-	self.height = h
+function World:initialize()
+	self.left = 1
+	self.right = 2
+	self.top = 1
+	self.bottom = 2
 	
 	self.objects = Pool:new()
 	self.foreground = DS.grid()
@@ -20,6 +22,16 @@ function World:initialize(w,h)
 	
 	self.paths = Pool:new()
 	self.pathNodes = DS.grid()
+end
+
+--misc
+
+function World:getWidth()
+	return self.right - self.left + 1
+end
+
+function World:getHeight()
+	return self.bottom - self.top + 1
 end
 
 --foreground & background
@@ -170,17 +182,17 @@ end
 -- Not Publicly Documentated because I/O shouldn't be done in user-scripts
 -- in here because some of them require the world state
 function World:fileToWorldX(x)
-	return x + 1
+	return x + self.left
 end
 function World:fileToWorldY(y)
-	return self.height - y
+	return self.bottom - y
 end
 
 function World:worldToFileX(x)
-	return x - 1
+	return x - self.left
 end
 function World:worldToFileY(y)
-	return self.height - y
+	return self.bottom - y
 end
 
 

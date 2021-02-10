@@ -28,8 +28,8 @@ end
 function UI:reload(level)
 	self:resetList()
 	
-	self:addTextEntry("Width:  "..level.width)
-	self:addTextEntry("Height: "..level.height)
+	self:addTextEntry("Width:  "..level:getWidth())
+	self:addTextEntry("Height: "..level:getHeight())
 	self:addButtonEntry(
 		"Save Level",
 		function()

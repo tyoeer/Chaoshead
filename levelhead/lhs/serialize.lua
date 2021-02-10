@@ -20,8 +20,8 @@ function LHS:serializeHeaders(level)
 	h.zone = s.zone
 	h.campaignMarker = s.campaignMarker
 	
-	h.width = level.width
-	h.height = level.height
+	h.width = level:getWidth()
+	h.height = level:getHeight()
 	
 	--title
 	for k,v in pairs(s.title) do
@@ -58,18 +58,18 @@ function LHS:serializeObjects(level,layer)
 	--state
 	local idMap = {}
 	local done = {}
-	for x=1, level.width, 1 do
+	for x=level.left, level.right, 1 do
 		done[x] = {}
 	end
 	
 	--process
-	for y=level.height, 1, -1 do
-		for x=1, level.width, 1 do
+	for y=level.bottom, level.top, -1 do
+		for x=level.left, level.right, 1 do
 			local o = level[layer][x][y]
 			if o and not done[x][y] then
 				--check the max size of a possible row/column
 				local rowSize = 1
-				while rowSize + x <= level.width do
+				while rowSize + x <= level.right do
 					local oo = level[layer][x+rowSize][y]
 					if oo and oo.id==o.id and not done[x+rowSize][y]  then
 						rowSize = rowSize + 1
@@ -79,7 +79,7 @@ function LHS:serializeObjects(level,layer)
 				end
 				
 				local colSize = 1
-				while y - colSize >= 0 do
+				while y - colSize >= level.top do
 					local oo = level[layer][x][y-colSize]
 					if oo and oo.id==o.id and not done[x][y-colSize] then
 						colSize = colSize + 1

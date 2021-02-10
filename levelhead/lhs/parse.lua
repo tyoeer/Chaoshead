@@ -36,7 +36,9 @@ local settingsListBooleans = {
 
 function LHS:parseHeaders()
 	local raw = self.rawHeaders
-	local w = Level:new(raw.width, raw.height)
+	local w = Level:new()
+	w.left, w.top = 1, 1
+	w.right, w.bottom = raw.width, raw.height
 	
 	local set = w.settings
 	set.zone = raw.zone

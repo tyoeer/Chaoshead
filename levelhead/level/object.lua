@@ -40,8 +40,8 @@ OBJ.getThingInsideThisThing = OBJ.getContents
 
 
 function OBJ:drawAsForeground()
-	local drawX = (self.x-1)*TILE_SIZE
-	local drawY = (self.y-1)*TILE_SIZE
+	local drawX = self.x*TILE_SIZE
+	local drawY = self.y*TILE_SIZE
 	
 	love.graphics.setColor(0,1,0,0.4)
 	love.graphics.rectangle("fill",drawX,drawY,TILE_SIZE,TILE_SIZE)
@@ -55,8 +55,8 @@ function OBJ:drawAsForeground()
 end
 
 function OBJ:drawAsBackground()
-	local x = (self.x-1)*TILE_SIZE
-	local y = (self.y-1)*TILE_SIZE
+	local x = self.x*TILE_SIZE
+	local y = self.y*TILE_SIZE
 	
 	love.graphics.setColor(1,0,0,0.4)
 	love.graphics.polygon("fill",

@@ -11,8 +11,8 @@ function PN:initialize(x,y)
 end
 
 function PN:draw()
-	local x = (self.x-1)*TILE_SIZE
-	local y = (self.y-1)*TILE_SIZE
+	local x = self.x*TILE_SIZE
+	local y = self.y*TILE_SIZE
 	love.graphics.setColor(0,0,1,0.4)
 	--it might have been useful to express this using TILE_SIZE
 	-- but the shape has been tweaked to be pixel-perfect, upon changing the tile size
@@ -33,10 +33,10 @@ function PN:draw()
 	)
 end
 function PN:drawConnection()
-	local drawX = (self.x-0.5)*TILE_SIZE
-	local drawY = (self.y-0.5)*TILE_SIZE
-	local toX = (self.next.x-0.5)*TILE_SIZE
-	local toY = (self.next.y-0.5)*TILE_SIZE
+	local drawX = (self.x+0.5)*TILE_SIZE
+	local drawY = (self.y+0.5)*TILE_SIZE
+	local toX = (self.next.x+0.5)*TILE_SIZE
+	local toY = (self.next.y+0.5)*TILE_SIZE
 	love.graphics.setColor(0,0,1,0.6)
 	love.graphics.setLineWidth(5)
 	love.graphics.line(drawX,drawY, toX,toY)
