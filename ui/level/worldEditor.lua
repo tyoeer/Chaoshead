@@ -133,20 +133,33 @@ function UI:mouseMoved(x,y,dx,dy)
 	if self.resizing then
 		--resize level
 		if self.resizeCornerX==1 then
-			self.level.right = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5)
+			self.level.right = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5) - 1
 			if self.resizeCornerY==1 then
-				self.level.bottom = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
+				self.level.bottom = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5) - 1
 			else
 				self.level.top = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
 			end
 		else
 			self.level.left = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5)
 			if self.resizeCornerY==1 then
-				self.level.bottom = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
+				self.level.bottom = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5) - 1
 			else
 				self.level.top = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
 			end
 		end
+		
+		--make sure left stays left of right and top stays above bottom
+		if self.level.left > self.level.right then
+			-- +1 and -1 are to make it mirror in the edge and not in the tile
+			self.level.left, self.level.right = self.level.right+1, self.level.left-1
+			self.resizeCornerX = -self.resizeCornerX
+		end
+		if self.level.top > self.level.bottom then
+			-- +1 and -1 are to make it mirror in the edge and not in the tile
+			self.level.top, self.level.bottom = self.level.bottom+1, self.level.top-1
+			self.resizeCornerY = -self.resizeCornerY
+		end
+		
 		--get the level details UI reloaded so it displays the right size
 		self.editor:reload(self.level)
 	else
