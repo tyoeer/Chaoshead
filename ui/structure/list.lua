@@ -48,10 +48,11 @@ function UI:getPropagatedMouseY(target)
 	end
 end
 
-function UI:getMinimumHeight()
+function UI:getMinimumHeight(width)
+	width = width or self.width
 	local out = 0
 	for c in self.children:iterate() do
-		out = out + c.height
+		out = out + c:getMinimumHeight(width)
 	end
 	return out + self.entryMargin * (self.nChildren-1)
 end
