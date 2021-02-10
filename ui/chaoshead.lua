@@ -2,8 +2,11 @@ local UI = Class(require("ui.structure.proxy"))
 
 function UI:initialize(w,h)
 	local tabs = require("ui.structure.tabs"):new()
-	UI.super.initialize(self,tabs)
+	self.modalOverlay = require("ui.structure.overlay"):new(tabs)
+	
+	UI.super.initialize(self,self.modalOverlay)
 	self:resize(w,h)
+	
 	tabs.tabHeight = settings.dim.main.tabHeight
 	
 	self.nLevels = 0
@@ -21,6 +24,7 @@ function UI:initialize(w,h)
 	tabs:addChild(require("ui.misc"):new())
 	
 end
+
 
 function UI:openEditor(path,name)
 	local editor = require("ui.level.levelRoot"):new(path)
@@ -41,5 +45,18 @@ function UI:closeEditor(editorRoot)
 		self.levelsProxy:setChild(self.noLevelsUI)
 	end
 end
+
+
+function UI:setUIModal(ui)
+	local modal = require("ui.utils.modal"):new(
+		require("ui.structure.padding"):new(ui, settings.dim.modal.padding)
+	)
+	self.modalOverlay:setOverlay(modal)
+end
+
+function UI:closeModal()
+	self.modalOverlay:removeOverlay()
+end
+
 
 return UI

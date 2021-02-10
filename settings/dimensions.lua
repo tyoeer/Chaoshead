@@ -1,4 +1,8 @@
 return {
+	modal = {
+		widthFactor = 0.57,
+		padding = 25,
+	},
 	main = {
 		tabHeight = 30,
 	},

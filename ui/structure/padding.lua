@@ -24,6 +24,11 @@ function UI:getPropagatedMouseY(child)
 	return self:getMouseY() - self.paddingUp
 end
 
+function UI:getMinimumHeight(width)
+	width = width or self.width
+	return self.child:getMinimumHeight(width) + self.paddingUp + self.paddingDown
+end
+
 -- events
 
 local relay = function(index)
