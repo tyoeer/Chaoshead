@@ -1,5 +1,5 @@
 local PAD = require("ui.structure.padding")
-local SCROLL = require("ui.utils.scrollbar")
+local SCROLL = require("ui.structure.scrollbar")
 
 local UI = Class("TreeViewerUI",require("ui.structure.proxy"))
 
