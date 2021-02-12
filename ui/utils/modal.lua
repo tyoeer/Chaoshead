@@ -15,6 +15,12 @@ function UI:draw()
 		self.paddingLeft-0.5, self.paddingUp-0.5,
 		self.child.width+1, self.child.height+1
 	)
+	love.graphics.setColor(settings.col.modal.bg)
+	love.graphics.rectangle(
+		"fill",
+		self.paddingLeft, self.paddingUp,
+		self.child.width, self.child.height
+	)
 	UI.super.draw(self)
 end
 

@@ -1,4 +1,6 @@
 local LHS = require("levelhead.lhs")
+local LIMITS = require("levelhead.level.limits")
+
 --levelRoot was the best name I could come up with, OK?
 
 local UI = Class(require("ui.structure.proxy"))
@@ -40,8 +42,29 @@ function UI:reload(level)
 end
 
 function UI:save()
-	self.levelFile:serializeAll(self.level)
-	self.levelFile:writeAll()
+	if self:checkLimits("Can't save level:\n") then
+		self.levelFile:serializeAll(self.level)
+		self.levelFile:writeAll()
+		ui:displayMessage("Succesfully saved level!")
+	end
+end
+
+function UI:checkLimits(prefix)
+	prefix = prefix or "Level broke limit:\n"
+	local toCheck = {
+		"file"
+	}
+	for _,v in ipairs(toCheck) do
+		local list = LIMITS[v]
+		for _,limit in ipairs(list) do
+			local failed = {limit.check(self.level)}
+			if failed[1] then
+				ui:displayMessage(prefix..string.format(limit.message,unpack(failed)))
+				return false
+			end
+		end
+	end
+	return true
 end
 
 function UI:runScript(path,disableSandbox)
@@ -53,6 +76,7 @@ function UI:runScript(path,disableSandbox)
 	end
 	--move to the levelEditor to show the scripts effects
 	self.child:setActive(self.levelEditor)
+	ui:displayMessage("Succesfully ran script!")
 end
 
 
@@ -72,10 +96,18 @@ function UI:focus(focus)
 end
 
 function UI:inputActivated(name,group, isCursorBound)
-	if name=="reload" and group=="misc" then
-		self:reload()
-	elseif name=="save" and group=="editor" then
-		self:save()
+	if group=="editor" then
+		if name=="reload" then
+			self:reload()
+		elseif name=="save" then
+			self:save()
+		elseif name=="checkLimits" then
+			if self:checkLimits() then
+				ui:displayMessage("Level doesn't brake any limits!")
+			end
+		else
+			self.child:inputActivated(name,group, isCursorBound)
+		end
 	else
 		self.child:inputActivated(name,group, isCursorBound)
 	end

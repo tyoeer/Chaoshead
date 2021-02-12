@@ -1,7 +1,7 @@
-local PAD = require("ui.structure.padding")
-local DET_LEVEL = require("ui.level.details.level")
-local DET_OBJ = require("ui.level.details.object")
-local DET_PN = require("ui.level.details.pathNode")
+local Padding = require("ui.structure.padding")
+local LevelDetails = require("ui.level.details.level")
+local ObjectDetails = require("ui.level.details.object")
+local PathNodeDetails = require("ui.level.details.pathNode")
 
 local UI = Class("LevelEditorUI",require("ui.structure.proxy"))
 
@@ -11,7 +11,7 @@ function UI:initialize(level,root)
 	--ui state
 	self.viewer = require("ui.level.worldEditor"):new(self)
 	self.detailsUI = require("ui.structure.tabs"):new()
-	self:addTab(DET_LEVEL:new(level,self))
+	self:addTab(LevelDetails:new(level,self))
 	self.detailsUI.tabHeight = settings.dim.editor.details.tabHeight
 	
 	--editor state
@@ -24,7 +24,7 @@ end
 
 function UI:addTab(tab)
 	tab.editor = self
-	tab = PAD:new(tab, settings.dim.editor.details.inset)
+	tab = Padding:new(tab, settings.dim.editor.details.inset)
 	self.detailsUI:addChild(tab)
 	self.detailsUI:setActive(tab)
 end
@@ -59,13 +59,13 @@ function UI:selectObject(tileX,tileY)
 	local obj = self.level.foreground:get(tileX,tileY) or self.level.background:get(tileX,tileY)
 	if obj then
 		self.selectedObject = obj
-		self.selectionDetails = DET_OBJ:new(obj)
+		self.selectionDetails = ObjectDetails:new(obj)
 		self:addTab(self.selectionDetails)
 	else
 		obj = self.level.pathNodes[tileX][tileY]
 		if obj then
 			self.selectedObject = obj
-			self.selectionDetails = DET_PN:new(obj)
+			self.selectionDetails = PathNodeDetails:new(obj)
 			self:addTab(self.selectionDetails)
 		end
 	end

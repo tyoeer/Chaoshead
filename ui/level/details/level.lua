@@ -51,6 +51,15 @@ function UI:reload(level)
 		end,
 		settings.dim.editor.details.level.buttonPadding
 	)
+	self:addButtonEntry(
+		"Check .lhs limits",
+		function()
+			if self.editor.root:checkLimits() then
+				ui:displayMessage("Level doesn't brake any limits!")
+			end
+		end,
+		settings.dim.editor.details.level.buttonPadding
+	)
 	-- settings
 	self:addTextEntry("Level settings:")
 	for _, v in ipairs(levelSettings) do

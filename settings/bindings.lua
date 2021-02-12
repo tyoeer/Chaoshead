@@ -5,7 +5,7 @@ return {
 			isCursorBound = true,
 		},
 	},
-	misc = {
+	editor = {
 		reload = {
 			type = "and",
 			triggers = {
@@ -16,8 +16,6 @@ return {
 				},
 			}
 		},
-	},
-	editor = {
 		save = {
 			type = "and",
 			triggers = {
@@ -42,7 +40,17 @@ return {
 		resize = {
 			isCursorBound = true,
 			trigger = "mouse: left"
-		}
+		},
+		checkLimits = {
+			type = "and",
+			triggers = {
+				"key: l",
+				{
+					type = "or",
+					triggers = {"lctrl","rctrl"}
+				},
+			}
+		},
 	},
 	camera = {
 		drag = {

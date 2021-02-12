@@ -22,7 +22,6 @@ function UI:initialize(w,h)
 	self.mainTabs:setActive(levelSelector)
 	
 	self.mainTabs:addChild(require("ui.misc"):new())
-	
 end
 
 
@@ -46,6 +45,13 @@ function UI:closeEditor(editorRoot)
 	end
 end
 
+
+function UI:displayMessage(text)
+	local ui = require("ui.structure.list"):new()
+	ui:addTextEntry(text)
+	ui:addButtonEntry("Dismiss",function() self:closeModal() end)
+	self:setUIModal(ui)
+end
 
 function UI:setUIModal(ui)
 	local modal = require("ui.utils.modal"):new(
