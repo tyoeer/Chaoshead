@@ -26,15 +26,9 @@ function UI:initialize(levelFile)
 	self:reload()
 end
 
-function UI:reload(l)
-	if l then
-		self.levelFile = l
-	else
-		l = self.levelFile
-	end
+function UI:reload(level)
+	self.levelFile = level
 end
-
-
 
 function UI:resetRows()
 	self.i = 0
@@ -113,12 +107,6 @@ function UI:draw()
 		self:sectionRows("backgroundColumns","Background Columns")
 		self:textRow("Hash:")
 			self:textRow(bytesToHex(self.levelFile.raw:sub(self.levelFile.rawContentEntries.backgroundColumns.endOffset+1)),1)
-end
-
-function UI:inputActivated(name,group, isCursorBound)
-	if name=="reload" and group=="misc" then
-		self:reload()
-	end
 end
 
 return UI
