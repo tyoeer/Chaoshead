@@ -13,12 +13,10 @@ See the scripting documentation (in the README) for how to access the existing l
 ```Lua
 level = require("levelhead.level.level"):new()
 ```
-- width, height: the size of the level
 
 ```Lua
 world = require("levelhead.level.world"):new()
 ```
-- width, height: the size of the world
 
 ## Editing the world
 
