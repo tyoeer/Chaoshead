@@ -41,9 +41,7 @@ function UI:reload()
 		--properties
 		self:addTextEntry("Properties:")
 		for prop,value in pairs(o.properties) do
-			local success, map = pcall(function()
-				return P:valueToMapping(prop,value)
-			end)
+			local map = P:valueToMapping(prop,value)
 			self:addTextEntry(P:getName(prop).." ("..prop.."): "..tostring(map).." ("..value..")",1)
 		end
 	end
