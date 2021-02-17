@@ -58,4 +58,32 @@ return {
 			end,
 		},
 	},
+	editor = {
+		-- level size
+		{
+			message = "Width is below 30!",
+			check = function(level)
+				return level:getWidth() < 30
+			end,
+		},
+		{
+			message = "Height is below 30!",
+			check = function(level)
+				return level:getHeight() < 30
+			end,
+		},
+		{
+			message = "Are is above 10 000! (%ix%i=%i)",
+			check = function(level)
+				local w = level:getWidth()
+				local h = level:getHeight()
+				local area = w*h
+				if area > 10000 then
+					return w,h,area
+				else
+					return false
+				end
+			end,
+		},
+	},
 }
