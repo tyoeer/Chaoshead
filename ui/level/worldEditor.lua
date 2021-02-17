@@ -91,7 +91,7 @@ function UI:draw()
 		--get psoition of objects at the screen edges
 		startX, startY = self:toWorldX(0), self:toWorldY(0)
 		endX, endY = self:toWorldX(self.width), self:toWorldY(self.height)
-		startX, startY = math.ceil(startX/TILE_SIZE), math.ceil(startY/TILE_SIZE)
+		startX, startY = math.floor(startX/TILE_SIZE), math.floor(startY/TILE_SIZE)
 		endX, endY = math.ceil(endX/TILE_SIZE), math.ceil(endY/TILE_SIZE)
 		--and draw all objects between
 		for x = startX, endX, 1 do
