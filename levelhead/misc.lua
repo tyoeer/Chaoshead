@@ -7,12 +7,20 @@ function m.getUserDataPath()
 	return m.getDataPath().."UserData/"
 end
 
---[[
-it doesn't match levelhead exactly,
-because levelhead has stupid rules where a digit is prepended by a space,
-unless a digit, "-", ".", or "..." are before the digit
-not going to bother with all the complicated rules now
-]]--
+local function hasSpaceBetween(first,second)
+	if first=="" or first==nil then
+		return false
+	end
+	if second=="word" then
+		return not (first=="¿" or first=="-")
+	elseif second=="&" then
+		return true
+	elseif second:match("%d") then
+		return not ( first:match("%.") or first=="-" or first:match("%d") )
+	else
+		return false
+	end
+end
 function m.parseLevelName(parts)
 	if type(parts)=="table" then
 		local out = ""
@@ -29,21 +37,22 @@ function m.parseLevelName(parts)
 					local notFirst = part:sub(2)
 					part = first:upper()..notFirst
 				end
-				if previous then
+				if hasSpaceBetween(previous,"word") then
 					out = out.." "..part
 				else
-					out = part
+					out = out..part
 				end
 				previous = "word"
-			else
-				if previous=="symbol" then
-					out = out..part
-				else
+			elseif part~="" then
+				if hasSpaceBetween(previous,part) then
 					out = out.." "..part
+				else
+					out = out..part
 				end
-				previous = "symbol"
+				previous = part
 			end
 		end
+		if out=="" then out = "$Unnamed Level" end
 		return out
 	end
 end
