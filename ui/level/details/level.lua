@@ -55,7 +55,7 @@ function UI:reload(level)
 		"Check level limits",
 		function()
 			if self.editor.root:checkLimits() then
-				ui:displayMessage("Level doesn't brake any limits!")
+				ui:displayMessage("Level doesn't break any limits!")
 			end
 		end,
 		settings.dim.editor.details.level.buttonPadding

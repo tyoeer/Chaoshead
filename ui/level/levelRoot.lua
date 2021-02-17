@@ -106,7 +106,7 @@ function UI:inputActivated(name,group, isCursorBound)
 			self:save()
 		elseif name=="checkLimits" then
 			if self:checkLimits() then
-				ui:displayMessage("Level doesn't brake any limits!")
+				ui:displayMessage("Level doesn't break any limits!")
 			end
 		else
 			self.child:inputActivated(name,group, isCursorBound)
