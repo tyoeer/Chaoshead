@@ -1,3 +1,5 @@
+local LevelRoot = require("ui.level.levelRoot")
+
 local UI = Class(require("ui.structure.proxy"))
 
 function UI:initialize(w,h)
@@ -26,14 +28,26 @@ end
 
 
 function UI:openEditor(path,name)
-	local editor = require("ui.level.levelRoot"):new(path)
-	editor.title = name
-	self.levels:addChild(editor)
-	self.levels:setActive(editor)
-	self.mainTabs:setActive(self.levelsProxy)
-	self.nLevels = self.nLevels + 1
-	if self.nLevels == 1 then
-		self.levelsProxy:setChild(self.levels)
+	local success, editor = xpcall(
+		function()
+			return LevelRoot:new(path)
+		end,
+		function(message)
+			--print full trace to console
+			--snippet yoinked from default löve error handling
+			print((debug.traceback("Error loading level: " .. tostring(message), 1):gsub("\n[^\n]+$", "")))
+			self:displayMessage("Failed to load level!\n(Probably due to lacking Void Update support)\nError message:\n"..tostring(message))
+		end
+	)
+	if success then
+		editor.title = name
+		self.levels:addChild(editor)
+		self.levels:setActive(editor)
+		self.mainTabs:setActive(self.levelsProxy)
+		self.nLevels = self.nLevels + 1
+		if self.nLevels == 1 then
+			self.levelsProxy:setChild(self.levels)
+		end
 	end
 end
 
