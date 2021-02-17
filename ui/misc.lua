@@ -76,7 +76,7 @@ function UI:initialize()
 		print("----------")
 	end)
 	
-	UI.super.initialize(self,list,settings.dim.misc.padding)
+	UI.super.initialize(self,list,settings.dim.misc.miscPadding)
 	self.title = "Misc."
 end
 

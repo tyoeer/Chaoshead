@@ -7,7 +7,8 @@ return {
 		tabHeight = 30,
 	},
 	misc = {
-		padding = 10,
+		noLevelsPadding = 10,
+		miscPadding = 10,
 		scrollbar = {
 			width = 25,
 			buttonHeight = 35,

@@ -12,7 +12,7 @@ function UI:initialize(w,h)
 	self.nLevels = 0
 	self.levels = require("ui.structure.tabs"):new()
 	self.levels.title = "Level Editors"
-	self.noLevelsUI = require("ui.list.text"):new("No levels opened!")
+	self.noLevelsUI = require("ui.structure.padding"):new(require("ui.list.text"):new("No levels opened!"),settings.dim.misc.noLevelsPadding)
 	self.noLevelsUI.title = "Level Editors"
 	self.levelsProxy = require("ui.structure.proxy"):new(self.noLevelsUI)
 	self.mainTabs:addChild(self.levelsProxy)
