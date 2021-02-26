@@ -73,7 +73,7 @@ return {
 			end,
 		},
 		{
-			message = "Are is above 10 000! (%ix%i=%i)",
+			message = "Area is above 10 000! (%ix%i=%i)",
 			check = function(level)
 				local w = level:getWidth()
 				local h = level:getHeight()
