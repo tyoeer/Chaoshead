@@ -16,6 +16,8 @@ Binary release that can be run without manually installing LÖVE can be found
 
 If you have any questions, feel free to ask.
 
+Choashead Awareness Day is annually on february 27, in order to spread awareness about Chaoshead updates.
+
 ### Currently not supported
 
 - Void Update objects and properties
