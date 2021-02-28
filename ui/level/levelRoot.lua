@@ -32,10 +32,26 @@ function UI:reload(level)
 	if level then
 		self.level = level
 	else
-		self.levelFile:reload()
-		self.levelFile:readAll()
-		self.latestHash = self.levelFile:getHash()
-		self.level = self.levelFile:parseAll()
+		local success, level = xpcall(
+			function()
+				self.levelFile:reload()
+				self.levelFile:readAll()
+				
+				return self.levelFile:parseAll()
+			end,
+			function(message)
+				--print full trace to console
+				--snippet yoinked from default löve error handling
+				print((debug.traceback("Error loading level: " .. tostring(message), 1):gsub("\n[^\n]+$", "")))
+				ui:displayMessage("Failed to load level!\n(Probably due to lacking Void Update support)\nError message:\n"..tostring(message))
+			end
+		)
+		if success then
+			self.latestHash = self.levelFile:getHash()
+			self.level = level
+		else
+			return
+		end
 	end
 	self.levelEditor:reload(self.level)
 	self.hexInspector:reload(self.levelFile)
