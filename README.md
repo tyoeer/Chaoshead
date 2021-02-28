@@ -20,10 +20,9 @@ Choashead Awareness Day is annually on february 27, in order to spread awareness
 
 ### Currently not supported
 
-- Void Update objects and properties
-  - except (item) Beamers and input switches (except the "Players Required" property)
+- Campaign-only objects and their properties
   - Unsupported properties will crash Chaoshead (because the .lhs is can't be loaded)
-  - Unsupported objects will only crash when placed in a row or column, otherwise they will simply show up with only their internal ID.
+  - Unsupported objects will only crash when placed in a row or column, otherwise they will simply show up with only their internal ID
 
 ## Terminology
 

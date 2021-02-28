@@ -58,7 +58,7 @@ Turbo Jem	55	#37	2	2	11	2
 Mega Jem	56	#38	2	3	11	2	
 3x3 Spike Block	57	#39	3	3	102		
 Spike Chainer	58	#3A	1	1	No	2	
-TBot	59	#3B	1	1	No	1	
+TBot	59	#3B	1	1	No	2	
 Environment Column	60	#3C			1	1	A downwards column of 16 Environment. Gets saved as Environment.
 Jem Switch	61	#3D	1	1	No	2	
 Battle Switch	62	#3E	1	1	No	2	
@@ -71,7 +71,7 @@ Rebound	66	#42	1	1	No	2
 2x2 Lizumi	69	#45	2	2	34		
 3x3 Lizumi	70	#46	3	3	34		
 Swoopadoop	71	#47	1	1	No	2	
-Canoodle	72	#48	1	1	No	1	
+Canoodle	72	#48	1	1	No	2	
 2x2 Flipwip	73	#49	2	2	8		
 3x3 Flipwip	74	#4A	3	3	8		
 2x2 Swoopadoop	75	#4B	2	2	71		
@@ -125,7 +125,7 @@ Refueler	122	#7A			No	1
 Golf Package	123	#7B			No	2	The round one used by golf mode. Actually called "Package" in the name combobulator (a different name is used here to have unique names for everything for better API).
 Ball Stopper	124	#7C			No	1	
 Bumper	125	#7D	1	1	No	2	
-Canoodle Core	126	#7E	1	1	No		
+Canoodle Core	126	#7E	1	1	No	2	
 Wingarang	127	#7F	1	1	No	2	
 Slurb Juice	128	#80	1	1	No	2	
 Spinny Platform	129	#81	1	1	No	2	
@@ -202,3 +202,11 @@ Weatherbox	199	#C7	1	1	No	2
 Swipe Teacher	200	#C8			No	1	
 Movement Teacher	201	#C9			No	1	
 Input Switch	202	#CA	1	1	No	2	
+Shade	203	#CB	1	1	No	2	
+Puncher	204	#CC	1	1	No	2	
+Jabber	205	#CD	1	1	No	2	
+Mad Jabber	206	#CE	1	1	205	2	
+Jibber	207	#CF	2	2	205	2	
+Peanut	208	#D0	1	1	No	2	
+Thorny Peanut	209	#D1	1	1	208	2	
+Explosive Peanut	210	#D2	1	1	208	2	

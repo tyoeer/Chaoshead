@@ -18,7 +18,7 @@ Minimum Players	15	#0F	A		1	0	4	Hybrid	!	All	-	-	-	-	!	!	!	!	Eye Switch
 Minimum Enemies	16	#10	A		1	1	20	None											Baddie Eyeswitch	
 Bombs Available	17	#11	A		0	0	99	Hybrid	!	Infinite	-	-	-	-	-	-	-	-	Bomb Beamer	
 Enemies Available	18	#12	A		3	1	99	None											Robo Factory	
-Enemy Type	19	#13	A		0	0	9	Simple	!	Vacrat	Flipwip	Blopfush	Flapjack	Lizumi	Swoopadoop	Popjaw	Scrubb	Ocula	Robo Factory	
+Enemy Type	19	#13	A		0	0	14	List	Enemies										Robo Factory	
 Cooldown	20	#14	A		1	1	20	None											Robo Factory	
 Direction	21	#15	D	0 has the graphics of left, but doesn't move things	1	-1	1	Simple	Left	0	Right	!	!	!	!	!	!	!	Toe Slider	
 Speed	22	#16	B		300	100	700	None											Toe Slider	
@@ -58,11 +58,11 @@ Melody Pitch	55	#37	A	Also gets saved for the "bass" instrument. Called "Pitch" 
 Platform Size	56	#38	A		1	0	1	Simple	!	Short	Long	!	!	!	!	!	!	!	Spinny Platform	
 Length	57	#39	A		3	1	4	None											Spinny Platform	
 Speed	58	#3A	B	Used for circular movement (type)	60	-90	90	None											Swoopadoop, Blobfush, Whizzblade, Spinny Platform	
-Icon	59	#3B	A		0	0	37												Sign	
+Icon	59	#3B	A		0	0	49	List	Sign Icons										Sign	
 Switch Requirements	60	#3C	A		2	0	5	Simple	!	One Active	Any Active	All Active	One Inactive	Any Inactive	All Inactive	!	!	!	Prizeblock, Hardlight, ...	
 Visuals	61	#3D	A		2	0	16	List	Path Visuals										Path	
 ???	62	#3E																		
-Song	63	#3F	A		9	0	30	Music											Jukebox	
+Song	63	#3F	A		9	0	37	Music											Jukebox	
 Sharp	64	#40	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Boombox	
 Delay Seconds	65	#41	C		3	0.25	600	None											Waitswitch	
 ???	66	#42																		
@@ -102,8 +102,11 @@ Repeat Count	98	#62	B	Always saved for some reason.	1	1	1000	Hybrid	!	!	Infinite
 ???	100	#64																		
 ???	101	#65																		
 Input	102	#66	A		0	0	6	Simple	!	Run Right	Run Left	Up	Down	Jump	Grab / Kick	Use Powerup	!	!	Input Switch	
-???	103	#67																		
-???	104	#68																		
-	105	#69																		
-	106	#6A																		
+Players Required	103	#67	A		0	0	5	Simple	!	Any Players	All Players	Player 1	Player 2	Player 3	Player 4	!	!	!	Input Switch	
+Target Type	104	#68	A		0	0	2	Simple	!	GR-18	Package	Enemies	!	!	!	!	!	!	Lookannon	
+Walk Direction	105	#69	A		0	0	1	Simple	!	Left	Right	!	!	!	!	!	!	!	Canoodle, Scrubb, Ocula	
+Start Direction	106	#6A	A		0	0	3	Simple	!	Right	Up	Left	Down	!	!	!	!	!	Peanut	
 Item	107	#6B	A		11	0	24	List	Items	-	-	-	-	-	-	-	-	-	Beamer	
+???	108	#6C																		
+Color	109	#6D	A		0	0	6	Simple	!	Red	Yellow	Teal	Green	Purple	Blue	White	!	!	Spiketron, etc.	
+Projectile	110	#6E	A		0	0	1	Simple	!	Normal	Fire	!	!	!	!	!	!	!	Canoodle	
