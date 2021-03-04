@@ -12,7 +12,6 @@ local function bytesToHex(bytes)
 end
 
 function UI:initialize(levelFile)
-	self.levelFile = levelFile
 	UI.super.initialize(self)
 	self.title = "Hex Inspector"
 	
@@ -23,11 +22,11 @@ function UI:initialize(levelFile)
 	--self.i = 0
 	--self.indent = 1
 	
-	self:reload()
+	self:reload(levelFile)
 end
 
-function UI:reload(level)
-	self.levelFile = level
+function UI:reload(levelFile)
+	self.levelFile = levelFile
 end
 
 function UI:resetRows()
