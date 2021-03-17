@@ -10,6 +10,16 @@ function P:initialize()
 	self.properties = {}
 end
 
+function P:iterateNodes()
+	return function(start,node)
+		if node then
+			return node.next
+		else
+			return start
+		end
+	end, self.head, nil
+end
+
 -- nodes editing
 
 function P:append(x,y)

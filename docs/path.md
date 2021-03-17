@@ -89,6 +89,11 @@ path.world
 ```
 The __World__ this path belongs to. Nil if it's not bound to a level. DO NOT edit this directly.
 
+```Lua
+for node in path:iterateNodes() do
+```
+A generic for iterator that iterates over all the nodes in this path from head to tail.
+
 # PathNode
 
 Nodes contain some internal drawing code, which is why they're a whole datastructure.
