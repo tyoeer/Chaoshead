@@ -11,13 +11,15 @@ function P:initialize()
 end
 
 function P:iterateNodes()
-	return function(start,node)
+	return function(path,node)
 		if node then
-			return node.next
+			if node~=path.tail then
+				return node.next
+			end
 		else
-			return start
+			return path.head
 		end
-	end, self.head, nil
+	end, self, nil
 end
 
 -- nodes editing
@@ -28,9 +30,7 @@ function P:append(x,y)
 		self:addNodeAfter(n,self.tail)
 	else
 		--no nodes yet
-		self:addNode(n)
-		self.tail = n
-		self.head = n
+		self:addNodeBetween(n,nil,nil)
 	end
 end
 
@@ -56,6 +56,13 @@ function P:addNodeBetween(n,prev,next)
 	else
 		--no next means this is the tail
 		self.tail = n
+	end
+	--close if closed property(38) is set to Yes(1)
+	--a single connected to itself doesn't make sense,
+	--but it allows new nodes to be connected while maintaining a closed loop
+	if prev==nil and next==nil and self.properties[38]==1 then
+		n.next = n
+		n.prev = n
 	end
 end
 
@@ -91,10 +98,33 @@ function P:addNode(n)
 	end
 end
 
+-- open & closed
+
+function P:closeEnds()
+	if self.head then
+		self.head.prev = self.tail
+		self.tail.next = self.head
+	end
+end
+
+function P:openEnds()
+	if self.head then
+		self.head.prev = nil
+		self.tail.next = nil
+	end
+end
+
 -- properties
 
 function P:setPropertyRaw(id, value)
 	self.properties[id] = value
+	if id==38 then --closed property
+		if value==1 then --Yes
+			self:closeEnds()
+		else --value==0 --No
+			self:openEnds()
+		end
+	end
 end
 
 function P:getPropertyRaw(id)
