@@ -70,13 +70,13 @@ function UI:draw()
 		love.graphics.translate(self.cameraX, self.cameraY)
 		
 		--bg
-		
-		love.graphics.setColor(0,0.5,1,1)
+		love.graphics.setColor(settings.col.editor.bg)
 		love.graphics.rectangle(
 			"fill",
 			self.level.left *TILE_SIZE, self.level.top *TILE_SIZE,
 			self.level:getWidth() *TILE_SIZE, self.level:getHeight() *TILE_SIZE
 		)
+		
 		--resize circles
 		love.graphics.setColor(settings.col.editor.resizeCircles)
 		--ipairs used because for-looping with the difference as step size gets stuck when the difference is 0
@@ -87,37 +87,79 @@ function UI:draw()
 		end
 		
 		--objects
-		
-		--get psoition of objects at the screen edges
-		startX, startY = self:toWorldX(0), self:toWorldY(0)
-		endX, endY = self:toWorldX(self.width), self:toWorldY(self.height)
-		startX, startY = math.floor(startX/TILE_SIZE), math.floor(startY/TILE_SIZE)
-		endX, endY = math.ceil(endX/TILE_SIZE), math.ceil(endY/TILE_SIZE)
-		--and draw all objects between
-		for x = startX, endX, 1 do
-			for y = startY, endY, 1 do
-				local bobj = self.level.background:get(x,y)
-				if bobj then bobj:drawAsBackground() end
-				
-				local pn = self.level.pathNodes:get(x,y)
-				if pn then
-					pn:draw()
-					if pn.next then
-						pn:drawConnection()
-					end
-					if
-						pn.prev and
-						(pn.prev.x < startX or pn.prev.x > endX or
-						pn.prev.y < startY or pn.prev.y > endY)
-					then
-						pn.prev:drawConnection()
-					end
+		do
+			--get position of objects at the screen edges
+			startX, startY = self:toWorldX(0), self:toWorldY(0)
+			endX, endY = self:toWorldX(self.width), self:toWorldY(self.height)
+			startX, startY = math.floor(startX/TILE_SIZE), math.floor(startY/TILE_SIZE)
+			endX, endY = math.ceil(endX/TILE_SIZE), math.ceil(endY/TILE_SIZE)
+			
+			--and get all objects between
+			--storing them in a list should optimize whne there's lots of empty space on teh screen a.k.a. when zoomed out
+			--adds extra overheads that doesn't cause improvements when the whole screen is covered (every grid space and layer)
+			--but that scenario should be pretty rare (and then this is hopefully still performant enough
+			local fg = {} --foreground
+			local bg = {} --background
+			local pn = {} --path nodes
+			for x = startX, endX, 1 do
+				for y = startY, endY, 1 do
+					local bobj = self.level.background:get(x,y)
+					if bobj then table.insert(bg,bobj) end
+					
+					local node = self.level.pathNodes:get(x,y)
+					if node then table.insert(pn,node) end
+					
+					local obj = self.level.foreground:get(x,y)
+					if obj then table.insert(fg,obj) end
 				end
-				
-				local obj = self.level.foreground:get(x,y)
-				if obj then obj:drawAsForeground() end
+			end
+			
+			--draw shapes
+			for _,v in ipairs(bg) do
+				v:drawShape()
+			end
+			for _,v in ipairs(pn) do
+				v:drawShape()
+			end
+			for _,v in ipairs(fg) do
+				v:drawShape()
+			end
+			
+			--draw path connections
+			for _,node in ipairs(pn) do
+				if node.next then
+					node:drawConnection()
+				end
+				--only draw connection with previous if it's offscreen and won't get drawn otherwise
+				if
+					node.prev and
+					(node.prev.x < startX or node.prev.x > endX or
+					node.prev.y < startY or node.prev.y > endY)
+				then
+					node.prev:drawConnection()
+				end
+			end
+			
+			--draw text
+			for _,v in ipairs(bg) do
+				v:drawText()
+			end
+			for _,v in ipairs(fg) do
+				v:drawText()
+			end
+			
+			--draw outlines
+			for _,v in ipairs(bg) do
+				v:drawOutline()
+			end
+			for _,v in ipairs(pn) do
+				v:drawOutline()
+			end
+			for _,v in ipairs(fg) do
+				v:drawOutline()
 			end
 		end
+		
 		--hover
 		local x,y = self:getMouseTile()
 		love.graphics.setColor(1,1,1,0.5)

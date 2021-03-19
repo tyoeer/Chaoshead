@@ -39,54 +39,63 @@ OBJ.getThingInsideThisThing = OBJ.getContents
 -- DRAWING
 
 
-function OBJ:drawAsForeground()
-	local drawX = self.x*TILE_SIZE
-	local drawY = self.y*TILE_SIZE
-	
-	love.graphics.setColor(0,1,0,0.4)
-	love.graphics.rectangle("fill",drawX,drawY,TILE_SIZE,TILE_SIZE)
-	love.graphics.setColor(0,0,0,1)
-	
-	love.graphics.print(self.id,drawX+2,drawY+2)
-	
-	love.graphics.setColor(0,1,0,1)
-	love.graphics.setLineWidth(1)
-	love.graphics.rectangle("line",drawX+0.5,drawY+0.5,TILE_SIZE-1,TILE_SIZE-1)
+function OBJ:getDrawCoords()
+	return self.x*TILE_SIZE, self.y*TILE_SIZE
 end
 
-function OBJ:drawAsBackground()
-	local x = self.x*TILE_SIZE
-	local y = self.y*TILE_SIZE
-	
-	love.graphics.setColor(1,0,0,0.4)
-	love.graphics.polygon("fill",
-		x+ 20.5, y+ 0.5,
-		x+ 50.5, y+ 0.5,
-		x+ 70.5, y+ 20.5,
-		x+ 70.5, y+ 50.5,
-		
-		x+ 50.5, y+ 70.5,
-		x+ 20.5, y+ 70.5,
-		x+ 0.5,  y+ 50.5,
-		x+ 0.5,  y+ 20.5
-	)
-	love.graphics.setColor(0,0,0,1)
-	
-	love.graphics.print(self.id, x+20,y+51)
-	
-	love.graphics.setColor(1,0,0,1)
-	love.graphics.setLineWidth(1)
-	love.graphics.polygon("line",
-		x+ 20.5, y+ 0.5,
-		x+ 50.5, y+ 0.5,
-		x+ 70.5, y+ 20.5,
-		x+ 70.5, y+ 50.5,
-		
-		x+ 50.5, y+ 70.5,
-		x+ 20.5, y+ 70.5,
-		x+ 0.5,  y+ 50.5,
-		x+ 0.5,  y+ 20.5
-	)
+function OBJ:drawShape()
+	local x, y = self:getDrawCoords()
+	if self.layer=="foreground" then
+		love.graphics.setColor(settings.col.editor.objects.foreground.shape)
+		love.graphics.rectangle("fill",x,y,TILE_SIZE,TILE_SIZE)
+	else --background
+		love.graphics.setColor(settings.col.editor.objects.background.shape)
+		love.graphics.polygon("fill",
+			x+ 20.5, y+ 0.5,
+			x+ 50.5, y+ 0.5,
+			x+ 70.5, y+ 20.5,
+			x+ 70.5, y+ 50.5,
+			
+			x+ 50.5, y+ 70.5,
+			x+ 20.5, y+ 70.5,
+			x+ 0.5,  y+ 50.5,
+			x+ 0.5,  y+ 20.5
+		)
+	end
+end
+
+function OBJ:drawText()
+	local x, y = self:getDrawCoords()
+	if self.layer=="foreground" then
+		love.graphics.setColor(settings.col.editor.objects.foreground.text)
+		love.graphics.print(self.id,x+2,y+2)
+	else --background
+		love.graphics.setColor(settings.col.editor.objects.background.text)
+		love.graphics.print(self.id, x+20,y+51)
+	end
+end
+
+function OBJ:drawOutline()
+	local x, y = self:getDrawCoords()
+	if self.layer=="foreground" then
+		love.graphics.setColor(settings.col.editor.objects.foreground.outline)
+		love.graphics.setLineWidth(1)
+		love.graphics.rectangle("line",x+0.5,y+0.5,TILE_SIZE-1,TILE_SIZE-1)
+	else --background
+		love.graphics.setColor(settings.col.editor.objects.background.outline)
+		love.graphics.setLineWidth(1)
+		love.graphics.polygon("line",
+			x+ 20.5, y+ 0.5,
+			x+ 50.5, y+ 0.5,
+			x+ 70.5, y+ 20.5,
+			x+ 70.5, y+ 50.5,
+			
+			x+ 50.5, y+ 70.5,
+			x+ 20.5, y+ 70.5,
+			x+ 0.5,  y+ 50.5,
+			x+ 0.5,  y+ 20.5
+		)
+	end
 end
 
 
