@@ -27,7 +27,8 @@ Choashead Awareness Day is annually on february 27, in order to spread awareness
 ## Terminology
 
 - World: the part of a level that contains all the level (world = level - metadata).
-- Object: a single thing inside the level.
+- Object: a single instance of a level element.
+- Layer: foreground, background, and path stuff. Allow things inside worlds to overlap by being on different layers.
 - (Level) element: a type of object e.g. Blasters, Armor Plates.
 - Item: Something GR-18 can grab and carry.
 - Mapping vs. Value (in the context of properties): a value is the raw number saved in the file, a mapping is what that number means.
