@@ -38,7 +38,17 @@ OBJ.getThingInsideThisThing = OBJ.getContents
 
 -- DRAWING
 
-
+OBJ.backgroundShape = {
+	20.5, 0.5,
+	50.5, 0.5,
+	70.5, 20.5,
+	70.5, 50.5,
+	
+	50.5, 70.5,
+	20.5, 70.5,
+	0.5,  50.5,
+	0.5,  20.5
+}
 function OBJ:getDrawCoords()
 	return self.x*TILE_SIZE, self.y*TILE_SIZE
 end
@@ -50,17 +60,9 @@ function OBJ:drawShape()
 		love.graphics.rectangle("fill",x,y,TILE_SIZE,TILE_SIZE)
 	else --background
 		love.graphics.setColor(settings.col.editor.objects.background.shape)
-		love.graphics.polygon("fill",
-			x+ 20.5, y+ 0.5,
-			x+ 50.5, y+ 0.5,
-			x+ 70.5, y+ 20.5,
-			x+ 70.5, y+ 50.5,
-			
-			x+ 50.5, y+ 70.5,
-			x+ 20.5, y+ 70.5,
-			x+ 0.5,  y+ 50.5,
-			x+ 0.5,  y+ 20.5
-		)
+		love.graphics.translate(x,y)
+		love.graphics.polygon("fill",self.backgroundShape)
+		love.graphics.translate(-x,-y)
 	end
 end
 
@@ -84,17 +86,9 @@ function OBJ:drawOutline()
 	else --background
 		love.graphics.setColor(settings.col.editor.objects.background.outline)
 		love.graphics.setLineWidth(1)
-		love.graphics.polygon("line",
-			x+ 20.5, y+ 0.5,
-			x+ 50.5, y+ 0.5,
-			x+ 70.5, y+ 20.5,
-			x+ 70.5, y+ 50.5,
-			
-			x+ 50.5, y+ 70.5,
-			x+ 20.5, y+ 70.5,
-			x+ 0.5,  y+ 50.5,
-			x+ 0.5,  y+ 20.5
-		)
+		love.graphics.translate(x,y)
+		love.graphics.polygon("line",self.backgroundShape)
+		love.graphics.translate(-x,-y)
 	end
 end
 
