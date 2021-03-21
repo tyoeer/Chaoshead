@@ -27,18 +27,19 @@ end
 function P:append(x,y)
 	local n = PN:new(x,y)
 	if self.tail then
-		self:addNodeAfter(n,self.tail)
+		return self:addNodeAfter(n,self.tail)
 	else
 		--no nodes yet
-		self:addNodeBetween(n,nil,nil)
+		return self:addNodeBetween(n,nil,nil)
 	end
+	return
 end
 
 function P:addNodeAfter(n,t)
-	self:addNodeBetween(n,t,t.next)
+	return self:addNodeBetween(n,t,t.next)
 end
 function P:addNodeBefore(n,t)
-	self:addNodeBetween(n,t.prev,t)
+	return self:addNodeBetween(n,t.prev,t)
 end
 -- internal use only, use P:addNodeAfter/Before
 function P:addNodeBetween(n,prev,next)
@@ -64,6 +65,7 @@ function P:addNodeBetween(n,prev,next)
 		n.next = n
 		n.prev = n
 	end
+	return self
 end
 
 function P:removeNode(n)
@@ -71,6 +73,7 @@ function P:removeNode(n)
 	if self.world then
 		self.world:removePathNodeRaw(n)
 	end
+	return self
 end
 --doesn't properly update world, use Level:removePathNode(x,y)
 function P:removeNodeRaw(n)
@@ -88,6 +91,8 @@ function P:removeNodeRaw(n)
 		--no prev means this was the head
 		self.head = next
 	end
+
+	return self
 end
 
 --doesn't properly connect, private use only
@@ -96,6 +101,7 @@ function P:addNode(n)
 	if self.world then
 		self.world:addPathNodeRaw(n)
 	end
+	return self
 end
 
 -- open & closed
@@ -125,6 +131,7 @@ function P:setPropertyRaw(id, value)
 			self:openEnds()
 		end
 	end
+	return self
 end
 
 function P:getPropertyRaw(id)
@@ -137,6 +144,7 @@ function P:setProperty(id, value)
 	end
 	id = PROP:getID(id)
 	self:setPropertyRaw(id,PROP:mappingToValue(id,value))
+	return self
 end
 
 function P:getProperty(id)
@@ -157,6 +165,7 @@ function P:__index(key)
 				if PROP:isValidMapping(id,mapping) then
 					set = true
 					self:setProperty(id, mapping)
+					return self
 				end
 			end
 			if not set then

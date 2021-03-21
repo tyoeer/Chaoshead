@@ -104,6 +104,7 @@ end
 
 function OBJ:setPropertyRaw(id, value)
 	self.properties[id] = value
+	return self
 end
 
 function OBJ:getPropertyRaw(id)
@@ -116,6 +117,7 @@ function OBJ:setProperty(id, value)
 	end
 	id = P:getID(id)
 	self:setPropertyRaw(id,P:mappingToValue(id,value))
+	return self
 end
 
 function OBJ:getProperty(id)
@@ -136,6 +138,7 @@ function OBJ:__index(key)
 				if P:isValidMapping(id,mapping) then
 					set = true
 					self:setProperty(id, mapping)
+					return self
 				end
 			end
 			if not set then
