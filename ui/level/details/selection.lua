@@ -5,7 +5,7 @@ local UI = Class(require("ui.structure.list"))
 
 function UI:initialize(tracker)
 	UI.super.initialize(self)
-	self.title = "Object Info"
+	self.title = "Selection"
 	
 	self.entryMargin = settings.dim.editor.details.object.entryMargin
 	self.indentSize = settings.dim.editor.details.object.textEntryIndentSize
@@ -43,6 +43,9 @@ function UI:reload()
 			self.editor:removeSelectionLayer("pathNodes")
 		end)
 	end
+	self:addButtonEntry("Delete",function()
+		self.editor:deleteSelection()
+	end)
 end
 
 return UI

@@ -17,8 +17,8 @@ local plurals = {
 	background = "nBackground",
 	pathNodes = "nPathNodes",
 }
-function C:removeLayer(layer)
-	self[layer] = nil
+function C:clearLayer(layer)
+	self[layer] = EP:new()
 	self[plurals[layer]] = 0
 end
 

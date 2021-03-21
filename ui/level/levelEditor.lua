@@ -89,18 +89,27 @@ end
 
 -- do stuff with the selection
 
-function UI:delete(obj)
-	if obj:isInstanceOf(OBJ) then
+
+function UI:deleteSelection()
+	local c = self.selection.contents
+	self.selection = nil
+	self:removeTab(self.selectionDetails)
+	self.selectionDetails = nil
+	
+	for obj in c.foreground:iterate() do
 		self.level:removeObject(obj)
-	elseif obj:isInstanceOf(PN) then
-		local p = obj.path
-		p:removeNode(obj)
+	end
+	for obj in c.background:iterate() do
+		self.level:removeObject(obj)
+	end
+	for node in c.pathNodes:iterate() do
+		local p = node.path
+		p:removeNode(node)
 		--removed all nodes?
 		if not p.tail then
 			self.level:removePath(p)
 		end
 	end
-	print("TODO delete handling the object being selected")
 end
 
 -- events (most are handled by the proxy super)
@@ -108,7 +117,7 @@ end
 function UI:inputActivated(name,group, isCursorBound)
 	if group=="editor" then
 		if name=="delete" then
-			print("TODO selection deletion")
+			self:deleteSelection()
 		elseif name=="deselectAll" then
 			self:deselectAll()
 		else

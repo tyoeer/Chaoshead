@@ -21,7 +21,7 @@ end
 
 function T:removeLayer(layer)
 	self.mask:setLayerEnabled(layer,false)
-	self.contents:removeLayer(layer)
+	self.contents:clearLayer(layer)
 end
 
 
