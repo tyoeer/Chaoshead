@@ -86,15 +86,16 @@ function UI:draw()
 			end
 		end
 		
+		--get position of objects at the screen edges
+		startX, startY = self:toWorldX(0), self:toWorldY(0)
+		endX, endY = self:toWorldX(self.width), self:toWorldY(self.height)
+		startX, startY = math.floor(startX/TILE_SIZE), math.floor(startY/TILE_SIZE)
+		endX, endY = math.ceil(endX/TILE_SIZE), math.ceil(endY/TILE_SIZE)
+		
 		--objects
 		do
-			--get position of objects at the screen edges
-			startX, startY = self:toWorldX(0), self:toWorldY(0)
-			endX, endY = self:toWorldX(self.width), self:toWorldY(self.height)
-			startX, startY = math.floor(startX/TILE_SIZE), math.floor(startY/TILE_SIZE)
-			endX, endY = math.ceil(endX/TILE_SIZE), math.ceil(endY/TILE_SIZE)
 			
-			--and get all objects between
+			--get all objects between
 			--storing them in a list should optimize whne there's lots of empty space on teh screen a.k.a. when zoomed out
 			--adds extra overheads that doesn't cause improvements when the whole screen is covered (every grid space and layer)
 			--but that scenario should be pretty rare (and then this is hopefully still performant enough
@@ -158,6 +159,11 @@ function UI:draw()
 			for _,v in ipairs(fg) do
 				v:drawOutline()
 			end
+		end
+		
+		--selection
+		if self.editor.selection then
+			self.editor.selection:draw(startX,startY, endX,endY)
 		end
 		
 		--hover
@@ -226,7 +232,7 @@ end
 
 function UI:inputActivated(name,group, isCursorBound)
 	if group=="editor" then
-		if name=="select" then
+		if name=="selectOnly" or name=="selectAdd" then
 			self.selecting = true
 		elseif name=="resize" then
 			local cx,cy = self:posNearCorner(self:toWorldX(self:getMouseX()),self:toWorldY(self:getMouseY()))
@@ -241,10 +247,15 @@ end
 
 function UI:inputDeactivated(name,group, isCursorBound)
 	if group=="editor" then
-		if name=="select" then
+		if name=="selectOnly" then
 			if self.selecting then
 				self.selecting = false
-				self.editor:selectObject(self:getMouseTile())
+				self.editor:selectOnly(self:getMouseTile())
+			end
+		elseif name=="selectAdd" then
+			if self.selecting then
+				self.selecting = false
+				self.editor:selectAdd(self:getMouseTile())
 			end
 		elseif name=="resize" then
 			if self.resizing then

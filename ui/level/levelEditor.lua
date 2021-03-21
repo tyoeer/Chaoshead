@@ -1,7 +1,12 @@
 local Padding = require("ui.structure.padding")
 local LevelDetails = require("ui.level.details.level")
+local OBJ = require("levelhead.level.object")
 local ObjectDetails = require("ui.level.details.object")
+local PN = require("levelhead.level.pathNode")
+local PATH = require("levelhead.level.path")
 local PathNodeDetails = require("ui.level.details.pathNode")
+local Selection = require("tools.selection.tracker")
+local SelectionDetails = require("ui.level.details.selection")
 
 local UI = Class("LevelEditorUI",require("ui.structure.proxy"))
 
@@ -15,7 +20,7 @@ function UI:initialize(level,root)
 	self.detailsUI.tabHeight = settings.dim.editor.details.tabHeight
 	
 	--editor state
-	self.selectedObject = nil
+	self.selection = nil
 	self.selectionDetails = nil
 	
 	UI.super.initialize(self,require("ui.structure.horDivide"):new(self.detailsUI, self.viewer))
@@ -48,34 +53,41 @@ function UI:reload(level)
 end
 
 -- editor stuff
-local OBJ = require("levelhead.level.object")
-local PATH = require("levelhead.level.path")
-local PN = require("levelhead.level.pathNode")
 
-function UI:selectObject(tileX,tileY)
-	if self.selectedObject then
-		self:deselect()
+-- selection manipulation
+
+function UI:selectOnly(tileX,tileY)
+	if self.selection then
+		self:deselectAll()
 	end
-	local obj = self.level.foreground:get(tileX,tileY) or self.level.background:get(tileX,tileY)
-	if obj then
-		self.selectedObject = obj
-		self.selectionDetails = ObjectDetails:new(obj)
-		self:addTab(self.selectionDetails)
+	self.selection = Selection:new(self.level)
+	self.selection:add(tileX,tileY)
+	self.selectionDetails = SelectionDetails:new(self.selection)
+	self:addTab(self.selectionDetails)
+end
+
+function UI:selectAdd(tileX,tileY)
+	if self.selection then
+		self.selection:add(tileX,tileY)
+		self.selectionDetails:reload()
 	else
-		obj = self.level.pathNodes[tileX][tileY]
-		if obj then
-			self.selectedObject = obj
-			self.selectionDetails = PathNodeDetails:new(obj)
-			self:addTab(self.selectionDetails)
-		end
+		self:selectOnly(tileX,tileY)
 	end
 end
 
-function UI:deselect()
-	self.selectedObject = nil
+function UI:removeSelectionLayer(layer)
+	self.selection:removeLayer(layer)
+	self.selectionDetails:reload()
+end
+
+function UI:deselectAll()
+	self.selection = nil
 	self:removeTab(self.selectionDetails)
 	self.selectionDetails = nil
 end
+
+
+-- do stuff with the selection
 
 function UI:delete(obj)
 	if obj:isInstanceOf(OBJ) then
@@ -88,17 +100,19 @@ function UI:delete(obj)
 			self.level:removePath(p)
 		end
 	end
-	if obj == self.selectedObject then
-		self:deselect()
-	end
+	print("TODO delete handling the object being selected")
 end
 
 -- events (most are handled by the proxy super)
 
 function UI:inputActivated(name,group, isCursorBound)
-	if group=="editor" and name=="delete" then
-		if self.selectedObject then
-			self:delete(self.selectedObject)
+	if group=="editor" then
+		if name=="delete" then
+			print("TODO selection deletion")
+		elseif name=="deselectAll" then
+			self:deselectAll()
+		else
+			self.child:inputActivated(name,group, isCursorBound)
 		end
 	else
 		self.child:inputActivated(name,group, isCursorBound)
