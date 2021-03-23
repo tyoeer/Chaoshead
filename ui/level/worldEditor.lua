@@ -92,7 +92,7 @@ function UI:draw()
 		startX, startY = self:toWorldX(0), self:toWorldY(0)
 		endX, endY = self:toWorldX(self.width), self:toWorldY(self.height)
 		startX, startY = math.floor(startX/TILE_SIZE), math.floor(startY/TILE_SIZE)
-		endX, endY = math.ceil(endX/TILE_SIZE), math.ceil(endY/TILE_SIZE)
+		endX, endY = math.floor(endX/TILE_SIZE), math.floor(endY/TILE_SIZE)
 		
 		--objects
 		do
