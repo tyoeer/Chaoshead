@@ -66,6 +66,12 @@ end
 
 function UI:draw()
 	love.graphics.push()
+	--not exactly one to compensate for float weirdness
+	if self.zoomFactor < 0.999 then
+		love.graphics.setLineStyle("smooth")
+	else
+		love.graphics.setLineStyle("rough")
+	end
 	--camera
 		love.graphics.translate(self.width/2, self.height/2)
 		love.graphics.scale(self.zoomFactor)
