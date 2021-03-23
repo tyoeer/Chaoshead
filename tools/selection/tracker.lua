@@ -41,5 +41,20 @@ function T:add(x,y)
 	end
 end
 
+function T:remove(x,y)
+	self.mask:remove(x,y)
+	if self:hasLayer("foreground") then
+		local obj = self.level.foreground[x][y]
+		if obj then self.contents:removeForeground(obj) end
+	end
+	if self:hasLayer("background") then
+		local obj = self.level.background[x][y]
+		if obj then self.contents:removeBackground(obj) end
+	end
+	if self:hasLayer("pathNodes") then
+		local obj = self.level.pathNodes[x][y]
+		if obj then self.contents:removePathNode(obj) end
+	end
+end
 
 return T

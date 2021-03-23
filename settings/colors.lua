@@ -27,6 +27,7 @@ return {
 			outline = {0,0,1, 1},
 			selected = {1,1,1 ,1},
 		},
+		selectionAreaOutline = {1,1,1, 1},
 	},
 	tabs = {
 		divide = {1,1,1, 1},

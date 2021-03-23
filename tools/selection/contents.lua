@@ -38,4 +38,19 @@ function C:addPathNode(node)
 	self.nPathNodes = self.nPathNodes + 1
 end
 
+function C:removeForeground(obj)
+	self.foreground:remove(obj)
+	self.nForeground = self.nForeground - 1
+end
+
+function C:removeBackground(obj)
+	self.background:remove(obj)
+	self.nBackground = self.nBackground - 1
+end
+
+function C:removePathNode(node)
+	self.pathNodes:remove(node)
+	self.nPathNodes = self.nPathNodes - 1
+end
+
 return C

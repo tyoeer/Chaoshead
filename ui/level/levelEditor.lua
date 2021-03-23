@@ -75,15 +75,42 @@ function UI:selectAdd(tileX,tileY)
 	end
 end
 
-function UI:removeSelectionLayer(layer)
-	self.selection:removeLayer(layer)
-	self.selectionDetails:reload()
+function UI:selectAddArea(startX,startY,endX,endY)
+	for x = startX, endX, 1 do
+		for y = startY, endY, 1 do
+			self:selectAdd(x,y)
+		end
+	end
+end
+
+function UI:deselectSub(tileX,tileY)
+	if self.selection then
+		self.selection:remove(tileX,tileY)
+		if self.selection.mask.nTiles==0 then
+			self:deselectAll()
+		else
+			self.selectionDetails:reload()
+		end
+	end
+end
+
+function UI:deselectSubArea(startX,startY,endX,endY)
+	for x = startX, endX, 1 do
+		for y = startY, endY, 1 do
+			self:deselectSub(x,y)
+		end
+	end
 end
 
 function UI:deselectAll()
 	self.selection = nil
 	self:removeTab(self.selectionDetails)
 	self.selectionDetails = nil
+end
+
+function UI:removeSelectionLayer(layer)
+	self.selection:removeLayer(layer)
+	self.selectionDetails:reload()
 end
 
 

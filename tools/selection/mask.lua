@@ -27,7 +27,7 @@ function S:getLayerEnabled(layer)
 	return self.layers[layer]
 end
 
---add & remove fail quietly when the tile is already in/out the selection
+--add & remove are quiet when the tile is already in/out the selection
 
 function S:add(x,y)
 	if not self.mask[x][y] then

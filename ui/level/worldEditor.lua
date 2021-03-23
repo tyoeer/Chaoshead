@@ -12,6 +12,8 @@ function UI:initialize(editor)
 	self.zoomSpeed = math.sqrt(2)
 	--state stuff
 	self.selecting = false
+	self.selectionStartX = nil
+	self.selectionStartY = nil
 	self.resizing = false
 	self.resizeCornerX = 0
 	self.resizeCornerY = 0
@@ -165,6 +167,16 @@ function UI:draw()
 		if self.editor.selection then
 			self.editor.selection:draw(startX,startY, endX,endY)
 		end
+		--area being selected
+		if self.selectStartX then
+			love.graphics.setLineWidth(2)
+			love.graphics.setColor(settings.col.editor.selectionAreaOutline)
+			love.graphics.rectangle("line",
+				self.selectStartX +0.5, self.selectStartY+0.5,
+				self:toWorldX(self:getMouseX()) - self.selectStartX-1,
+				self:toWorldY(self:getMouseY()) - self.selectStartY-1
+			)
+		end
 		
 		--hover
 		local x,y = self:getMouseTile()
@@ -232,8 +244,11 @@ end
 
 function UI:inputActivated(name,group, isCursorBound)
 	if group=="editor" then
-		if name=="selectOnly" or name=="selectAdd" then
+		if name=="selectOnly" or name=="selectAdd" or name=="deselectSub" then
 			self.selecting = true
+		elseif name=="selectAddArea" or name=="deselectSubArea" then
+			self.selectStartX = self:toWorldX(self:getMouseX())
+			self.selectStartY = self:toWorldY(self:getMouseY())
 		elseif name=="resize" then
 			local cx,cy = self:posNearCorner(self:toWorldX(self:getMouseX()),self:toWorldY(self:getMouseY()))
 			if cx then
@@ -257,6 +272,29 @@ function UI:inputDeactivated(name,group, isCursorBound)
 				self.selecting = false
 				self.editor:selectAdd(self:getMouseTile())
 			end
+		elseif name=="deselectSub" then
+			if self.selecting then
+				self.selecting = false
+				self.editor:deselectSub(self:getMouseTile())
+			end
+		elseif name=="selectAddArea" then
+			local fromX, fromY = math.floor(self.selectStartX/TILE_SIZE), math.floor(self.selectStartY/TILE_SIZE)
+			local endX, endY = self:getMouseTile()
+			self.editor:selectAddArea(
+				math.min(fromX,endX), math.min(fromY,endY),
+				math.max(fromX,endX), math.max(fromY,endY)
+			)
+			self.selectStartX = nil
+			self.selectStartY = nil
+		elseif name=="deselectSubArea" then
+			local fromX, fromY = math.floor(self.selectStartX/TILE_SIZE), math.floor(self.selectStartY/TILE_SIZE)
+			local endX, endY = self:getMouseTile()
+			self.editor:deselectSubArea(
+				math.min(fromX,endX), math.min(fromY,endY),
+				math.max(fromX,endX), math.max(fromY,endY)
+			)
+			self.selectStartX = nil
+			self.selectStartY = nil
 		elseif name=="resize" then
 			if self.resizing then
 				self.resizing = false
