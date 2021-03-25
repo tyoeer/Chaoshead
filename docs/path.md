@@ -39,6 +39,14 @@ path:removeNode(node)
 ```
 - node: the __PathNode__ to remove
 
+to make node editing easier and cleaner, all methods return __this__, usage looks like
+```Lua
+path:append(x,y)
+    :addNodeAfter(new, anchor)
+    :addNodeBefore(new, anchor)
+    :removeNode(node)
+```
+
 ## Properties
 
 ```Lua
@@ -76,6 +84,13 @@ value = path:getPropertyRaw(id)
 ```
 - id: the id/name of the property to retrieve
 - value: the raw value of said property
+
+to make setting multiple properties easier and cleaner, all property setters return __this__, usage looks like
+```Lua
+path:setProperty(id, mapping)
+    :setPropertyRaw(id, value)
+    :set[property name](value)
+```
 
 ## Info
 
