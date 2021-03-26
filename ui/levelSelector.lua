@@ -65,7 +65,7 @@ function UI:initialize()
 				"Explore user data",
 				function()
 					local dv = require("ui.utils.dataViewer"):new(UserData.getUserData(data.user).raw)
-					ui.child:addChild(dv)
+					ui.child.child:addChild(dv)
 				end
 			)
 			
