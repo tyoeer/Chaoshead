@@ -21,8 +21,10 @@ Choashead Awareness Day is annually on february 27, in order to spread awareness
 ### Currently not supported
 
 - Campaign-only objects and their properties
-  - Unsupported properties will crash Chaoshead (because the .lhs is can't be loaded)
-  - Unsupported objects will only crash when placed in a row or column, otherwise they will simply show up with only their internal ID
+  - Unsupported properties error upon file load (because the .lhs is can't be loaded)
+  - Unsupported objects will only error when placed in a row or column, otherwise they will simply show up with only their internal ID
+- Multiple path nodes in the same tile
+  - While they do work in Levelhead, the visual bugs show that taht isn't intended.
 
 ## Terminology
 
