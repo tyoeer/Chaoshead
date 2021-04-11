@@ -42,7 +42,7 @@ function A:initialize(level,settings)
 	end
 	if self.settings.preScan then
 		local scan
-		local channelPorperties = {0,1,49,90}
+		local channelProperties = {0,1,49,90}
 		if self.objectMask and self.channelMask then
 			scan = function(obj)
 				self.objectMask:set(obj.x, obj.y, false)
