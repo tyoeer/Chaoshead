@@ -1,5 +1,14 @@
 local csv = {}
 
+local function preprocess(item)
+	item = item:trim()
+	item = tonumber(item) or item
+	if item=="" then
+		item = nil
+	end
+	return item
+end
+
 function csv.parseString(text,seperator)
 	parser = parser or csv.noParser
 	local SEP = seperator or ","
@@ -15,7 +24,7 @@ function csv.parseString(text,seperator)
 		local char = text:sub(i,i)
 		if char==SEP then
 			if out and current then
-				current = tonumber(current) or current
+				current = preprocess(current)
 				out[#out][headers[column]] = current
 			else
 				headers[column] = current
@@ -23,12 +32,12 @@ function csv.parseString(text,seperator)
 			current = ""
 			column = column + 1
 		elseif char==END then
-			--line ending shenanigans (a CR can otherwise get appended)
-			current = current:trim()
 			if out then
-				current = tonumber(current) or current
+				current = preprocess(current)
 				out[#out][headers[column]] = current
 			else
+				-- a CR char might hang around in the current due to the END char being only one character of windows 2-chars newline
+				current = current:trim()
 				headers[column] = current
 				out = {}
 			end
@@ -42,8 +51,7 @@ function csv.parseString(text,seperator)
 	end
 	-- if the file doesn't end with a newline, append what's left
 	if current then
-		current = current:trim()
-		current = tonumber(current) or current
+		current = preprocess(current)
 		out[#out][headers[column]] = current
 	end
 	return out, headers

@@ -95,6 +95,24 @@ end
 
 -- PROPERTIES
 
+function OBJ:hasProperties()
+	local e = E:hasProperties(self.id)
+	if e=="$UnknownProperties" then
+		-- next returns nil if self.properties is empty
+		return next(self.properties) and true or false
+	else
+		return e
+	end
+end
+
+function OBJ:iterateProperties()
+	if E:hasProperties(self.id)=="$UnknownProperties" then
+		return pairs(self.properties)
+	else
+		return E:iterateProperties(self.id)
+	end
+end
+
 
 function OBJ:setPropertyRaw(id, value)
 	self.properties[id] = value

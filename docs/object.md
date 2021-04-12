@@ -15,17 +15,13 @@ object = require("levelhead.level.object"):new(id)
 
 ## Properties
 
+### Setting
+
 ```Lua
 object:set[property name](value)
 ```
 - property name: concatanated name of the poperty you're setting, where each word starts with with an uppercase letter
 - value: the new value of said property
-
-```Lua
-value = object:get[property name]()
-```
-- property name: concatanated name of the poperty you're getting, where each word starts with with an uppercase letter
-- value: the value of said property
 
 ```Lua
 object:setProperty(id, mapping)
@@ -34,16 +30,33 @@ object:setProperty(id, mapping)
 - mapping: the new mapped value of said property
 
 ```Lua
-mapping = object:getProperty(id)
-```
-- id: the id/name of the property to retrieve
-- mapping: the mapped value of said property
-
-```Lua
 object:setPropertyRaw(id, value)
 ```
 - id: the id/name of the property to change
 - value: the new raw value of said property
+
+#### Chaining
+
+To make setting multiple properties easier and cleaner, all property setters return the object, usage looks like
+```Lua
+object:setProperty(id, mapping)
+      :setPropertyRaw(id, value)
+      :set[property name](value)
+```
+
+### Getting
+
+```Lua
+value = object:get[property name]()
+```
+- property name: concatanated name of the poperty you're getting, where each word starts with with an uppercase letter
+- value: the value of said property
+
+```Lua
+mapping = object:getProperty(id)
+```
+- id: the id/name of the property to retrieve
+- mapping: the mapped value of said property
 
 ```Lua
 value = object:getPropertyRaw(id)
@@ -51,12 +64,17 @@ value = object:getPropertyRaw(id)
 - id: the id/name of the property to retrieve
 - value: the raw value of said property
 
-to make setting multiple properties easier and cleaner, all property setters return __this__, usage looks like
+### Meta
+
 ```Lua
-object:setProperty(id, mapping)
-      :setPropertyRaw(id, value)
-      :set[property name](value)
+has = object:hasProperties()
 ```
+- has: a boolean indicating if this object has properties or not
+
+```Lua
+for property in object:iterateProperties() do
+```
+Iterates over all the properties this object has.
 
 ## Contained Objects
 

@@ -5,7 +5,7 @@ function E:initialize()
 	--parse data file
 	local rawHeaders
 	self.data, rawHeaders = csv.parseString(love.filesystem.read("data/levelElements.tsv"),"\t")
-	
+	self.N_INHERITENCE_CHECKS = 20
 	--parse headers
 	self.headers = {}
 	for i,v in ipairs(rawHeaders) do
@@ -47,7 +47,7 @@ end
 
 
 function E:hasProperties(selector)
-	for _=1,20,1 do
+	for _=1,self.N_INHERITENCE_CHECKS,1 do
 		local r = self:getRow(selector)
 		local base = r[self.headers.properties]
 		
@@ -59,26 +59,30 @@ function E:hasProperties(selector)
 			return true
 		end
 	end
-	error(string.format("Failed to get property status of %q, parent lookup took >20 checks, it's probably recursing.",selector))
+	error(string.format("Failed to get property status of %q, parent lookup took >%d checks, it's probably recursing.",selector,self.N_INHERITENCE_CHECKS))
 end
 
---WARNING: iterated properties will be strings, because that makes iteration possible with string.gmatch. they should be tonumber()ed manually
 function E:iterateProperties(selector)
-	for _=1,20,1 do
+	for _=1,self.N_INHERITENCE_CHECKS,1 do
 		local r = self:getRow(selector)
 		local base = r[self.headers.properties]
 		
 		if base==nil then
 			error(string.format("Can't iterate unknown properties of %q.",selector))
 		end
-		if base=="None" then return false end
+		if base=="None" then return  end
 		if base=="Inherit" then
 			selector = r[self.headers.parent]
 		else
-			return base:gmatch("(%d+)")
+			--wrap string:gmatch() to tonumber() everything
+			local f,s,v = base:gmatch("(%d+)")
+			return function(s,v)
+				v = f(s,v)
+				return v==nil and nil or tonumber(v)
+			end, s, v
 		end
 	end
-	error(string.format("Failed to get property status of %q, parent lookup took >20 checks, it's probably recursing.",selector))
+	error(string.format("Failed to get property status of %q, parent lookup took >%d checks, it's probably recursing.",selector,self.N_INHERITENCE_CHECKS))
 end
 
 
