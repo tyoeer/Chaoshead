@@ -132,7 +132,6 @@ function OBJ:__index(key)
 				if P:isValidMapping(id,mapping) then
 					set = true
 					self:setProperty(id, mapping)
-					return self
 				end
 			end
 			if not set then
@@ -142,6 +141,7 @@ function OBJ:__index(key)
 					error("Property "..prop.." doesn't exist")
 				end
 			end
+			return self
 		end
 	elseif key:match("get") then
 		local prop = key:match("get(.+)")
