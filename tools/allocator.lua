@@ -201,6 +201,13 @@ function A:allocateChannel()
 	return self.channelCounter
 end
 
+function A:allocateChannels(count)
+	local result = {}
+	for i=1,count do
+		result[i] = self:allocateChannel()
+	end
+	return result
+end
 
 -- MISC
 
