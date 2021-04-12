@@ -43,7 +43,12 @@ obj = allocator:allocateObject(element)
 ```Lua
 channel = allocater:allocateChannel()
 ```
-- channel: a new unused channel
+- channel: a new unused channel  
+
+```Lua
+channels = allocator:allocateChannels(n)
+```
+It is possible to allocate a whole range of channels at once. This will allocate `n` channels and return them as an array `channels`.
 
 ```Lua
 area = allocator:allocateArea(width, height)
