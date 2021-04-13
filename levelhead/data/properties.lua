@@ -128,7 +128,7 @@ function P:valueToMapping(selector, value)
 			return value
 		end
 		local m = p[self.headers.map[value]]
-		if m=="-" then
+		if m=="-" or value~=math.floor(value) then
 			return value
 		else
 			return m or "$UnknownMappedValue"
