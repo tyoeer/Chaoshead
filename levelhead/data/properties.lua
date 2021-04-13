@@ -107,16 +107,18 @@ function P:valueToMapping(selector, value)
 		return "$IllegalValue: "..tostring(value)
 	end
 	
-	local min, max = p[self.headers.min], p[self.headers.max]
-	if not min or not max or min=="" or max=="" then
-		print("Property range undefined: "..selector.." :-: "..tostring(min).." - "..tostring("max"))
-		return "$RangeUndefined"
-	end
-	if value < min or value > max then
-		return "$OutOfBOunds"
+	local mappingType = p[self.headers.mappingType]
+	if mappingType=="Simple" or mappingType=="List" or mappingType=="Music" then
+		local min, max = p[self.headers.min], p[self.headers.max]
+		if not min or not max or min=="" or max=="" then
+			print("Property range undefined: "..selector.." :-: "..tostring(min).." - "..tostring("max"))
+			return "$RangeUndefined"
+		end
+		if value < min or value > max then
+			return "$OutOfBOunds"
+		end
 	end
 	
-	local mappingType = p[self.headers.mappingType]
 	if mappingType=="None" then
 		return value
 	elseif mappingType=="Simple" then
