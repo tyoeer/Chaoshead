@@ -58,6 +58,31 @@ function UI:reload()
 	self:addButtonEntry("Delete",function()
 		self.editor:deleteSelection()
 	end)
+	-- info of single object
+	do
+		--foreground
+		if c.nForeground==1 and c.nBackground==0 and c.nPathNodes==0 then
+			local o = c.foreground:getTop()
+			self:addTextEntry("Position: ("..o.x..","..o.y..")")
+			self:addTextEntry("Element: "..o:getName().." ("..o.id..")")
+			self:addTextEntry("Layer: Foreground")
+			if o.contents then
+				self:addTextEntry("Contents: "..o:getContents().." ("..o.contents..")")
+			else
+				self:addTextEntry("Contents: None")
+			end
+		elseif c.nForeground==0 and c.nBackground==1 and c.nPathNodes==0 then
+			--background
+			local o = c.background:getTop()
+			self:addTextEntry("Position: ("..o.x..","..o.y..")")
+			self:addTextEntry("Element: "..o:getName().." ("..o.id..")")
+			self:addTextEntry("Layer: Background")
+		elseif c.nForeground==0 and c.nBackground==0 and c.nPathNodes==1 then
+			local n = c.pathNodes:getTop()
+			--mark it as a path node to prevent possible confusion
+			self:addTextEntry("Path Node Position: ("..n.x..","..n.y..")")
+		end
+	end
 	--add a divider
 	self:addTextEntry(" ",0)
 	--objects with unknown properties
