@@ -22,7 +22,7 @@ end
 function UI:getPropagatedMouseX(child)
 	if self.bg and child~=self.child then
 		--prevent bg from interacting with mouse
-		--e.g. button hvoer effects
+		--e.g. button hover effects
 		return -1
 	else
 		return self:getMouseX()
@@ -31,7 +31,7 @@ end
 function UI:getPropagatedMouseY(child)
 	if self.bg and child~=self.child then
 		--prevent bg from interacting with mouse
-		--e.g. button hvoer effects
+		--e.g. button hover effects
 		return -1
 	else
 		return self:getMouseY()
