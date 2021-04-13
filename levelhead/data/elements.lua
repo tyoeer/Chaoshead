@@ -47,6 +47,7 @@ end
 
 
 function E:hasProperties(selector)
+	local start = selector
 	for _=1,self.N_INHERITENCE_CHECKS,1 do
 		local r = self:getRow(selector)
 		local base = r[self.headers.properties]
@@ -54,25 +55,34 @@ function E:hasProperties(selector)
 		if base==nil then return "$UnknownProperties" end
 		if base=="None" then return false end
 		if base=="Inherit" then
-			selector = r[self.headers.parent]
+			local p = r[self.headers.parent]
+			if p==nil then
+				return "$UnknownProperties"
+			end
+			selector = p
 		else
 			return true
 		end
 	end
-	error(string.format("Failed to get property status of %q, parent lookup took >%d checks, it's probably recursing.",selector,self.N_INHERITENCE_CHECKS))
+	error(string.format("Failed to get property status of %q (start: %q), parent lookup took >%d checks, it's probably recursing.",selector,start,self.N_INHERITENCE_CHECKS))
 end
 
 function E:iterateProperties(selector)
+	local start = selector
 	for _=1,self.N_INHERITENCE_CHECKS,1 do
 		local r = self:getRow(selector)
 		local base = r[self.headers.properties]
 		
 		if base==nil then
-			error(string.format("Can't iterate unknown properties of %q.",selector))
+			error(string.format("Can't iterate unknown properties of %q (start: %q).",selector,start))
 		end
 		if base=="None" then return  end
 		if base=="Inherit" then
-			selector = r[self.headers.parent]
+			local p = r[self.headers.parent]
+			if p==nil then
+				error(string.format("Can't iterate properties of %q (start: %q) due to unknown parents.",selector,start))
+			end
+			selector = p
 		else
 			--wrap string:gmatch() to tonumber() everything
 			local f,s,v = base:gmatch("(%d+)")
@@ -82,7 +92,7 @@ function E:iterateProperties(selector)
 			end, s, v
 		end
 	end
-	error(string.format("Failed to get property status of %q, parent lookup took >%d checks, it's probably recursing.",selector,self.N_INHERITENCE_CHECKS))
+	error(string.format("Failed to get property status of %q (start: %q), parent lookup took >%d checks, it's probably recursing.",selector,start,self.N_INHERITENCE_CHECKS))
 end
 
 
