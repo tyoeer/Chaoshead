@@ -22,17 +22,11 @@ function UI:reload()
 	self:resetList()
 	if self.propertyList then
 		local pl = self.propertyList
-		self:addTextEntry(P:getName(pl.propId).." ("..pl.propId..")",0)
+		self:addTextEntry(string.format("%s (%d)",P:getName(pl.propId),pl.propId),0)
 		if pl.min==pl.max then
-			self:addTextEntry(
-				P:valueToMapping(pl.propId,pl.min)
-				.." ("..pl.min..")"
-			,1)
+			self:addTextEntry(string.format("%s (%d)",P:valueToMapping(pl.propId,pl.min),pl.min),1)
 		else
-			self:addTextEntry(
-				P:valueToMapping(pl.propId,pl.min).."-"..P:valueToMapping(pl.propId,pl.max)
-				.." ("..pl.min.."-"..pl.max..")"
-			,1)
+			self:addTextEntry(string.format("%s-%s (%d-%d)",P:valueToMapping(pl.propId,pl.min),P:valueToMapping(pl.propId,pl.max),pl.min,pl.max),1)
 		end
 		--[[self:addButtonEntry(
 			"WIP",
