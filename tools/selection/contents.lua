@@ -1,6 +1,49 @@
 local EP = require("libs.tyoeerUtils.entitypool")
 local E = require("levelhead.data.elements")
 
+--PropertyLists
+local PL = Class()
+do
+	function PL:initialize(propertyId)
+		self.pool = EP:new()
+		self.propId = propertyId
+		self.max = -math.huge
+		self.min = math.huge
+	end
+	
+	function PL:findBounds()
+		local max = -math.huge
+		local min = math.huge
+		for obj in self.pool:iterate() do
+			local val = obj:getPropertyRaw(self.propId)
+			if val < min then min = val end
+			if val > max then max = val end
+		end
+		self.max = max
+		self.min = min
+	end
+	
+	function PL:isEmpty()
+		return self.pool:getTop()==nil
+	end
+	
+	function PL:add(obj)
+		self.pool:add(obj)
+		local val = obj:getPropertyRaw(self.propId)
+		if val < self.min then self.min = val end
+		if val > self.max then self.max = val end
+	end
+	
+	function PL:remove(obj)
+		self.pool:remove(obj)
+		local val = obj:getPropertyRaw(self.propId)
+		if val == self.min or val == self.max then
+			self:findBounds()
+		end
+	end
+end
+
+
 local C = Class()
 
 function C:initialize()
@@ -13,6 +56,7 @@ function C:initialize()
 	self.nPathNodes = 0
 	
 	self.properties = {}
+	self.unknownProperties = EP:new()
 end
 
 local plurals = {
@@ -60,42 +104,40 @@ end
 
 function C:addObjectToPropertyList(obj,prop)
 	if not self.properties[prop] then
-		self.properties[prop] = EP:new()
+		self.properties[prop] = PL:new(prop)
 	end
 	self.properties[prop]:add(obj)
 end
 
 function C:addObjectWithProperties(obj)
-	local has = E:hasProperties(obj.id)
-	if has=="$UnknownProperties" then
-		for _,prop in pairs(obj.properties) do
+	if obj:hasProperties() then
+		for prop in obj:iterateProperties() do
 			self:addObjectToPropertyList(obj,prop)
 		end
-	elseif has then
-		for prop in E:iterateProperties(obj.id) do
-			self:addObjectToPropertyList(obj,tonumber(prop))
-		end
+	end
+	--keep track of the ones with missing data
+	if E:hasProperties(obj.id)=="$UnknownProperties" then
+		self.unknownProperties:add(obj)
 	end
 end
 
 function C:removeObjectFromPropertyList(obj,prop)
 	self.properties[prop]:remove(obj)
 	--check if the pool is empty
-	if self.properties[prop]:getTop()==nil then
+	if self.properties[prop]:isEmpty() then
 		self.properties[prop] = nil
 	end
 end
 
 function C:removeObjectWithProperties(obj)
-	local has = E:hasProperties(obj.id)
-	if has=="$UnknownProperties" then
-		for _,prop in pairs(obj.properties) do
+	if obj:hasProperties() then
+		for prop in obj:iterateProperties() do
 			self:removeObjectFromPropertyList(obj,prop)
 		end
-	elseif has then
-		for prop in E:iterateProperties(obj.id) do
-			self:removeObjectFromPropertyList(obj,tonumber(prop))
-		end
+	end
+	--keep track of the ones with missing data
+	if E:hasProperties(obj.id)=="$UnknownProperties" then
+		self.unknownProperties:remove(obj)
 	end
 end
 

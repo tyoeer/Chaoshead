@@ -35,10 +35,15 @@ return {
 				textEntryIndentSize = 15,
 				buttonPadding = 5,
 			},
-			object = {
+			selection = {
 				entryMargin = 6,
 				textEntryIndentSize = 15,
 				buttonPadding = 5,
+				property = {
+					entryMargin = 0,
+					textEntryIndentSize = 15,
+					buttonPadding = 5,
+				},
 			},
 			pathNode = {
 				entryMargin = 6,
