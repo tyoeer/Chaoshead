@@ -27,6 +27,10 @@ function S:getLayerEnabled(layer)
 	return self.layers[layer]
 end
 
+function S:has(x,y)
+	return self.mask[x][y]
+end
+
 --add & remove are quiet when the tile is already in/out the selection
 
 function S:add(x,y)

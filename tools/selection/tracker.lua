@@ -26,34 +26,38 @@ end
 
 
 function T:add(x,y)
-	self.mask:add(x,y)
-	if self:hasLayer("foreground") then
-		local obj = self.level.foreground[x][y]
-		if obj then self.contents:addForeground(obj) end
-	end
-	if self:hasLayer("background") then
-		local obj = self.level.background[x][y]
-		if obj then self.contents:addBackground(obj) end
-	end
-	if self:hasLayer("pathNodes") then
-		local obj = self.level.pathNodes[x][y]
-		if obj then self.contents:addPathNode(obj) end
+	if not self.mask:has(x,y) then
+		self.mask:add(x,y)
+		if self:hasLayer("foreground") then
+			local obj = self.level.foreground[x][y]
+			if obj then self.contents:addForeground(obj) end
+		end
+		if self:hasLayer("background") then
+			local obj = self.level.background[x][y]
+			if obj then self.contents:addBackground(obj) end
+		end
+		if self:hasLayer("pathNodes") then
+			local obj = self.level.pathNodes[x][y]
+			if obj then self.contents:addPathNode(obj) end
+		end
 	end
 end
 
 function T:remove(x,y)
-	self.mask:remove(x,y)
-	if self:hasLayer("foreground") then
-		local obj = self.level.foreground[x][y]
-		if obj then self.contents:removeForeground(obj) end
-	end
-	if self:hasLayer("background") then
-		local obj = self.level.background[x][y]
-		if obj then self.contents:removeBackground(obj) end
-	end
-	if self:hasLayer("pathNodes") then
-		local obj = self.level.pathNodes[x][y]
-		if obj then self.contents:removePathNode(obj) end
+	if self.mask:has(x,y) then
+		self.mask:remove(x,y)
+		if self:hasLayer("foreground") then
+			local obj = self.level.foreground[x][y]
+			if obj then self.contents:removeForeground(obj) end
+		end
+		if self:hasLayer("background") then
+			local obj = self.level.background[x][y]
+			if obj then self.contents:removeBackground(obj) end
+		end
+		if self:hasLayer("pathNodes") then
+			local obj = self.level.pathNodes[x][y]
+			if obj then self.contents:removePathNode(obj) end
+		end
 	end
 end
 
