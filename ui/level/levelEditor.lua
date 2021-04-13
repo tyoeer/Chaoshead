@@ -1,10 +1,8 @@
 local Padding = require("ui.structure.padding")
 local LevelDetails = require("ui.level.details.level")
 local OBJ = require("levelhead.level.object")
-local ObjectDetails = require("ui.level.details.object")
 local PN = require("levelhead.level.pathNode")
 local PATH = require("levelhead.level.path")
-local PathNodeDetails = require("ui.level.details.pathNode")
 local Selection = require("tools.selection.tracker")
 local SelectionDetails = require("ui.level.details.selection")
 
