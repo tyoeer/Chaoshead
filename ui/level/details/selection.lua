@@ -65,8 +65,14 @@ function UI:reload()
 		local u = c.unknownProperties
 		if u:getTop()~=nil then
 			local text = "The objects at the following positions are missing proper property data and had to use fallbacks:"
+			local max = settings.misc.selectionDetails.maxUnknownProperties
 			for obj in u:iterate() do
 				text = text..string.format(" (%d,%d)", obj.x, obj.y)
+				max = max - 1
+				if max<=0 then
+					text = text.." + more"
+					break
+				end
 			end
 			self:addTextEntry(text)
 		end
