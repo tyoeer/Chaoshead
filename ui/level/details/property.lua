@@ -23,15 +23,17 @@ function UI:reload()
 	if self.propertyList then
 		local pl = self.propertyList
 		self:addTextEntry(P:getName(pl.propId).." ("..pl.propId..")",0)
-		self:addTextEntry(P:valueToMapping(pl.propId,pl.min).." - "..P:valueToMapping(pl.propId,pl.max),1)
-		self:addTextEntry("("..pl.min.." - "..pl.max..")",1)
-		self:addButtonEntry(
+		self:addTextEntry(
+			P:valueToMapping(pl.propId,pl.min).."-"..P:valueToMapping(pl.propId,pl.max)
+			.." ("..pl.min.."-"..pl.max..")"
+		,1)
+		--[[self:addButtonEntry(
 			"WIP",
 			function()
 				--
 			end,
 			settings.dim.editor.details.selection.property.buttonPadding
-		)
+		)]]--
 	end
 end
 
