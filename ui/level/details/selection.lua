@@ -23,6 +23,7 @@ end
 function UI:reload()
 	self:resetList()
 	local s = self.selection
+	local c = s.contents
 	--counts + filters
 	do
 		self:addTextEntry("Tiles: "..s.mask.nTiles)
@@ -30,28 +31,33 @@ function UI:reload()
 			self.editor:deselect()
 		end)
 		if s:hasLayer("foreground") then
-			self:addTextEntry("Foreground objects: "..s.contents.nForeground)
-			self:addButtonEntry("Deselect foreground",function()
-				self.editor:removeSelectionLayer("foreground")
-			end)
+			self:addTextEntry("Foreground objects: "..c.nForeground)
+			if c.nForeground ~= 0 then
+				self:addButtonEntry("Deselect foreground layer",function()
+					self.editor:removeSelectionLayer("foreground")
+				end)
+			end
 		end
 		if s:hasLayer("background") then
-			self:addTextEntry("Background objects: "..s.contents.nBackground)
-			self:addButtonEntry("Deselect background",function()
-				self.editor:removeSelectionLayer("background")
-			end)
+			self:addTextEntry("Background objects: "..c.nBackground)
+			if c.nBackground ~= 0 then
+				self:addButtonEntry("Deselect background layer",function()
+					self.editor:removeSelectionLayer("background")
+				end)
+			end
 		end
 		if s:hasLayer("pathNodes") then
-			self:addTextEntry("Path nodes: "..s.contents.nPathNodes)
-			self:addButtonEntry("Deselect path nodes",function()
-				self.editor:removeSelectionLayer("pathNodes")
-			end)
+			self:addTextEntry("Path nodes: "..c.nPathNodes)
+			if c.nPathNodes ~= 0 then
+				self:addButtonEntry("Deselect path layer",function()
+					self.editor:removeSelectionLayer("pathNodes")
+				end)
+			end
 		end
 	end
 	self:addButtonEntry("Delete",function()
 		self.editor:deleteSelection()
 	end)
-	local c = s.contents
 	--add a divider
 	self:addTextEntry(" ",0)
 	--objects with unknown properties
