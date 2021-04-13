@@ -25,10 +25,12 @@ function P:initialize()
 			self.headers.id = v
 		elseif raw:match("^mappingtype") then
 			self.headers.mappingType = v
-		elseif raw:match("min") then
+		elseif raw:match("^min$") then
 			self.headers.min = v
-		elseif raw:match("max") then
+		elseif raw:match("^max$") then
 			self.headers.max = v
+		elseif raw:match("^default$") then
+			self.headers.default = v
 		else
 			for i=-1,SIMPLE_MAPPING_SIZE,1 do
 				if raw:match(string.depatternize("map"..tostring(i))) then
@@ -49,6 +51,10 @@ end
 
 function P:getMin(selector)
 	return self:getRow(selector)[self.headers.min] or "$UnknownMinimum"
+end
+
+function P:getDefault(selector)
+	return self:getRow(selector)[self.headers.default] or "$UnknownDefault"
 end
 
 function P:getMax(selector)
@@ -114,7 +120,7 @@ function P:valueToMapping(selector, value)
 	if mappingType=="None" then
 		return value
 	elseif mappingType=="Simple" then
-		return p[self.headers.map[value]]
+		return p[self.headers.map[value]] or "$UnknownMappedValue"
 	elseif mappingType=="Hybrid" then
 		if value > SIMPLE_MAPPING_SIZE then
 			return value
@@ -123,7 +129,7 @@ function P:valueToMapping(selector, value)
 		if m=="-" then
 			return value
 		else
-			return m
+			return m or "$UnknownMappedValue"
 		end
 	elseif mappingType=="List" then
 		return L:valueToMapping(p[self.headers.map[-1]], value)
@@ -131,7 +137,7 @@ function P:valueToMapping(selector, value)
 		return M:getName(value)
 	else
 		print("Illegal mapping type: "..selector.." :-: "..tostring(mappingType))
-		return "$UnknownMapping"
+		return "$UnknownMappingType"
 	end
 end
 

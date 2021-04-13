@@ -120,7 +120,7 @@ function OBJ:setPropertyRaw(id, value)
 end
 
 function OBJ:getPropertyRaw(id)
-	return self.properties[id]
+	return self.properties[id] or P:getDefault(id)
 end
 
 function OBJ:setProperty(id, value)
