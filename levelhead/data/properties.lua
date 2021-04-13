@@ -4,7 +4,7 @@ local L = require("levelhead.data.propertyLists")
 
 local P = Class(require("levelhead.data.base"))
 
-local SIMPLE_MAPPING_SIZE = 8
+local SIMPLE_MAPPING_SIZE = 6
 
 function P:initialize()
 	--parse data file

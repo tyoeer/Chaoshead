@@ -1,112 +1,112 @@
-Name	ID (decimal)	ID (hex)	Save Format (How it's saved, see the doc for more info)	Notes	Default	Min	Max	Mapping Type (Simple: use mapping on the right | Hybrid: use mappings on the right, - means use number | None: use numbers | Music: use the music data | List:[name]: Use the [name] list from the Property Lists sheet)	Map: -1 (When the Mapping Type is List, this is the list name. Otherwise see Map: 0 for details)	Map: 0 (Which int value maps to which displayed string. - means that that mappnig is just the number. ! means that that mapping is out of range. Blue background means that it's the default, but it hasn't been verified the default is that number/byte)	Map: 1	Map: 2	Map: 3	Map: 4	Map: 5	Map: 6	Map: 7	Map: 8	Elements using this property(this column is just to help understand the property better)	 
-Sending Channel	0	#00	B	Can't be set to none.	0	0	999	None											Pressure Switch, Flippy Longswitch, ...	
-Receiving Channel	1	#01	B	Can't be set to none.	0	0	999	None											Powered Gate	
-Start State	2	#02	A		0	0	1	Simple	!	Inactive	Active	!	!	!	!	!	!	!	Key Chest, Pressure Switch, ...	
-Rotation	3	#03	A		1	0	4	Simple	!	Right	Up	Left	Down	!	!	!	!	!	Prizeblock, Pressure Switch, ...	
-Direction	4	#04	B		90	-180	180	None											(Trig)blaster, Arrow Hologram	
-Invisible	5	#05	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Prizeblock, Jem, Clock Switch, ...	
-Jems Required	6	#06	B		0	0	1000	Hybrid	!	All	-	-	-	-	-	-	-	-	Jem Switch, Jem Gate	
-Enemies Required	7	#07	A		0	0	255	Hybrid	!	All	-	-	-	-	-	-	-	-	Battle Switch, Battle Gate	
-Locking	8	#08	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Eye Switch, Baddie Eyeswitch, Package Cam, Spike Trap	
-Batteries Required	9	#09	A		1	1	99	None											Charge Switch	
-On Seconds	10	#0A	C		1	0.25	10	None											Clock Switch	
-Off Seconds	11	#0B	C		1	0.25	10	None											Clock Switch	
-Seconds	12	#0C	C		5	0.25	60	None											Tempswitch	
-Behaviour	13	#0D	A		0	0	2	Simple	!	Reusable	Explode	Lock	!	!	!	!	!	!	Tempswitch, Waitswitch	
-Range	14	#0E	A		3	0	20	None											Eye Switch, Baddie Eyeswitch, Package Cam	
-Minimum Players	15	#0F	A		1	0	4	Hybrid	!	All	-	-	-	-	!	!	!	!	Eye Switch	
-Minimum Enemies	16	#10	A		1	1	20	None											Baddie Eyeswitch	
-Bombs Available	17	#11	A		0	0	99	Hybrid	!	Infinite	-	-	-	-	-	-	-	-	Bomb Beamer	
-Enemies Available	18	#12	A		3	1	99	None											Robo Factory	
-Enemy Type	19	#13	A		0	0	14	List	Enemies										Robo Factory	
-Cooldown	20	#14	A		1	1	20	None											Robo Factory	
-Direction	21	#15	D	0 has the graphics of left, but doesn't move things	1	-1	1	Simple	Left	0	Right	!	!	!	!	!	!	!	Toe Slider	
-Speed	22	#16	B		300	100	700	None											Toe Slider	
-Power	23	#17	B		2000	2000	3500	None											(Trig)blaster	
-Spin Speed	24	#18	B		0	-360	360	None											(Trig)blaster	
-Fire Delay	25	#19	C		0	0.5	2	None											Blaster	
-???	26	#20																		
-???	27	#21																		
-Rift ID	28	#1C	B		0	-1	999	Hybrid	None	-	-	-	-	-	-	-	-	-	Rift	
-Destination Rift ID	29	#1D	B	Defaults to 0 (it doesn't get saved if it's 0), while the editor default is 1	0	-1	999	Hybrid	None	-	-	-	-	-	-	-	-	-	Rift	
-Movement	30	#1E	A		0	0	3	Simple	!	Horizontal	Vertical	Circle	Stationary	!	!	!	!	!	Swoopadoop, Blobfush, Whizzblade, Fireball	
-Direction	31	#1F	A		3	0	3	Simple	!	Right	Up	Left	Down	!	!	!	!	!	Cromblers	
-Cooldown	32	#20	C		1	0.5	4	None											Cromblers	
-Time Offset	33	#21	C		0	0	4	None											(Look)cannon	
-???	34	#22																		
-Distance	35	#23	A		2	1	4	None											Swoopadoop, Blobfush, Whizzblade, Fireball	
-Speed	36	#24	A	Used for horizontal and vertical movement (types)	2	1	3	Simple	!	!	Slow	Medium	Fast	!	!	!	!	!	Swoopadoop, Blobfush, Whizzblade, Fireball	
-Active Speed	37	#25	B		200	-600	600	None											Path	
-Closed	38	#26	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Path	
-End Action	39	#27	D		-1	-1	2	Simple	Reverse	Stop	Restart	2	!	!	!	!	!	!	Path	
-Start Direction	40	#28	B		90	-180	180	None											Swoopadoop, Blobfush, Whizzblade, Burny Whirler, Spike Chainer, Fireball, Spinny Platform	
-Speed	41	#29	B	In case of fireball only used for circular movement (type)	90	-180	180	None											Burny Whirler, Spike Chainer, Fireball	
-Length	42	#2A	A		4	1	5	None											Burny Whirler, Spike Chainer	
-Gap	43	#2B	A		1	1	2	Simple	!	!	No	Yes	!	!	!	!	!	!	Burny Whirler	
-Spike Size 	44	#2C	A		1	1	3	Simple	!	!	Regular	Medium	Venti	!	!	!	!	!	Spike Chainer	
-Chains	45	#2D	A		1	1	4	None											Burny Whirler, Spike Chainer, Spinny Platform	
-Powerup	46	#2E	A		0	0	5	Simple	!	None	Tiptow	Waylay	Zipper	Ripcord	Rebound	!	!	!	GR-18	
-Color	47	#2F	A		2	0	3	Simple	!	Blue	Gold	Fuchsia	Green	!	!	!	!	!	Hardlight, Rift, Key Chests, ...	
-Projectile	48	#30	A		0	0	4	Simple	!	Steel	Fire	Rubber	Rocket	Guided Missile	!	!	!	!	(Look)cannon	
-Receiving Channel	49	#31	B	Can be set to none.	-1	-1	999	Hybrid	None	-	-	-	-	-	-	-	-	-	Prizeblock, Hardlight, ...	
-???	50	#32																		
-Bass Pitch	51	#33	A	Also gets saved for the "melody" instrument. Called "Pitch" in-game.	7	0	23	List	Bass Pitch										Boombox	
-???	52	#34																		
-???	53	#35																		
-Instrument	54	#36	A		0	0	2	Simple	!	Bass	Melody	Percussion	!	!	!	!	!	!	Boombox	
-Melody Pitch	55	#37	A	Also gets saved for the "bass" instrument. Called "Pitch" in-game.	7	0	28	List	Melody Pitch										Boombox	
-Platform Size	56	#38	A		1	0	1	Simple	!	Short	Long	!	!	!	!	!	!	!	Spinny Platform	
-Length	57	#39	A		3	1	4	None											Spinny Platform	
-Speed	58	#3A	B	Used for circular movement (type)	60	-90	90	None											Swoopadoop, Blobfush, Whizzblade, Spinny Platform	
-Icon	59	#3B	A		0	0	49	List	Sign Icons										Sign	
-Switch Requirements	60	#3C	A		2	0	5	Simple	!	One Active	Any Active	All Active	One Inactive	Any Inactive	All Inactive	!	!	!	Prizeblock, Hardlight, ...	
-Visuals	61	#3D	A		2	0	16	List	Path Visuals										Path	
-???	62	#3E																		
-Song	63	#3F	A		9	0	37	Music											Jukebox	
-Sharp	64	#40	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Boombox	
-Delay Seconds	65	#41	C		3	0.25	600	None											Waitswitch	
-???	66	#42																		
-???	67	#43																		
-Volume	68	#44	A		100	0	100	None											Boombox	
-Zoom Level	69	#45	A		100	80	140	None											ZOOM-R	
-Gate Style	70	#46	A		0	0	2	Simple	!	Purge Powerups	Purge Items	Purge All	!	!	!	!	!	!	Purge Gate	
-Inactive Speed	71	#47	B		0	-600	600	None											Path	
-Rotation Style	72	#48	A		0	0	1	Simple	!	Spin	Swing	!	!	!	!	!	!	!	(Trig)blaster, Burny Whirler, Spike Chainer	
-Swing Degrees	73	#49	B		90	0	90	None											(Trig)blaster, Burny Whirler, Spike Chainer	
-Swing Speed	74	#4A	A		-100	50	100	None											Burny Whirler, Spike Chainer	
-Swing Time Offset	75	#4B	C		0	0	30	None											(Trig)blaster, Burny Whirler, Spike Chainer	
-Muted	76	#4C	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Pressure Switch, Clock Switch, ...	
-Style	77	#4D	A		0	0	1	Simple	!	Normal	Enraged	!	!	!	!	!	!	!	Cromblers	
-Camera Lock Style	78	#4E	A		0	0	2	Simple	!	Normal	Vertical	Horizontal	!	!	!	!	!	!	Camera Anchor	
-Swing Speed	79	#4F	B		100	-200	200	None											(Trig)blaster	
-Range Right	80	#50	A		3	0	20	None											Eye Switch, Baddie Eyeswitch, Package Cam	
-Range Up	81	#51	A		3	0	20	None											Eye Switch, Baddie Eyeswitch, Package Cam	
-Range Left	82	#52	A		3	0	20	None											Eye Switch, Baddie Eyeswitch, Package Cam	
-Range Down	83	#53	A		3	0	20	None											Eye Switch, Baddie Eyeswitch, Package Cam	
-Detection Shape	84	#54	A		0	0	1	Simple	!	Square	Rectangle	!	!	!	!	!	!	!	Eye Switch, Baddie Eyeswitch, Package Cam	
-Behaviour	85	#55	A		0	0	3	Simple	!	Hold	Lock	Toggle	Explode	!	!	!	!	!	Pressure Switch	
-Horizontal Flip	86	#56	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Key Chest, Sign	
-Fire Style	87	#57	A		0	0	1	Simple	!	Hot Fire	Wildfire	!	!	!	!	!	!	!	Burny Whirler, Fireball	
-Jingle	88	#58	A		0	0	15	List	Jingle										Jinglebox	
-Positional	89	#59	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Jinglebox	
-Sending Channel	90	#5A	B	Can be set to none	-1	-1	999	Hybrid	None	-	-	-	-	-	-	-	-	-	Key Chest, Key Gate	
-Repeatable	91	#5B	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	Jinglebox	
-Reusable	92	#5C	A		1	0	1	Simple	!	No	Yes	!	!	!	!	!	!	!	BUDD-E	
-Note Beats	93	#5D	C	The duration of the note/sound	0.25	0.25	16	None											Boombox	
-Repeat Beats	94	#5E	C		0	0	1000	Hybrid	!	No Repeat	-	-	-	-	-	-	-	-	Boombox	
-Beats Per Minute	95	#5F	A		120	60	240	None											Boombox	
-Percussion Note	96	#60	A		0	0	14	List	Percussion										Boombox	
-Start Delay Beats	97	#61	C		0	0	1000	Hybrid	!	No Delay	-	-	-	-	-	-	-	-	Boombox	
-Repeat Count	98	#62	B	Always saved for some reason.	1	1	1000	Hybrid	!	!	Infinite	-	-	-	-	-	-	-	Boombox	
-???	99	#63																		
-???	100	#64																		
-???	101	#65																		
-Input	102	#66	A		0	0	6	Simple	!	Run Right	Run Left	Up	Down	Jump	Grab / Kick	Use Powerup	!	!	Input Switch	
-Players Required	103	#67	A		0	0	5	Simple	!	Any Players	All Players	Player 1	Player 2	Player 3	Player 4	!	!	!	Input Switch	
-Target Type	104	#68	A		0	0	2	Simple	!	GR-18	Package	Enemies	!	!	!	!	!	!	Lookannon	
-Walk Direction	105	#69	A		0	0	1	Simple	!	Left	Right	!	!	!	!	!	!	!	Canoodle, Scrubb, Ocula	
-Start Direction	106	#6A	A		0	0	3	Simple	!	Right	Up	Left	Down	!	!	!	!	!	Peanut	
-Item	107	#6B	A		11	0	24	List	Items	-	-	-	-	-	-	-	-	-	Beamer	
-???	108	#6C																		
-Color	109	#6D	A		0	0	6	Simple	!	Red	Yellow	Teal	Green	Purple	Blue	White	!	!	Spiketron, etc.	
-Projectile	110	#6E	A		0	0	1	Simple	!	Normal	Fire	!	!	!	!	!	!	!	Canoodle	
+Name	ID (decimal)	ID (hex)	Save Format (How it's saved, see the doc for more info)	Notes	Default	Min	Max	Mapping Type (Simple: use mapping on the right | Hybrid: use mappings on the right, - means use number | None: use numbers | Music: use the music data | List:[name]: Use the [name] list from the Property Lists sheet)	Map: -1 (When the Mapping Type is List, this is the list name. Otherwise see Map: 0 for details)	Map: 0 (Which int value maps to which displayed string. - means that that mappnig is just the number. ! means that that mapping is out of range. Blue background means that it's the default, but it hasn't been verified the default is that number/byte)	Map: 1	Map: 2	Map: 3	Map: 4	Map: 5	Map: 6	Elements using this property(this column is just to help understand the property better)	 
+Sending Channel	0	#00	B	Can't be set to none.	0	0	999	None									Pressure Switch, Flippy Longswitch, ...	
+Receiving Channel	1	#01	B	Can't be set to none.	0	0	999	None									Powered Gate	
+Start State	2	#02	A		0	0	1	Simple	!	Inactive	Active	!	!	!	!	!	Key Chest, Pressure Switch, ...	
+Rotation	3	#03	A		1	0	4	Simple	!	Right	Up	Left	Down	!	!	!	Prizeblock, Pressure Switch, ...	
+Direction	4	#04	B		90	-180	180	None									(Trig)blaster, Arrow Hologram	
+Invisible	5	#05	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	Prizeblock, Jem, Clock Switch, ...	
+Jems Required	6	#06	B		0	0	1000	Hybrid	!	All	-	-	-	-	-	-	Jem Switch, Jem Gate	
+Enemies Required	7	#07	A		0	0	255	Hybrid	!	All	-	-	-	-	-	-	Battle Switch, Battle Gate	
+Locking	8	#08	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	Eye Switch, Baddie Eyeswitch, Package Cam, Spike Trap	
+Batteries Required	9	#09	A		1	1	99	None									Charge Switch	
+On Seconds	10	#0A	C		1	0.25	10	None									Clock Switch	
+Off Seconds	11	#0B	C		1	0.25	10	None									Clock Switch	
+Seconds	12	#0C	C		5	0.25	60	None									Tempswitch	
+Behaviour	13	#0D	A		0	0	2	Simple	!	Reusable	Explode	Lock	!	!	!	!	Tempswitch, Waitswitch	
+Range	14	#0E	A		3	0	20	None									Eye Switch, Baddie Eyeswitch, Package Cam	
+Minimum Players	15	#0F	A		1	0	4	Hybrid	!	All	-	-	-	-	!	!	Eye Switch	
+Minimum Enemies	16	#10	A		1	1	20	None									Baddie Eyeswitch	
+Bombs Available	17	#11	A		0	0	99	Hybrid	!	Infinite	-	-	-	-	-	-	Bomb Beamer	
+Enemies Available	18	#12	A		3	1	99	None									Robo Factory	
+Enemy Type	19	#13	A		0	0	14	List	Enemies								Robo Factory	
+Cooldown	20	#14	A		1	1	20	None									Robo Factory	
+Direction	21	#15	D	0 has the graphics of left, but doesn't move things	1	-1	1	Simple	Left	0	Right	!	!	!	!	!	Toe Slider	
+Speed	22	#16	B		300	100	700	None									Toe Slider	
+Power	23	#17	B		2000	2000	3500	None									(Trig)blaster	
+Spin Speed	24	#18	B		0	-360	360	None									(Trig)blaster	
+Fire Delay	25	#19	C		0	0.5	2	None									Blaster	
+???	26	#20																
+???	27	#21																
+Rift ID	28	#1C	B		0	-1	999	Hybrid	None	-	-	-	-	-	-	-	Rift	
+Destination Rift ID	29	#1D	B	Defaults to 0 (it doesn't get saved if it's 0), while the editor default is 1	0	-1	999	Hybrid	None	-	-	-	-	-	-	-	Rift	
+Movement	30	#1E	A		0	0	3	Simple	!	Horizontal	Vertical	Circle	Stationary	!	!	!	Swoopadoop, Blobfush, Whizzblade, Fireball	
+Direction	31	#1F	A		3	0	3	Simple	!	Right	Up	Left	Down	!	!	!	Cromblers	
+Cooldown	32	#20	C		1	0.5	4	None									Cromblers	
+Time Offset	33	#21	C		0	0	4	None									(Look)cannon	
+???	34	#22																
+Distance	35	#23	A		2	1	4	None									Swoopadoop, Blobfush, Whizzblade, Fireball	
+Speed	36	#24	A	Used for horizontal and vertical movement (types)	2	1	3	Simple	!	!	Slow	Medium	Fast	!	!	!	Swoopadoop, Blobfush, Whizzblade, Fireball	
+Active Speed	37	#25	B		200	-600	600	None									Path	
+Closed	38	#26	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	Path	
+End Action	39	#27	D		-1	-1	2	Simple	Reverse	Stop	Restart	2	!	!	!	!	Path	
+Start Direction	40	#28	B		90	-180	180	None									Swoopadoop, Blobfush, Whizzblade, Burny Whirler, Spike Chainer, Fireball, Spinny Platform	
+Speed	41	#29	B	In case of fireball only used for circular movement (type)	90	-180	180	None									Burny Whirler, Spike Chainer, Fireball	
+Length	42	#2A	A		4	1	5	None									Burny Whirler, Spike Chainer	
+Gap	43	#2B	A		1	1	2	Simple	!	!	No	Yes	!	!	!	!	Burny Whirler	
+Spike Size 	44	#2C	A		1	1	3	Simple	!	!	Regular	Medium	Venti	!	!	!	Spike Chainer	
+Chains	45	#2D	A		1	1	4	None									Burny Whirler, Spike Chainer, Spinny Platform	
+Powerup	46	#2E	A		0	0	66	Simple	!	None	Tiptow	Waylay	Zipper	Ripcord	Rebound	Shade	GR-18	
+Color	47	#2F	A		2	0	3	Simple	!	Blue	Gold	Fuchsia	Green	!	!	!	Hardlight, Rift, Key Chests, ...	
+Projectile	48	#30	A		0	0	4	Simple	!	Steel	Fire	Rubber	Rocket	Guided Missile	!	!	(Look)cannon	
+Receiving Channel	49	#31	B	Can be set to none.	-1	-1	999	Hybrid	None	-	-	-	-	-	-	-	Prizeblock, Hardlight, ...	
+???	50	#32																
+Bass Pitch	51	#33	A	Also gets saved for the "melody" instrument. Called "Pitch" in-game.	7	0	23	List	Bass Pitch								Boombox	
+???	52	#34																
+???	53	#35																
+Instrument	54	#36	A		0	0	2	Simple	!	Bass	Melody	Percussion	!	!	!	!	Boombox	
+Melody Pitch	55	#37	A	Also gets saved for the "bass" instrument. Called "Pitch" in-game.	7	0	28	List	Melody Pitch								Boombox	
+Platform Size	56	#38	A		1	0	1	Simple	!	Short	Long	!	!	!	!	!	Spinny Platform	
+Length	57	#39	A		3	1	4	None									Spinny Platform	
+Speed	58	#3A	B	Used for circular movement (type)	60	-90	90	None									Swoopadoop, Blobfush, Whizzblade, Spinny Platform	
+Icon	59	#3B	A		0	0	49	List	Sign Icons								Sign	
+Switch Requirements	60	#3C	A		2	0	5	Simple	!	One Active	Any Active	All Active	One Inactive	Any Inactive	All Inactive	!	Prizeblock, Hardlight, ...	
+Visuals	61	#3D	A		2	0	16	List	Path Visuals								Path	
+???	62	#3E																
+Song	63	#3F	A		9	0	37	Music									Jukebox	
+Sharp	64	#40	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	Boombox	
+Delay Seconds	65	#41	C		3	0.25	600	None									Waitswitch	
+???	66	#42																
+???	67	#43																
+Volume	68	#44	A		100	0	100	None									Boombox	
+Zoom Level	69	#45	A		100	80	140	None									ZOOM-R	
+Gate Style	70	#46	A		0	0	2	Simple	!	Purge Powerups	Purge Items	Purge All	!	!	!	!	Purge Gate	
+Inactive Speed	71	#47	B		0	-600	600	None									Path	
+Rotation Style	72	#48	A		0	0	1	Simple	!	Spin	Swing	!	!	!	!	!	(Trig)blaster, Burny Whirler, Spike Chainer	
+Swing Degrees	73	#49	B		90	0	90	None									(Trig)blaster, Burny Whirler, Spike Chainer	
+Swing Speed	74	#4A	A		-100	50	100	None									Burny Whirler, Spike Chainer	
+Swing Time Offset	75	#4B	C		0	0	30	None									(Trig)blaster, Burny Whirler, Spike Chainer	
+Muted	76	#4C	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	Pressure Switch, Clock Switch, ...	
+Style	77	#4D	A		0	0	1	Simple	!	Normal	Enraged	!	!	!	!	!	Cromblers	
+Camera Lock Style	78	#4E	A		0	0	2	Simple	!	Normal	Vertical	Horizontal	!	!	!	!	Camera Anchor	
+Swing Speed	79	#4F	B		100	-200	200	None									(Trig)blaster	
+Range Right	80	#50	A		3	0	20	None									Eye Switch, Baddie Eyeswitch, Package Cam	
+Range Up	81	#51	A		3	0	20	None									Eye Switch, Baddie Eyeswitch, Package Cam	
+Range Left	82	#52	A		3	0	20	None									Eye Switch, Baddie Eyeswitch, Package Cam	
+Range Down	83	#53	A		3	0	20	None									Eye Switch, Baddie Eyeswitch, Package Cam	
+Detection Shape	84	#54	A		0	0	1	Simple	!	Square	Rectangle	!	!	!	!	!	Eye Switch, Baddie Eyeswitch, Package Cam	
+Behaviour	85	#55	A		0	0	3	Simple	!	Hold	Lock	Toggle	Explode	!	!	!	Pressure Switch	
+Horizontal Flip	86	#56	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	Key Chest, Sign	
+Fire Style	87	#57	A		0	0	1	Simple	!	Hot Fire	Wildfire	!	!	!	!	!	Burny Whirler, Fireball	
+Jingle	88	#58	A		0	0	15	List	Jingle								Jinglebox	
+Positional	89	#59	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	Jinglebox	
+Sending Channel	90	#5A	B	Can be set to none	-1	-1	999	Hybrid	None	-	-	-	-	-	-	-	Key Chest, Key Gate	
+Repeatable	91	#5B	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	Jinglebox	
+Reusable	92	#5C	A		1	0	1	Simple	!	No	Yes	!	!	!	!	!	BUDD-E	
+Note Beats	93	#5D	C	The duration of the note/sound	0.25	0.25	16	None									Boombox	
+Repeat Beats	94	#5E	C		0	0	1000	Hybrid	!	No Repeat	-	-	-	-	-	-	Boombox	
+Beats Per Minute	95	#5F	A		120	60	240	None									Boombox	
+Percussion Note	96	#60	A		0	0	14	List	Percussion								Boombox	
+Start Delay Beats	97	#61	C		0	0	1000	Hybrid	!	No Delay	-	-	-	-	-	-	Boombox	
+Repeat Count	98	#62	B	Always saved for some reason.	1	1	1000	Hybrid	!	!	Infinite	-	-	-	-	-	Boombox	
+???	99	#63																
+???	100	#64																
+???	101	#65																
+Input	102	#66	A		0	0	6	Simple	!	Run Right	Run Left	Up	Down	Jump	Grab / Kick	Use Powerup	Input Switch	
+Players Required	103	#67	A		0	0	5	Simple	!	Any Players	All Players	Player 1	Player 2	Player 3	Player 4	!	Input Switch	
+Target Type	104	#68	A		0	0	2	Simple	!	GR-18	Package	Enemies	!	!	!	!	Lookannon	
+Walk Direction	105	#69	A		0	0	1	Simple	!	Left	Right	!	!	!	!	!	Canoodle, Scrubb, Ocula	
+Start Direction	106	#6A	A		0	0	3	Simple	!	Right	Up	Left	Down	!	!	!	Peanut	
+Item	107	#6B	A		11	0	24	List	Items	-	-	-	-	-	-	-	Beamer	
+???	108	#6C																
+Color	109	#6D	A		0	0	6	Simple	!	Red	Yellow	Teal	Green	Purple	Blue	White	Spiketron, etc.	
+Projectile	110	#6E	A		0	0	1	Simple	!	Normal	Fire	!	!	!	!	!	Canoodle	
