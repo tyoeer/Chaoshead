@@ -35,7 +35,7 @@ function UI:draw()
 	end
 end
 
-function UI:inputActivated(name,group,isCursorBound)
+function UI:inputDeactivated(name,group,isCursorBound)
 	if name=="click" and group=="main" then
 		self.onClick()
 	end
