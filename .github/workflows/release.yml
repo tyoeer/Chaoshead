@@ -51,26 +51,22 @@ jobs:
         with:
           name: win32-build
           path: release
-      - name: Create release
-        id: create-release
-        uses: actions/create-release@v1.1.4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: "v${{ github.event.inputs.version-number }}"
-          release_name: "Chaoshead v${{ github.event.inputs.version-number }}"
-          draft: true
       - name: Package binaries for Github release
         uses: vimtor/action-zip@v1
         with:
           files: release/
-          dest: release.zip
-      - name: Upload binaries to release
-        uses: actions/upload-release-asset@v1.0.2
+          dest: build-win32.zip
+      # Collect commits since last release to make making the changelog easier
+      - run: git log $(git describe --tags --abbrev=0)..HEAD --format=format:"> %s%+b" >changelog.txt
+      - name: Create release
+        id: create-release
+        uses: softprops/action-gh-release@v0.1.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create-release.outputs.upload_url }}
-          asset_path: release.zip
-          asset_name: build-win32.zip
-          asset_content_type: application/zip
+          body-path: changelog.txt
+          files: build-win32.zip
+          tag_name: "v${{ github.event.inputs.version-number }}"
+          release_name: "Chaoshead v${{ github.event.inputs.version-number }}"
+          draft: true
+
