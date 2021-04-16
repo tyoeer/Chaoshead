@@ -21,7 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.2
-      - uses: textbook/git-checkout-submodule-action@2.1.1
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 0
       - name: "Build binaries"
         id: "love-build"
         uses: nhartland/love-build@v1-beta2
@@ -58,8 +62,6 @@ jobs:
           dest: build-win32.zip
       # Collect commits since last release to make making the changelog easier
       - run: git log $(git describe --tags --abbrev=0)..HEAD --format=format:"> %s%+b" > commits.txt
-      - name: Show commits for debug purposes
-        run: cat commits.txt
       - name: Create release
         id: create-release
         uses: softprops/action-gh-release@v1
