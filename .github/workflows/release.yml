@@ -60,13 +60,13 @@ jobs:
       - run: git log $(git describe --tags --abbrev=0)..HEAD --format=format:"> %s%+b" >changelog.txt
       - name: Create release
         id: create-release
-        uses: softprops/action-gh-release@v0.1.5
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          body-path: changelog.txt
+          body_path: changelog.txt
           files: build-win32.zip
           tag_name: "v${{ github.event.inputs.version-number }}"
-          release_name: "Chaoshead v${{ github.event.inputs.version-number }}"
+          name: "Chaoshead v${{ github.event.inputs.version-number }}"
           draft: true
 
