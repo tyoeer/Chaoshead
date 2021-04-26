@@ -1,4 +1,5 @@
 local Padding = require("ui.structure.padding")
+local Scrollbar = require("ui.structure.scrollbar")
 local LevelDetails = require("ui.level.details.level")
 local OBJ = require("levelhead.level.object")
 local PN = require("levelhead.level.pathNode")
@@ -28,16 +29,18 @@ end
 function UI:addTab(tab)
 	tab.editor = self
 	tab = Padding:new(tab, settings.dim.editor.details.inset)
+	tab = Scrollbar:new(tab)
 	self.detailsUI:addChild(tab)
 	self.detailsUI:setActive(tab)
 end
 
 function UI:removeTab(tab)
-	for child in self.detailsUI.children:iterate() do
-		if child.child==tab then
-			self.detailsUI:removeChild(child)
+	while tab.parent do
+		if tab.parent==self.detailsUI then
+			self.detailsUI:removeChild(tab)
 			break
 		end
+		tab = tab.parent
 	end
 end
 
