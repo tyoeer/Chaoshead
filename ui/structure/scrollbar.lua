@@ -108,7 +108,8 @@ end
 function UI:resize(w,h)
 	self.width = w
 	self.height = h
-	self.child:resize(w-self.scrollbarWidth, h)
+	local ch = self.child:getMinimumHeight(w-self.scrollbarWidth)
+	self.child:resize(w-self.scrollbarWidth, math.max(ch,h))
 	self.downButtonY = self.height - self.buttonHeight
 	self.scrollAreaHeight = self.height - 2*self.buttonHeight
 	self:updateScroll()
