@@ -25,7 +25,7 @@ function UI:initialize(child)
 	
 	self.scrollButton = B:new("", function()
 		self.dragging = true
-	end, 5,true)
+	end, 5,true, true)
 	self.scrollButton.parent = self
 	self.scrollButton:resize(self.scrollbarWidth, self.scrollButtonHeight)
 	

@@ -1,11 +1,12 @@
 local UI = Class(require("ui.structure.base"))
 
-function UI:initialize(text,onClick,padding,drawBorder)
+function UI:initialize(text,onClick,padding,drawBorder,triggerOnActivate)
 	self.text = text
 	self.onClick = onClick
 	self.padding = padding or 5
 	-- ==false because it should be true if it's nil, not when it's false
 	self.drawBorder = (drawBorder==nil) and true or drawBorder
+	self.triggerOnActivate = (triggerOnActivate==nil) and false or triggerOnActivate
 	self.font = love.graphics.getFont()
 	UI.super.initialize(self)
 end
@@ -35,8 +36,14 @@ function UI:draw()
 	end
 end
 
+function UI:inputActivated(name,group,isCursorBound)
+	if self.triggerOnActivate and name=="click" and group=="main" then
+		self.onClick()
+	end
+end
+
 function UI:inputDeactivated(name,group,isCursorBound)
-	if name=="click" and group=="main" then
+	if not self.triggerOnActivate and name=="click" and group=="main" then
 		self.onClick()
 	end
 end
