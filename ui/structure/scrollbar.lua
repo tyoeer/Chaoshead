@@ -32,17 +32,17 @@ function UI:initialize(child)
 	UI.super.initialize(self,child)
 end
 
-function UI:updateScroll()
+function UI:updateScrollButton()
 	self.scrollButtonHeight = math.min(1, self.height / self.child:getMinimumHeight() ) * self.scrollAreaHeight
 	self.scrollButton:resize(self.scrollbarWidth, self.scrollButtonHeight)
 	self:scrollToOffset(math.min(self.childOffset,self.child:getMinimumHeight()))
 end
-function UI:scroll(scrollY)
+function UI:scroll(scrollButtonY)
 	if self.scrollButtonHeight == self.scrollAreaHeight then
 		self.childOffset = 0
 		self.scrollButtonY = 0
 	else
-		self.scrollButtonY = scrollY
+		self.scrollButtonY = scrollButtonY
 		if self.scrollButtonY < 0 then
 			self.scrollButtonY = 0
 		elseif self.scrollButtonY > self.scrollAreaHeight-self.scrollButtonHeight then
@@ -112,7 +112,7 @@ function UI:resize(w,h)
 	self.child:resize(w-self.scrollbarWidth, math.max(ch,h))
 	self.downButtonY = self.height - self.buttonHeight
 	self.scrollAreaHeight = self.height - 2*self.buttonHeight
-	self:updateScroll()
+	self:updateScrollButton()
 end
 
 function UI:inputActivated(name, group, isCursorBound)
@@ -120,7 +120,7 @@ function UI:inputActivated(name, group, isCursorBound)
 		local x = self:getMouseX()
 		if x < self.width-self.scrollbarWidth then
 			self.child:inputActivated(name,group,isCursorBound)
-			self:updateScroll()
+			self:updateScrollButton()
 		else
 			local y = self:getMouseY()
 			if y < self.buttonHeight then
@@ -133,7 +133,7 @@ function UI:inputActivated(name, group, isCursorBound)
 		end
 	else
 		self.child:inputActivated(name,group,isCursorBound)
-		self:updateScroll()
+		self:updateScrollButton()
 	end
 end
 function UI:inputDeactivated(name, group, isCursorBound)
@@ -144,7 +144,7 @@ function UI:inputDeactivated(name, group, isCursorBound)
 		local x = self:getMouseX()
 		if x < self.width-self.scrollbarWidth then
 			self.child:inputDeactivated(name,group,isCursorBound)
-			self:updateScroll()
+			self:updateScrollButton()
 		else
 			local y = self:getMouseY()
 			if y < self.buttonHeight then
@@ -157,7 +157,7 @@ function UI:inputDeactivated(name, group, isCursorBound)
 		end
 	else
 		self.child:inputDeactivated(name,group,isCursorBound)
-		self:updateScroll()
+		self:updateScrollButton()
 	end
 end
 
