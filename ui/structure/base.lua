@@ -2,7 +2,8 @@ local BaseUI = Class("BaseUI")
 
 function BaseUI:initialize()
 	self.title = "Unnamed"
-	self:resize(-1,-1)
+	--using (-1,-1) leads to bugs (scrollbar defaulted to the bottom because the negative value got it to think it had scrolled to far)
+	self:resize(math.huge,math.huge)
 end
 
 
