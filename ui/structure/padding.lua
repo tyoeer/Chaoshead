@@ -26,7 +26,7 @@ end
 
 function UI:getMinimumHeight(width)
 	width = width or self.width
-	return self.child:getMinimumHeight(width) + self.paddingUp + self.paddingDown
+	return self.child:getMinimumHeight(width - self.paddingLeft - self.paddingRight) + self.paddingUp + self.paddingDown
 end
 
 -- events
