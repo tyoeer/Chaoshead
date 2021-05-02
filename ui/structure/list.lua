@@ -36,6 +36,7 @@ end
 function UI:resetList()
 	--the garbage collector should take care of the old pool
 	self.children = Pool:new()
+	self.nChildren = 0
 end
 
 function UI:getPropagatedMouseY(target)
