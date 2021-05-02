@@ -34,6 +34,24 @@ function BaseUI:getMousePos()
 end
 
 
+--used for items in lists:
+--function BaseUI:getMinimumHeight(width) end
+
+--trigger the event after this one
+function BaseUI:minimumHeightChanged()
+	--do we actually have a parent to send this event to
+	if self.parent then
+		self.parent:childMinimumHeightChanged(self)
+	end
+end
+--this event propagates upwards instead of downwards
+function BaseUI:childMinimumHeightChanged(child)
+	--does this UI have a minimum height that can be affected?
+	if self.getMinimumHeight then
+		self:minimumHeightChanged()
+	end
+end
+
 function BaseUI:update(dt) end
 
 function BaseUI:draw() end

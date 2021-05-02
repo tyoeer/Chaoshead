@@ -88,6 +88,7 @@ end
 function UI:reload()
 	self:resetList()
 	self:buildList(self.dataCache,0)
+	self:minimumHeightChanged()
 end
 
 return UI

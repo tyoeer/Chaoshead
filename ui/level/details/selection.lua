@@ -106,6 +106,8 @@ function UI:reload()
 	for _,pl in pairs(c.properties) do
 		self:addUIEntry(PUI:new(pl))
 	end
+	
+	self:minimumHeightChanged()
 end
 
 return UI

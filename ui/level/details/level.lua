@@ -76,6 +76,8 @@ function UI:reload(level)
 			self:addTextEntry(v[2]..": "..(data and "Yes" or "No"),1)
 		end
 	end
+	
+	self:minimumHeightChanged()
 end
 
 return UI

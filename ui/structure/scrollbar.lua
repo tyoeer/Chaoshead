@@ -79,6 +79,13 @@ end
 
 -- events
 
+function UI:childMinimumHeightChanged(child)
+	local cw = self.width-self.scrollbarWidth
+	local ch = child:getMinimumHeight(cw)
+	child:resize(cw, math.max(ch,self.height))
+	self:updateScrollButton()
+end
+
 -- UI:update
 
 function UI:draw()
@@ -108,11 +115,9 @@ end
 function UI:resize(w,h)
 	self.width = w
 	self.height = h
-	local ch = self.child:getMinimumHeight(w-self.scrollbarWidth)
-	self.child:resize(w-self.scrollbarWidth, math.max(ch,h))
 	self.downButtonY = self.height - self.buttonHeight
 	self.scrollAreaHeight = self.height - 2*self.buttonHeight
-	self:updateScrollButton()
+	self:childMinimumHeightChanged(self.child)
 end
 
 function UI:inputActivated(name, group, isCursorBound)
@@ -120,7 +125,6 @@ function UI:inputActivated(name, group, isCursorBound)
 		local x = self:getMouseX()
 		if x < self.width-self.scrollbarWidth then
 			self.child:inputActivated(name,group,isCursorBound)
-			self:updateScrollButton()
 		else
 			local y = self:getMouseY()
 			if y < self.buttonHeight then
@@ -133,7 +137,6 @@ function UI:inputActivated(name, group, isCursorBound)
 		end
 	else
 		self.child:inputActivated(name,group,isCursorBound)
-		self:updateScrollButton()
 	end
 end
 function UI:inputDeactivated(name, group, isCursorBound)
@@ -144,7 +147,6 @@ function UI:inputDeactivated(name, group, isCursorBound)
 		local x = self:getMouseX()
 		if x < self.width-self.scrollbarWidth then
 			self.child:inputDeactivated(name,group,isCursorBound)
-			self:updateScrollButton()
 		else
 			local y = self:getMouseY()
 			if y < self.buttonHeight then
@@ -157,7 +159,6 @@ function UI:inputDeactivated(name, group, isCursorBound)
 		end
 	else
 		self.child:inputDeactivated(name,group,isCursorBound)
-		self:updateScrollButton()
 	end
 end
 
