@@ -16,6 +16,7 @@ function P:initialize()
 		map = {}
 	}
 	for i,v in ipairs(rawHeaders) do
+		--keep the '-', to differentiate map:1 and map:-1
 		local raw = v:lower():gsub("[^a-z0-9%-]","")
 		if raw:match("saveformat") then
 			self.headers.saveFormat = v

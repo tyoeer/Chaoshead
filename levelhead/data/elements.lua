@@ -1,4 +1,5 @@
 local csv = require("utils.csv")
+local P = require("levelhead.data.properties")
 local E = Class(require("levelhead.data.base"))
 
 function E:initialize()
@@ -9,7 +10,7 @@ function E:initialize()
 	--parse headers
 	self.headers = {}
 	for i,v in ipairs(rawHeaders) do
-		local raw = v:gsub("%W",""):lower()
+		local raw = self:reduceSelector(v)
 		if raw:match("^name$") then
 			self.headers.name = v
 		elseif raw:match("^iddecimal$") then
@@ -45,6 +46,27 @@ function E:getParent(selector)
 	return self:getRow(selector)[self.headers.parent] or "$UnknownParent"
 end
 
+--uses reduced selectors
+function E:buildPropertyIDMap(element)
+	local out = {}
+	for propId in self:iterateProperties(element) do
+		out[self:reduceSelector(P:getName(propId))] = propId
+	end
+	return out
+end
+
+--uses reduced selectors
+-- returns nil on unknown properties data instead of a $ error string
+function E:getPropertyID(elementSelector,propertySelector)
+	local row = self:getRow(elementSelector)
+	if not row.propertyIDMap then
+		if row[self.headers.properties]==nil then
+			return nil
+		end
+		row.propertyIDMap = self:buildPropertyIDMap(elemntSelector)
+	end
+	return row.propertyIDMap[self:reduceSelector(propertySelector)]
+end
 
 function E:hasProperties(selector)
 	local start = selector

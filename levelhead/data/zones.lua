@@ -9,7 +9,7 @@ function Z:initialize()
 	--parse headers
 	self.headers = {}
 	for i,v in ipairs(rawHeaders) do
-		local raw = v:gsub("%W",""):lower()
+		local raw = self:reduceSelector(v)
 		if raw:match("^name$") then
 			self.headers.name = v
 		elseif raw:match("^music1$") then

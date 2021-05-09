@@ -25,14 +25,18 @@ function DATA:getRow(selector)
 	end
 end
 
+function DATA:reduceSelector(selector)
+	return selector:gsub("%W",""):lower()
+end
 
 function DATA:getID(selector)
 	return self:getRow(selector)[self.headers.id] or
 		(type(selector)=="number" and selector or "$UnknownId")
 end
 
+--uses reduced selectors
 function DATA:getAllIDs(name)
-	name = name:lower():gsub(" ","")
+	name = self:reduceSelector(name)
 	local out = {}
 	for i,v in ipairs(self.data) do
 		if v[self.headers.name]:lower():gsub(" ","") == name then
