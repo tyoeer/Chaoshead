@@ -101,10 +101,9 @@ end
 
 function A:allocateArea(w,h)
 	if self.objectMask then
-		local sub = A:new(self.level,{
-			size={w,h},
-			immediate = self.settings.immediate,
-		})
+		local sub_settings = self.settings
+		sub_settings.size = {w, h}
+		local sub = A:new(self.level, sub_settings)
 		if self.settings.immediate then
 			self:placeArea(sub)
 		else
