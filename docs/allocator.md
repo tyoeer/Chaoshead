@@ -56,6 +56,7 @@ area = allocator:allocateArea(width, height)
 - width, height: the size fo the area to allocate
 - area: an allocator limited to the spcified area
 
+An objectMask is required for to prevent an area getting used for mutliple things simultaneously.
 There're no guarantees about the order in which areas are allocated, relating to objects and each other.
 
 ## Misc

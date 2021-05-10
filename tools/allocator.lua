@@ -100,16 +100,20 @@ function A:allocateObject(element)
 end
 
 function A:allocateArea(w,h)
-	local sub = A:new(self.level,{
-		size={w,h},
-		immediate = self.settings.immediate,
-	})
-	if self.settings.immediate then
-		self:placeArea(sub)
+	if self.objectMask then
+		local sub = A:new(self.level,{
+			size={w,h},
+			immediate = self.settings.immediate,
+		})
+		if self.settings.immediate then
+			self:placeArea(sub)
+		else
+			table.insert(self.areaQueue,sub)
+		end
+		return sub
 	else
-		table.insert(self.areaQueue,sub)
+		error("Can't allocate area without an object mask!",2)
 	end
-	return sub
 end
 
 function A:allocateRelay(cin,cond,cout)
@@ -176,8 +180,10 @@ function A:finalize()
 	if self.settings.immediate then
 		error("Trying to finalize an immediate allocator!",2)
 	end
-	for _,area in ipairs(self.areaQueue) do
-		self:placeArea(area)
+	if self.objectMask then
+		for _,area in ipairs(self.areaQueue) do
+			self:placeArea(area)
+		end
 	end
 	for _,obj in ipairs(self.objectQueue) do
 		self:placeObject(obj)
