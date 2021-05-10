@@ -127,15 +127,90 @@ function OBJ:setProperty(id, value)
 	if value==nil then
 		error(string.format("Can't set property %q to nil!",id),2)
 	end
-	id = P:getID(id)
-	self:setPropertyRaw(id,P:mappingToValue(id,value))
+	if type(id)=="string" then
+		local nId = E:getPropertyID(self.id,id)
+		if nId then
+			id = nId
+		else
+			--check if this element has its properties known
+			if E:hasProperties(self.id)~="$UnknownProperties" then
+				error(string.format("Element %q has no property with selector %q!",self:getName(),id))
+			end
+			--unknown elemnt properties, just try setting all ids with this selector
+			local ids = P:getAllIDs(id)
+			if #ids==0 then
+				error(string.format("Property %q doesn't exist!",id))
+			end
+			local set = false
+			for _,id in ipairs(ids) do
+				local isValid = false
+				if type(value)=="string" then
+					isValid = P:isValidMapping(id,value)
+				elseif type(value)=="number" then
+					isValid = P:getMin(id) <= value and value <= P:getMax(id)
+				end--if it's any other type it's invalid anyway
+				if isValid then
+					set = true
+					self:setPropertyRaw(id, P:mappingToValue(id,value))
+				else
+					--reset this one so getProperty knows to keep looking for an actually set one
+					self:setPropertyRaw(id,nil)
+				end
+			end
+			if not set then
+				if type(value)=="string" then
+					error(string.format("Mapping %q is not valid for any property with selector %q",value,id))
+				else
+					error(string.format("Value %d is not valid/out of bounds for any property with selector %q",value,id))
+				end
+			end
+			--property has been set, cancel execution and allow method chaining
+			return self
+		end
+	end
+	self:setPropertyRaw(id, P:mappingToValue(id,value))
 	return self
 end
 
 function OBJ:getProperty(id)
 	--LH doesn't set all the properties, so this is currently a bit broken
-	id = P:getID(id)
-	return P:valueToMapping(id,self:getPropertyRaw(id))
+	if type(id)=="string" then
+		local nId = E:getPropertyID(self.id,id)
+		if nId then
+			id = nId
+		else
+			--check if this element has its properties known
+			if E:hasProperties(self.id)~="$UnknownProperties" then
+				error(string.format("Element %q has no property with selector %q!",self:getName(),id))
+			end
+			--unknown elemnt properties, just try setting all ids with this selector
+			local ids = P:getAllIDs(id)
+			if #ids==0 then
+				error(string.format("Property %q doesn't exist!",id))
+			end
+			local default = P:valueToMapping(ids[1],P:getDefault(ids[1]))
+			for _,id in ipairs(ids) do
+				local value = self:getPropertyRaw(id)
+				if value then
+					return P:valueToMapping(id,value)
+				else
+					if P:valueToMapping(ids,P:getDefault(id)) ~= default then
+						default = nil
+					end
+				end
+			end
+			--all properties agree on the default value
+			if default then
+				return default
+			else
+				--the element has unknown property data
+				--of all the possible properties from th selector, this object has none set
+				--the possible properties have different default values
+				error(string.format("Property selector %q for element %q is not concise enough to return a value! (consider adding property data)",id,self:getName()))
+			end
+		end
+	end
+	return P:valueToMapping(id,self:getPropertyRaw(id) or P:getDefault(id))
 end
 
 function OBJ:__index(key)
@@ -143,23 +218,7 @@ function OBJ:__index(key)
 		local prop = key:match("set(.+)")
 		--prop = prop:gsub("([A-Z])"," %1"):trim()
 		return function(self,mapping)
-			local exists = false
-			local set = false
-			for _,id in ipairs(P:getAllIDs(prop)) do
-				exists = true
-				if P:isValidMapping(id,mapping) then
-					set = true
-					self:setProperty(id, mapping)
-				end
-			end
-			if not set then
-				if exists then
-					error("Mapping "..mapping.." is invalid for property "..prop)
-				else
-					error("Property "..prop.." doesn't exist")
-				end
-			end
-			return self
+			return self:setProperty(prop,mapping)
 		end
 	elseif key:match("get") then
 		local prop = key:match("get(.+)")
