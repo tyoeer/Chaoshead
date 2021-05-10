@@ -59,7 +59,7 @@ function P:getDefault(selector)
 end
 
 function P:getMax(selector)
-	return self:getRow(selector)[self.headers.min] or "$UnknownMaximum"
+	return self:getRow(selector)[self.headers.max] or "$UnknownMaximum"
 end
 
 function P:isValidMapping(selector, mapping)
