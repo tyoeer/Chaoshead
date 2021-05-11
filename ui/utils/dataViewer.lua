@@ -9,7 +9,7 @@ function UI:initialize(data)
 			
 			if type(data.raw)=="string" then
 				if data.raw:len()>500 then
-					list:addTextEntry("Value is too lnog to display: "..data.raw:len())
+					list:addTextEntry("Value is too long to display: "..data.raw:len())
 				else
 					list:addTextEntry("Value: ".. data.raw)
 				end
@@ -19,7 +19,7 @@ function UI:initialize(data)
 					function()
 						local dat = require("libs.json").decode(data.raw)
 						local dv = require("ui.utils.dataViewer"):new(dat)
-						ui.child:addChild(dv)
+						ui.child.child:addChild(dv)
 					end
 				)
 			else
