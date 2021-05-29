@@ -17,6 +17,8 @@ function love.load(arg)
 	love.graphics.setLineWidth(1)
 	love.graphics.setPointSize(1)
 	love.graphics.setLineStyle("rough")
+	--maximize window
+	love.window.maximize()
 	
 	--build ui
 	ui = require("ui.chaoshead"):new(love.graphics.getWidth(), love.graphics.getHeight())
