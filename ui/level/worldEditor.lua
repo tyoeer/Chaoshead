@@ -233,18 +233,25 @@ function UI:mouseMoved(x,y,dx,dy)
 			self.selecting = false
 			self.cameraX = self.cameraX + dx/self.zoomFactor
 			self.cameraY = self.cameraY + dy/self.zoomFactor
-		else
-			local cx,cy = self:posNearCorner(self:toWorldX(x),self:toWorldY(y))
-			if cx then
-				if cx*cy==1 then
-					love.mouse.setCursor(love.mouse.getSystemCursor("sizenwse"))
-				else
-					love.mouse.setCursor(love.mouse.getSystemCursor("sizenesw"))
-				end
-			else
-				love.mouse.setCursor()
-			end
 		end
+		--update cursor symbol
+		local cx,cy = self:posNearCorner(self:toWorldX(x),self:toWorldY(y))
+		if cx then
+			if cx*cy==1 then
+				love.mouse.setCursor(love.mouse.getSystemCursor("sizenwse"))
+			else
+				love.mouse.setCursor(love.mouse.getSystemCursor("sizenesw"))
+			end
+		else
+			love.mouse.setCursor()
+		end
+	end
+	--stop selecting when you have moved the cursor
+	if input.isActive("selectOnly","editor")
+		or input.isActive("selectAdd","editor")
+		or input.isActive("deselectSub","editor")
+	then
+		self.selecting = false
 	end
 end
 
