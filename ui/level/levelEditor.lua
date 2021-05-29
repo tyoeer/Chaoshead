@@ -47,8 +47,9 @@ end
 function UI:reload(level)
 	self.level = level
 	self.viewer:reload(level)
+	--should probably be tracked in a different list so the c.child.child hack is unnecessary
 	for c in self.detailsUI.children:iterate() do
-		local v = c.child
+		local v = c.child.child
 		if v.reload then v:reload(level) end
 	end
 end
