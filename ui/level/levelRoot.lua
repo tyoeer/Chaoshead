@@ -1,6 +1,6 @@
 local LHS = require("levelhead.lhs")
 local LIMITS = require("levelhead.level.limits")
-
+local LH_MISC = require("levelhead.misc")
 --levelRoot was the best name I could come up with, OK?
 
 local UI = Class(require("ui.structure.proxy"))
@@ -25,7 +25,7 @@ function UI:initialize(levelPath)
 	tabs:addChild(self.scriptInterface)
 	
 	UI.super.initialize(self,tabs)
-	self.title = levelPath
+	self.title = self.level.settings:getTitle()
 end
 
 function UI:reload(level)
@@ -55,6 +55,7 @@ function UI:reload(level)
 	end
 	self.levelEditor:reload(self.level)
 	self.hexInspector:reload(self.levelFile)
+	self.title = self.level.settings:getTitle()
 end
 
 function UI:save()

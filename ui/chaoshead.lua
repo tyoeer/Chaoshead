@@ -27,7 +27,7 @@ function UI:initialize(w,h)
 end
 
 
-function UI:openEditor(path,name)
+function UI:openEditor(path)
 	local success, editor = xpcall(
 		function()
 			return LevelRoot:new(path)
@@ -40,7 +40,6 @@ function UI:openEditor(path,name)
 		end
 	)
 	if success then
-		editor.title = name
 		self.levels:addChild(editor)
 		self.levels:setActive(editor)
 		self.mainTabs:setActive(self.levelsProxy)

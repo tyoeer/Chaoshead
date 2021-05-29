@@ -40,7 +40,7 @@ function UI:initialize()
 			list:addButtonEntry(
 				"Open in editor (load)",
 				function()
-					ui:openEditor(d.path,d.name)
+					ui:openEditor(d.path)
 				end
 			)
 			list:addButtonEntry(
