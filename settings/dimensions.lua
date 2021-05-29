@@ -17,13 +17,13 @@ return {
 		},
 	},
 	levelSelector = {
-		listDetailsDivisionRatio = 0.4,
+		listDetailsDivisionRatio = 0.25,
 		details = {
 			padding = 10,
 		},
 	},
 	scriptInterface = {
-		horDivisionRatio = 0.4,
+		horDivisionRatio = 0.25,
 		detailsPadding = 10,
 	},
 	editor = {

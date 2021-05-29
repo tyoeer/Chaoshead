@@ -15,7 +15,7 @@ function UI:initialize(left,right)
 	self.rightChild = right
 	right.parent = self
 	
-	self.divisionRatio = 0.3
+	self.divisionRatio = 0.25
 	--self.divisionX = -1
 	self.divisionWidth = 1 -1
 	UI.super.initialize(self)
