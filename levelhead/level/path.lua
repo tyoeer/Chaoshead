@@ -3,6 +3,11 @@ local PN = require("levelhead.level.pathNode")
 
 local P = Class("Path")
 
+local CLOSED_PROPERTY_ID = 38
+--to revise these, change all properties from their default and get their hex ids from the hexs inspector
+local PATH_PROPERTIES = {37,38,39,49,60,61,71}
+local PROPERTIES_LOOKUP = {}
+
 function P:initialize()
 	--self.tail = nil
 	--self.head = nil
@@ -121,10 +126,34 @@ function P:openEnds()
 end
 
 -- properties
+-- similiar to object properties, but objects have more code to deal with unknown properties data
+--build lookup table
+do
+	for _,property in ipairs(PATH_PROPERTIES) do
+		PROPERTIES_LOOKUP[ PROP:reduceSelector(PROP:getName(property)) ] = property
+	end
+end
+
+local function processSelector(selector)
+	if type(id)=="string" then
+		local nId = PROPERTIES_LOOKUP[ PROP:reduceSelector(selector) ]
+		if nId then
+			return nId
+		else
+			error(string.format("Paths don't have property %q!",id),3)
+		end
+	else
+		return selector
+	end
+end
+
+function P:iterateProperties()
+	return ipairs(PATH_PROPERTIES)
+end
 
 function P:setPropertyRaw(id, value)
 	self.properties[id] = value
-	if id==38 then --closed property
+	if id==CLOSED_PROPERTY_ID then --closed property
 		if value==1 then --Yes
 			self:closeEnds()
 		else --value==0 --No
@@ -135,22 +164,21 @@ function P:setPropertyRaw(id, value)
 end
 
 function P:getPropertyRaw(id)
-	return self.properties[id]
+	return self.properties[id] or PROP:getDefault(id)
 end
 
 function P:setProperty(id, value)
 	if value==nil then
 		error(string.format("Can't set property %q to nil!",id),2)
 	end
-	id = PROP:getID(id)
-	self:setPropertyRaw(id,PROP:mappingToValue(id,value))
+	id = processSelector(id)
+	self:setPropertyRaw(id, PROP:mappingToValue(id,value))
 	return self
 end
 
 function P:getProperty(id)
-	--LH doesn't set all the properties, so this is currently a bit brokens
-	id = PROP:getID(id)
-	return PROP:valueToMapping(id,self:getPropertyRaw(id))
+	id = processSelector(id)
+	return PROP:valueToMapping(id, self:getPropertyRaw(id))
 end
 
 function P:__index(key)
@@ -158,27 +186,11 @@ function P:__index(key)
 		local prop = key:match("set(.+)")
 		--prop = prop:gsub("([A-Z])"," %1"):trim()
 		return function(self,mapping)
-			local exists = false
-			local set = false
-			for _,id in ipairs(PROP:getAllIDs(prop)) do
-				exists = true
-				if PROP:isValidMapping(id,mapping) then
-					set = true
-					self:setProperty(id, mapping)
-					return self
-				end
-			end
-			if not set then
-				if exists then
-					error("Mapping "..mapping.." is invalid for property "..prop)
-				else
-					error("Property "..prop.." doesn't exist")
-				end
-			end
+			return self:setProperty(prop,mapping)
 		end
 	elseif key:match("get") then
 		local prop = key:match("get(.+)")
-		prop = prop:gsub("([A-Z])"," %1"):trim()
+		--prop = prop:gsub("([A-Z])"," %1"):trim()
 		return function(self)
 			return self:getProperty(prop)
 		end

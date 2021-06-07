@@ -85,12 +85,22 @@ value = path:getPropertyRaw(id)
 - id: the id/name of the property to retrieve
 - value: the raw value of said property
 
-to make setting multiple properties easier and cleaner, all property setters return __this__, usage looks like
+### Chaining
+
+To make setting multiple properties easier and cleaner, all property setters return the path, usage looks like:
+
 ```Lua
 path:setProperty(id, mapping)
     :setPropertyRaw(id, value)
     :set[property name](value)
 ```
+
+### Meta
+
+```Lua
+for propertyId in object:iterateProperties() do
+```
+Iterates over all the properties this object has.
 
 ## Info
 

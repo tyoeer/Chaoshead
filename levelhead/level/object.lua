@@ -94,6 +94,7 @@ end
 
 
 -- PROPERTIES
+--similiar to path properties, but paths always have their exact properties known
 
 function OBJ:hasProperties()
 	local e = E:hasProperties(self.id)
@@ -173,7 +174,6 @@ function OBJ:setProperty(id, value)
 end
 
 function OBJ:getProperty(id)
-	--LH doesn't set all the properties, so this is currently a bit broken
 	if type(id)=="string" then
 		local nId = E:getPropertyID(self.id,id)
 		if nId then
@@ -183,7 +183,7 @@ function OBJ:getProperty(id)
 			if E:hasProperties(self.id)~="$UnknownProperties" then
 				error(string.format("Element %q has no property with selector %q!",self:getName(),id))
 			end
-			--unknown elemnt properties, just try setting all ids with this selector
+			--unknown element properties, search all ids with this selector
 			local ids = P:getAllIDs(id)
 			if #ids==0 then
 				error(string.format("Property %q doesn't exist!",id))
@@ -222,7 +222,7 @@ function OBJ:__index(key)
 		end
 	elseif key:match("get") then
 		local prop = key:match("get(.+)")
-		prop = prop:gsub("([A-Z])"," %1"):trim()
+		--prop = prop:gsub("([A-Z])"," %1"):trim()
 		return function(self)
 			return self:getProperty(prop)
 		end

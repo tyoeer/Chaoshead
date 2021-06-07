@@ -37,7 +37,7 @@ object:setPropertyRaw(id, value)
 
 #### Chaining
 
-To make setting multiple properties easier and cleaner, all property setters return the object, usage looks like
+To make setting multiple properties easier and cleaner, all property setters return the object, usage looks like:
 ```Lua
 object:setProperty(id, mapping)
       :setPropertyRaw(id, value)
@@ -72,7 +72,7 @@ has = object:hasProperties()
 - has: a boolean indicating if this object has properties or not
 
 ```Lua
-for property in object:iterateProperties() do
+for propertyId in object:iterateProperties() do
 ```
 Iterates over all the properties this object has.
 
