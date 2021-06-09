@@ -22,10 +22,16 @@ function UI:initialize(level,editor)
 	self.entryMargin = settings.dim.editor.details.level.entryMargin
 	self.indentSize = settings.dim.editor.details.level.textEntryIndentSize
 	
+	--self.level
 	self:reload(level)
 end
 
 function UI:reload(level)
+	if level then
+		self.level = level
+	else
+		level = self.level
+	end
 	self:resetList()
 	
 	self:addTextEntry("Width:  "..level:getWidth())

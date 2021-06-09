@@ -15,7 +15,8 @@ function UI:initialize(level,root)
 	--ui state
 	self.viewer = require("ui.level.worldEditor"):new(self)
 	self.detailsUI = require("ui.structure.tabs"):new()
-	self:addTab(LevelDetails:new(level,self))
+	self.levelDetails = LevelDetails:new(level,self)
+	self:addTab(self.levelDetails)
 	self.detailsUI.tabHeight = settings.dim.editor.details.tabHeight
 	
 	--editor state
@@ -47,11 +48,15 @@ end
 function UI:reload(level)
 	self.level = level
 	self.viewer:reload(level)
-	--should probably be tracked in a different list so the c.child.child hack is unnecessary
+	self.levelDetails:reload(level)
+	if self.selectionDetails then
+		self.selectionDetails:reload(level)
+	end
+	--[[should probably be tracked in a different list so the c.child.child hack is unnecessary
 	for c in self.detailsUI.children:iterate() do
 		local v = c.child.child
 		if v.reload then v:reload(level) end
-	end
+	end]]
 end
 
 -- editor stuff
@@ -118,7 +123,6 @@ end
 
 -- do stuff with the selection
 
-
 function UI:deleteSelection()
 	local c = self.selection.contents
 	self.selection = nil
@@ -139,6 +143,16 @@ function UI:deleteSelection()
 			self.level:removePath(p)
 		end
 	end
+end
+
+-- other stuff
+
+function UI:resizeLevel(top,right,bottom,left)
+	self.level.top = top
+	self.level.right = right
+	self.level.bottom = bottom
+	self.level.left = left
+	self.levelDetails:reload()
 end
 
 -- events (most are handled by the proxy super)

@@ -197,37 +197,39 @@ end
 
 function UI:mouseMoved(x,y,dx,dy)
 	if self.resizing then
-		--resize level
+		--calculate new size
+		local top, bottom = self.level.top, self.level.bottom
+		local right, left = self.level.right, self.level.left
 		if self.resizeCornerX==1 then
-			self.level.right = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5) - 1
+			right = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5) - 1
 			if self.resizeCornerY==1 then
-				self.level.bottom = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5) - 1
+				bottom = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5) - 1
 			else
-				self.level.top = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
+				top = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
 			end
 		else
-			self.level.left = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5)
+			left = math.floor((self:toWorldX(self:getMouseX()) / TILE_SIZE)+0.5)
 			if self.resizeCornerY==1 then
-				self.level.bottom = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5) - 1
+				bottom = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5) - 1
 			else
-				self.level.top = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
+				top = math.floor((self:toWorldY(self:getMouseY()) / TILE_SIZE)+0.5)
 			end
 		end
 		
 		--make sure left stays left of right and top stays above bottom
-		if self.level.left > self.level.right then
+		if left > right then
 			-- +1 and -1 are to make it mirror in the edge and not in the tile
-			self.level.left, self.level.right = self.level.right+1, self.level.left-1
+			left, right = right+1, left-1
 			self.resizeCornerX = -self.resizeCornerX
 		end
-		if self.level.top > self.level.bottom then
+		if top > bottom then
 			-- +1 and -1 are to make it mirror in the edge and not in the tile
-			self.level.top, self.level.bottom = self.level.bottom+1, self.level.top-1
+			top, bottom = bottom+1, top-1
 			self.resizeCornerY = -self.resizeCornerY
 		end
 		
-		--get the level details UI reloaded so it displays the right size
-		self.editor:reload(self.level)
+		--resize
+		self.editor:resizeLevel(top, right, bottom, left)
 	else
 		if input.isActive("drag","camera") then
 			self.selecting = false
