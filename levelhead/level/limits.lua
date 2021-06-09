@@ -47,11 +47,10 @@ return {
 			check = function(level)
 				for path in level.paths:iterate() do
 					local node = path.head
-					while node do
+					for node in path:iterateNodes() do
 						if node.x < level.left or node.x > level.right or node.y < level.top or node.y > level.bottom then
 							return node.x, node.y
 						end
-						node = node.next
 					end
 				end
 				return false

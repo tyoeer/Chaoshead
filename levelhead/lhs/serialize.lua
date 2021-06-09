@@ -276,13 +276,11 @@ function LHS:serializePaths(level)
 		idMap[path] = entry.id
 		idCounter = idCounter + 1
 		
-		local n = path.head
-		while n do
+		for n in path:iterateNodes() do
 			table.insert(entry.subentries,{
 				x = level:worldToFileX(n.x),
 				y = level:worldToFileY(n.y),
 			})
-			n = n.next
 		end
 		
 		entry.amount = #entry.subentries
