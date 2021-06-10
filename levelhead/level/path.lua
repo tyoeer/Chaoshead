@@ -86,17 +86,16 @@ function P:removeNodeRaw(n)
 	local next = n.next
 	if next then
 		next.prev = prev
-	else
-		--no next means this was the tail
-		self.tail = prev
 	end
 	if prev then
 		prev.next = next
-	else
-		--no prev means this was the head
+	end
+	if n==self.head then
 		self.head = next
 	end
-
+	if n==self.tail then
+		self.tail = prev
+	end
 	return self
 end
 
