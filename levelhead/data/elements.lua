@@ -63,7 +63,7 @@ function E:getPropertyID(elementSelector,propertySelector)
 		if row[self.headers.properties]==nil then
 			return nil
 		end
-		row.propertyIDMap = self:buildPropertyIDMap(elemntSelector)
+		row.propertyIDMap = self:buildPropertyIDMap(elementSelector)
 	end
 	return row.propertyIDMap[self:reduceSelector(propertySelector)]
 end
