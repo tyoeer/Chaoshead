@@ -59,7 +59,15 @@ function UI:reload(level)
 	end]]
 end
 
--- editor stuff
+-- private editor stuff
+
+function UI:newSelection()
+	self.selection = Selection:new(self.level)
+	self.selectionDetails = SelectionDetails:new(self.selection)
+	self:addTab(self.selectionDetails)
+end
+
+-- public editor stuff
 
 -- selection manipulation
 
@@ -67,10 +75,9 @@ function UI:selectOnly(tileX,tileY)
 	if self.selection then
 		self:deselectAll()
 	end
-	self.selection = Selection:new(self.level)
+	--deselectAll() destroys the selection
+	self:newSelection()
 	self.selection:add(tileX,tileY)
-	self.selectionDetails = SelectionDetails:new(self.selection)
-	self:addTab(self.selectionDetails)
 end
 
 function UI:selectAdd(tileX,tileY)
@@ -83,11 +90,15 @@ function UI:selectAdd(tileX,tileY)
 end
 
 function UI:selectAddArea(startX,startY,endX,endY)
+	if not self.selection then
+		self:newSelection()
+	end
 	for x = startX, endX, 1 do
 		for y = startY, endY, 1 do
-			self:selectAdd(x,y)
+			self.selection:add(x,y)
 		end
 	end
+	self.selectionDetails:reload()
 end
 
 function UI:deselectSub(tileX,tileY)
@@ -104,8 +115,13 @@ end
 function UI:deselectSubArea(startX,startY,endX,endY)
 	for x = startX, endX, 1 do
 		for y = startY, endY, 1 do
-			self:deselectSub(x,y)
+			self.selection:remove(tileX,tileY)
 		end
+	end
+	if self.selection.mask.nTiles==0 then
+		self:deselectAll()
+	else
+		self.selectionDetails:reload()
 	end
 end
 
