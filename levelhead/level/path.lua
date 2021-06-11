@@ -91,12 +91,23 @@ function P:removeNodeRaw(n)
 		prev.next = next
 	end
 	if n==self.head then
-		self.head = next
+		--in a closed path, the last node is connected to itself
+		--(which is a bit weird, but it makes it easy to add nodes again)
+		if next==n then
+			self.head = nil
+		else
+			self.head = next
+		end
 	end
 	if n==self.tail then
-		self.tail = prev
+		--in a closed path, the last node is connected to itself
+		--(which is a bit weird, but it makes it easy to add nodes again)
+		if prev==n then
+			self.tail = nil
+		else
+			self.tail = prev
+		end
 	end
-	return self
 end
 
 --doesn't properly connect, private use only
@@ -105,7 +116,6 @@ function P:addNode(n)
 	if self.world then
 		self.world:addPathNodeRaw(n)
 	end
-	return self
 end
 
 -- open & closed
