@@ -78,6 +78,7 @@ function UI:selectOnly(tileX,tileY)
 	--deselectAll() destroys the selection
 	self:newSelection()
 	self.selection:add(tileX,tileY)
+	self.selectionDetails:reload()
 end
 
 function UI:selectAdd(tileX,tileY)
