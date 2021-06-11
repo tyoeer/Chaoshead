@@ -19,7 +19,7 @@ function E:initialize()
 			self.headers.width = v
 		elseif raw:match("height") then
 			self.headers.height = v
-		elseif raw:match("^parentid") then
+		elseif raw:match("^parent") then
 			self.headers.parent = v
 		elseif raw:match("^properties") then
 			self.headers.properties = v
