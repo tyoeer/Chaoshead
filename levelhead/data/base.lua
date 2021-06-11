@@ -50,5 +50,8 @@ function DATA:getName(selector)
 	return self:getRow(selector)[self.headers.name] or "$UnknownName"
 end
 
+function DATA:getHighestID()
+	return #self.data - 1
+end
 
 return DATA
