@@ -39,7 +39,10 @@ path:removeNode(node)
 ```
 - node: the __PathNode__ to remove
 
-to make node editing easier and cleaner, all methods return __this__, usage looks like
+### Chaining
+
+To make node editing easier and cleaner, all methods return the path, usage looks like:
+
 ```Lua
 path:append(x,y)
     :addNodeAfter(new, anchor)

@@ -37,7 +37,6 @@ function P:append(x,y)
 		--no nodes yet
 		return self:addNodeBetween(n,nil,nil)
 	end
-	return
 end
 
 function P:addNodeAfter(n,t)
@@ -80,7 +79,7 @@ function P:removeNode(n)
 	end
 	return self
 end
---doesn't properly update world, use Level:removePathNode(x,y)
+--doesn't properly update world, use Path:removeNode(), private use only
 function P:removeNodeRaw(n)
 	local prev = n.prev
 	local next = n.next
