@@ -106,6 +106,9 @@ function E:iterateProperties(selector)
 			end
 			selector = p
 		else
+			--if there's only 1 id, the csv loader converts it into a number, which can't be iterated
+			--this is a quick hack
+			if type(base)=="number" then base = tostring(base) end
 			--wrap string:gmatch() to tonumber() everything
 			local f,s,v = base:gmatch("(%d+)")
 			return function(s,v)
