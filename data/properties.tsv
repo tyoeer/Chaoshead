@@ -25,7 +25,7 @@ Speed	22	#16	B		300	100	700	None									Toe Slider
 Power	23	#17	B		2000	2000	3500	None									(Trig)blaster	
 Spin Speed	24	#18	B		0	-360	360	None									(Trig)blaster	
 Fire Delay	25	#19	C		0	0.5	2	None									Blaster	
-???	26	#20																
+???	26	#20	A															
 ???	27	#21																
 Rift ID	28	#1C	B		0	-1	999	Hybrid	None	-	-	-	-	-	-	-	Rift	
 Destination Rift ID	29	#1D	B	Defaults to 0 (it doesn't get saved if it's 0), while the editor default is 1	0	-1	999	Hybrid	None	-	-	-	-	-	-	-	Rift	
@@ -57,7 +57,7 @@ Instrument	54	#36	A		0	0	2	Simple	!	Bass	Melody	Percussion	!	!	!	!	Boombox
 Melody Pitch	55	#37	A	Also gets saved for the "bass" instrument. Called "Pitch" in-game.	7	0	28	List	Melody Pitch								Boombox	
 Platform Size	56	#38	A		1	0	1	Simple	!	Short	Long	!	!	!	!	!	Spinny Platform	
 Length	57	#39	A		3	1	4	None									Spinny Platform	
-Speed	58	#3A	B	Used for circular movement (type)	60	-90	90	None									Swoopadoop, Blobfush, Whizzblade, Spinny Platform	
+Rotation Speed	58	#3A	B	Used for circular movement (type). Called "Speed" ingame, renamed to prevent clashing API names.	60	-90	90	None									Swoopadoop, Blobfush, Whizzblade, Spinny Platform	
 Icon	59	#3B	A		0	0	49	List	Sign Icons								Sign	
 Switch Requirements	60	#3C	A		2	0	5	Simple	!	One Active	Any Active	All Active	One Inactive	Any Inactive	All Inactive	!	Prizeblock, Hardlight, ...	
 Visuals	61	#3D	A		2	0	16	List	Path Visuals								Path	
@@ -107,6 +107,6 @@ Target Type	104	#68	A		0	0	2	Simple	!	GR-18	Package	Enemies	!	!	!	!	Lookannon
 Walk Direction	105	#69	A		0	0	1	Simple	!	Left	Right	!	!	!	!	!	Canoodle, Scrubb, Ocula	
 Start Direction	106	#6A	A		0	0	3	Simple	!	Right	Up	Left	Down	!	!	!	Peanut	
 Item	107	#6B	A		11	0	24	List	Items	-	-	-	-	-	-	-	Beamer	
-???	108	#6C																
+Cooldown	108	#6C	C		0	0	60	None									Beamer	
 Color	109	#6D	A		0	0	6	Simple	!	Red	Yellow	Teal	Green	Purple	Blue	White	Spiketron, etc.	
 Projectile	110	#6E	A		0	0	1	Simple	!	Normal	Fire	!	!	!	!	!	Canoodle	
