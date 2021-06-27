@@ -177,28 +177,12 @@ function LHS:serializeProperties(level,pathIdMap)
 				
 				local subentry
 				if not doubleLookup[id][value] then
-					--make sure the save format can handle this value
-					--fail quietly because of aggressive property setting
-					--this part can be removed once the property names of the an element no longer overlap
-					--which they currently do because all elements share all properties (data needs to be collected)
-					local f = P:getSaveFormat(id)
-					if f=="A" and (value<0 or value>255) then
-						go = false
-					elseif f=="B" and (value<-32768 or value>32767) then
-						go = false
-					-- no C because floats are huge, and can thus save everything
-					elseif f=="D" and (value<-128 or value>127) then
-						go = false
-					end
-					
-					if go then
-						subentry = {
-							value = value,
-							entries = {}
-						}
-						doubleLookup[id][value] = subentry
-						table.insert(entry.entries,subentry)
-					end
+					subentry = {
+						value = value,
+						entries = {}
+					}
+					doubleLookup[id][value] = subentry
+					table.insert(entry.entries,subentry)
 				else
 					subentry = doubleLookup[id][value]
 				end
