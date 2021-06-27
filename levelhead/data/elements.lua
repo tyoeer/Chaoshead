@@ -98,7 +98,11 @@ function E:iterateProperties(selector)
 		if base==nil then
 			error(string.format("Can't iterate unknown properties of %q (start: %q).",selector,start))
 		end
-		if base=="None" then return  end
+		if base=="None" then
+			--thise object has no properties
+			--return a function that returns nil
+			return function() end
+		end
 		if base=="Inherit" then
 			local p = r[self.headers.parent]
 			if p==nil then
