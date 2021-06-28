@@ -11,24 +11,6 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 
 --io
 
-local defaultFiles = {
-	--love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/m7n6j8/stages/-26.lhs",
-	love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/m7n6j8/stages/-23.lhs",
-	love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/m7n6j8/stages/-22.lhs",
-	love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/UserData/xxqtsv/stages/-12.lhs",
-}
-
-function LHS:loadDefaultFile()
-	for _,v in ipairs(defaultFiles) do
-		local file,err = io.open(v,"rb")
-		if file then
-			self.path = v
-			self.raw = file:read("*a")
-			file:close()
-			break
-		end
-	end
-end
 
 function LHS:loadFile(fullPath)
 	local file,err = io.open(fullPath,"rb")

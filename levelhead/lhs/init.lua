@@ -7,11 +7,7 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 ]]--
 
 function LHS:initialize(path)
-	if path then
-		self:loadFile(path)
-	else
-		self:loadDefaultFile()
-	end
+	self:loadFile(path)
 end
 
 --load the other files
