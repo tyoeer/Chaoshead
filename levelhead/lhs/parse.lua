@@ -11,28 +11,6 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 
 ]]--
 
---which id corresponds to which setting
-local settingsListMap = {
-	[0] = "music",
-	"mode",
-	"minimumPlayers",
-	"playerSharePowerups",
-	"weather",
-	"language",
-	"multiplayerRespawnStyle",
-	"stopCameraAtLevelSides"
-}
---whether or not a certain settings list id has a boolean value
-local settingsListBooleans = {
-	[0] = false,
-	false,
-	false,
-	true,
-	true,
-	false,
-	false,
-	true,
-}
 
 function LHS:parseHeaders()
 	local raw = self.rawHeaders
@@ -52,10 +30,10 @@ function LHS:parseHeaders()
 	
 	--settings list
 	for _,v in ipairs(raw.settingsList.entries) do
-		if settingsListBooleans[v.id] then
-			set[settingsListMap[v.id]] = v.value>=1
+		if self.settingsListBooleans[v.id] then
+			set[self.settingsList[v.id]] = v.value>=1
 		else
-			set[settingsListMap[v.id]] = v.value
+			set[self.settingsList[v.id]] = v.value
 		end
 	end
 	

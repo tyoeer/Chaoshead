@@ -1,17 +1,6 @@
 local P = require("levelhead.data.properties")
 local LHS = {}
 
-
-local settingsList = {
-	[0] = "music",
-	"mode",
-	"minimumPlayers",
-	"playerSharePowerups",
-	"weather",
-	"language",
-	"multiplayerRespawnStyle",
-	"stopCameraAtLevelSides"
-}
 function LHS:serializeHeaders(level)
 	local s = level.settings
 	local h = self.rawHeaders
@@ -29,7 +18,7 @@ function LHS:serializeHeaders(level)
 	end
 	
 	h.settingsList.entries = {}
-	for id, setting in pairs(settingsList) do
+	for id, setting in pairs(self.settingsList) do
 		local value = s[setting]
 		if type(value)=="boolean" then
 			value = value and 1 or 0

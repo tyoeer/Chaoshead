@@ -6,6 +6,29 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 
 ]]--
 
+--which id correspodns to which setting
+LHS.settingsList = {
+	[0] = "music",
+	"mode",
+	"minimumPlayers",
+	"playerSharePowerups",
+	"weather",
+	"language",
+	"multiplayerRespawnStyle",
+	"stopCameraAtLevelSides"
+}
+--whether or not a certain settings list id has a boolean value
+LHS.settingsListBooleans = {
+	[0] = false,
+	false,
+	false,
+	true,
+	true,
+	false,
+	false,
+	true,
+}
+
 function LHS:initialize(path)
 	self:loadFile(path)
 end
