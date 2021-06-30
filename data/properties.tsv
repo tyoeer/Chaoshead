@@ -40,7 +40,7 @@ Active Speed	37	#25	B		200	-600	600	None									Path
 Closed	38	#26	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	Path	
 End Action	39	#27	D		-1	-1	2	Simple	Reverse	Stop	Restart	2	!	!	!	!	Path	
 Start Direction	40	#28	B		90	-180	180	None									Swoopadoop, Blobfush, Whizzblade, Burny Whirler, Spike Chainer, Fireball, Spinny Platform	
-Speed	41	#29	B	In case of fireball only used for circular movement (type)	90	-180	180	None									Burny Whirler, Spike Chainer, Fireball	
+Rotation Speed	41	#29	B	Used for circular movement (type). Called "Speed" in-game, renamed to prevent cconflicting API names.	90	-180	180	None									Burny Whirler, Spike Chainer, Fireball	
 Length	42	#2A	A		4	1	5	None									Burny Whirler, Spike Chainer	
 Gap	43	#2B	A		1	1	2	Simple	!	!	No	Yes	!	!	!	!	Burny Whirler	
 Spike Size 	44	#2C	A		1	1	3	Simple	!	!	Regular	Medium	Venti	!	!	!	Spike Chainer	
