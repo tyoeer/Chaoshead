@@ -112,30 +112,7 @@ function LHS:writeProperties(isPath)
 				self:write2(v)
 			elseif format=="C" then
 				local v = subentry.value
-				-- single precision floating point:
-				-- conversion based on my understanding of the format and my read code,
-				-- because the wikipedia method is vague and complicated
-				
-				-- calculate parts
-				local sign = math.sign(v)
-				v = v * sign -- make sure v is positive
-				sign = sign==-1 and 0x80000000 or 0
-				local exponent = math.floor(math.log(v)/math.log(2))
-				v = v / 2^exponent
-				exponent = bit.band(exponent + 127, 0xFF)
-				exponent = bit.lshift(exponent,23) -- move it to the right position
-				local fraction = math.round(v * 2^23)
-				fraction = bit.band(fraction, 0x7FFFFF)
-				--combine everything
-				v = bit.bor(sign, exponent, fraction)
-				--make sure it's 4 bytes long
-				data = math.numberToBytesLE(v)
-				if data:len() > 4 then
-					error("Float write size error: "..love.data.encode("string","hex",data))
-				end
-				while data:len()~=4 do
-					data = data .. string.char(0x00)
-				end
+				local data = love.data.pack("string",self.floatFormat,v)
 				self:write(data)
 			elseif format=="D" then
 				local v = subentry.value

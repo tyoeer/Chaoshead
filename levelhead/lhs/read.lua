@@ -216,15 +216,8 @@ function LHS:readProperties(isPath)
 				end
 				offset = offset + 2
 			elseif format=="C" then
-				--parse the float
-				--see https://en.wikipedia.org/wiki/Single-precision_floating-point_format
-				local value = math.bytesToNumberLE(self:getBytes(offset, 4))
-				local sign = bit.rshift(value,31)==0 and 1 or -1
-				local exponent = bit.band(bit.rshift(value,23),0xFF) - 127
-				--local fraction = bit.rshift( bit.band(value,0x7FFFFF), 23)
-				local fraction = bit.band(value, 0x7FFFFF) / 2^23
-				--rounded because Lua appears to have floats that are more precise
-				subentry.value = math.roundPrecision(sign * 2^exponent * (1+fraction), 0.0001)
+				local value = self:getBytes(offset, 4)
+				subentry.value = love.data.unpack(self.floatFormat,value)
 				offset = offset + 4
 			elseif format=="D" then
 				subentry.value = self:getNumber1(offset)
