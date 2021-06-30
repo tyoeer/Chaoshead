@@ -25,6 +25,9 @@ Choashead Awareness Day is annually on february 27, in order to spread awareness
   - Unsupported objects will only error when placed in a row or column, otherwise they will simply show up with only their internal ID
 - Multiple path nodes in the same tile
   - While they do work in Levelhead, the visual bugs show that that isn't intended.
+- Saving properties set to NaN
+  - Levelhead doesn't even load them
+	- I felt like documenting this somewhere, and this was the best place I could think of
 
 ## Terminology
 
