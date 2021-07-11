@@ -51,30 +51,6 @@ function UI:initialize()
 			print("No campaign.bin found!")
 		end
 	end)
-	list:addButtonEntry("Test LH folder detection",function()
-		local M = require("levelhead.misc")
-		print(M.getDataPath())
-		print(M.getUserDataPath())
-		local UD = require("levelhead.userData")
-		print("----------")
-		table.print(UD.getUserCodes())
-		print("----------")
-		local listCmd = "dir"
-		local cdCmd = "cd \""..require("levelhead.misc").getUserDataPath().."\""
-		local sd = love.filesystem.getSaveDirectory().."/"
-		local out1 = " 1>\""..sd.."out1.txt\" 2>\""..sd.."err1.txt\" "
-		local out2 = " 1>\""..sd.."out2.txt\" 2>\""..sd.."err2.txt\" "
-		local out3 = " 1>\""..sd.."out3.txt\" 2>\""..sd.."err3.txt\" "
-		local cmd = cdCmd..out1.." && ".."cd"..out2.." && "..listCmd..out3
-		print(cmd)
-		
-		print("----------")
-		local cli = io.popen(cmd,"r")
-		local list = cli:read("*all")
-		cli:close()
-		print(list)
-		print("----------")
-	end)
 	list:addButtonEntry("UI testing time, or WHY DOES getMinimumHeight() NOT WORK PROPERLY?!?!?!?!",function()
 		local buttons = require("ui.structure.list"):new()
 		buttons:addTextEntry(" ",0)
