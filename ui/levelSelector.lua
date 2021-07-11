@@ -1,4 +1,5 @@
 local UserData = require("levelhead.userData")
+local NFS = require("libs.nativefs")
 
 local UI = Class(require("ui.structure.proxy"))
 
@@ -46,14 +47,14 @@ function UI:initialize()
 			list:addButtonEntry(
 				"Rehash",
 				function()
-					local f = io.open(d.path,"rb")
-					local size = f:seek("end")
-					f:seek("set",0)
+					local f = NFS.newFile(d.path)
+					f:open("r")
+					local size = f:getSize()
 					local notHash = f:read(size-33)
 					--local oldHash = f:read("*a"):sub(1,-1)
 					--print(oldHash)
 					f:close()
-					f = io.open(d.path,"wb")
+					f:open(d.path,"w")
 					f:write(notHash)
 					local hash = require("levelhead.lhs").hash(notHash)
 					f:write(hash)
