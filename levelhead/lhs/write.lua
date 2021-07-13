@@ -1,4 +1,5 @@
 local P = require("levelhead.data.properties")
+local NFS = require("libs.nativefs")
 
 local LHS = {}
 
@@ -141,8 +142,12 @@ end
 function LHS:writeHash()
 	self:write(0x61)
 	--get current file contents
-	self.saveHandle:seek("set",0)
-	local contents = self.saveHandle:read("*all")
+	self.saveHandle:close()
+	self.saveHandle:open("r")
+	--self.saveHandle:seek(0)
+	local contents = self.saveHandle:read()
+	self.saveHandle:close()
+	self.saveHandle:open("a")
 	-- the cursor should be at the end again
 	self:write(self.hash(contents))
 	self:write(0)
@@ -158,8 +163,9 @@ end
 
 
 function LHS:writeAll()
-	local file, err = io.open(self.path,"wb+")
-	if err then error(err) end
+	local file = NFS.newFile(self.path)
+	local success,err = file:open("w")
+	if not success then error(err) end
 	self.saveHandle = file
 	
 	self:writeHeaders()

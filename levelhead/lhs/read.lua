@@ -2,6 +2,7 @@ local LHS = {}
 local bit = require("bit")
 
 local P = require("levelhead.data.properties")
+local NFS = require("libs.nativefs")
 
 --[[
 
@@ -13,10 +14,11 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 
 
 function LHS:loadFile(fullPath)
-	local file,err = io.open(fullPath,"rb")
-	if err then error(err) end
+	local file = NFS.newFile(fullPath)
+	local success,err = file:open("r")
+	if not success then error(err) end
 	self.path = fullPath
-	self.raw = file:read("*a")
+	self.raw = file:read()
 	file:close()
 end
 

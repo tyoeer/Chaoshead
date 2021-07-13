@@ -51,30 +51,6 @@ function UI:initialize()
 			print("No campaign.bin found!")
 		end
 	end)
-	list:addButtonEntry("Test LH folder detection",function()
-		local M = require("levelhead.misc")
-		print(M.getDataPath())
-		print(M.getUserDataPath())
-		local UD = require("levelhead.userData")
-		print("----------")
-		table.print(UD.getUserCodes())
-		print("----------")
-		local listCmd = "dir"
-		local cdCmd = "cd \""..require("levelhead.misc").getUserDataPath().."\""
-		local sd = love.filesystem.getSaveDirectory().."/"
-		local out1 = " 1>\""..sd.."out1.txt\" 2>\""..sd.."err1.txt\" "
-		local out2 = " 1>\""..sd.."out2.txt\" 2>\""..sd.."err2.txt\" "
-		local out3 = " 1>\""..sd.."out3.txt\" 2>\""..sd.."err3.txt\" "
-		local cmd = cdCmd..out1.." && ".."cd"..out2.." && "..listCmd..out3
-		print(cmd)
-		
-		print("----------")
-		local cli = io.popen(cmd,"r")
-		local list = cli:read("*all")
-		cli:close()
-		print(list)
-		print("----------")
-	end)
 	list:addButtonEntry("UI testing time, or WHY DOES getMinimumHeight() NOT WORK PROPERLY?!?!?!?!",function()
 		local buttons = require("ui.structure.list"):new()
 		buttons:addTextEntry(" ",0)
@@ -92,6 +68,38 @@ function UI:initialize()
 		end
 		buttons = require("ui.structure.scrollbar"):new(buttons)
 		ui.child.child:addChild(buttons)
+	end)
+	list:addButtonEntry("save_data change beeper (bring your own beep.wav in the chaoshead data folder)",function()
+		local NFS = require("libs.nativefs")
+		local userCodes = require("levelhead.userData").getUserCodes()
+		local dataPath = require("levelhead.misc").getUserDataPath()
+		local beep = love.audio.newSource("beep.wav","static")
+		local lastTime = 0
+		
+		local B = Class(require("ui.list.text"))
+		function B:update()
+			for _,v in ipairs(userCodes) do
+				local path = dataPath..v.."/save_data"
+				local time = NFS.getInfo(path).modtime
+				if time > lastTime then
+					lastTime = time
+					beep:stop()
+					beep:play()
+				end
+				local f = NFS.newFile(path)
+				local success,error = f:open("a")
+				if success then
+					f:close()
+				else
+					self.text = self.text .. "\n"..error
+					if not beep:isPlaying() then
+						beep:play()
+					end
+				end
+			end
+		end
+		local beepr = B:new("Will beep when a save_data gets modified. Alt+F4 to stop.",0)
+		ui:setUIModal(beepr)
 	end)
 	
 	
