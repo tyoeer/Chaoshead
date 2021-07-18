@@ -63,6 +63,27 @@ function UI:toWorldY(y)
 	return y
 end
 
+function UI:selectArea()
+	local fromX, fromY = math.floor(self.selectStartX/TILE_SIZE), math.floor(self.selectStartY/TILE_SIZE)
+	local endX, endY = self:getMouseTile()
+	self.editor:selectAddArea(
+		math.min(fromX,endX), math.min(fromY,endY),
+		math.max(fromX,endX), math.max(fromY,endY)
+	)
+	self.selectStartX = nil
+	self.selectStartY = nil
+end
+
+function UI:deselectArea()
+	local fromX, fromY = math.floor(self.selectStartX/TILE_SIZE), math.floor(self.selectStartY/TILE_SIZE)
+	local endX, endY = self:getMouseTile()
+	self.editor:deselectSubArea(
+		math.min(fromX,endX), math.min(fromY,endY),
+		math.max(fromX,endX), math.max(fromY,endY)
+	)
+	self.selectStartX = nil
+	self.selectStartY = nil
+end
 
 function UI:draw()
 	love.graphics.push()
@@ -249,9 +270,11 @@ function UI:mouseMoved(x,y,dx,dy)
 		end
 	end
 	--stop selecting when you have moved the cursor
-	if input.isActive("selectOnly","editor")
+	if (input.isActive("selectOnly","editor")
 		or input.isActive("selectAdd","editor")
 		or input.isActive("deselectSub","editor")
+		or input.isActive("deselectArea","editor"))
+		and self.selecting~="area"
 	then
 		self.selecting = false
 	end
@@ -259,11 +282,24 @@ end
 
 function UI:inputActivated(name,group, isCursorBound)
 	if group=="editor" then
-		if name=="selectOnly" or name=="selectAdd" or name=="deselectSub" then
-			self.selecting = true
-		elseif name=="selectAddArea" or name=="deselectSubArea" then
-			self.selectStartX = self:toWorldX(self:getMouseX())
-			self.selectStartY = self:toWorldY(self:getMouseY())
+		if name=="selectOnly" or name=="selectAdd" or name=="deselectSub" or name=="deselectArea" then
+			if input.isActive("selectAreaModifier","editor") then
+				self.selectStartX = self:toWorldX(self:getMouseX())
+				self.selectStartY = self:toWorldY(self:getMouseY())
+				self.selecting = "area"
+			else
+				self.selecting = true
+			end
+		elseif name=="selectAreaModifier"  then
+			if input.isActive("selectOnly","editor")
+				or input.isActive("selectAdd","editor")
+				or input.isActive("deselectSub","editor")
+				or input.isActive("deselectArea","editor")
+			then
+				self.selectStartX = self:toWorldX(self:getMouseX())
+				self.selectStartY = self:toWorldY(self:getMouseY())
+				self.selecting = "area"
+			end
 		elseif name=="resize" then
 			local cx,cy = self:posNearCorner(self:toWorldX(self:getMouseX()),self:toWorldY(self:getMouseY()))
 			if cx then
@@ -279,37 +315,37 @@ function UI:inputDeactivated(name,group, isCursorBound)
 	if group=="editor" then
 		if name=="selectOnly" then
 			if self.selecting then
+				if self.selecting=="area" then
+					self:selectArea()
+				else
+					self.editor:selectOnly(self:getMouseTile())
+				end
 				self.selecting = false
-				self.editor:selectOnly(self:getMouseTile())
 			end
 		elseif name=="selectAdd" then
 			if self.selecting then
+				if self.selecting=="area" then
+					self:selectArea()
+				else
+					self.editor:selectAdd(self:getMouseTile())
+				end
 				self.selecting = false
-				self.editor:selectAdd(self:getMouseTile())
 			end
 		elseif name=="deselectSub" then
 			if self.selecting then
+				if self.selecting=="area" then
+					self:deselectArea()
+				else
+					self.editor:deselectSub(self:getMouseTile())
+				end
 				self.selecting = false
-				self.editor:deselectSub(self:getMouseTile())
 			end
-		elseif name=="selectAddArea" then
-			local fromX, fromY = math.floor(self.selectStartX/TILE_SIZE), math.floor(self.selectStartY/TILE_SIZE)
-			local endX, endY = self:getMouseTile()
-			self.editor:selectAddArea(
-				math.min(fromX,endX), math.min(fromY,endY),
-				math.max(fromX,endX), math.max(fromY,endY)
-			)
-			self.selectStartX = nil
-			self.selectStartY = nil
-		elseif name=="deselectSubArea" then
-			local fromX, fromY = math.floor(self.selectStartX/TILE_SIZE), math.floor(self.selectStartY/TILE_SIZE)
-			local endX, endY = self:getMouseTile()
-			self.editor:deselectSubArea(
-				math.min(fromX,endX), math.min(fromY,endY),
-				math.max(fromX,endX), math.max(fromY,endY)
-			)
-			self.selectStartX = nil
-			self.selectStartY = nil
+		elseif name=="deselectArea" then
+			if self.selecting=="area" then
+				self:deselectArea()
+				self.selecting = false
+			end
+			--do nothing otherwise because this input is doubly mapped to camera.drag
 		elseif name=="resize" then
 			if self.resizing then
 				self.resizing = false

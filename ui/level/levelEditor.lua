@@ -114,9 +114,12 @@ function UI:deselectSub(tileX,tileY)
 end
 
 function UI:deselectSubArea(startX,startY,endX,endY)
+	if not self.selection then
+		return nil
+	end
 	for x = startX, endX, 1 do
 		for y = startY, endY, 1 do
-			self.selection:remove(tileX,tileY)
+			self.selection:remove(x,y)
 		end
 	end
 	if self.selection.mask.nTiles==0 then

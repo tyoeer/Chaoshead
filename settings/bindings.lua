@@ -36,8 +36,6 @@ return {
 					triggers = {
 						"key: lctrl",
 						"key: rctrl",
-						"key: lshift",
-						"key: rshift",
 					},
 				},
 			},
@@ -54,27 +52,20 @@ return {
 						"key: rctrl",
 					},
 				},
-				{
-					type = "nor",
-					triggers = {
-						"key: lshift",
-						"key: rshift",
-					},
-				},
 			},
 			isCursorBound = true,
 		},
-		selectAddArea = {
+		selectAreaModifier = {
+			type = "or",
+			triggers = {
+				"key: lshift",
+				"key: rshift",
+			},
+		},
+		deselectArea = {
 			type = "and",
 			triggers = {
-				"mouse: left",
-				{
-					type = "or",
-					triggers = {
-						"key: lshift",
-						"key: rshift",
-					},
-				},
+				"mouse: right",
 				{
 					type = "nor",
 					triggers = {
@@ -90,33 +81,6 @@ return {
 				"mouse: right",
 				{
 					type = "or",
-					triggers = {
-						"key: lctrl",
-						"key: rctrl",
-					},
-				},
-				{
-					type = "nor",
-					triggers = {
-						"key: lshift",
-						"key: rshift",
-					},
-				},
-			},
-		},
-		deselectSubArea = {
-			type = "and",
-			triggers = {
-				"mouse: right",
-				{
-					type = "or",
-					triggers = {
-						"key: lshift",
-						"key: rshift",
-					},
-				},
-				{
-					type = "nor",
 					triggers = {
 						"key: lctrl",
 						"key: rctrl",
@@ -169,25 +133,7 @@ return {
 	},
 	camera = {
 		drag = {
-			type = "or",
-			triggers = {
-				"mouse: middle",
-				{
-					type = "and",
-					triggers = {
-						"mouse: right",
-						{
-							type = "nor",
-							triggers = {
-								"lshift",
-								"rshift",
-								"lctrl",
-								"rctrl",
-							},
-						},
-					},
-				},
-			},
+			trigger = "mouse: middle",
 			isCursorBound = true,
 		}
 	}
