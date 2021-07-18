@@ -36,7 +36,7 @@ function UI:openEditor(path)
 			--print full trace to console
 			--snippet yoinked from default löve error handling
 			print((debug.traceback("Error loading level: " .. tostring(message), 1):gsub("\n[^\n]+$", "")))
-			self:displayMessage("Failed to load level!\n(Probably due to lacking Void Update support)\nError message:\n"..tostring(message))
+			self:displayMessage("Failed to load level!\nError message:\n"..tostring(message))
 		end
 	)
 	if success then
