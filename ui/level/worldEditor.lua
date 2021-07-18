@@ -9,7 +9,8 @@ function UI:initialize(editor)
 	self.cameraX = 0
 	self.cameraY = 0
 	self.zoomFactor = 1
-	self.zoomSpeed = math.sqrt(2)
+	self.zoomSpeed = settings.misc.editor.zoomSpeed
+	self.moveSpeed = settings.misc.editor.cameraMoveSpeed
 	--state stuff
 	self.selecting = false
 	self.selectionStartX = nil
@@ -83,6 +84,22 @@ function UI:deselectArea()
 	)
 	self.selectStartX = nil
 	self.selectStartY = nil
+end
+
+
+function UI:update(dt)
+	if input.isActive("up","camera") then
+		self.cameraY = self.cameraY + self.moveSpeed/self.zoomFactor
+	end
+	if input.isActive("down","camera") then
+		self.cameraY = self.cameraY - self.moveSpeed/self.zoomFactor
+	end
+	if input.isActive("left","camera") then
+		self.cameraX = self.cameraX + self.moveSpeed/self.zoomFactor
+	end
+	if input.isActive("right","camera") then
+		self.cameraX = self.cameraX - self.moveSpeed/self.zoomFactor
+	end
 end
 
 function UI:draw()

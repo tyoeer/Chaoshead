@@ -6,7 +6,9 @@ function UI:initialize(child)
 	self.x = 0
 	self.y = 0
 	self.zoomFactor = 1
-	self.zoomSpeed = math.sqrt(2)
+	--copy settings from the editor
+	self.zoomSpeed = settings.misc.editor.zoomSpeed
+	self.moveSpeed = settings.misc.editor.cameraMoveSpeed
 	self.child = child
 	child.parent = self
 	UI.super.initialize(self)
@@ -38,7 +40,20 @@ local relay = function(index)
 	end
 end
 
-relay("update")
+function UI:update()
+	if input.isActive("up","camera") then
+		self.y = self.y + self.moveSpeed/self.zoomFactor
+	end
+	if input.isActive("down","camera") then
+		self.y = self.y - self.moveSpeed/self.zoomFactor
+	end
+	if input.isActive("left","camera") then
+		self.x = self.x + self.moveSpeed/self.zoomFactor
+	end
+	if input.isActive("right","camera") then
+		self.x = self.x - self.moveSpeed/self.zoomFactor
+	end
+end
 
 function UI:draw()
 	love.graphics.push()

@@ -135,6 +135,10 @@ return {
 		drag = {
 			trigger = "mouse: middle",
 			isCursorBound = true,
-		}
+		},
+		up = "key: w",
+		down = "key: s",
+		left = "key: a",
+		right = "key: d",
 	}
 }
