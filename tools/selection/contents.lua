@@ -55,6 +55,10 @@ function C:initialize()
 	self.nBackground = 0
 	self.nPathNodes = 0
 	
+	--how many nodes of a given path we have
+	--used to keep track of when to add/remove the paths properties
+	self.pathNodeAmountMap = {}
+	
 	self.properties = {}
 	self.unknownProperties = EP:new()
 end
@@ -81,12 +85,12 @@ end
 
 function C:addForeground(obj)
 	self.foreground:add(obj)
-	self:addObjectWithProperties(obj)
+	self:addObjectProperties(obj)
 	self.nForeground = self.nForeground + 1
 end
 function C:removeForeground(obj)
 	self.foreground:remove(obj)
-	self:removeObjectWithProperties(obj)
+	self:removeObjectProperties(obj)
 	self.nForeground = self.nForeground - 1
 end
 
@@ -101,27 +105,29 @@ end
 
 function C:addPathNode(node)
 	self.pathNodes:add(node)
+	self:addPathNodeProperties(node)
 	self.nPathNodes = self.nPathNodes + 1
 end
 function C:removePathNode(node)
 	self.pathNodes:remove(node)
+	self:removePathNodeProperties(node)
 	self.nPathNodes = self.nPathNodes - 1
 end
 
 -- Property stuff
 
-function C:addObjectToPropertyList(obj,prop)
-	if not self.properties[prop] then
-		self.properties[prop] = PL:new(prop)
+function C:addThingProperties(thing)
+	for prop in thing:iterateProperties() do
+		if not self.properties[prop] then
+			self.properties[prop] = PL:new(prop)
+		end
+		self.properties[prop]:add(thing)
 	end
-	self.properties[prop]:add(obj)
 end
 
-function C:addObjectWithProperties(obj)
+function C:addObjectProperties(obj)
 	if obj:hasProperties() then
-		for prop in obj:iterateProperties() do
-			self:addObjectToPropertyList(obj,prop)
-		end
+		self:addThingProperties(obj)
 	end
 	--keep track of the ones with missing data
 	if E:hasProperties(obj.id)=="$UnknownProperties" then
@@ -129,23 +135,43 @@ function C:addObjectWithProperties(obj)
 	end
 end
 
-function C:removeObjectFromPropertyList(obj,prop)
-	self.properties[prop]:remove(obj)
-	--check if the pool is empty
-	if self.properties[prop]:isEmpty() then
-		self.properties[prop] = nil
+function C:addPathNodeProperties(node)
+	local path = node.path
+	if self.pathNodeAmountMap[path] then
+		self.pathNodeAmountMap[path] = self.pathNodeAmountMap[path] + 1
+	else
+		self.pathNodeAmountMap[path] = 1
+		self:addThingProperties(path)
 	end
 end
 
-function C:removeObjectWithProperties(obj)
-	if obj:hasProperties() then
-		for prop in obj:iterateProperties() do
-			self:removeObjectFromPropertyList(obj,prop)
+
+function C:removeThingProperties(thing)
+	for prop in thing:iterateProperties() do
+		self.properties[prop]:remove(thing)
+		if self.properties[prop]:isEmpty() then
+			self.properties[prop] = nil
 		end
+	end
+end
+
+function C:removeObjectProperties(obj)
+	if obj:hasProperties() then
+		self:removeThingProperties(obj)
 	end
 	--keep track of the ones with missing data
 	if E:hasProperties(obj.id)=="$UnknownProperties" then
 		self.unknownProperties:remove(obj)
+	end
+end
+
+function C:removePathNodeProperties(node)
+	local path = node.path
+	if self.pathNodeAmountMap[path]==1 then
+		self:removeThingProperties(path)
+		self.pathNodeAmountMap[path] = nil
+	else
+		self.pathNodeAmountMap[path] = self.pathNodeAmountMap[path] - 1
 	end
 end
 
