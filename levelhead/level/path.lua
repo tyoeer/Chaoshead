@@ -4,7 +4,7 @@ local PN = require("levelhead.level.pathNode")
 local P = Class("Path")
 
 local CLOSED_PROPERTY_ID = 38
---to revise these, change all properties from their default and get their hex ids from the hexs inspector
+--to revise these, change all properties from their default and get their hex ids from the hex-inspector
 local PATH_PROPERTIES = {37,38,39,49,60,61,71}
 local PROPERTIES_LOOKUP = {}
 
@@ -156,7 +156,11 @@ local function processSelector(selector)
 end
 
 function P:iterateProperties()
-	return ipairs(PATH_PROPERTIES)
+	local i = 0
+	return function(path)
+		i = i + 1
+		return PATH_PROPERTIES[i]
+	end, self, nil
 end
 
 function P:setPropertyRaw(id, value)
