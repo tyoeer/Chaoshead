@@ -55,6 +55,20 @@ return {
 			},
 			isCursorBound = true,
 		},
+		selectAll = {
+			type = "and",
+			triggers = {
+				"key: a",
+				{
+					type = "or",
+					triggers = {
+						"key: lctrl",
+						"key: rctrl",
+					},
+				},
+			},
+		},
+		
 		selectAreaModifier = {
 			type = "or",
 			triggers = {
@@ -62,6 +76,7 @@ return {
 				"key: rshift",
 			},
 		},
+		
 		deselectArea = {
 			type = "and",
 			triggers = {
@@ -136,9 +151,57 @@ return {
 			trigger = "mouse: middle",
 			isCursorBound = true,
 		},
-		up = "key: w",
-		down = "key: s",
-		left = "key: a",
-		right = "key: d",
+		up = {
+			type = "and",
+				triggers = {
+				"key: w",
+				{
+					type = "nor",
+					triggers = {
+						"key: lctrl",
+						"key: rctrl",
+					},
+				},
+			},
+		},
+		down = {
+			type = "and",
+				triggers = {
+				"key: s",
+				{
+					type = "nor",
+					triggers = {
+						"key: lctrl",
+						"key: rctrl",
+					},
+				},
+			},
+		},
+		left = {
+			type = "and",
+				triggers = {
+				"key: a",
+				{
+					type = "nor",
+					triggers = {
+						"key: lctrl",
+						"key: rctrl",
+					},
+				},
+			},
+		},
+		right = {
+			type = "and",
+				triggers = {
+				"key: d",
+				{
+					type = "nor",
+					triggers = {
+						"key: lctrl",
+						"key: rctrl",
+					},
+				},
+			},
+		},
 	}
 }
