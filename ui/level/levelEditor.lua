@@ -102,6 +102,29 @@ function UI:selectAddArea(startX,startY,endX,endY)
 	self.selectionDetails:reload()
 end
 
+function UI:selectAll()
+	if not self.selection then
+		self:newSelection()
+	end
+	--select everything in bounds
+	for x=self.level.left, self.level.right, 1 do
+		for y=self.level.top, self.level.bottom, 1 do
+			self.selection:add(x,y)
+		end
+	end
+	--select all the objects (they can be out-of-bounds)
+	for obj in self.level.objects:iterate() do
+		self.selection:add(obj.x,obj.y)
+	end
+	--select all the path nodes (they can be out-of-bounds)
+	for path in self.level.paths:iterate() do
+		for node in path:iterateNodes() do
+			self.selection:add(node.x,node.y)
+		end
+	end
+	self.selectionDetails:reload()
+end
+
 function UI:deselectSub(tileX,tileY)
 	if self.selection then
 		self.selection:remove(tileX,tileY)
@@ -183,6 +206,8 @@ function UI:inputActivated(name,group, isCursorBound)
 			self:deleteSelection()
 		elseif name=="deselectAll" then
 			self:deselectAll()
+		elseif name=="selectAll" then
+			self:selectAll()
 		else
 			self.child:inputActivated(name,group, isCursorBound)
 		end
