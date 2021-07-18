@@ -12,13 +12,13 @@ function UI:initialize(child)
 	self.childOffset = 0
 	
 	self.upButton = B:new("Λ", function()
-		self:scrollToOffset(self.childOffset - settings.dim.misc.scrollbar.buttonScrollSpeed)
+		self:scrollToOffset(self.childOffset - settings.misc.scrollbar.buttonScrollSpeed)
 	end, 7,true)
 	self.upButton.parent = self
 	self.upButton:resize(self.scrollbarWidth, self.buttonHeight)
 	
 	self.downButton = B:new("V", function()
-		self:scrollToOffset(self.childOffset + settings.dim.misc.scrollbar.buttonScrollSpeed)
+		self:scrollToOffset(self.childOffset + settings.misc.scrollbar.buttonScrollSpeed)
 	end, 7,true)
 	self.downButton.parent = self
 	self.downButton:resize(self.scrollbarWidth, self.buttonHeight)
@@ -173,7 +173,7 @@ function UI:mouseMoved(x,y,dx,dy)
 end
 
 function UI:wheelMoved(dx,dy)
-	self:scrollToOffset(self.childOffset + -dy*settings.dim.misc.scrollbar.mouseWheelScrollSpeed)
+	self:scrollToOffset(self.childOffset + -dy*settings.misc.scrollbar.mouseWheelScrollSpeed)
 end
 
 return UI

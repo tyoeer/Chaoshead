@@ -9,4 +9,8 @@ return {
 		zoomSpeed = math.sqrt(2),
 		cameraMoveSpeed = 25,
 	},
+	scrollbar = {
+		buttonScrollSpeed = 100,
+		mouseWheelScrollSpeed = 100,
+	},
 }
