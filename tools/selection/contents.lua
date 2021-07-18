@@ -59,14 +59,22 @@ function C:initialize()
 	self.unknownProperties = EP:new()
 end
 
-local plurals = {
-	foreground = "nForeground",
-	background = "nBackground",
-	pathNodes = "nPathNodes",
-}
-function C:clearLayer(layer)
-	self[layer] = EP:new()
-	self[plurals[layer]] = 0
+function C:removeLayer(layer)
+	if layer=="foreground" then
+		for obj in self.foreground:iterate() do
+			self:removeObjectWithProperties(obj)
+		end
+		self.nForeground = 0
+		self.foreground = nil
+	elseif layer=="background" then
+		self.nBackground = 0
+		self.background = nil
+	elseif layer=="pathNodes" then
+		self.nPathNodes = 0
+		self.pathNodes = nil
+	else
+		error(string.format("Invalid layer: %q",layer))
+	end
 end
 
 -- Layer-related Adding/Removing
