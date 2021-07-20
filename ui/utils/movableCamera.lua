@@ -42,16 +42,16 @@ end
 
 function UI:update()
 	if input.isActive("up","camera") then
-		self.y = self.y + self.moveSpeed/self.zoomFactor
+		self.y = self.y + self.moveSpeed/self.zoomFactor*dt
 	end
 	if input.isActive("down","camera") then
-		self.y = self.y - self.moveSpeed/self.zoomFactor
+		self.y = self.y - self.moveSpeed/self.zoomFactor*dt
 	end
 	if input.isActive("left","camera") then
-		self.x = self.x + self.moveSpeed/self.zoomFactor
+		self.x = self.x + self.moveSpeed/self.zoomFactor*dt
 	end
 	if input.isActive("right","camera") then
-		self.x = self.x - self.moveSpeed/self.zoomFactor
+		self.x = self.x - self.moveSpeed/self.zoomFactor*dt
 	end
 end
 
