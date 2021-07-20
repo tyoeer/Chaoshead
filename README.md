@@ -42,11 +42,21 @@ Choashead Awareness Day is annually on february 27, in order to spread awareness
 
 ## Scripting
 
-Chasohead executes from the scripts folder, which can be opened from the Misc. tab.
+Chaoshead executes from the scripts folder, which can be opened from the Misc. tab.
 When it says running scripts without sandbox is dangerous, it mostly means that you shouldn't randomly trust script from others,
 making a script yourself will most likely be alright.
-Scripts get provided access to the level trough `level` global.
-For documentation on how to use the `level` global and other stuff, have a look at the [docs](docs/) folder.
+Scripts get provided access to the following globals:
+- `level`: The **Level** opened in the editor. You usually want to modify this one (using the provided methods).
+  If you overwrite it with a new value though, Chaoshead will use that one.
+- `selection`: The selection in the current editor, `nil` if nothing is selected. Has the following fields:
+  - `mask`: The **SelectionMask** that shows which area of the level is selected.
+    If you overwrite it with a new value, Chaoshead will use that one (modifying an existing one is probably easier though).
+    If the `selection` global is not set at first, you can set it to a table yourself and then set the `mask` field to a new **SelectionMask**.
+  - `contents`: The **SelectionContents** that have all the objects in the current selection.
+    Does not update if you change the level or the mask.
+    Modifications and overwriting get ignored (the new contents get constructed based on the new mask).
+
+For documentation on how to use these globals and other stuff, have a look at the [docs](docs/) folder.
 
 ## Useful links
 
@@ -64,7 +74,7 @@ https://docs.google.com/spreadsheets/d/1wongis8qvVj3-cHEa4HhmzpL1XkP1TXjWYjV5Rob
 ## Contributing is easy
 
 There's always data that needs collecting, which just involves editing some stuff in Levelhead,
-and looking at it in Chaoshead to get the internal ID's and stuff.
+and looking at it in Chaoshead to get the internal IDs and stuff.
 There's also still parts that need to be reverse engineered in which case the Hex Inpector is your friend.
 Though if you want to help program this thing, that's also possible.
 

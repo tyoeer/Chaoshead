@@ -2,11 +2,11 @@
 
 Represents a level or world.
 Two variations exist: __Level__ and __World__: level = world + settings.
-Foreground and backgrounds objects can overlap, and are therefore split accross different 'layers'.
+Foreground and backgrounds objects can overlap, and are therefore split across different 'layers'.
 Worlds allow objects to be placed outside their bounds, but those can't be saved.
 The x and y axes increase towards the right and bottom respectively.
-See the scripting documentation (in the README) for how to access the existing level when in a script
-(TL;DR use the level global).
+See the scripting documentation (in the README) for how to access the existing __Level__ when in a script
+(TL;DR use the `level` global).
 
 ## Creation
 
