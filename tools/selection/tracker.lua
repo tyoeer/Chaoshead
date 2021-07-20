@@ -3,12 +3,40 @@ local Contents = require("tools.selection.contents")
 
 local T = Class()
 
-function T:initialize(level)
+function T:initialize(level,mask)
 	self.level = level
-	self.mask = Mask:new()
 	self.contents = Contents:new()
+	if mask then
+		self.mask = mask
+		self:fillContentsFromMask()
+	else
+		self.mask = Mask:new()
+	end
 end
 
+function T:fillContentsFromMask()
+	if self:hasLayer("pathNodes") then
+		for path in self.level.paths:iterate() do
+			for node in path:iterateNodes() do
+				if self.mask:has(node.x, node.y) then
+					self.contents:addPathNode(node)
+				end
+			end
+		end
+	end
+	for obj in self.level.objects:iterate() do
+		if self.mask:has(obj.x, obj.y) then
+			if self:hasLayer(obj.layer) and self.mask:has(obj.x, obj.y) then
+				if obj.layer=="foreground" then
+					self.contents:addForeground(obj)
+				else
+					--object is in the background layer
+					self.contents:addBackground(obj)
+				end
+			end
+		end
+	end
+end
 
 function T:draw(sx,sy,ex,ey)
 	self.mask:draw(sx,sy,ex,ey)

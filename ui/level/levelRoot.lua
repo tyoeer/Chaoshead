@@ -89,8 +89,18 @@ end
 
 function UI:runScript(path,disableSandbox)
 	if disableSandbox then
-		local level = require("script").runDangerously(path, self.level)
+		local sel
+		if self.levelEditor.selection then
+			sel = {
+				mask = self.levelEditor.selection.mask,
+				contents = self.levelEditor.selection.contents,
+			}
+		end
+		local level, selection = require("script").runDangerously(path, self.level, sel)
 		self:reload(level)
+		if selection and selection.mask then
+			self.levelEditor:newSelection(selection.mask)
+		end
 	else
 		error("Tried to run script in sandboxed mode, which is currently not yet implemented.")
 	end

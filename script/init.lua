@@ -6,7 +6,7 @@ if not love.filesystem.getInfo(S.folder) then
 	love.filesystem.createDirectory(S.folder)
 end
 
-function S.runDangerously(path, level)
+function S.runDangerously(path, level, selection)
 	local scriptText = love.filesystem.read(path)
 	local f, err = loadstring(scriptText)
 	if not f then
@@ -14,13 +14,17 @@ function S.runDangerously(path, level)
 	end
 	--provide the level as a global
 	local oldLevel = _G.level
+	local oldSelection = _G.selection
 	_G.level = level
+	_G.selection = selection
 	
 	f()
 	
 	level = _G.level
+	selection = _G.selection
 	_G.level = oldLevel
-	return level
+	_G.selection = oldSelection
+	return level, selection
 end
 
 return S

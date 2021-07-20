@@ -56,11 +56,13 @@ end
 
 -- private editor stuff
 
-function UI:newSelection()
-	self.selection = Selection:new(self.level)
+--mask is optional
+function UI:newSelection(mask)
+	self.selection = Selection:new(self.level,mask)
 	self.selectionDetails = SelectionDetails:new(self.selection)
 	self:addTab(self.selectionDetails)
 end
+
 
 -- public editor stuff
 
