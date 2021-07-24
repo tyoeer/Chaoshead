@@ -147,14 +147,14 @@ function LHS:parsePaths(w)
 	return idMap
 end
 
-function LHS:parsePathProperties(idMap)
+function LHS:parsePathProperties(pathIdMap)
 	local raw = self.rawContentEntries.pathProperties
 	for i=1,raw.nEntries,1 do
 		local entry = raw.entries[i]
 		for j=1,entry.amount,1 do
 			local subentry = entry.entries[j]
 			for _,v in ipairs(subentry.entries) do
-				idMap[v]:setPropertyRaw(entry.id, subentry.value)
+				pathIdMap[v]:setPropertyRaw(entry.id, subentry.value)
 			end
 		end
 	end
