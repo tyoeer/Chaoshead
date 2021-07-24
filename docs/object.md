@@ -20,26 +20,28 @@ object = require("levelhead.level.object"):new(id)
 ```Lua
 object:set[property name](value)
 ```
-- property name: concatanated name of the poperty you're setting, where each word starts with with an uppercase letter
+- property name: concatenated name of the property you're setting, where each word starts with with an uppercase letter
 - value: the new value of said property
 
 ```Lua
-object:setProperty(id, mapping)
+object:setProperty(selector, mapping)
 ```
-- id: the id/name of the property to change
+- selector: the numerical id or properly capitalized name of the property to change
 - mapping: the new mapped value of said property
 
 ```Lua
 object:setPropertyRaw(id, value)
 ```
-- id: the id/name of the property to change
+- id: the numerical of the property to change
 - value: the new raw value of said property
+
+_WARNING_: this bypasses important checks. Only use this if you know what you're doing.
 
 #### Chaining
 
 To make setting multiple properties easier and cleaner, all property setters return the object, usage looks like:
 ```Lua
-object:setProperty(id, mapping)
+object:setProperty(selector, mapping)
       :setPropertyRaw(id, value)
       :set[property name](value)
 ```
@@ -49,20 +51,22 @@ object:setProperty(id, mapping)
 ```Lua
 value = object:get[property name]()
 ```
-- property name: concatanated name of the poperty you're getting, where each word starts with with an uppercase letter
+- property name: concatenated name of the property you're getting, where each word starts with with an uppercase letter
 - value: the value of said property
 
 ```Lua
-mapping = object:getProperty(id)
+mapping = object:getProperty(selector)
 ```
-- id: the id/name of the property to retrieve
+- selector: the numerical id or properly capitalized name of the property to retrieve
 - mapping: the mapped value of said property
 
 ```Lua
 value = object:getPropertyRaw(id)
 ```
-- id: the id/name of the property to retrieve
+- id: the numerical id of the property to retrieve
 - value: the raw value of said property
+
+_WARNING_: this bypasses important checks. Only use this if you know what you're doing.
 
 ### Meta
 
@@ -77,9 +81,9 @@ for propertyId in object:iterateProperties() do
 Iterates over all the properties this object has.
 
 ```Lua
-has = object:hasProperty(propId)
+has = object:hasProperty(id)
 ```
-- id: the _numerical id_ of the property to check
+- id: the numerical id of the property to check
 - has: whether or not this objects has that property
 
 ## Contained Objects

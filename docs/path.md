@@ -55,45 +55,49 @@ path:append(x,y)
 ```Lua
 path:set[property name](value)
 ```
-- property name: concatanated name of the poperty you're setting, where each new word starts with with an uppercase letter
+- property name: concatenated name of the property you're setting, where each new word starts with with an uppercase letter
 - value: the new value of said property
 
 ```Lua
 value = path:get[property name]()
 ```
-- property name: concatanated name of the poperty you're getting, where each new word starts with with an uppercase letter
+- property name: concatenated name of the property you're getting, where each new word starts with with an uppercase letter
 - value: the value of said property
 
 ```Lua
-path:setProperty(id, mapping)
+path:setProperty(selector, mapping)
 ```
-- id: the id/name of the property to change
+- selector: the numerical id or properly capitalized name of the property to change
 - mapping: the new mapped value of said property
 
 ```Lua
-mapping = path:getProperty(id)
+mapping = path:getProperty(selector)
 ```
-- id: the id/name of the property to retrieve
+- selector: the numerical id or properly capitalized name of the property to retrieve
 - mapping: the mapped value of said property
 
 ```Lua
 path:setPropertyRaw(id, value)
 ```
-- id: the id/name of the property to change
+- id: the numerical id of the property to change
 - value: the new raw value of said property
+
+_WARNING_: this bypasses important checks. Only use this if you know what you're doing.
 
 ```Lua
 value = path:getPropertyRaw(id)
 ```
-- id: the id/name of the property to retrieve
+- id: the numerical id of the property to retrieve
 - value: the raw value of said property
+
+_WARNING_: this bypasses important checks. Only use this if you know what you're doing.
 
 ### Chaining
 
 To make setting multiple properties easier and cleaner, all property setters return the path, usage looks like:
 
 ```Lua
-path:setProperty(id, mapping)
+path:setProperty(selector, mapping)
     :setPropertyRaw(id, value)
     :set[property name](value)
 ```
