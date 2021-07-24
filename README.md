@@ -16,7 +16,7 @@ Binary release that can be run without manually installing LÖVE can be found
 
 If you have any questions, feel free to ask.
 
-Choashead Awareness Day is annually on february 27, in order to spread awareness about Chaoshead updates.
+Chaoshead Awareness Day is annually on february 27, in order to spread awareness about Chaoshead updates.
 
 ### Currently not supported
 
@@ -25,6 +25,9 @@ Choashead Awareness Day is annually on february 27, in order to spread awareness
   - Unsupported objects will only error when placed in a row or column, otherwise they will simply show up with only their internal ID
 - Multiple path nodes in the same tile
   - While they do work in Levelhead, the visual bugs show that that isn't intended.
+- Setting properties on objects that don't have them
+  - I think that making property handling handle both known properties as in the data and unknown ones set at runtime simultaneously is more effort than it's worth
+	- Workaround for objects/elements: remove data about which properties the element has, it will fall back on the ones specifically set
 - Saving properties set to NaN
   - Levelhead doesn't even load them
 	- I felt like documenting this somewhere, and this was the best place I could think of
