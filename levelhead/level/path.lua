@@ -144,12 +144,12 @@ do
 end
 
 local function processSelector(selector)
-	if type(id)=="string" then
+	if type(selector)=="string" then
 		local nId = PROPERTIES_LOOKUP[ PROP:reduceSelector(selector) ]
 		if nId then
 			return nId
 		else
-			error(string.format("Paths don't have property %q!",id),3)
+			error(string.format("Paths don't have property %q!",selector),3)
 		end
 	else
 		return selector
@@ -196,7 +196,7 @@ function P:setProperty(id, value)
 	end
 	id2 = processSelector(id)
 	if not self:hasProperty(id2) then
-		error(string.format("Paths don't have a property %q (%i) to set!",PROP:getName(id),id),2)
+		error(string.format("Paths don't have a property %q (%i) to set!",PROP:getName(id2),id2),2)
 	end
 	self:setPropertyRaw(id2, PROP:mappingToValue(id2,value))
 	return self
@@ -205,7 +205,7 @@ end
 function P:getProperty(id)
 	id2 = processSelector(id)
 	if not self:hasProperty(id2) then
-		error(string.format("Paths don't have a property %q (%i) to get!",PROP:getName(id),id),2)
+		error(string.format("Paths don't have a property %q (%i) to get!",PROP:getName(id2),id2),2)
 	end
 	return PROP:valueToMapping(id2, self:getPropertyRaw(id2))
 end
