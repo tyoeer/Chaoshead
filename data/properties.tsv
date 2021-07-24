@@ -73,7 +73,7 @@ Gate Style	70	#46	A		0	0	2	Simple	!	Purge Powerups	Purge Items	Purge All	!	!	!	!
 Inactive Speed	71	#47	B		0	-600	600	None									Path	
 Rotation Style	72	#48	A		0	0	1	Simple	!	Spin	Swing	!	!	!	!	!	(Trig)blaster, Burny Whirler, Spike Chainer	
 Swing Degrees	73	#49	B		90	0	90	None									(Trig)blaster, Burny Whirler, Spike Chainer	
-Swing Speed	74	#4A	A		-100	50	100	None									Burny Whirler, Spike Chainer	
+Swing Speed	74	#4A	D		50	-100	100	None									Burny Whirler, Spike Chainer	
 Swing Time Offset	75	#4B	C		0	0	30	None									(Trig)blaster, Burny Whirler, Spike Chainer	
 Muted	76	#4C	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	Pressure Switch, Clock Switch, ...	
 Style	77	#4D	A		0	0	1	Simple	!	Normal	Enraged	!	!	!	!	!	Cromblers	
