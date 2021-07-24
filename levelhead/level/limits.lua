@@ -63,7 +63,6 @@ return {
 			check = function(level)
 				--objects
 				for obj in level.objects:iterate() do
-					print(obj,obj.iterateProperties)
 					for prop in obj:iterateProperties() do
 						local sf = P:getSaveFormat(prop)
 						if sf=="$UnknownSaveFormat" then
@@ -102,7 +101,7 @@ return {
 					elseif sf=="C" then
 						min = -math.huge
 						max = math.huge
-					elseif s=="D" then
+					elseif sf=="D" then
 						min = -128
 						max = 127
 					else
