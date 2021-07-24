@@ -55,7 +55,7 @@ function E:buildPropertyIDMap(element)
 	return out
 end
 
---uses reduced selectors
+--uses reduced propertySelector
 -- returns nil on unknown properties data instead of a $ error string
 function E:getPropertyID(elementSelector,propertySelector)
 	local row = self:getRow(elementSelector)
