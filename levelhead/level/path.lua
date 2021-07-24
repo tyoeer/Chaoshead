@@ -135,6 +135,7 @@ end
 
 -- properties
 -- similiar to object properties, but objects have more code to deal with unknown properties data
+
 --build lookup table
 do
 	for _,property in ipairs(PATH_PROPERTIES) do
@@ -163,6 +164,16 @@ function P:iterateProperties()
 	end, self, nil
 end
 
+function P:hasProperty(prop)
+	for prop2 in self:iterateProperties() do
+		if prop == prop2 then
+			return true
+		end
+	end
+	return false
+end
+
+
 function P:setPropertyRaw(id, value)
 	self.properties[id] = value
 	if id==CLOSED_PROPERTY_ID then --closed property
@@ -183,14 +194,20 @@ function P:setProperty(id, value)
 	if value==nil then
 		error(string.format("Can't set property %q to nil!",id),2)
 	end
-	id = processSelector(id)
-	self:setPropertyRaw(id, PROP:mappingToValue(id,value))
+	id2 = processSelector(id)
+	if not self:hasProperty(id2) then
+		error(string.format("Paths don't have a property %q (%i) to set!",PROP:getName(id),id),2)
+	end
+	self:setPropertyRaw(id2, PROP:mappingToValue(id2,value))
 	return self
 end
 
 function P:getProperty(id)
-	id = processSelector(id)
-	return PROP:valueToMapping(id, self:getPropertyRaw(id))
+	id2 = processSelector(id)
+	if not self:hasProperty(id2) then
+		error(string.format("Paths don't have a property %q (%i) to get!",PROP:getName(id),id),2)
+	end
+	return PROP:valueToMapping(id2, self:getPropertyRaw(id2))
 end
 
 function P:__index(key)

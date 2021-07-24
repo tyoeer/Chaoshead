@@ -114,6 +114,15 @@ function OBJ:iterateProperties()
 	end
 end
 
+function OBJ:hasProperty(prop)
+	for prop2 in self:iterateProperties() do
+		if prop == prop2 then
+			return true
+		end
+	end
+	return false
+end
+
 
 function OBJ:setPropertyRaw(id, value)
 	self.properties[id] = value
@@ -168,6 +177,15 @@ function OBJ:setProperty(id, value)
 			--property has been set, cancel execution and allow method chaining
 			return self
 		end
+	elseif type(id)=="number" then
+		if E:hasProperties(self.id)~="$UnknownProperties" then
+			--properties are known, make sure this object has the property attempted to set
+			if not self:hasProperty(id) then
+				error(string.format("Element %q doesn't have a property %q (%i) to set!",self:getName(),P:getName(id),id),2)
+			end
+		end
+	else
+		error(string.format("Property selector has invalid type %q!",type(id)),2)
 	end
 	self:setPropertyRaw(id, P:mappingToValue(id,value))
 	return self
@@ -209,6 +227,15 @@ function OBJ:getProperty(id)
 				error(string.format("Property selector %q for element %q is not concise enough to return a value! (consider adding property data)",id,self:getName()))
 			end
 		end
+	elseif type(id)=="number" then
+		if E:hasProperties(self.id)~="$UnknownProperties" then
+			--properties are known, make sure this object has the property attempted to get
+			if not self:hasProperty(id) then
+				error(string.format("Element %q doesn't have a property %q (%i) to get!",self:getName(),P:getName(id),id),2)
+			end
+		end
+	else
+		error(string.format("Property selector has invalid type %q!",type(id)),2)
 	end
 	return P:valueToMapping(id,self:getPropertyRaw(id) or P:getDefault(id))
 end

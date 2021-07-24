@@ -101,9 +101,15 @@ path:setProperty(id, mapping)
 ### Meta
 
 ```Lua
-for propertyId in object:iterateProperties() do
+for propertyId in path:iterateProperties() do
 ```
 Iterates over all the properties this object has.
+
+```Lua
+has = path:hasProperty(propId)
+```
+- id: the _numerical id_ of the property to check
+- has: whether or not paths have that property
 
 ## Info
 

@@ -76,6 +76,12 @@ for propertyId in object:iterateProperties() do
 ```
 Iterates over all the properties this object has.
 
+```Lua
+has = object:hasProperty(propId)
+```
+- id: the _numerical id_ of the property to check
+- has: whether or not this objects has that property
+
 ## Contained Objects
 
 ```Lua
