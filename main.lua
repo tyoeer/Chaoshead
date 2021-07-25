@@ -75,6 +75,6 @@ end
 function love.mousemoved(x, y, dx, dy)
 	ui:mouseMoved(x, y, dx, dy)
 end
-function love.wheelmoved(x, y)
-	ui:wheelMoved(x,y)
+function love.wheelmoved(dx, dy)
+	ui:wheelMoved(dx,dy)
 end

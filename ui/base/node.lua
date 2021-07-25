@@ -24,6 +24,7 @@ function UI:getMousePos()
 end
 
 --actions on this UI to be called by it's parent
+--both of these should be called once before this UI is fed any events
 
 function UI:resize(width,height)
 	self.width = width
@@ -50,6 +51,6 @@ function UI:inputDeactivated(name,group,isCursorBound) end
 function UI:textInput(text) end
 
 function UI:mouseMoved(x,y, dx,dy) end
-function UI:wheelMoved(x,y) end
+function UI:wheelMoved(dx,dy) end
 
 return UI
