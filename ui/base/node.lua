@@ -42,7 +42,7 @@ function UI:draw() end
 
 function UI:focus(hasFocus) end
 function UI:visible(isVisible) end
-function UI:resize(width,height) end
+function UI:resized(width,height) end
 
 function UI:inputActivated(name,group,isCursorBound) end
 function UI:inputDeactivated(name,group,isCursorBound) end
