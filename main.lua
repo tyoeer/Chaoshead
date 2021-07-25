@@ -21,8 +21,9 @@ function love.load(arg)
 	love.window.maximize()
 	
 	--build ui
-	ui = require("ui.chaoshead"):new(love.graphics.getWidth(), love.graphics.getHeight())
-	
+	--ui = require("ui.chaoshead"):new(love.graphics.getWidth(), love.graphics.getHeight())
+	ui = require("ui.widgets.text"):new("Hello, UI!")
+	ui:resize(love.graphics.getWidth(), love.graphics.getHeight())
 	--bind ui and input
 	input.parseActions(settings.bindings)
 	input.inputActivated = function(...)
@@ -49,7 +50,7 @@ function love.visible(visible)
 	ui:visible(visible)
 end
 function love.resize(w, h)
-	ui:resize(w,h)
+	ui:resized(w,h)
 end
 
 function love.keypressed(key, scancode, isrepeat)
