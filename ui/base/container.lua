@@ -1,7 +1,7 @@
-local UI = Class(require("ui.base.node"),"UIContainer")
+local UI = Class("UIContainer",require("ui.base.node"))
 
 function UI:initialize()
-	UI.super.initialise(self)
+	UI.super.initialize(self)
 	self.children = {}
 end
 
@@ -56,6 +56,7 @@ function UI:draw()
 		end
 	end
 end
+function UI:onDraw() end
 
 rAll("focus")
 rAll("visible")
@@ -75,6 +76,7 @@ function UI:inputActivated(name,group, isCursorBound)
 		end
 	end
 end
+function UI:onInputActivated() end
 function UI:inputDeactivated(name,group, isCursorBound)
 	if not self:onInputDeactivated(name,group, isCursorBound) then
 		if isCursorBound then
@@ -89,6 +91,7 @@ function UI:inputDeactivated(name,group, isCursorBound)
 		end
 	end
 end
+function UI:onInputDeactivated() end
 
 rAll("textInput")
 
@@ -105,6 +108,7 @@ function UI:mouseMoved(x,y, dx,dy)
 		end
 	end
 end
+function UI:onMouseMoved() end
 function UI:wheelMoved(...)
 	if not self:onWheelMoved(...) then
 		local child = self:findChildAt(self:getMousePos())
@@ -113,5 +117,6 @@ function UI:wheelMoved(...)
 		end
 	end
 end
+function UI:onWheelMoved() end
 
 return UI

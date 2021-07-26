@@ -1,6 +1,6 @@
 local UI = Class("UINode")
 
-function UI:intialize()
+function UI:initialize()
 	-- it's parent
 	--self.parent
 	--following values are stubbed so UI nodes don't have to be worried about whether they're moved/resized yet
