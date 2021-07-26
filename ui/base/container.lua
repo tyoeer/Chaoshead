@@ -5,6 +5,19 @@ function UI:initialize()
 	self.children = {}
 end
 
+function UI:addChild(child)
+	table.insert(self.children,child)
+end
+
+function UI:removeChild(toRemove)
+	for i,child in ipairs(self.children) do
+		if child==toRemove then
+			table.remove(self.children,i)
+			break
+		end
+	end
+end
+
 function UI:findChildAt(x,y)
 	for _,child in ipairs(self.children) do
 		if x >= child.x and y >= child.y and x < child.x+child.width and y < child.y+child.height then
@@ -26,8 +39,6 @@ local function rAll(event)
 	--stub the hook
 	UI[hook] = function() end
 end
-
-
 
 rAll("update")
 function UI:draw()
