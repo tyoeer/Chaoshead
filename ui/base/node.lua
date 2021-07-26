@@ -3,12 +3,15 @@ local UI = Class("UINode")
 function UI:intialize()
 	-- it's parent
 	--self.parent
+	--following values are stubbed so UI nodes don't have to be worried about whether they're moved/resized yet
 	-- position relative to it's parent:
-	--self.x
-	--self.y
+	self.x = 0
+	self.y = 0
 	-- display size
-	--self.width
-	--self.height
+	-- stubbing using (-1,-1) leads to bugs
+	-- (scrollbar defaulted to the bottom because the negative value got it to think it had scrolled to far)
+	self.width = math.huge
+	self.height = math.huge
 end
 
 function UI:getMouseX()
@@ -24,7 +27,6 @@ function UI:getMousePos()
 end
 
 --actions on this UI to be called by it's parent
---both of these should be called once before this UI is fed any events
 
 function UI:resize(width,height)
 	self.width = width
