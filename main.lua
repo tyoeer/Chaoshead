@@ -22,7 +22,9 @@ function love.load(arg)
 	
 	--build ui
 	--ui = require("ui.chaoshead"):new(love.graphics.getWidth(), love.graphics.getHeight())
-	ui = require("ui.widgets.text"):new("Hello, UI!")
+	local l = require("ui.widgets.text"):new("Hello, left!")
+	local r = require("ui.widgets.text"):new("Hello, right!")
+	ui = require("ui.layout.horDivide"):new(l,r)
 	ui:resize(love.graphics.getWidth(), love.graphics.getHeight())
 	--bind ui and input
 	input.parseActions(settings.bindings)
