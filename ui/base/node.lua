@@ -31,6 +31,7 @@ end
 function UI:resize(width,height)
 	self.width = width
 	self.height = height
+	self:resized(width,height)
 end
 
 function UI:move(x,y)

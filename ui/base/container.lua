@@ -60,7 +60,9 @@ function UI:onDraw() end
 
 rAll("focus")
 rAll("visible")
-rAll("resized")
+--this events should be propagated be resizing children, not automatically
+--in most cases children should be a different size than their parent
+--rAll("resized")
 
 function UI:inputActivated(name,group, isCursorBound)
 	if not self:onInputActivated(name,group, isCursorBound) then

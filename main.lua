@@ -52,7 +52,7 @@ function love.visible(visible)
 	ui:visible(visible)
 end
 function love.resize(w, h)
-	ui:resized(w,h)
+	ui:resize(w,h)
 end
 
 function love.keypressed(key, scancode, isrepeat)

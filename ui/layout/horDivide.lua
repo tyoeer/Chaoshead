@@ -73,7 +73,7 @@ function UI:onDraw()
 	)
 end
 
-function UI:onResized(w,h)
+function UI:resized(w,h)
 	--reset divisionX and child sizes
 	self:setDivisionRatio(self.divisionRatio)
 end
