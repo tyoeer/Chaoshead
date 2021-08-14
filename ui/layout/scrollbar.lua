@@ -1,3 +1,4 @@
+local Text = require("ui.widgets.text")
 local Button = require("ui.widgets.button")
 
 local UI = Class(require("ui.base.container"))
@@ -13,19 +14,19 @@ function UI:initialize(contents)
 	self.contents = contents
 	self:addChild(contents)
 	
-	self.upButton = Button:new("Λ", function()
+	self.upButton = Button:new(Text:new("Λ",0,"center","center"), function()
 		self:scrollToOffset(self.contentOffset - settings.misc.scrollbar.buttonScrollSpeed)
-	end, 7)
+	end, 0)
 	self:addChild(self.upButton)
 	self.upButton:resize(settings.dim.misc.scrollbar.width, settings.dim.misc.scrollbar.buttonHeight)
 	
-	self.downButton = Button:new("V", function()
+	self.downButton = Button:new(Text:new("V",0,"center","center"), function()
 		self:scrollToOffset(self.contentOffset + settings.misc.scrollbar.buttonScrollSpeed)
-	end, 7)
+	end, 0)
 	self:addChild(self.downButton)
 	self.downButton:resize(settings.dim.misc.scrollbar.width, settings.dim.misc.scrollbar.buttonHeight)
 	
-	self.scrollButton = Button:new("", function()
+	self.scrollButton = Button:new(Text:new("=",0,"center","center"), function()
 		self.dragging = true
 	end, 5,true)
 	self:addChild(self.scrollButton)
