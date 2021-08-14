@@ -1,9 +1,7 @@
-local UI = Class(require("ui.base.container"))
+local UI = Class(require("ui.base.proxy"))
 
 function UI:initialize(child)
-	UI.super.initialize(self)
-	self.child = child
-	self:addChild(child)
+	UI.super.initialize(self,child)
 end
 
 function UI:getMouseX()
@@ -13,8 +11,5 @@ function UI:getMouseY()
 	return love.mouse.getY()
 end
 
-function UI:resized(w,h)
-	self.child:resize(w,h)
-end
 
 return UI
