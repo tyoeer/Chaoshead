@@ -22,9 +22,10 @@ function love.load(arg)
 	
 	--build ui
 	--ui = require("ui.chaoshead"):new(love.graphics.getWidth(), love.graphics.getHeight())
-	local l = require("ui.widgets.text"):new("Hello, left!")
+	local l = require("ui.widgets.button"):new("Hello, left!",print,5)
 	local r = require("ui.widgets.text"):new("Hello, right!")
 	ui = require("ui.layout.horDivide"):new(l,r)
+	ui = require("ui.base.root"):new(ui)
 	ui:resize(love.graphics.getWidth(), love.graphics.getHeight())
 	--bind ui and input
 	input.parseActions(settings.bindings)
@@ -36,11 +37,13 @@ function love.load(arg)
 	end
 end
 
+function love.resize(w, h)
+	ui:resize(w,h)
+end
 
 function love.update(dt)
 	ui:update(dt)
 end
-
 function love.draw()
 	ui:draw()
 end
@@ -50,9 +53,6 @@ function love.focus(focus)
 end
 function love.visible(visible)
 	ui:visible(visible)
-end
-function love.resize(w, h)
-	ui:resize(w,h)
 end
 
 function love.keypressed(key, scancode, isrepeat)
