@@ -1,10 +1,14 @@
 local UI = Class(require("ui.base.node"))
 
-function UI:initialize(text,indention)
-	self.text = text
-	self.font = love.graphics.getFont()
-	self.indention = indention or 0
+--valign valid values: top middle bottom
+function UI:initialize(text,indention,halign,valign)
 	UI.super.initialize(self)
+	self.text = text
+	self.indention = indention or 0
+	self.halign = halign or "left"
+	self.valign = valign or "top"
+	self.offsetY = 0
+	self.font = love.graphics.getFont()
 end
 
 function UI:getMinimumHeight(width)
@@ -16,7 +20,17 @@ end
 function UI:draw()
 	love.graphics.setFont(self.font)
 	love.graphics.setColor(settings.col.list.text)
-	love.graphics.printf(self.text, self.indention,0, self.width-self.indention, "left")
+	love.graphics.printf(self.text, self.indention, self.offsetY, self.width-self.indention, self.halign)
+end
+
+function UI:resized(width,height)
+	if self.valign=="center" then
+		self.offsetY = math.floor( (self.height - self:getMinimumHeight(width))/2 +0.5 )
+	elseif self.valign=="bottom" then
+		self.offsetY = self.height - self:getMinimumHeight(width)
+	end
+	--only (valid) other option: top
+	--leave offset at 0
 end
 
 return UI
