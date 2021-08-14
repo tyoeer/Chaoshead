@@ -22,9 +22,15 @@ function love.load(arg)
 	
 	--build ui
 	--ui = require("ui.chaoshead"):new(love.graphics.getWidth(), love.graphics.getHeight())
-	local l = require("ui.widgets.button"):new("Hello, left!",print,5)
-	local r = require("ui.layout.padding"):new(require("ui.widgets.text"):new("Hello, right!"),5)
+	local list = require("ui.layout.list"):new(5,15)
+	list:addTextEntry("Hello, right!")
+	list:addTextEntry("Helloer, right!")
+	list:addButtonEntry("Addissimo",function() list:addTextEntry(os.time()) end,5)
+	list:addTextEntry("Helloest, right!")
+	local r = require("ui.layout.padding"):new(list,5)
+	local l = require("ui.widgets.button"):new("Hello, left!",function() list:addTextEntry("Left!") end,5,true)
 	ui = require("ui.layout.horDivide"):new(l,r)
+	
 	ui = require("ui.base.root"):new(ui)
 	ui:resize(love.graphics.getWidth(), love.graphics.getHeight())
 	--bind ui and input
