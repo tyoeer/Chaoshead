@@ -28,7 +28,12 @@ function love.load(arg)
 	list:addButtonEntry("Addissimo",function() list:addTextEntry(os.time()) end,5)
 	list:addTextEntry("Helloest, right!")
 	local r = require("ui.layout.padding"):new(list,5)
-	local l = require("ui.widgets.button"):new("Hello, left!",function() list:addTextEntry("Left!") end,5,true)
+	r = require("ui.layout.scrollbar"):new(r)
+	local l = require("ui.widgets.button"):new("Hello, left!",function()
+		for i=0,20,1 do
+			list:addTextEntry(string.rep("Left! ",i),math.floor(i/5))
+		end
+	end,5,true)
 	ui = require("ui.layout.horDivide"):new(l,r)
 	
 	ui = require("ui.base.root"):new(ui)
