@@ -42,6 +42,10 @@ local function rAll(event)
 	UI[hook] = function() end
 end
 
+--the resized event should be propagated by resizing children, not automatically
+--in most cases children should be a different size than their parent
+--rAll("resized")
+
 rAll("update")
 function UI:draw()
 	if not self:onDraw() then
@@ -62,9 +66,6 @@ function UI:onDraw() end
 
 rAll("focus")
 rAll("visible")
---this events should be propagated be resizing children, not automatically
---in most cases children should be a different size than their parent
---rAll("resized")
 
 function UI:inputActivated(name,group, isCursorBound)
 	if not self:onInputActivated(name,group, isCursorBound) then

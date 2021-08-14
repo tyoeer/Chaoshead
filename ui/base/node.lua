@@ -40,13 +40,13 @@ function UI:move(x,y)
 end
 
 -- event stubs
+function UI:resized(width,height) end
 
 function UI:update(dt) end
 function UI:draw() end
 
 function UI:focus(hasFocus) end
 function UI:visible(isVisible) end
-function UI:resized(width,height) end
 
 function UI:inputActivated(name,group,isCursorBound) end
 function UI:inputDeactivated(name,group,isCursorBound) end
