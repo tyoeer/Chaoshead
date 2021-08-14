@@ -7,12 +7,14 @@ end
 
 function UI:addChild(child)
 	table.insert(self.children,child)
+	child.parent = self
 end
 
 function UI:removeChild(toRemove)
 	for i,child in ipairs(self.children) do
 		if child==toRemove then
 			table.remove(self.children,i)
+			child.parent = nil
 			break
 		end
 	end
