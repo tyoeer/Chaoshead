@@ -105,20 +105,20 @@ function UI:mouseMoved(x,y, dx,dy)
 		--also give the event to the child the mouse moved out from
 		local oldChild = self:findChildAt(x-dx, y-dy)
 		if oldChild then
-			oldChild:mouseMoved(x,y, dx,dy)
+			oldChild:mouseMoved(x-oldChild.x, y-oldChild.y, dx,dy)
 		end
 		local newChild = self:findChildAt(x,y)
 		if newChild and newchild ~= oldChild then
-			newChild:mouseMoved(x,y, dx,dy)
+			newChild:mouseMoved(x-newChild.x, y-newChild.y, dx,dy)
 		end
 	end
 end
 function UI:onMouseMoved() end
-function UI:wheelMoved(...)
-	if not self:onWheelMoved(...) then
+function UI:wheelMoved(dx,dy)
+	if not self:onWheelMoved(dx,dy) then
 		local child = self:findChildAt(self:getMousePos())
 		if child then
-			child:wheelMoved(...)
+			child:wheelMoved(dx,dy)
 		end
 	end
 end
