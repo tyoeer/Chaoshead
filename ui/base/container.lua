@@ -1,4 +1,4 @@
-local UI = Class("UIContainer",require("ui.base.node"))
+local UI = Class("ContainerUI",require("ui.base.node"))
 
 function UI:initialize()
 	UI.super.initialize(self)

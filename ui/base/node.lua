@@ -1,4 +1,4 @@
-local UI = Class("UINode")
+local UI = Class("BaseNodeUI")
 
 function UI:initialize()
 	-- it's parent

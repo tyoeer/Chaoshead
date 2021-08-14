@@ -1,4 +1,4 @@
-local UI = Class(require("ui.base.proxy"))
+local UI = Class("RootUI",require("ui.base.proxy"))
 
 function UI:initialize(child)
 	UI.super.initialize(self,child)
