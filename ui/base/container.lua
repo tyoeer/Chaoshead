@@ -108,7 +108,7 @@ function UI:mouseMoved(x,y, dx,dy)
 			oldChild:mouseMoved(x-oldChild.x, y-oldChild.y, dx,dy)
 		end
 		local newChild = self:findChildAt(x,y)
-		if newChild and newchild ~= oldChild then
+		if newChild and newChild ~= oldChild then
 			newChild:mouseMoved(x-newChild.x, y-newChild.y, dx,dy)
 		end
 	end
