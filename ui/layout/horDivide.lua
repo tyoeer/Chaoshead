@@ -34,12 +34,15 @@ function UI:setRightChild(ui)
 end
 
 function UI:updateLeftChild()
-	self.leftChild:resize(self.divisionX-1, self.height)
+	--if divisionX = 200, the div start at pixel 200
+	--meaning leftCHild has the pixels 0-199
+	--which in total are 200 = divisionX pixels
+	self.leftChild:resize(self.divisionX, self.height)
 end
 
 function UI:updateRightChild()
 	self.rightChild:move(self.divisionX + self.divisionWidth, 0)
-	self.rightChild:resize(self.width - (self.divisionX-1) - self.divisionWidth, self.height)
+	self.rightChild:resize(self.width - self.divisionX - self.divisionWidth, self.height)
 end
 
 function UI:updateChildren()
