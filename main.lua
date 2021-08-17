@@ -34,8 +34,14 @@ function love.load(arg)
 			list:addTextEntry(string.rep("Left! ",i),math.floor(i/5))
 		end
 	end,5,true)
-	ui = require("ui.layout.horDivide"):new(l,r)
-	
+	ui = require("ui.layout.tabs"):new(30)
+	ui:addTab(require("ui.layout.horDivide"):new(l,r))
+	local c = require("ui.widgets.text"):new("Hello!\n\nHello!\n\nHello!\n\nGetting kind of repetitve\n\nisn't it?",0,"center","bottom")
+	c.title = "Hello!"
+	ui:addTab(c)
+	local d = require("ui.widgets.text"):new("Hello!\n\nHello!\n\nHello!\n\nGetting kind of repetitve\n\nisn't it?",0,"center","center")
+	d.title = "Helloer!"
+	ui:addTab(d)
 	ui = require("ui.base.root"):new(ui)
 	ui:resize(love.graphics.getWidth(), love.graphics.getHeight())
 	--bind ui and input
