@@ -8,6 +8,8 @@ function UI:initialize(tabHeight)
 	self.tabContents = {}
 	--the buttons that set their corresponding tab as the active one
 	self.tabButtons = {}
+	--map the get the button of a specific tab (content)
+	self.contentButtonMap = {}
 	self.tabHeight = tabHeight
 	--self.activeTab
 end
@@ -34,6 +36,7 @@ function UI:updateButtons()
 end
 
 --set the ui.title field to provide a label for the button
+--(not what this function does, it's a tip for users)
 function UI:addTab(ui)
 	local label = Text:new(self:getTitle(ui),0,"center","center")
 	local b = Button:new(label,function()
@@ -42,10 +45,10 @@ function UI:addTab(ui)
 	end, 0)
 	self:addChild(b)
 	table.insert(self.tabButtons,b)
+	self.contentButtonMap[ui] = b
 	self:updateButtons()
 	
 	table.insert(self.tabContents,ui)
-	
 	if not self.activeTab then
 		self:setActiveTab(ui)
 	end
@@ -84,6 +87,7 @@ function UI:removeTab(ui)
 	end
 	table.remove(self.tabContents,n)
 	table.remove(self.tabButtons,i)
+	self.contentButtonMap[ui] = nil
 	if ui == self.activeTab then
 		--check if there's a tab to make active
 		if #self.tabContents >= 1 then
@@ -94,9 +98,31 @@ function UI:removeTab(ui)
 	end
 end
 
+
 function UI:resized(w,h)
 	self:updateButtons()
 	self:updateActiveTab()
 end
+
+
+function UI:onDraw()
+	local btn = self.contentButtonMap[self.activeTab]
+	love.graphics.setColor(settings.col.list.button.other.bg)
+	--[[
+	button start at 30, has width of 10:
+	it has pixels 30-39
+	pixels to be overwritten are 31-38
+	(to not overwrite the part directly below the vertical lines of the outline)
+	edges don't have the line width added, so we sghould draw from pixel edge to pixel edge
+	the first is btn.x + 1 = 31
+	the last is btn.x + btn.width - 1 = 39 (aka the right edge of pixel 38)
+	]]
+	love.graphics.line(
+		btn.x+1, self.tabHeight-0.5,
+		btn.x+btn.width-1, self.tabHeight-0.5
+	)
+	print(love.graphics.getLineJoin())
+end
+
 
 return UI
