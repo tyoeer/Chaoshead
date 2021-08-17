@@ -121,7 +121,6 @@ function UI:onDraw()
 		btn.x+1, self.tabHeight-0.5,
 		btn.x+btn.width-1, self.tabHeight-0.5
 	)
-	print(love.graphics.getLineJoin())
 end
 
 
