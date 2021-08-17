@@ -1,6 +1,7 @@
 local UI = Class(require("ui.base.node"))
 
---valign valid values: top middle bottom
+--halign valid values: left center right
+--valign valid values: top center bottom
 function UI:initialize(text,indention,halign,valign)
 	UI.super.initialize(self)
 	self.text = text
