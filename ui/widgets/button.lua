@@ -32,7 +32,7 @@ function UI:resized(width,height)
 	self.contents:resize(width-2*self.padding, height - 2*self.padding)
 end
 
-function UI:onDraw()
+function UI:preDraw()
 	local x,y = self:getMousePos()
 	local col
 	if x >= 0 and y >= 0 and x < self.width and y < self.height then

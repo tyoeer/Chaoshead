@@ -48,6 +48,7 @@ end
 rAll("update")
 
 function UI:draw()
+	self:preDraw()
 	for _,child in ipairs(self.children) do
 		love.graphics.push("all")
 			love.graphics.translate(child.x, child.y)
@@ -61,6 +62,7 @@ function UI:draw()
 	end
 	self:onDraw()
 end
+function UI:preDraw() end
 function UI:onDraw() end
 
 rAll("focus")
