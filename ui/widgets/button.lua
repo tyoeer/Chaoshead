@@ -1,6 +1,6 @@
 local TEXT = require("ui.widgets.text")
 
-local UI = Class(require("ui.base.container"))
+local UI = Class("ButtonUI",require("ui.base.container"))
 
 function UI:initialize(contents,onClick,padding,triggerOnActivate)
 	UI.super.initialize(self)

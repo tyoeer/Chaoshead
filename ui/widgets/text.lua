@@ -1,4 +1,4 @@
-local UI = Class(require("ui.base.node"))
+local UI = Class("TextUI",require("ui.base.node"))
 
 --halign valid values: left center right
 --valign valid values: top center bottom
