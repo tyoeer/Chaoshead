@@ -2,6 +2,7 @@ local UI = Class("ContainerUI",require("ui.base.node"))
 
 function UI:initialize()
 	UI.super.initialize(self)
+	--the child with the highest index is on top
 	self.children = {}
 end
 
@@ -21,7 +22,9 @@ function UI:removeChild(toRemove)
 end
 
 function UI:findChildAt(x,y)
-	for _,child in ipairs(self.children) do
+	--iterate in reverse so the child with highest index (which should be on top) gets found first
+	for i = #self.children,1,-1 do
+		local child = self.children[i]
 		if x >= child.x and y >= child.y and x < child.x+child.width and y < child.y+child.height then
 			return child
 		end
