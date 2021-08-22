@@ -1,5 +1,7 @@
 local UI = Class("ProxyUI",require("ui.base.container"))
 
+-- child can be temporary nil, but should not be when actually handling events
+
 function UI:initialize(child)
 	UI.super.initialize(self)
 	--self.child
