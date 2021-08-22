@@ -31,6 +31,23 @@ function UI:findChildAt(x,y)
 	end
 end
 
+-- debug
+
+local singleIndention = "  "
+function UI:printStructure(indention)
+	indention = indention or 0
+	local pre = string.rep(singleIndention,indention).."- "
+	print(pre..self.class.name)
+	for _,child in ipairs(self.children) do
+		--if it is a container
+		if child:isInstanceOf(UI.super) then
+			child:printStructure(indention+1)
+		else
+			print(singleIndention..pre..child.class.name)
+		end
+	end
+end
+
 --events
 local function rAll(event)
 	local hook = "on"..event:sub(1,1):upper()..event:sub(2,-1)
