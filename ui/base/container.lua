@@ -73,18 +73,22 @@ end
 
 rAll("update")
 
+function UI:drawChild(child)
+	love.graphics.push("all")
+		love.graphics.translate(child.x, child.y)
+		--find childs bounding box in screen coordinates
+		local startX,startY = love.graphics.transformPoint(0,0)
+		local endX,endY = love.graphics.transformPoint(child.width, child.height)
+		--make sure the child can't draw outside it's bounding box
+		love.graphics.intersectScissor(startX, startY, endX-startX, endY-startY)
+		child:draw()
+	love.graphics.pop("all")
+end
+
 function UI:draw()
 	self:preDraw()
 	for _,child in ipairs(self.children) do
-		love.graphics.push("all")
-			love.graphics.translate(child.x, child.y)
-			--find childs bounding box in screen coordinates
-			local startX,startY = love.graphics.transformPoint(0,0)
-			local endX,endY = love.graphics.transformPoint(child.width, child.height)
-			--make sure the child can't draw outside it's bounding box
-			love.graphics.intersectScissor(startX, startY, endX-startX, endY-startY)
-			child:draw()
-		love.graphics.pop("all")
+		self:drawChild(child)
 	end
 	self:onDraw()
 end
