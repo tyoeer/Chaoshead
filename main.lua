@@ -33,6 +33,10 @@ function love.load(arg)
 		for i=0,20,1 do
 			list:addTextEntry(string.rep("Left! ",i),math.floor(i/5))
 		end
+		local b = require("ui.utils.block"):new(ui.child)
+		ui:setChild(b)
+		print(ui.width, b.width)
+		b:setBlock(true)
 	end,5,true)
 	ui = require("ui.layout.tabs"):new(30)
 	ui:addTab(require("ui.layout.horDivide"):new(l,r))

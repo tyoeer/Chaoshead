@@ -1,6 +1,8 @@
 return {
+	misc = {
+		blockOverlay = {0,0,0, 0.5},
+	},
 	modal = {
-		overlay = {0,0,0, 0.5},
 		bg = {0,0,0},
 		border = {1,1,1},
 	},
