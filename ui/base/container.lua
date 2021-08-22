@@ -7,6 +7,12 @@ function UI:initialize()
 end
 
 function UI:addChild(child)
+	--auto remove child from original parent
+	--this is useful when you insert a new UI node between a node and its child
+	--since you don't have to explicitly detach them first
+	if child.parent then
+		child.parent:removeChild(child)
+	end
 	table.insert(self.children,child)
 	child.parent = self
 end
