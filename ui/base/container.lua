@@ -40,7 +40,7 @@ function UI:printStructure(indention)
 	print(pre..self.class.name)
 	for _,child in ipairs(self.children) do
 		--if it is a container
-		if child:isInstanceOf(UI.super) then
+		if child:isInstanceOf(UI) then
 			child:printStructure(indention+1)
 		else
 			print(singleIndention..pre..child.class.name)
