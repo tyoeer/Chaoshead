@@ -10,12 +10,15 @@ function UI:initialize(entryMargin,indentSize)
 	self.indentSize = indentSize
 end
 
-function UI:addTextEntry(text,indent)
-	self:addUIEntry(TextEntry:new(text, (indent or 0)*self.indentSize ))
+function UI:addTextEntry(text, indent, ...)
+	self:addUIEntry(TextEntry:new(text, (indent or 0)*self.indentSize, ...))
 end
 
 function UI:addButtonEntry(...)
-	self:addUIEntry(ButtonEntry:new(...))
+	local button = ButtonEntry:new(...)
+	self:addUIEntry(button)
+	--return the button so its border can possibly be set
+	return button
 end
 
 function UI:addUIEntry(child)

@@ -46,6 +46,8 @@ function love.load(arg)
 	local d = require("ui.widgets.text"):new("Hello!\n\nHello!\n\nHello!\n\nGetting kind of repetitve\n\nisn't it?",0,"center","center")
 	d.title = "Helloer!"
 	ui:addTab(d)
+	ui:addTab(require("ui.tools.dataViewer"):new({test={1,2,3},a=2,hello="hello"}))
+	
 	ui = require("ui.base.root"):new(ui)
 	ui:resize(love.graphics.getWidth(), love.graphics.getHeight())
 	--bind ui and input

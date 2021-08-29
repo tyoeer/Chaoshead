@@ -1,4 +1,4 @@
-local UI = Class("TreeListUI",require("ui.structure.list"))
+local UI = Class("TreeListUI",require("ui.layout.list"))
 
 --[[
 
@@ -16,18 +16,17 @@ dataRetriever:
 
 function UI:initialize(dataRetriever,onClick)
 	UI.super.initialize(self)
-	self.title = "Tree explorer"
 	
 	self.dataRetriever = dataRetriever
 	self.onClick = onClick
 	
 	self.dataCache = self:toCache(dataRetriever:getRootEntries())
 	
-	self.indentSize = 2
-	self.entryMargin = 0
-	self.buttonPadding = 5
+	self.indentSize = settings.dim.treeViewer.indentSize
+	self.entryMargin = settings.dim.treeViewer.entryMargin
+	self.buttonPadding = settings.dim.treeViewer.buttonPadding
 	
-	self:reload()
+	self:buildList(self.dataCache,0)
 end
 
 function UI:toCache(input)
@@ -54,9 +53,8 @@ function UI:buildList(data,indentLevel)
 						v.open = false
 						self:reload()
 					end,
-					self.buttonPadding,
-					false
-				)
+					self.buttonPadding
+				):setBorder(false)
 				self:buildList(v.children, indentLevel+1)
 			else
 				self:addButtonEntry(
@@ -68,9 +66,8 @@ function UI:buildList(data,indentLevel)
 						end
 						self:reload()
 					end,
-					self.buttonPadding,
-					false
-				)
+					self.buttonPadding
+				):setBorder(false)
 			end
 		else
 			self:addButtonEntry(
@@ -78,9 +75,8 @@ function UI:buildList(data,indentLevel)
 				function()
 					self.onClick(v.data)
 				end,
-				self.buttonPadding,
-				false
-			)
+				self.buttonPadding
+			):setBorder(false)
 		end
 	end
 end

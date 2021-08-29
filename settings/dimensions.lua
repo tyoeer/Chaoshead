@@ -14,14 +14,11 @@ return {
 			buttonHeight = 35,
 		},
 	},
-	levelSelector = {
-		listDetailsDivisionRatio = 0.25,
-		details = {
-			padding = 10,
-		},
-	},
-	scriptInterface = {
-		horDivisionRatio = 0.25,
+	treeViewer = {
+		indentSize = 2,
+		entryMargin = 0,
+		buttonPadding = 5,
+		divisionRatio = 0.25,
 		detailsPadding = 10,
 	},
 	editor = {
