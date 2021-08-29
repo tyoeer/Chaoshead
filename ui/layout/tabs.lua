@@ -10,7 +10,7 @@ function UI:initialize(tabHeight)
 	self.tabButtons = {}
 	--map the get the button of a specific tab (content)
 	self.contentButtonMap = {}
-	self.tabHeight = tabHeight
+	self.tabHeight = tabHeight or settings.dim.misc.tabHeight
 	--self.activeTab
 end
 

@@ -3,16 +3,15 @@ return {
 		widthFactor = 0.57,
 		padding = 25,
 	},
-	main = {
-		tabHeight = 30,
-	},
 	misc = {
-		noLevelsPadding = 10,
-		miscPadding = 10,
+		tabHeight = 30,
 		scrollbar = {
 			width = 25,
 			buttonHeight = 35,
 		},
+		
+		miscPadding = 10,
+		noLevelsPadding = 10,
 	},
 	treeViewer = {
 		indentSize = 2,

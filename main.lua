@@ -38,7 +38,7 @@ function love.load(arg)
 		print(ui.width, b.width)
 		b:setBlock(true)
 	end,5,true)
-	ui = require("ui.layout.tabs"):new(30)
+	ui = require("ui.layout.tabs"):new()
 	ui:addTab(require("ui.layout.horDivide"):new(l,r))
 	local c = require("ui.widgets.text"):new("Hello!\n\nHello!\n\nHello!\n\nGetting kind of repetitve\n\nisn't it?",0,"center","bottom")
 	c.title = "Hello!"
