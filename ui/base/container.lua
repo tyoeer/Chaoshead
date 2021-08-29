@@ -71,6 +71,11 @@ end
 --in most cases children should be a different size than their parent
 --rAll("resized")
 
+--default: relay trough to parent until one cares
+function UI:childMinimumHeightChanged(child)
+	self:minimumHeightChanged()
+end
+
 rAll("update")
 
 function UI:drawChild(child)

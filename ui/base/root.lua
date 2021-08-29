@@ -11,5 +11,8 @@ function UI:getMouseY()
 	return love.mouse.getY()
 end
 
+function UI:childMinimumHeightChanged(child)
+	--we don't care
+end
 
 return UI
