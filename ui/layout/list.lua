@@ -6,8 +6,16 @@ local UI = Class("ListUI",require("ui.base.container"))
 function UI:initialize(entryMargin,indentSize)
 	UI.super.initialize(self)
 	
-	self.entryMargin = entryMargin
-	self.indentSize = indentSize
+	if entryMargin then
+		self.entryMargin = entryMargin
+	else
+		error("Entry margin not specified!",2)
+	end
+	if indentSize then
+		self.indentSize = indentSize
+	else
+		error("Indent size not specified!",2)
+	end
 end
 
 function UI:addTextEntry(text, indent, ...)

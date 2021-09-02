@@ -15,15 +15,17 @@ dataRetriever:
 ]]--
 
 function UI:initialize(dataRetriever,onClick)
-	UI.super.initialize(self)
+	UI.super.initialize(
+		self,
+		settings.dim.treeViewer.entryMargin,
+		settings.dim.treeViewer.textIndentSize
+	)
 	
 	self.dataRetriever = dataRetriever
 	self.onClick = onClick
 	
 	self.dataCache = self:toCache(dataRetriever:getRootEntries())
 	
-	self.indentSize = settings.dim.treeViewer.indentSize
-	self.entryMargin = settings.dim.treeViewer.entryMargin
 	self.buttonPadding = settings.dim.treeViewer.buttonPadding
 	
 	self:buildList(self.dataCache,0)

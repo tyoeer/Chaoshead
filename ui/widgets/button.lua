@@ -12,7 +12,11 @@ function UI:initialize(contents,onClick,padding,triggerOnActivate)
 	self:addChild(self.contents)
 	
 	self.onClick = onClick
-	self.padding = padding
+	if padding then
+		self.padding = padding
+	else
+		error("Padding not specified!",2)
+	end
 	self.contents:move(padding,padding)
 	self.triggerOnActivate = (triggerOnActivate==nil) and false or triggerOnActivate
 	self.drawBorder = true
