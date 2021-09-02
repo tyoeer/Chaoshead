@@ -6,7 +6,7 @@ return {
 			width = 25,
 			buttonHeight = 35,
 		},
-		miscPadding = 10,
+		miscTabPadding = 10,
 		noLevelsPadding = 10,
 	},
 	modal = {
