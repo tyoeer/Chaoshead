@@ -2,7 +2,7 @@ return {
 	misc = {
 		blockOverlay = {0,0,0, 0.5},
 	},
-	modal = {
+	box = {
 		bg = {0,0,0},
 		border = {1,1,1},
 	},

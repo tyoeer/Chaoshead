@@ -47,7 +47,8 @@ function love.load(arg)
 	d.title = "Helloer!"
 	ui:addTab(d)
 	ui:addTab(require("ui.tools.dataViewer"):new({test={1,2,3},a=2,hello="hello"}))
-	
+	ui:addTab(require("ui.widgets.button"):new("Tnxt",function() ui.child:displayMessage("Thanks + Text") end,5))
+	ui = require("ui.tools.modal"):new(ui)
 	ui = require("ui.base.root"):new(ui)
 	ui:resize(love.graphics.getWidth(), love.graphics.getHeight())
 	--bind ui and input

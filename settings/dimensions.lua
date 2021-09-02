@@ -1,21 +1,27 @@
 return {
-	modal = {
-		widthFactor = 0.57,
-		padding = 25,
-	},
 	misc = {
 		tabHeight = 30,
+		boxPadding = 10,
 		scrollbar = {
 			width = 25,
 			buttonHeight = 35,
 		},
-		
 		miscPadding = 10,
 		noLevelsPadding = 10,
+	},
+	modal = {
+		widthFactor = 0.57,
+		buttonPadding = 5,
+		list = {
+			entryMargin = 5,
+			indentSize = 12,
+		},
 	},
 	treeViewer = {
 		indentSize = 2,
 		entryMargin = 0,
+		--not used, but needed to prevent nil argument
+		textIndentSize = 2,
 		buttonPadding = 5,
 		divisionRatio = 0.25,
 		detailsPadding = 10,
