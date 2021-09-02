@@ -3,7 +3,7 @@ local ButtonEntry = require("ui.widgets.button")
 
 local UI = Class("ListUI",require("ui.base.container"))
 
-function UI:initialize(entryMargin,indentSize)
+function UI:initialize(entryMargin,indentSize,defaultButtonPadding)
 	UI.super.initialize(self)
 	
 	if entryMargin then
@@ -16,14 +16,17 @@ function UI:initialize(entryMargin,indentSize)
 	else
 		error("Indent size not specified!",2)
 	end
+	--this is one is allowed to be nil
+	self.defaultButtonPadding = defaultButtonPadding
 end
 
 function UI:addTextEntry(text, indent, ...)
 	self:addUIEntry(TextEntry:new(text, (indent or 0)*self.indentSize, ...))
 end
 
-function UI:addButtonEntry(...)
-	local button = ButtonEntry:new(...)
+function UI:addButtonEntry(contents,onClick,padding,triggerOnActivate)
+	padding = padding or self.defaultButtonPadding
+	local button = ButtonEntry:new(contents,onClick,padding,triggerOnActivate)
 	self:addUIEntry(button)
 	--return the button so its border can possibly be set
 	return button
