@@ -1,4 +1,4 @@
-local UI = Class(require("ui.base.proxy"))
+local UI = Class("PaddingUI",require("ui.base.proxy"))
 
 function UI:initialize(child,padding)
 	UI.super.initialize(self,child)
