@@ -1,14 +1,26 @@
-local UI = Class(require("ui.layout.padding"))
+local UI = Class("MiscTabUI",require("ui.tools.details"))
 
 function UI:initialize()
-	local list = require("ui.layout.list"):new()
+	UI.super.initialize(self)
+	self.title = "Misc."
+end
+
+function UI:onReload()
 	
-	list:addButtonEntry("Open scripts folder",function()
+	
+	-- INFORMATION
+	
+	
+	self:addButtonEntry("Open scripts folder",function()
 		local url = "file://"..love.filesystem.getSaveDirectory().."/"..require("script").folder
 		love.system.openURL(url)
 	end)
 	
-	list:addButtonEntry("Decompress campaign (move the hardfile to the chaoshead data folder first)",function()
+	
+	-- CAMPAIGN
+	
+	
+	self:addButtonEntry("Decompress campaign (move the hardfile to the chaoshead data folder first)",function()
 		local i =love.filesystem.getInfo("campaign_hardfile")
 		if i then
 			local c = love.filesystem.read("campaign_hardfile")
@@ -21,7 +33,8 @@ function UI:initialize()
 			print("No campaign_hardfile found!")
 		end
 	end)
-	list:addButtonEntry("Compress campaign (from campaign.bin in the chaoshead data folder)",function()
+	
+	self:addButtonEntry("Compress campaign (from campaign.bin in the chaoshead data folder)",function()
 		local i = love.filesystem.getInfo("campaign.bin")
 		if i then
 			local c = love.filesystem.read("campaign.bin")
@@ -34,7 +47,8 @@ function UI:initialize()
 			print("No campaign.bin found!")
 		end
 	end)
-	list:addButtonEntry("Rehash campaign.bin",function()
+	
+	self:addButtonEntry("Rehash campaign.bin",function()
 		local i = love.filesystem.getInfo("campaign.bin")
 		if i then
 			local f = love.filesystem.newFile("campaign.bin")
@@ -51,7 +65,12 @@ function UI:initialize()
 			print("No campaign.bin found!")
 		end
 	end)
-	list:addButtonEntry("save_data change beeper (bring your own beep.wav in the chaoshead data folder)",function()
+	
+	
+	-- ALERTS/BEEPERS
+	
+	
+	self:addButtonEntry("save_data change beeper (bring your own beep.wav in the chaoshead data folder)",function()
 		local NFS = require("libs.nativefs")
 		local userCodes = require("levelhead.userData").getUserCodes()
 		local dataPath = require("levelhead.misc").getUserDataPath()
@@ -84,8 +103,6 @@ function UI:initialize()
 		ui:setModal(beepr)
 	end)
 	
-	UI.super.initialize(self,list,settings.dim.misc.miscTabPadding)
-	self.title = "Misc."
 end
 
 return UI
