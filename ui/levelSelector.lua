@@ -1,7 +1,9 @@
 local UserData = require("levelhead.userData")
+local DETAILS = require("ui.tools.details")
 local NFS = require("libs.nativefs")
+local TREE_VIEWER = require("ui.tools.treeViewer")
 
-local UI = Class(require("ui.structure.proxy"))
+local UI = Class("LevelSelectorUI",require("ui.base.proxy"))
 
 function UI:initialize()
 	local treeData = {
@@ -31,7 +33,8 @@ function UI:initialize()
 		getDetailsUI = function(self,data)
 			--this should probably be it's own class, but I couldn't come up with a name for it here we are
 			--besides when I started it wasn't very complex (thoguh that might have changed)
-			local list = require("ui.structure.list"):new()
+			local details = DETAILS:new(false)
+			local list = details:getList()
 			
 			local d = data.raw
 			list:addTextEntry("Name: ".. d.name)
@@ -70,12 +73,10 @@ function UI:initialize()
 				end
 			)
 			
-			return require("ui.structure.padding"):new(list,settings.dim.levelSelector.details.padding)
+			return details
 		end,
 	}
-	local treeViewer = require("ui.utils.treeViewer"):new(treeData)
-	treeViewer.child:setDivisionRatio(settings.dim.levelSelector.listDetailsDivisionRatio)
-	UI.super.initialize(self,treeViewer)
+	UI.super.initialize(self,TREE_VIEWER:new(treeData))
 	self.title = "Level Select"
 end
 

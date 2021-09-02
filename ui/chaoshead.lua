@@ -1,36 +1,40 @@
-local LevelRoot = require("ui.level.levelRoot")
+--local LEVEL_ROOT = require("ui.level.levelRoot")
+local TABS = require("ui.layout.tabs")
+local PROXY = require("ui.base.proxy")
+local LEVEL_SELECTOR = require("ui.levelSelector")
+local DETAILS = require("ui.tools.details")
+local MISC = require("ui.misc")
 
-local UI = Class(require("ui.structure.proxy"))
+local UI = Class(require("ui.tools.modal"))
 
-function UI:initialize(w,h)
-	self.mainTabs = require("ui.structure.tabs"):new()
-	self.modalOverlay = require("ui.structure.overlay"):new(self.mainTabs)
-	
-	UI.super.initialize(self,self.modalOverlay)
-	self:resize(w,h)
-	
-	self.mainTabs.tabHeight = settings.dim.main.tabHeight
+function UI:initialize()
+	self.mainTabs = TABS:new()
 	
 	self.nLevels = 0
-	self.levels = require("ui.structure.tabs"):new()
+	self.levels = TABS:new()
 	self.levels.title = "Level Editors"
-	self.noLevelsUI = require("ui.structure.padding"):new(require("ui.list.text"):new("No levels opened!"),settings.dim.misc.noLevelsPadding)
+	self.noLevelsUI = DETAILS:new(false)
+	self.noLevelsUI:getList():addTextEntry("No Levels opened!")
 	self.noLevelsUI.title = "Level Editors"
-	self.levelsProxy = require("ui.structure.proxy"):new(self.noLevelsUI)
-	self.mainTabs:addChild(self.levelsProxy)
+	self.levelsProxy = PROXY:new(self.noLevelsUI)
+	self.mainTabs:addTab(self.levelsProxy)
 	
-	local levelSelector = require("ui.levelSelector"):new()
-	self.mainTabs:addChild(levelSelector)
-	self.mainTabs:setActive(levelSelector)
+	local levelSelector = LEVEL_SELECTOR:new()
+	self.mainTabs:addTab(levelSelector)
 	
-	self.mainTabs:addChild(require("ui.misc"):new())
+	self.mainTabs:addTab(MISC:new())
+	
+	self.mainTabs:setActiveTab(levelSelector)
+	
+	--TabsUI needs buttons before getting resized (which always happens when added)
+	UI.super.initialize(self,self.mainTabs)
 end
 
 
 function UI:openEditor(path)
 	local success, editor = xpcall(
 		function()
-			return LevelRoot:new(path)
+			return LEVEL_ROOT:new(path)
 		end,
 		function(message)
 			--print full trace to console
@@ -56,25 +60,6 @@ function UI:closeEditor(editorRoot)
 	if self.nLevels == 0 then
 		self.levelsProxy:setChild(self.noLevelsUI)
 	end
-end
-
-
-function UI:displayMessage(text)
-	local ui = require("ui.structure.list"):new()
-	ui:addTextEntry(text)
-	ui:addButtonEntry("Dismiss",function() self:closeModal() end)
-	self:setUIModal(ui)
-end
-
-function UI:setUIModal(ui)
-	local modal = require("ui.utils.modal"):new(
-		require("ui.structure.padding"):new(ui, settings.dim.modal.padding)
-	)
-	self.modalOverlay:setOverlay(modal)
-end
-
-function UI:closeModal()
-	self.modalOverlay:removeOverlay()
 end
 
 

@@ -21,34 +21,7 @@ function love.load(arg)
 	love.window.maximize()
 	
 	--build ui
-	--ui = require("ui.chaoshead"):new(love.graphics.getWidth(), love.graphics.getHeight())
-	local list = require("ui.layout.list"):new(5,15)
-	list:addTextEntry("Hello, right!")
-	list:addTextEntry("Helloer, right!")
-	list:addButtonEntry("Addissimo",function() list:addTextEntry(os.time()) end,5)
-	list:addTextEntry("Helloest, right!")
-	local r = require("ui.layout.padding"):new(list,5)
-	r = require("ui.layout.scrollbar"):new(r)
-	local l = require("ui.widgets.button"):new("Hello, left!",function()
-		for i=0,20,1 do
-			list:addTextEntry(string.rep("Left! ",i),math.floor(i/5))
-		end
-		local b = require("ui.utils.block"):new(ui.child)
-		ui:setChild(b)
-		print(ui.width, b.width)
-		b:setBlock(true)
-	end,5,true)
-	ui = require("ui.layout.tabs"):new()
-	ui:addTab(require("ui.layout.horDivide"):new(l,r))
-	local c = require("ui.widgets.text"):new("Hello!\n\nHello!\n\nHello!\n\nGetting kind of repetitve\n\nisn't it?",0,"center","bottom")
-	c.title = "Hello!"
-	ui:addTab(c)
-	local d = require("ui.widgets.text"):new("Hello!\n\nHello!\n\nHello!\n\nGetting kind of repetitve\n\nisn't it?",0,"center","center")
-	d.title = "Helloer!"
-	ui:addTab(d)
-	ui:addTab(require("ui.tools.dataViewer"):new({test={1,2,3},a=2,hello="hello"}))
-	ui:addTab(require("ui.widgets.button"):new("Tnxt",function() ui.child:displayMessage("Thanks + Text") end,5))
-	ui = require("ui.tools.modal"):new(ui)
+	ui = require("ui.chaoshead"):new()
 	ui = require("ui.base.root"):new(ui)
 	ui:resize(love.graphics.getWidth(), love.graphics.getHeight())
 	--bind ui and input
