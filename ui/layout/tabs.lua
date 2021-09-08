@@ -111,7 +111,7 @@ end
 
 function UI:onDraw()
 	local btn = self.contentButtonMap[self.activeTab]
-	love.graphics.setColor(settings.col.list.button.other.bg)
+	love.graphics.setColor(settings.col.misc.activeTabDivider)
 	--[[
 	button start at 30, has width of 10:
 	it has pixels 30-39
