@@ -3,7 +3,7 @@ local TABS = require("ui.layout.tabs")
 --local LEVEL_ROOT = require("levelEditor.level.levelRoot")
 local LEVEL_SELECTOR = require("levelEditor.levelSelector")
 
-local UI = Class(require("ui.base.proxy"))
+local UI = Class("WorkshopUI",require("ui.base.proxy"))
 
 function UI:initialize()
 	local tabs = TABS:new()
