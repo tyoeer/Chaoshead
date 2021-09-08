@@ -26,10 +26,8 @@ function UI:getList()
 end
 
 --reload hook
---execute as list because that is how the details UIs were originally written (they were lists)
---and the details UI should sorta be a lists extension, but because it puts some UI nodes between itself and the list it isn't
 function UI:reload(...)
-	self.onReload(self.list, ...)
+	self.onReload(self,self.list, ...)
 end
 
 -- :onReload() should be defined by the subclass

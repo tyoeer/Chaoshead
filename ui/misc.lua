@@ -5,13 +5,13 @@ function UI:initialize()
 	self.title = "Misc."
 end
 
-function UI:onReload()
+function UI:onReload(list)
 	
 	
 	-- INFORMATION
 	
 	
-	self:addButtonEntry("Open scripts folder",function()
+	list:addButtonEntry("Open scripts folder",function()
 		local url = "file://"..love.filesystem.getSaveDirectory().."/"..require("script").folder
 		love.system.openURL(url)
 	end)
@@ -20,7 +20,7 @@ function UI:onReload()
 	-- CAMPAIGN
 	
 	
-	self:addButtonEntry("Decompress campaign (move the hardfile to the chaoshead data folder first)",function()
+	list:addButtonEntry("Decompress campaign (move the hardfile to the chaoshead data folder first)",function()
 		local i =love.filesystem.getInfo("campaign_hardfile")
 		if i then
 			local c = love.filesystem.read("campaign_hardfile")
@@ -34,7 +34,7 @@ function UI:onReload()
 		end
 	end)
 	
-	self:addButtonEntry("Compress campaign (from campaign.bin in the chaoshead data folder)",function()
+	list:addButtonEntry("Compress campaign (from campaign.bin in the chaoshead data folder)",function()
 		local i = love.filesystem.getInfo("campaign.bin")
 		if i then
 			local c = love.filesystem.read("campaign.bin")
@@ -48,7 +48,7 @@ function UI:onReload()
 		end
 	end)
 	
-	self:addButtonEntry("Rehash campaign.bin",function()
+	list:addButtonEntry("Rehash campaign.bin",function()
 		local i = love.filesystem.getInfo("campaign.bin")
 		if i then
 			local f = love.filesystem.newFile("campaign.bin")
@@ -70,7 +70,7 @@ function UI:onReload()
 	-- ALERTS/BEEPERS
 	
 	
-	self:addButtonEntry("save_data change beeper (bring your own beep.wav in the chaoshead data folder)",function()
+	list:addButtonEntry("save_data change beeper (bring your own beep.wav in the chaoshead data folder)",function()
 		local NFS = require("libs.nativefs")
 		local userCodes = require("levelhead.userData").getUserCodes()
 		local dataPath = require("levelhead.misc").getUserDataPath()
