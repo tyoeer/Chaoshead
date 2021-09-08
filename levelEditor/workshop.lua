@@ -13,6 +13,7 @@ function UI:initialize()
 	
 	--TabsUI needs buttons before getting resized (which always happens when added)
 	UI.super.initialize(self,tabs)
+	self.title = "Workshop"
 end
 
 
