@@ -77,6 +77,10 @@ function UI:setActiveTab(ui)
 	ui:visible(true)
 end
 
+function UI:getActiveTab()
+	return self.activeTab
+end
+
 function UI:removeTab(ui)
 	local n
 	for i,tab in ipairs(self.tabContents) do
