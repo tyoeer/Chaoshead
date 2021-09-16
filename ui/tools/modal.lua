@@ -8,7 +8,7 @@ function UI:initialize(child)
 	UI.super.initialize(self)
 	--self.modal
 	--the stuff behind the modal
-	self.main = BLOCK:new(child)
+	self.main = BLOCK:new(child, settings.theme.modal.blockStyle)
 	self:addChild(self.main)
 end
 

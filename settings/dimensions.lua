@@ -5,9 +5,6 @@ return {
 			width = 25,
 			buttonHeight = 35,
 		},
-		noLevelsPadding = 10,
-	},
-	modal = {
 	},
 	hexInspector = {
 		indentSize = 20,
@@ -15,7 +12,8 @@ return {
 		xPadding = 0,
 		yPadding = 0,
 	},
-	--[[editor = {
+	
+	editor = {
 		details = {
 			inset = 10,
 			tabHeight = 30,
@@ -40,6 +38,6 @@ return {
 				buttonPadding = 5,
 			},
 		},
-	},]]--
+	},
 	
 }

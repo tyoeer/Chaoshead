@@ -4,8 +4,14 @@ local UI = Class("BlockUI",require("ui.base.proxy"))
 
 -- thsi UI can optionally block access to the underlying child
 
-function UI:initialize(child)
+function UI:initialize(child,style)
 	UI.super.initialize(self,child)
+	
+	if not style.overlayColor then
+		error("Overlay color not set!",2)
+	end
+	self.style = style
+	
 	--self.child can get cleared
 	self.contents = child
 	self.blocking = false
@@ -33,7 +39,7 @@ function UI:onDraw()
 	if self.blocking then
 		self:drawChild(self.blockRoot)
 		--print(self.contents.x, self.contents.y, self.contents.width, self.contents.height)
-		love.graphics.setColor(settings.col.misc.blockOverlay)
+		love.graphics.setColor(self.style.overlayColor)
 		love.graphics.rectangle("fill", 0,0, self.width,self.height)
 	end
 end

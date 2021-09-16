@@ -35,6 +35,9 @@ return {
 			entryMargin = 8,
 			defaultButtonPadding = 5,
 		},
+		blockStyle = {
+			overlayColor = {0,0,0, 0.5},
+		},
 		widthFactor = 0.57,
 	},
 }
