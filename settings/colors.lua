@@ -1,7 +1,7 @@
 return {
 	misc = {
 		blockOverlay = {0,0,0, 0.5},
-		activeTabDivider = {0.6, 0.6, 0.6, 1}
+		--activeTabDivider = 
 	},
 	box = {
 		bg = {0,0,0},

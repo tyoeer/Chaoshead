@@ -1,6 +1,6 @@
 return {
 	misc = {
-		tabHeight = 30,
+		--tabHeight =
 		boxPadding = 10,
 		scrollbar = {
 			width = 25,

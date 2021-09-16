@@ -3,17 +3,15 @@ local Text = require("ui.widgets.text")
 
 local UI = Class("TabsUI",require("ui.base.container"))
 
-function UI:initialize(tabHeight)
+function UI:initialize()
 	UI.super.initialize(self)
 	self.tabContents = {}
 	--the buttons that set their corresponding tab as the active one
 	self.tabButtons = {}
 	--map the get the button of a specific tab (content)
 	self.contentButtonMap = {}
-	self.tabHeight = tabHeight or settings.dim.misc.tabHeight
 	--self.activeTab
 end
-
 
 function UI:getTitle(ui)
 	if ui.title then
@@ -26,13 +24,13 @@ end
 function UI:updateButtons()
 	local tabWidth = math.floor(self.width / #self.tabButtons)
 	for i,button in ipairs(self.tabButtons) do
-		button:resize(tabWidth,self.tabHeight)
+		button:resize(tabWidth,self.style.buttonHeight)
 		button:move((i-1)*tabWidth, 0)
 	end
 	-- stretch the last button to make sure it covers the entire UI and doesn't leave some empty pixels on the right
 	-- which are caused by the floor in the tabWidth calculation when the the available space doesn't divide nicely
 	local leftOverWidth = self.width - #self.tabButtons * tabWidth
-	self.tabButtons[#self.tabButtons]:resize(tabWidth + leftOverWidth, self.tabHeight)
+	self.tabButtons[#self.tabButtons]:resize(tabWidth + leftOverWidth, self.style.buttonHeight)
 end
 
 --set the ui.title field to provide a label for the button
@@ -56,8 +54,8 @@ end
 
 function UI:updateActiveTab()
 	--if tabHeight=30, the tabs covers pixels 0-29, and the content should start at pixel 30, aka tabHeight
-	self.activeTab:move(0,self.tabHeight)
-	self.activeTab:resize(self.width, self.height-self.tabHeight)
+	self.activeTab:move(0,self.style.buttonHeight)
+	self.activeTab:resize(self.width, self.height-self.style.buttonHeight)
 end
 
 function UI:removeActiveTab()
@@ -108,10 +106,13 @@ function UI:resized(w,h)
 	self:updateActiveTab()
 end
 
+function UI:onThemeChanged(theme)
+	self.style = theme.tabs
+end
 
 function UI:onDraw()
 	local btn = self.contentButtonMap[self.activeTab]
-	love.graphics.setColor(settings.col.misc.activeTabDivider)
+	love.graphics.setColor(self.style.activeDividerColor)
 	--[[
 	button start at 30, has width of 10:
 	it has pixels 30-39
@@ -122,8 +123,8 @@ function UI:onDraw()
 	the last is btn.x + btn.width - 1 = 39 (aka the right edge of pixel 38)
 	]]
 	love.graphics.line(
-		btn.x+1, self.tabHeight-0.5,
-		btn.x+btn.width-1, self.tabHeight-0.5
+		btn.x+1, self.style.buttonHeight-0.5,
+		btn.x+btn.width-1, self.style.buttonHeight-0.5
 	)
 end
 
