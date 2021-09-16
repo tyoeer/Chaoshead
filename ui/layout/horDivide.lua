@@ -7,7 +7,7 @@ Current off by ones have been deduced by pixel-perfect mouse pointer placement t
 
 function UI:initialize(left,right,divisionRatio)
 	UI.super.initialize(self)
-	self.divisionRatio = divisionRatio or 0.5
+	self.divisionRatio = divisionRatio
 	self.divisionX = math.huge
 	self.divisionWidth = 1
 	
