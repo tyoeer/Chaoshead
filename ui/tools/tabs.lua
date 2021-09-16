@@ -11,6 +11,7 @@ function UI:initialize()
 	--map the get the button of a specific tab (content)
 	self.contentButtonMap = {}
 	--self.activeTab
+	self.style = settings.theme.tabs
 end
 
 function UI:getTitle(ui)
@@ -104,10 +105,6 @@ end
 function UI:resized(w,h)
 	self:updateButtons()
 	self:updateActiveTab()
-end
-
-function UI:onThemeChanged(theme)
-	self.style = theme.tabs
 end
 
 function UI:onDraw()

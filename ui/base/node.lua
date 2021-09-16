@@ -12,10 +12,8 @@ function UI:initialize()
 	-- (scrollbar defaulted to the bottom because the negative value got it to think it had scrolled to far)
 	self.width = math.huge
 	self.height = math.huge
+	--node dependant data about colors and dimensions(ratios)
 	--self.style = nil
-	--self.theme
-	--default so dimensions can be used before the UI is added to a parent
-	self:setTheme(settings.theme)
 end
 
 function UI:getMouseX()

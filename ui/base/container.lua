@@ -16,7 +16,6 @@ function UI:addChild(child)
 	end
 	table.insert(self.children,child)
 	child.parent = self
-	child:setTheme(self.theme)
 end
 
 function UI:removeChild(toRemove)
@@ -77,14 +76,6 @@ end
 function UI:childMinimumHeightChanged(child)
 	self:minimumHeightChanged()
 end
-
-function UI:themeChanged(theme)
-	for _,child in ipairs(self.children) do
-		child:setTheme(theme)
-	end
-	self:onThemeChanged(theme)
-end
-function UI:onThemeChanged() end
 
 rAll("update")
 
