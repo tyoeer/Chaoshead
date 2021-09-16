@@ -4,9 +4,7 @@ local UI = Class("DetailsUI",require("ui.layout.padding"))
 
 function UI:initialize(autoLoad)
 	self.list = LIST:new(
-		settings.dim.details.entryMargin,
-		settings.dim.details.textIndentSize,
-		settings.dim.details.buttonPadding
+		settings.theme.details.listStyle
 	)
 	--also load on nil/unspecified
 	if autoLoad~=false then
@@ -16,7 +14,7 @@ function UI:initialize(autoLoad)
 	UI.super.initialize(
 		self,
 		self.list,
-		settings.dim.details.inset
+		settings.theme.details.insetSize
 	)
 end
 

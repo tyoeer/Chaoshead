@@ -15,18 +15,12 @@ dataRetriever:
 ]]--
 
 function UI:initialize(dataRetriever,onClick)
-	UI.super.initialize(
-		self,
-		settings.dim.treeViewer.entryMargin,
-		settings.dim.treeViewer.textIndentSize
-	)
+	UI.super.initialize(self, settings.theme.treeViewer.listStyle)
 	
 	self.dataRetriever = dataRetriever
 	self.onClick = onClick
 	
 	self.dataCache = self:toCache(dataRetriever:getRootEntries())
-	
-	self.buttonPadding = settings.dim.treeViewer.buttonPadding
 	
 	self:buildList(self.dataCache,0)
 end
@@ -50,34 +44,31 @@ function UI:buildList(data,indentLevel)
 		if v.folder then
 			if v.open then
 				self:addButtonEntry(
-					string.rep(" ",indentLevel*self.indentSize).."V "..v.title,
+					string.rep(" ",indentLevel*self.style.indentCharacters).."V "..v.title,
 					function()
 						v.open = false
 						self:reload()
-					end,
-					self.buttonPadding
+					end
 				):setBorder(false)
 				self:buildList(v.children, indentLevel+1)
 			else
 				self:addButtonEntry(
-					string.rep(" ",indentLevel*self.indentSize).."> "..v.title,
+					string.rep(" ",indentLevel*self.style.indentCharacters).."> "..v.title,
 					function()
 						v.open = true
 						if not v.children then
 							v.children = self:toCache(self.dataRetriever:getChildren(v.data))
 						end
 						self:reload()
-					end,
-					self.buttonPadding
+					end
 				):setBorder(false)
 			end
 		else
 			self:addButtonEntry(
-				string.rep(" ",indentLevel*self.indentSize)..v.title,
+				string.rep(" ",indentLevel*self.style.indentCharacters)..v.title,
 				function()
 					self.onClick(v.data)
-				end,
-				self.buttonPadding
+				end
 			):setBorder(false)
 		end
 	end

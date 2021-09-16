@@ -17,19 +17,11 @@ return {
 		},
 	},
 	treeViewer = {
-		indentSize = 2,
-		entryMargin = 0,
+		
 		--not used, but needed to prevent nil argument
 		textIndentSize = 2,
-		buttonPadding = 5,
 		divisionRatio = 0.25,
 		detailsPadding = 10,
-	},
-	details = {
-		buttonPadding = 5,
-		textIndentSize = 15,
-		entryMargin = 6,
-		inset = 10,
 	},
 	--[[editor = {
 		details = {

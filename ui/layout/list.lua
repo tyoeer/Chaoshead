@@ -3,29 +3,25 @@ local ButtonEntry = require("ui.widgets.button")
 
 local UI = Class("ListUI",require("ui.base.container"))
 
-function UI:initialize(entryMargin,indentSize,defaultButtonPadding)
+function UI:initialize(style)
 	UI.super.initialize(self)
 	
-	if entryMargin then
-		self.entryMargin = entryMargin
-	else
+	if not style.entryMargin then
 		error("Entry margin not specified!",2)
 	end
-	if indentSize then
-		self.indentSize = indentSize
-	else
-		error("Indent size not specified!",2)
+	if not style.textIndentSize then
+		error("Text indent size not specified!",2)
 	end
-	--this is one is allowed to be nil
-	self.defaultButtonPadding = defaultButtonPadding
+	--style.defaulButtonPadding is allowed to be nil
+	self.style = style
 end
 
 function UI:addTextEntry(text, indent, ...)
-	self:addUIEntry(TextEntry:new(text, (indent or 0)*self.indentSize, ...))
+	self:addUIEntry(TextEntry:new(text, (indent or 0)*self.style.textIndentSize, ...))
 end
 
 function UI:addButtonEntry(contents,onClick,padding,triggerOnActivate)
-	padding = padding or self.defaultButtonPadding
+	padding = padding or self.style.defaultButtonPadding
 	local button = ButtonEntry:new(contents,onClick,padding,triggerOnActivate)
 	self:addUIEntry(button)
 	--return the button so its border can possibly be set
@@ -39,7 +35,7 @@ function UI:addUIEntry(child)
 	local y = 0
 	if #self.children>0 then
 		local lastChild = self.children[#self.children]
-		y = lastChild.y + lastChild.height + self.entryMargin
+		y = lastChild.y + lastChild.height + self.style.entryMargin
 	end
 	child:move(0,y)
 	self:addChild(child)
@@ -56,7 +52,7 @@ function UI:getMinimumHeight(width)
 	for _,child in ipairs(self.children) do
 		out = out + child:getMinimumHeight(width)
 	end
-	return out + self.entryMargin * (#self.children-1)
+	return out + self.style.entryMargin * (#self.children-1)
 end
 
 -- events
@@ -68,7 +64,7 @@ function UI:resized(w,h)
 		local width = w
 		local height = child:getMinimumHeight(width)
 		child:resize(width,height)
-		y = y + child.height + self.entryMargin
+		y = y + child.height + self.style.entryMargin
 	end
 end
 
