@@ -1,5 +1,5 @@
 --local LEVEL_ROOT = require("ui.level.levelRoot")
-local TABS = require("ui.layout.tabs")
+local TABS = require("ui.tools.tabs")
 local WORKSHOP = require("levelEditor.workshop")
 local MISC = require("ui.misc")
 
