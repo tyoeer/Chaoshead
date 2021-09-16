@@ -14,5 +14,10 @@ Use :on[Event]() to execute events after they're normally executed.
 Overwriting :[event]() prevents the event from propagating trough to the children.
 :preDraw() exists to draw something before/behind the children.
 
+Required dimension/color information should be gotten from a "style" table passed as an argument to the constructor.
+The constructor should explicitly check for all the requird fields of the style and error if they're not set.
+(To have a concise place were all the field are mentioned)
+Non-required (style) fields should also be mentioned somewhere in the constrcutor.
+
 /tools/:
 These UIs are allowed to use the settings global (layouts should be generic and aren't).
