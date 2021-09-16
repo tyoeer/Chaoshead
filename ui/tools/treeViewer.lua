@@ -26,16 +26,13 @@ dataHandler:
 function UI:initialize(dataHandler)
 	--ui state
 	self.list = LIST:new(dataHandler,function(data)
-		self:setDetailsUI(PADDING:new(
-			dataHandler:getDetailsUI(data),
-			settings.dim.treeViewer.detailsPadding
-		))
+		self:setDetailsUI(dataHandler:getDetailsUI(data))
 	end)
 	self.details = BASE:new()
 	
 	UI.super.initialize(self,HOR_DIVIDE:new(
 		SCROLL:new(self.list), self.details,
-		settings.dim.treeViewer.divisionRatio
+		settings.theme.treeViewer.listDetailsDivisionRatio
 	))
 end
 

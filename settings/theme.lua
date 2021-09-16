@@ -11,6 +11,7 @@ return {
 			
 			indentCharacters = 2,
 		},
+		listDetailsDivisionRatio = 0.25,
 	},
 	details = {
 		listStyle = {
