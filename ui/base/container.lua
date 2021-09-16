@@ -1,9 +1,10 @@
 local UI = Class("ContainerUI",require("ui.base.node"))
 
 function UI:initialize()
-	UI.super.initialize(self)
 	--the child with the highest index is on top
 	self.children = {}
+	-- node init sets the theme, and the container theme handler requires the children array
+	UI.super.initialize(self)
 end
 
 function UI:addChild(child)
@@ -15,6 +16,7 @@ function UI:addChild(child)
 	end
 	table.insert(self.children,child)
 	child.parent = self
+	child:setTheme(self.theme)
 end
 
 function UI:removeChild(toRemove)
@@ -75,6 +77,14 @@ end
 function UI:childMinimumHeightChanged(child)
 	self:minimumHeightChanged()
 end
+
+function UI:themeChanged(theme)
+	for _,child in ipairs(self.children) do
+		child:setTheme(theme)
+	end
+	self:onThemeChanged(theme)
+end
+function UI:onThemeChanged() end
 
 rAll("update")
 

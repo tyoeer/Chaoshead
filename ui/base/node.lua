@@ -12,6 +12,10 @@ function UI:initialize()
 	-- (scrollbar defaulted to the bottom because the negative value got it to think it had scrolled to far)
 	self.width = math.huge
 	self.height = math.huge
+	--self.style = nil
+	--self.theme
+	--default so dimensions can be used before the UI is added to a parent
+	self:setTheme(settings.theme)
 end
 
 function UI:getMouseX()
@@ -38,6 +42,11 @@ function UI:resize(width,height)
 	self:resized(width,height)
 end
 
+function UI:setTheme(theme)
+	self.theme = theme
+	self:themeChanged(theme)
+end
+
 function UI:move(x,y)
 	self.x = x
 	self.y = y
@@ -46,6 +55,7 @@ end
 
 -- event stubs
 function UI:resized(width,height) end
+function UI:themeChanged(theme) end
 
 function UI:update(dt) end
 function UI:draw() end
