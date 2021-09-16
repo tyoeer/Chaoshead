@@ -1,4 +1,4 @@
-local BlockRoot = require("ui.utils.blockRoot")
+local BlockRoot = require("ui.layout.blockRoot")
 
 local UI = Class("BlockUI",require("ui.base.proxy"))
 

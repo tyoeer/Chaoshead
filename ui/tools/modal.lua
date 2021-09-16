@@ -1,6 +1,6 @@
 local LIST = require("ui.layout.list")
 local BOX = require("ui.layout.box")
-local BLOCK = require("ui.utils.block")
+local BLOCK = require("ui.layout.block")
 
 local UI = Class(require("ui.base.container"))
 
