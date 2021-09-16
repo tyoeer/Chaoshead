@@ -11,7 +11,10 @@ return {
 			
 			indentCharacters = 2,
 		},
-		listDetailsDivisionRatio = 0.25,
+		listDetailsDivisionStyle = {
+			divisionRatio = 0.25,
+			dividerColor = {1,1,1},
+		},
 	},
 	details = {
 		listStyle = {

@@ -5,9 +5,15 @@ When there's an apparent off by one error, test it first.
 Current off by ones have been deduced by pixel-perfect mouse pointer placement testing.
 ]]--
 
-function UI:initialize(left,right,divisionRatio)
+function UI:initialize(left,right,style)
 	UI.super.initialize(self)
-	self.divisionRatio = divisionRatio
+	self.style = style
+	if not style.divisionRatio then
+		error("Division ratio not set!",2)
+	end
+	if not style.dividerColor then
+		error("Divider color not set!",2)
+	end
 	self.divisionX = math.huge
 	self.divisionWidth = 1
 	
@@ -65,7 +71,7 @@ end
 
 function UI:onDraw()
 	--draw divider
-	love.graphics.setColor(settings.col.horDivide)
+	love.graphics.setColor(self.style.dividerColor)
 	love.graphics.line(
 		self.divisionX+0.5, 0,
 		self.divisionX+0.5, self.height
@@ -78,7 +84,7 @@ end
 
 function UI:resized(w,h)
 	--reset divisionX and child sizes
-	self:setDivisionRatio(self.divisionRatio)
+	self:setDivisionRatio(self.style.divisionRatio)
 end
 
 return UI

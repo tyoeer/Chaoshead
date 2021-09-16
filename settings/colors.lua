@@ -1,7 +1,7 @@
 return {
 	misc = {
 		blockOverlay = {0,0,0, 0.5},
-		--activeTabDivider = 
+		--activeTabDivider =
 	},
 	box = {
 		bg = {0,0,0},
@@ -32,7 +32,6 @@ return {
 		},
 		selectionAreaOutline = {1,1,1, 1},
 	},
-	horDivide = {1,1,1, 1},
 	list = {
 		text = {1,1,1, 1},
 		button = {

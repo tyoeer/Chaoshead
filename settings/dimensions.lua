@@ -16,12 +16,11 @@ return {
 			indentSize = 12,
 		},
 	},
-	treeViewer = {
-		
-		--not used, but needed to prevent nil argument
-		textIndentSize = 2,
-		divisionRatio = 0.25,
-		detailsPadding = 10,
+	hexInspector = {
+		indentSize = 20,
+		rowHeight = 20,
+		xPadding = 0,
+		yPadding = 0,
 	},
 	--[[editor = {
 		details = {
@@ -49,10 +48,5 @@ return {
 			},
 		},
 	},]]--
-	hexInspector = {
-		indentSize = 20,
-		rowHeight = 20,
-		xPadding = 0,
-		yPadding = 0,
-	},
+	
 }

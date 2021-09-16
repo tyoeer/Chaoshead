@@ -32,7 +32,7 @@ function UI:initialize(dataHandler)
 	
 	UI.super.initialize(self,HOR_DIVIDE:new(
 		SCROLL:new(self.list), self.details,
-		settings.theme.treeViewer.listDetailsDivisionRatio
+		settings.theme.treeViewer.listDetailsDivisionStyle
 	))
 end
 
