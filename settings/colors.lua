@@ -3,10 +3,6 @@ return {
 		blockOverlay = {0,0,0, 0.5},
 		--activeTabDivider =
 	},
-	box = {
-		bg = {0,0,0},
-		border = {1,1,1},
-	},
 	editor = {
 		resizeCircles = {0.5,0.5,0.5,0.5},
 		bg = {0,0.5,1,1},

@@ -24,5 +24,17 @@ return {
 		},
 		insetSize = 10,
 	},
-	modal = {},
+	modal = {
+		boxStyle = {
+			padding = 10,
+			backgroundColor = {0,0,0},
+			borderColor = {1,1,1},
+		},
+		listStyle = {
+			textIndentSize = 12,
+			entryMargin = 8,
+			defaultButtonPadding = 5,
+		},
+		widthFactor = 0.57,
+	},
 }

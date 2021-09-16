@@ -20,11 +20,11 @@ function UI:setModalRaw(ui)
 end
 
 function UI:setModal(ui)
-	self:setModalRaw(BOX:new(ui))
+	self:setModalRaw(BOX:new(ui, settings.theme.modal.boxStyle))
 end
 
 function UI:resizeModal()
-	local modalWidth = settings.dim.modal.widthFactor * self.width
+	local modalWidth = settings.theme.modal.widthFactor * self.width
 	local modalHeight = self.modal:getMinimumHeight(modalWidth)
 	self.modal:resize(modalWidth,modalHeight)
 	
@@ -44,15 +44,9 @@ end
 
 
 function UI:displayMessage(text)
-	local ui = LIST:new(
-		settings.dim.modal.list.entryMargin,
-		settings.dim.modal.list.indentSize
-	)
+	local ui = LIST:new(settings.theme.modal.listStyle)
 	ui:addTextEntry(text)
-	ui:addButtonEntry(
-		"Dismiss", function() self:removeModal() end,
-		settings.dim.modal.buttonPadding
-	)
+	ui:addButtonEntry("Dismiss", function() self:removeModal() end)
 	self:setModal(ui)
 end
 

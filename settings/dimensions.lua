@@ -1,7 +1,6 @@
 return {
 	misc = {
 		--tabHeight =
-		boxPadding = 10,
 		scrollbar = {
 			width = 25,
 			buttonHeight = 35,
@@ -9,12 +8,6 @@ return {
 		noLevelsPadding = 10,
 	},
 	modal = {
-		widthFactor = 0.57,
-		buttonPadding = 5,
-		list = {
-			entryMargin = 5,
-			indentSize = 12,
-		},
 	},
 	hexInspector = {
 		indentSize = 20,
