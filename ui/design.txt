@@ -1,0 +1,18 @@
+UI design:
+
+Every UI has a parent except ui.base.root, which should be used as the root of the UI node tree.
+For a list of events, check the stubs at the end of /base/node.lua
+
+/widgets/:
+Leaf nodes without children. Extend ui.base.node
+Use :[event]() to handle events were needed.
+
+/layout/:
+These UIs are containers that position and resize their children. Extend ui.base.container
+They should specify their own :resized() event handler.
+Use :on[Event]() to execute events after they're normally executed.
+Overwriting :[event]() prevents the event from propagating trough to the children.
+:preDraw() exists to draw something before/behind the children.
+
+/tools/:
+These UIs are allowed to use the settings global (layouts should be generic and aren't).
