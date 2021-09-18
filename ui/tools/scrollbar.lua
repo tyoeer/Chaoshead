@@ -14,21 +14,21 @@ function UI:initialize(contents)
 	self.contents = contents
 	self:addChild(contents)
 	
-	self.upButton = Button:new(Text:new("Λ",0,"center","center"), function()
+	self.upButton = Button:new("Λ", function()
 		self:scrollToOffset(self.contentOffset - settings.misc.scrollbar.buttonScrollSpeed)
-	end, 0)
+	end, settings.theme.scrollbar.buttonStyle)
 	self:addChild(self.upButton)
-	self.upButton:resize(settings.dim.misc.scrollbar.width, settings.dim.misc.scrollbar.buttonHeight)
+	self.upButton:resize(settings.theme.scrollbar.width, settings.theme.scrollbar.buttonHeight)
 	
-	self.downButton = Button:new(Text:new("V",0,"center","center"), function()
+	self.downButton = Button:new("V", function()
 		self:scrollToOffset(self.contentOffset + settings.misc.scrollbar.buttonScrollSpeed)
-	end, 0)
+	end, settings.theme.scrollbar.buttonStyle)
 	self:addChild(self.downButton)
-	self.downButton:resize(settings.dim.misc.scrollbar.width, settings.dim.misc.scrollbar.buttonHeight)
+	self.downButton:resize(settings.theme.scrollbar.width, settings.theme.scrollbar.buttonHeight)
 	
-	self.scrollButton = Button:new(Text:new("=",0,"center","center"), function()
+	self.scrollButton = Button:new("=", function()
 		self.dragging = true
-	end, 5,true)
+	end, settings.theme.scrollbar.buttonStyle, true)
 	self:addChild(self.scrollButton)
 	self:updateScrollButton()
 	
@@ -41,7 +41,7 @@ function UI:updateScrollButton()
 	which then gets multiplied by the area available to the scroll button to get its height
 	]]
 	local height = math.min(1, self.height / self.contents:getMinimumHeight() ) * self.scrollAreaHeight
-	self.scrollButton:resize(settings.dim.misc.scrollbar.width, math.floor(0.5+height) )
+	self.scrollButton:resize(settings.theme.scrollbar.width, math.floor(0.5+height) )
 	--math.min to prevent scrolling beyond the height of the contents (it could have been reduced due to an update in them)
 	self:scrollToOffset(math.min(self.contentOffset,self.contents:getMinimumHeight()))
 end
@@ -49,7 +49,7 @@ end
 function UI:scroll(scrollButtonOffset)
 	if self.scrollButton.height == self.scrollAreaHeight then
 		self.contents:move(0,0)
-		self.scrollButton:move(self.buttonX, settings.dim.misc.scrollbar.buttonHeight)
+		self.scrollButton:move(self.buttonX, settings.theme.scrollbar.buttonHeight)
 	else
 		self.scrollButtonOffset = scrollButtonOffset
 		if self.scrollButtonOffset < 0 then
@@ -57,7 +57,7 @@ function UI:scroll(scrollButtonOffset)
 		elseif self.scrollButtonOffset > self.scrollAreaHeight-self.scrollButton.height then
 			self.scrollButtonOffset = self.scrollAreaHeight-self.scrollButton.height
 		end
-		self.scrollButton:move(self.buttonX, settings.dim.misc.scrollbar.buttonHeight + self.scrollButtonOffset)
+		self.scrollButton:move(self.buttonX, settings.theme.scrollbar.buttonHeight + self.scrollButtonOffset)
 		--formula is the inverse of the one in UI:scrollToOffset, and works effectively the same
 		self.contentOffset = math.floor(
 			self.scrollButtonOffset
@@ -83,17 +83,17 @@ end
 -- events
 
 function UI:childMinimumHeightChanged(child)
-	local cw = self.width - settings.dim.misc.scrollbar.width
+	local cw = self.width - settings.theme.scrollbar.width
 	local ch = child:getMinimumHeight(cw)
 	self.contents:resize(cw, math.max(ch,self.height))
 	self:updateScrollButton()
 end
 
 function UI:resized(w,h)
-	self.buttonX = self.width - settings.dim.misc.scrollbar.width
+	self.buttonX = self.width - settings.theme.scrollbar.width
 	self.upButton:move(self.buttonX, 0)
-	self.downButton:move(self.buttonX, h - settings.dim.misc.scrollbar.buttonHeight)
-	self.scrollAreaHeight = h - 2* settings.dim.misc.scrollbar.buttonHeight
+	self.downButton:move(self.buttonX, h - settings.theme.scrollbar.buttonHeight)
+	self.scrollAreaHeight = h - 2* settings.theme.scrollbar.buttonHeight
 	--update the scroll button through a sidetrack so code only has to be written once
 	self:childMinimumHeightChanged(self.contents)
 end

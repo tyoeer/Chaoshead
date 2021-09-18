@@ -40,4 +40,31 @@ return {
 		},
 		widthFactor = 0.57,
 	},
+	scrollbar = {
+		buttonStyle = {
+			padding = 0,
+			border = true,
+			normal = {
+				backgroundColor = {0,0,0},
+				borderColor = {1,1,1},
+				textStyle = {
+					horAlign = "center",
+					verAlign = "center",
+					color = {1,1,1},
+				},
+			},
+			hover = {
+				backgroundColor = {0.5,0.5,0.5},
+				borderColor = {1,1,1},
+				textStyle = {
+					horAlign = "center",
+					verAlign = "center",
+					color = {1,1,1},
+				},
+			},
+		},
+		width = 25,
+		--not the center button:
+		buttonHeight = 35,
+	},
 }

@@ -1,11 +1,5 @@
 return {
-	misc = {
-		--tabHeight =
-		scrollbar = {
-			width = 25,
-			buttonHeight = 35,
-		},
-	},
+
 	hexInspector = {
 		indentSize = 20,
 		rowHeight = 20,
