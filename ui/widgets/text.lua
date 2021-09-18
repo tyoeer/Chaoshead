@@ -29,6 +29,9 @@ function UI:setStyle(style)
 	else
 		error("Vertical alignment not specified!",2)
 	end
+	if not style.color then
+		error("Color not specified!",2)
+	end
 	self:updateOffset()
 end
 
@@ -50,7 +53,7 @@ end
 
 function UI:draw()
 	love.graphics.setFont(self.font)
-	love.graphics.setColor(settings.col.list.text)
+	love.graphics.setColor(self.style.color)
 	love.graphics.printf(self.text, self.indention, self.offsetY, self.width-self.indention, self.style.horAlign)
 end
 
