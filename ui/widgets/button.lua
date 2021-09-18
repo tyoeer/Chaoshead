@@ -5,16 +5,18 @@ local UI = Class("ButtonUI",require("ui.base.container"))
 function UI:initialize(contents,onClick,style,triggerOnActivate)
 	UI.super.initialize(self)
 	
+	self:setStyle(style)
+	
 	if type(contents)=="table" then
 		self.contents = contents
 		self.managingContents = false
 	else
-		self.contents = TEXT:new(contents)
+		self.contents = TEXT:new(contents,0,style.normal.textStyle)
 		self.managingContents = true
 	end
 	self:addChild(self.contents)
 	
-	self:setStyle(style)
+	
 	
 	self.onClick = onClick
 	self.triggerOnActivate = (triggerOnActivate==nil) and false or triggerOnActivate
@@ -36,6 +38,9 @@ function UI:setStyle(style)
 		if style.border and not style.normal.borderColor then
 			error("Normal border color not specified",2)
 		end
+		if self.managingContents and not style.normal.textStyle then
+			error("Normal text style not specified!",2)
+		end
 	else
 		error("Normal colors not specified",2)
 	end
@@ -46,15 +51,15 @@ function UI:setStyle(style)
 		if style.border and not style.hover.borderColor then
 			error("Hover border color not specified",2)
 		end
+		if self.managingContents and not style.hover.textStyle then
+			error("Hover text style not specified!",2)
+		end
 	else
 		error("Hover colors not specified",2)
 	end
-	if self.managingContents then
-		if style.textStyle then
-			self.contents:setStyle(style.textStyle)
-		else
-			error("Text style not specified!",2)
-		end
+	--self.contents can be nil, setStyle gets called (to verify style integrity) before contents get created
+	if self.managingContents and self.contents then
+		self.contents:setStyle(style.textStyle)
 	end
 	self.style = style
 end
