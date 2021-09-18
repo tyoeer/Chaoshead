@@ -9,7 +9,7 @@ function UI:initialize(contents)
 	self.scrollAreaHeight = math.huge
 	self.contentOffset = 0
 	self.scrollButtonOffset = 0
-	self.buttonX = self.width - settings.dim.misc.scrollbar.width
+	self.buttonX = self.width - settings.theme.scrollbar.width
 	
 	self.contents = contents
 	self:addChild(contents)

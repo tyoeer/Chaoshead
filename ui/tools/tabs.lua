@@ -11,7 +11,6 @@ function UI:initialize()
 	--map the get the button of a specific tab (content)
 	self.contentButtonMap = {}
 	--self.activeTab
-	self.style = settings.theme.tabs
 end
 
 function UI:getTitle(ui)
@@ -25,23 +24,22 @@ end
 function UI:updateButtons()
 	local tabWidth = math.floor(self.width / #self.tabButtons)
 	for i,button in ipairs(self.tabButtons) do
-		button:resize(tabWidth,self.style.buttonHeight)
+		button:resize(tabWidth,settings.theme.tabs.buttonHeight)
 		button:move((i-1)*tabWidth, 0)
 	end
 	-- stretch the last button to make sure it covers the entire UI and doesn't leave some empty pixels on the right
 	-- which are caused by the floor in the tabWidth calculation when the the available space doesn't divide nicely
 	local leftOverWidth = self.width - #self.tabButtons * tabWidth
-	self.tabButtons[#self.tabButtons]:resize(tabWidth + leftOverWidth, self.style.buttonHeight)
+	self.tabButtons[#self.tabButtons]:resize(tabWidth + leftOverWidth, settings.theme.tabs.buttonHeight)
 end
 
 --set the ui.title field to provide a label for the button
 --(not what this function does, it's a tip for users)
 function UI:addTab(ui)
-	local label = Text:new(self:getTitle(ui),0,"center","center")
-	local b = Button:new(label,function()
+	local b = Button:new(self:getTitle(ui), function()
 		--referencing self here works
 		self:setActiveTab(ui)
-	end, 0)
+	end, settings.theme.tabs.tabButtonStyle)
 	self:addChild(b)
 	table.insert(self.tabButtons,b)
 	self.contentButtonMap[ui] = b
@@ -55,13 +53,14 @@ end
 
 function UI:updateActiveTab()
 	--if tabHeight=30, the tabs covers pixels 0-29, and the content should start at pixel 30, aka tabHeight
-	self.activeTab:move(0,self.style.buttonHeight)
-	self.activeTab:resize(self.width, self.height-self.style.buttonHeight)
+	self.activeTab:move(0,settings.theme.tabs.buttonHeight)
+	self.activeTab:resize(self.width, self.height-settings.theme.tabs.buttonHeight)
 end
 
 function UI:removeActiveTab()
 	self.activeTab:visible(false)
 	self:removeChild(self.activeTab)
+	self.contentButtonMap[self.activeTab]:setStyle(settings.theme.tabs.tabButtonStyle)
 	self.activeTab = nil
 end
 
@@ -71,6 +70,7 @@ function UI:setActiveTab(ui)
 		self:removeActiveTab()
 	end
 	self.activeTab = ui
+	self.contentButtonMap[ui]:setStyle(settings.theme.tabs.activeTabButtonStyle)
 	self:addChild(ui)
 	self:updateActiveTab()
 	ui:visible(true)
@@ -109,7 +109,7 @@ end
 
 function UI:onDraw()
 	local btn = self.contentButtonMap[self.activeTab]
-	love.graphics.setColor(self.style.activeDividerColor)
+	love.graphics.setColor(settings.theme.tabs.activeDividerColor)
 	--[[
 	button start at 30, has width of 10:
 	it has pixels 30-39
@@ -120,8 +120,8 @@ function UI:onDraw()
 	the last is btn.x + btn.width - 1 = 39 (aka the right edge of pixel 38)
 	]]
 	love.graphics.line(
-		btn.x+1, self.style.buttonHeight-0.5,
-		btn.x+btn.width-1, self.style.buttonHeight-0.5
+		btn.x+1, settings.theme.tabs.buttonHeight-0.5,
+		btn.x+btn.width-1, settings.theme.tabs.buttonHeight-0.5
 	)
 end
 

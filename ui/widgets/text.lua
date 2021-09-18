@@ -4,12 +4,12 @@ local UI = Class("TextUI",require("ui.base.node"))
 --valign valid values: bottom center top
 function UI:initialize(text,indention,style)
 	UI.super.initialize(self)
+	self.font = love.graphics.getFont()
 	self.text = text
 	self.indention = indention or 0
 	self:setStyle(style)
 	self.style = style
 	self.offsetY = 0
-	self.font = love.graphics.getFont()
 end
 
 function UI:setStyle(style)
@@ -32,14 +32,15 @@ function UI:setStyle(style)
 	if not style.color then
 		error("Color not specified!",2)
 	end
+	self.style = style
 	self:updateOffset()
 end
 
 function UI:updateOffset()
 	if self.style.verAlign=="center" then
-		self.offsetY = math.floor( (self.height - self:getMinimumHeight(width))/2 +0.5 )
+		self.offsetY = math.floor( (self.height - self:getMinimumHeight(self.width))/2 +0.5 )
 	elseif self.style.verAlign=="bottom" then
-		self.offsetY = self.height - self:getMinimumHeight(width)
+		self.offsetY = self.height - self:getMinimumHeight(self.width)
 	end
 	--only (valid) other option: top
 	--leave offset at 0

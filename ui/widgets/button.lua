@@ -59,7 +59,7 @@ function UI:setStyle(style)
 	end
 	--self.contents can be nil, setStyle gets called (to verify style integrity) before contents get created
 	if self.managingContents and self.contents then
-		self.contents:setStyle(style.textStyle)
+		self.contents:setStyle(style.normal.textStyle)
 	end
 	self.style = style
 end
@@ -72,7 +72,7 @@ end
 
 function UI:resized(width,height)
 	self.contents:resize(width-2*self.style.padding, height - 2*self.style.padding)
-	self.contents:move(style.padding,style.padding)
+	self.contents:move(self.style.padding,self.style.padding)
 end
 
 function UI:preDraw()
@@ -87,7 +87,7 @@ function UI:preDraw()
 		self.contents:setStyle(subStyle.textStyle)
 	end
 	
-	love.graphics.setColor(subStyle.backgroundColors)
+	love.graphics.setColor(subStyle.backgroundColor)
 	love.graphics.rectangle("fill",0,0,self.width,self.height)
 	if self.style.border then
 		love.graphics.setColor(subStyle.borderColor)

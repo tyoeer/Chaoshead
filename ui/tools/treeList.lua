@@ -49,7 +49,7 @@ function UI:buildList(data,indentLevel)
 						v.open = false
 						self:reload()
 					end
-				):setBorder(false)
+				)
 				self:buildList(v.children, indentLevel+1)
 			else
 				self:addButtonEntry(
@@ -61,7 +61,7 @@ function UI:buildList(data,indentLevel)
 						end
 						self:reload()
 					end
-				):setBorder(false)
+				)
 			end
 		else
 			self:addButtonEntry(
@@ -69,7 +69,7 @@ function UI:buildList(data,indentLevel)
 				function()
 					self.onClick(v.data)
 				end
-			):setBorder(false)
+			)
 		end
 	end
 end
