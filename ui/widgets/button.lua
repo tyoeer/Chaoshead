@@ -7,8 +7,10 @@ function UI:initialize(contents,onClick,style,triggerOnActivate)
 	
 	if type(contents)=="table" then
 		self.contents = contents
+		self.managingContents = false
 	else
 		self.contents = TEXT:new(contents)
+		self.managingContents = true
 	end
 	self:addChild(self.contents)
 	
@@ -47,7 +49,7 @@ function UI:setStyle(style)
 	else
 		error("Hover colors not specified",2)
 	end
-	if self.contents:isInstanceOf(TEXT) then
+	if self.managingContents then
 		if style.textStyle then
 			self.contents:setStyle(style.textStyle)
 		else
@@ -70,16 +72,20 @@ end
 
 function UI:preDraw()
 	local x,y = self:getMousePos()
-	local colors
+	local subStyle
 	if x >= 0 and y >= 0 and x < self.width and y < self.height then
-		colors = self.style.hover
+		subStyle = self.style.hover
 	else
-		colors = self.style.normal
+		subStyle = self.style.normal
 	end
-	love.graphics.setColor(colors.backgroundColors)
+	if self.managingContents and self.contents.style ~= substyle then
+		self.contents:setStyle(subStyle.textStyle)
+	end
+	
+	love.graphics.setColor(subStyle.backgroundColors)
 	love.graphics.rectangle("fill",0,0,self.width,self.height)
 	if self.style.border then
-		love.graphics.setColor(colors.borderColor)
+		love.graphics.setColor(subStyle.borderColor)
 		love.graphics.rectangle("line",0.5,0.5,self.width-1,self.height-1)
 	end
 end
