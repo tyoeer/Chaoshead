@@ -11,7 +11,7 @@ Required dimension/color information should be gotten from a "style" table passe
 The constructor should explicitly check for all the requird fields of the style and error if they're not set.
 (To have a concise place were all the field are mentioned)
 Non-required (style) fields should also be mentioned somewhere in the constrcutor.
-Dynamically changing the style should work and be fine.
+Dynamically changing the style should work (by :setStyle())
 
 /layout/:
 These UIs are containers that position and resize their children. Extend ui.base.container

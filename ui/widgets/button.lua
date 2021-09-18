@@ -2,8 +2,9 @@ local TEXT = require("ui.widgets.text")
 
 local UI = Class("ButtonUI",require("ui.base.container"))
 
-function UI:initialize(contents,onClick,padding,triggerOnActivate)
+function UI:initialize(contents,onClick,style,triggerOnActivate)
 	UI.super.initialize(self)
+	
 	if type(contents)=="table" then
 		self.contents = contents
 	else
@@ -11,43 +12,74 @@ function UI:initialize(contents,onClick,padding,triggerOnActivate)
 	end
 	self:addChild(self.contents)
 	
+	self:setStyle(style)
+	
 	self.onClick = onClick
-	if padding then
-		self.padding = padding
-	else
-		error("Padding not specified!",2)
-	end
-	self.contents:move(padding,padding)
 	self.triggerOnActivate = (triggerOnActivate==nil) and false or triggerOnActivate
-	self.drawBorder = true
+	
+	self.contents:move(style.padding,style.padding)
 end
 
-function UI:setBorder(drawBorder)
-	self.drawBorder = drawBorder
+function UI:setStyle(style)
+	if not style.padding then
+		error("Padding not specified!",2)
+	end
+	if style.border==nil then
+		error("Border not specified!",2)
+	end
+	if style.normal then
+		if not style.normal.backgroundColor then
+			error("Normal background color not specified",2)
+		end
+		if style.border and not style.normal.borderColor then
+			error("Normal border color not specified",2)
+		end
+	else
+		error("Normal colors not specified",2)
+	end
+	if style.hover then
+		if not style.hover.backgroundColor then
+			error("Hover background color not specified",2)
+		end
+		if style.border and not style.hover.borderColor then
+			error("Hover border color not specified",2)
+		end
+	else
+		error("Hover colors not specified",2)
+	end
+	if self.contents:isInstanceOf(TEXT) then
+		if style.textStyle then
+			self.contents:setStyle(style.textStyle)
+		else
+			error("Text style not specified!",2)
+		end
+	end
+	self.style = style
 end
 
 function UI:getMinimumHeight(width)
 	--local w, text = self.font:getWrap(self.text, width-2*self.padding)
 	--local h = #text * self.font:getLineHeight() * self.font:getHeight()
-	return self.contents:getMinimumHeight(width-2*self.padding) + 2*self.padding
+	return self.contents:getMinimumHeight(width-2*self.style.padding) + 2*self.style.padding
 end
 
 function UI:resized(width,height)
-	self.contents:resize(width-2*self.padding, height - 2*self.padding)
+	self.contents:resize(width-2*self.style.padding, height - 2*self.style.padding)
+	self.contents:move(style.padding,style.padding)
 end
 
 function UI:preDraw()
 	local x,y = self:getMousePos()
-	local col
+	local colors
 	if x >= 0 and y >= 0 and x < self.width and y < self.height then
-		col = settings.col.list.button.hover
+		colors = self.style.hover
 	else
-		col = settings.col.list.button.other
+		colors = self.style.normal
 	end
-	love.graphics.setColor(col.bg)
+	love.graphics.setColor(colors.backgroundColors)
 	love.graphics.rectangle("fill",0,0,self.width,self.height)
-	if self.drawBorder then
-		love.graphics.setColor(col.outline)
+	if self.style.border then
+		love.graphics.setColor(colors.borderColor)
 		love.graphics.rectangle("line",0.5,0.5,self.width-1,self.height-1)
 	end
 end
