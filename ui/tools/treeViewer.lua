@@ -1,4 +1,4 @@
-local SCROLL = require("ui.layout.scrollbar")
+local SCROLL = require("ui.tools.scrollbar")
 local HOR_DIVIDE = require("ui.layout.horDivide")
 local LIST = require("ui.tools.treeList")
 local PADDING = require("ui.layout.padding")
