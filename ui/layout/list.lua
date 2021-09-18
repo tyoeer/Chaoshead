@@ -22,7 +22,7 @@ function UI:initialize(style)
 end
 
 function UI:addTextEntry(text, indent, style)
-	style = style or self.style.defaultTextStyle
+	style = style or self.style.textStyle
 	self:addUIEntry(TextEntry:new(text, (indent or 0)*self.style.textIndentSize, style))
 end
 
