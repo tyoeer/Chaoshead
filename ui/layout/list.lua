@@ -15,10 +15,7 @@ function UI:initialize(style)
 	--style.textStyle is optional
 	--style.buttonStyle is optional
 	if style.buttonStyle and not style.textStyle then
-		style.textStyle = style.buttonStyle.textStyle
-	end
-	if style.textStyle and style.buttonStyle and not style.buttonStyle.textStyle then
-		style.buttonStyle.textStyle = style.textStyle
+		style.textStyle = style.buttonStyle.normal.textStyle
 	end
 	--style.defaulButtonPadding is allowed to be nil
 	self.style = style
