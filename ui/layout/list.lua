@@ -12,17 +12,26 @@ function UI:initialize(style)
 	if not style.textIndentSize then
 		error("Text indent size not specified!",2)
 	end
+	--style.textStyle is optional
+	--style.buttonStyle is optional
+	if style.buttonStyle and not style.textStyle then
+		style.textStyle = style.buttonStyle.textStyle
+	end
+	if style.textStyle and style.buttonStyle and not style.buttonStyle.textStyle then
+		style.buttonStyle.textStyle = style.textStyle
+	end
 	--style.defaulButtonPadding is allowed to be nil
 	self.style = style
 end
 
-function UI:addTextEntry(text, indent, ...)
-	self:addUIEntry(TextEntry:new(text, (indent or 0)*self.style.textIndentSize, ...))
+function UI:addTextEntry(text, indent, style)
+	style = style or self.style.defaultTextStyle
+	self:addUIEntry(TextEntry:new(text, (indent or 0)*self.style.textIndentSize, style))
 end
 
-function UI:addButtonEntry(contents,onClick,padding,triggerOnActivate)
-	padding = padding or self.style.defaultButtonPadding
-	local button = ButtonEntry:new(contents,onClick,padding,triggerOnActivate)
+function UI:addButtonEntry(contents, onClick, style, triggerOnActivate)
+	style = style or self.style.buttonStyle
+	local button = ButtonEntry:new(contents,onClick,style,triggerOnActivate)
 	self:addUIEntry(button)
 	--return the button so its border can possibly be set
 	return button
