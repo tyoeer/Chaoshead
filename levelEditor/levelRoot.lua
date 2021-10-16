@@ -122,17 +122,16 @@ function UI:close()
 end
 
 
-function UI:focus(focus)
+function UI:onFocus(focus)
 	if focus then
 		self.levelFile:reload()
 		if self.latestHash ~= self.levelFile:getHash() then
 			self:reload()
 		end
 	end
-	self.child:focus(focus)
 end
 
-function UI:inputActivated(name,group, isCursorBound)
+function UI:onInputActivated(name,group, isCursorBound)
 	if group=="editor" then
 		if name=="reload" then
 			self:reload()
@@ -142,11 +141,7 @@ function UI:inputActivated(name,group, isCursorBound)
 			if self:checkLimits() then
 				ui:displayMessage("Level doesn't break any limits!")
 			end
-		else
-			self.child:inputActivated(name,group, isCursorBound)
 		end
-	else
-		self.child:inputActivated(name,group, isCursorBound)
 	end
 end
 

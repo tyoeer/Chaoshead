@@ -205,7 +205,7 @@ end
 
 -- events (most are handled by the proxy super)
 
-function UI:inputActivated(name,group, isCursorBound)
+function UI:onInputActivated(name,group, isCursorBound)
 	if group=="editor" then
 		if name=="delete" then
 			self:deleteSelection()
@@ -213,11 +213,7 @@ function UI:inputActivated(name,group, isCursorBound)
 			self:deselectAll()
 		elseif name=="selectAll" then
 			self:selectAll()
-		else
-			self.child:inputActivated(name,group, isCursorBound)
 		end
-	else
-		self.child:inputActivated(name,group, isCursorBound)
 	end
 end
 
