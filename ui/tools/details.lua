@@ -1,11 +1,16 @@
 local LIST = require("ui.layout.list")
+local PADDING = require("ui.layout.padding")
+local SCROLLBAR = require("ui.tools.scrollbar")
 
-local UI = Class("DetailsUI",require("ui.layout.padding"))
+local UI = Class("DetailsUI",require("ui.base.proxy"))
 
 function UI:initialize(autoLoad)
 	self.list = LIST:new(
 		settings.theme.details.listStyle
 	)
+	local padding = PADDING:new(self.list, settings.theme.details.insetSize)
+	local scrollbar = SCROLLBAR:new(padding)
+	
 	--also load on nil/unspecified
 	if autoLoad~=false then
 		self:reload()
@@ -13,8 +18,7 @@ function UI:initialize(autoLoad)
 	
 	UI.super.initialize(
 		self,
-		self.list,
-		settings.theme.details.insetSize
+		scrollbar
 	)
 end
 
@@ -28,7 +32,7 @@ function UI:reload(...)
 	self:onReload(self.list, ...)
 	--it could get reloaded (ex.: autoLoad) before added to the UI tree
 	if self.parent then
-		self:minimumHeightChanged()
+		self.list:minimumHeightChanged()
 	end
 end
 
