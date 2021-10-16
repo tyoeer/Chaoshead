@@ -2,7 +2,7 @@ local LIST = require("ui.layout.list")
 local PADDING = require("ui.layout.padding")
 local JSON = require("libs.json")
 
-local UI = Class("TreeViewerUI",require("ui.tools.treeViewer"))
+local UI = Class("DataViewerUI",require("ui.tools.treeViewer"))
 
 function UI:initialize(data)
 	UI.super.initialize(self,{

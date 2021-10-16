@@ -1,7 +1,7 @@
 local Text = require("ui.widgets.text")
 local Button = require("ui.widgets.button")
 
-local UI = Class(require("ui.base.container"))
+local UI = Class("ScrollbarUI",require("ui.base.container"))
 
 function UI:initialize(contents)
 	UI.super.initialize(self)

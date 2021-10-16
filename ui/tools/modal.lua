@@ -2,7 +2,7 @@ local LIST = require("ui.layout.list")
 local BOX = require("ui.layout.box")
 local BLOCK = require("ui.layout.block")
 
-local UI = Class(require("ui.base.container"))
+local UI = Class("ModalManagerUI",require("ui.base.container"))
 
 function UI:initialize(child)
 	UI.super.initialize(self)
