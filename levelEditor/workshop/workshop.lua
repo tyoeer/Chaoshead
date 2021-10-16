@@ -27,7 +27,7 @@ function UI:openEditor(path)
 	)
 	if success then
 		self.child:addTab(editor)
-		self.child:setActive(self.levelsProxy)
+		self.child:setActiveTab(editor)
 	end
 end
 
