@@ -25,7 +25,11 @@ end
 
 --reload hook
 function UI:reload(...)
-	self.onReload(self,self.list, ...)
+	self:onReload(self.list, ...)
+	--it could get reloaded (ex.: autoLoad) before added to the UI tree
+	if self.parent then
+		self:minimumHeightChanged()
+	end
 end
 
 -- :onReload() should be defined by the subclass
