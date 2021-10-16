@@ -1,14 +1,10 @@
 local P = require("levelhead.data.properties")
 local E = require("levelhead.data.elements")
 
-local UI = Class(require("ui.structure.list"))
+local UI = Class(require("ui.layout.list"))
 
-function UI:initialize(propertyList)
-	UI.super.initialize(self)
-	self.title = "Property Info"
-	
-	self.entryMargin = settings.dim.editor.details.selection.property.entryMargin
-	self.indentSize = settings.dim.editor.details.selection.property.textEntryIndentSize
+function UI:initialize(propertyList,listStyle)
+	UI.super.initialize(self,listStyle)
 	
 	self:setPropertyList(propertyList)
 end

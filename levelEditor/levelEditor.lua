@@ -1,44 +1,52 @@
-local Padding = require("ui.structure.padding")
-local Scrollbar = require("ui.structure.scrollbar")
-local LevelDetails = require("ui.level.details.level")
 local OBJ = require("levelhead.level.object")
 local PN = require("levelhead.level.pathNode")
 local PATH = require("levelhead.level.path")
-local Selection = require("tools.selection.tracker")
-local SelectionDetails = require("ui.level.details.selection")
 
-local UI = Class("LevelEditorUI",require("ui.structure.proxy"))
+local Selection = require("tools.selection.tracker")
+
+local Padding = require("ui.layout.padding")
+local HorDivide = require("ui.layout.horDivide")
+local Tabs = require("ui.tools.tabs")
+local Scrollbar = require("ui.tools.scrollbar")
+
+local WorldEditor = require("levelEditor.worldEditor")
+local SelectionDetails = require("levelEditor.details.selection")
+local LevelDetails = require("levelEditor.details.level")
+
+local UI = Class("LevelEditorUI",require("ui.base.proxy"))
 
 function UI:initialize(level,root)
 	self.level = level
 	self.root = root
 	--ui state
-	self.viewer = require("ui.level.worldEditor"):new(self)
-	self.detailsUI = require("ui.structure.tabs"):new()
+	self.viewer = WorldEditor:new(self)
+	self.detailsUI = Tabs:new()
 	self.levelDetails = LevelDetails:new(level,self)
 	self:addTab(self.levelDetails)
-	self.detailsUI.tabHeight = settings.dim.editor.details.tabHeight
 	
 	--editor state
 	self.selection = nil
 	self.selectionDetails = nil
 	
-	UI.super.initialize(self,require("ui.structure.horDivide"):new(self.detailsUI, self.viewer))
+	UI.super.initialize(self,HorDivide:new(
+		self.detailsUI, self.viewer,
+		settings.theme.levelEditor.detailsWorldDivisionStyle
+	))
 	self.title = "Level Editor"
 end
 
 function UI:addTab(tab)
 	tab.editor = self
-	tab = Padding:new(tab, settings.dim.editor.details.inset)
+	--TODO: move scrollbar to ui.tools.details
 	tab = Scrollbar:new(tab)
-	self.detailsUI:addChild(tab)
-	self.detailsUI:setActive(tab)
+	self.detailsUI:addTab(tab)
+	self.detailsUI:setActiveTab(tab)
 end
 
 function UI:removeTab(tab)
 	while tab.parent do
 		if tab.parent==self.detailsUI then
-			self.detailsUI:removeChild(tab)
+			self.detailsUI:removeTab(tab)
 			break
 		end
 		tab = tab.parent

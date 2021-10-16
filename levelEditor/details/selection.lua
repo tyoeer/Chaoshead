@@ -1,16 +1,14 @@
 local P = require("levelhead.data.properties")
 local E = require("levelhead.data.elements")
 
-local PUI = require("ui.level.details.property")
+local PUI = require("levelEditor.details.property")
 
-local UI = Class(require("ui.structure.list"))
+local UI = Class(require("ui.tools.details"))
 
 function UI:initialize(tracker)
-	UI.super.initialize(self)
+	--it gets (re)loaded in setSelectionTracker
+	UI.super.initialize(self,false)
 	self.title = "Selection"
-	
-	self.entryMargin = settings.dim.editor.details.selection.entryMargin
-	self.indentSize = settings.dim.editor.details.selection.textEntryIndentSize
 	
 	self:setSelectionTracker(tracker)
 end
@@ -20,42 +18,42 @@ function UI:setSelectionTracker(tracker)
 	self:reload()
 end
 
-function UI:reload()
-	self:resetList()
+function UI:onReload(list)
+	list:resetList()
 	local s = self.selection
 	local c = s.contents
 	--counts + filters
 	do
-		self:addTextEntry("Tiles: "..s.mask.nTiles)
-		self:addButtonEntry("Deselect",function()
+		list:addTextEntry("Tiles: "..s.mask.nTiles)
+		list:addButtonEntry("Deselect",function()
 			self.editor:deselect()
 		end)
 		if s:hasLayer("foreground") then
-			self:addTextEntry("Foreground objects: "..c.nForeground)
+			list:addTextEntry("Foreground objects: "..c.nForeground)
 			if c.nForeground ~= 0 then
-				self:addButtonEntry("Deselect foreground layer",function()
+				list:addButtonEntry("Deselect foreground layer",function()
 					self.editor:removeSelectionLayer("foreground")
 				end)
 			end
 		end
 		if s:hasLayer("background") then
-			self:addTextEntry("Background objects: "..c.nBackground)
+			list:addTextEntry("Background objects: "..c.nBackground)
 			if c.nBackground ~= 0 then
-				self:addButtonEntry("Deselect background layer",function()
+				list:addButtonEntry("Deselect background layer",function()
 					self.editor:removeSelectionLayer("background")
 				end)
 			end
 		end
 		if s:hasLayer("pathNodes") then
-			self:addTextEntry("Path nodes: "..c.nPathNodes)
+			list:addTextEntry("Path nodes: "..c.nPathNodes)
 			if c.nPathNodes ~= 0 then
-				self:addButtonEntry("Deselect path layer",function()
+				list:addButtonEntry("Deselect path layer",function()
 					self.editor:removeSelectionLayer("pathNodes")
 				end)
 			end
 		end
 	end
-	self:addButtonEntry("Delete",function()
+	list:addButtonEntry("Delete",function()
 		self.editor:deleteSelection()
 	end)
 	-- info of single object
@@ -63,28 +61,28 @@ function UI:reload()
 		--foreground
 		if c.nForeground==1 and c.nBackground==0 and c.nPathNodes==0 then
 			local o = c.foreground:getTop()
-			self:addTextEntry("Position: ("..o.x..","..o.y..")")
-			self:addTextEntry("Element: "..o:getName().." ("..o.id..")")
-			self:addTextEntry("Layer: Foreground")
+			list:addTextEntry("Position: ("..o.x..","..o.y..")")
+			list:addTextEntry("Element: "..o:getName().." ("..o.id..")")
+			list:addTextEntry("Layer: Foreground")
 			if o.contents then
-				self:addTextEntry("Contents: "..o:getContents().." ("..o.contents..")")
+				list:addTextEntry("Contents: "..o:getContents().." ("..o.contents..")")
 			else
-				self:addTextEntry("Contents: None")
+				list:addTextEntry("Contents: None")
 			end
 		elseif c.nForeground==0 and c.nBackground==1 and c.nPathNodes==0 then
 			--background
 			local o = c.background:getTop()
-			self:addTextEntry("Position: ("..o.x..","..o.y..")")
-			self:addTextEntry("Element: "..o:getName().." ("..o.id..")")
-			self:addTextEntry("Layer: Background")
+			list:addTextEntry("Position: ("..o.x..","..o.y..")")
+			list:addTextEntry("Element: "..o:getName().." ("..o.id..")")
+			list:addTextEntry("Layer: Background")
 		elseif c.nForeground==0 and c.nBackground==0 and c.nPathNodes==1 then
 			local n = c.pathNodes:getTop()
 			--mark it as a path node to prevent possible confusion
-			self:addTextEntry("Path Node Position: ("..n.x..","..n.y..")")
+			list:addTextEntry("Path Node Position: ("..n.x..","..n.y..")")
 		end
 	end
 	--add a divider
-	self:addTextEntry(" ",0)
+	list:addTextEntry(" ",0)
 	--objects with unknown properties
 	do
 		local u = c.unknownProperties
@@ -99,15 +97,13 @@ function UI:reload()
 					break
 				end
 			end
-			self:addTextEntry(text)
+			list:addTextEntry(text)
 		end
 	end
 	--properties
 	for _,pl in pairs(c.properties) do
-		self:addUIEntry(PUI:new(pl))
+		list:addUIEntry(PUI:new(pl,list.style))
 	end
-	
-	self:minimumHeightChanged()
 end
 
 return UI

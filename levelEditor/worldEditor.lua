@@ -1,6 +1,6 @@
 local UTILS = require("utils.levelUtils")
 
-local UI = Class(require("ui.structure.base"))
+local UI = Class(require("ui.base.node"))
 
 function UI:initialize(editor)
 	self.editor = editor
@@ -24,7 +24,6 @@ function UI:initialize(editor)
 	
 	--UI stuff
 	UI.super.initialize(self)
-	self.title = "World Editor"
 end
 
 function UI:reload(level)

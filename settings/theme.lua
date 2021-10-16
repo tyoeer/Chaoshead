@@ -1,4 +1,11 @@
 return {
+	levelEditor = {
+		detailsWorldDivisionStyle = {
+			divisionRatio = 0.3,
+			dividerColor = {1,1,1},
+			dividerWidth = 1,
+		},
+	},
 	tabs = {
 		activeDividerColor = {0,0,0, 0},
 		buttonHeight = 30,
