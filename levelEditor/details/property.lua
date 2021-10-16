@@ -32,8 +32,6 @@ function UI:reload()
 			settings.dim.editor.details.selection.property.buttonPadding
 		)]]--
 	end
-	
-	self:minimumHeightChanged()
 end
 
 return UI
