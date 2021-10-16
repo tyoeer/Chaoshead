@@ -2,6 +2,7 @@
 local TABS = require("ui.tools.tabs")
 --local LEVEL_ROOT = require("levelEditor.level.levelRoot")
 local LEVEL_SELECTOR = require("levelEditor.workshop.levelSelector")
+local LEVEL_ROOT = require("levelEditor.levelRoot")
 
 local UI = Class("WorkshopUI",require("ui.base.proxy"))
 
@@ -22,16 +23,7 @@ function UI:openEditor(path)
 		function()
 			return LEVEL_ROOT:new(path)
 		end,
-		function(message)
-			message = tostring(message)
-			--part of snippet yoinked from default löve error handling
-			local fullTrace = debug.traceback():gsub("\n[^\n]+$", "")
-			print(fullTrace)
-			--cut of the part of the trace that goes into the code that calls UI:openEditor()
-			local index = fullTrace:find("%s+%[C%]: in function 'xpcall'")
-			trace = fullTrace:sub(1,index-1)
-			ui:displayMessage("Failed to load level!","Error message: "..message,trace)
-		end
+		LEVEL_ROOT.loadErrorHandler
 	)
 	if success then
 		self.child:addTab(editor)

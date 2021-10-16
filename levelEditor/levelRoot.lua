@@ -1,9 +1,21 @@
 local LHS = require("levelhead.lhs")
 local LIMITS = require("levelhead.level.limits")
 local LH_MISC = require("levelhead.misc")
+local TABS = require("ui.tools.tabs")
 --levelRoot was the best name I could come up with, OK?
 
-local UI = Class(require("ui.structure.proxy"))
+local UI = Class("LevelRootUI",require("ui.base.proxy"))
+
+function UI.loadErrorHandler(message)
+	message = tostring(message)
+	--part of snippet yoinked from default löve error handling
+	local fullTrace = debug.traceback("",2):gsub("\n[^\n]+$", "")
+	print(fullTrace)
+	--cut of the part of the trace that goes into the code that calls UI:openEditor()
+	local index = fullTrace:find("%s+%[C%]: in function 'xpcall'")
+	trace = fullTrace:sub(1,index-1)
+	ui:displayMessage("Failed to load level!","Error message: "..message,trace)
+end
 
 function UI:initialize(levelPath)
 	self.levelPath = levelPath
@@ -12,17 +24,17 @@ function UI:initialize(levelPath)
 	self.latestHash = self.levelFile:getHash()
 	self.level = self.levelFile:parseAll()
 	
-	tabs = require("ui.structure.tabs"):new()
+	tabs = TABS:new()
 	
-	self.hexInspector = require("ui.level.hexInspector"):new(self.levelFile)
-	tabs:addChild(require("ui.utils.movableCamera"):new(self.hexInspector))
+	--self.hexInspector = require("ui.level.hexInspector"):new(self.levelFile)
+	--tabs:addTab(require("ui.utils.movableCamera"):new(self.hexInspector))
 	
-	self.levelEditor = require("ui.level.levelEditor"):new(self.level, self)
-	tabs:addChild(self.levelEditor)
-	tabs:setActive(self.levelEditor)
+	self.levelEditor = require("levelEditor.levelEditor"):new(self.level, self)
+	tabs:addTab(self.levelEditor)
+	tabs:setActiveTab(self.levelEditor)
 	
-	self.scriptInterface = require("ui.level.scriptInterface"):new(self)
-	tabs:addChild(self.scriptInterface)
+	--self.scriptInterface = require("ui.level.scriptInterface"):new(self)
+	--tabs:addTab(self.scriptInterface)
 	
 	UI.super.initialize(self,tabs)
 	self.title = self.level.settings:getTitle()
@@ -39,12 +51,7 @@ function UI:reload(level)
 				
 				return self.levelFile:parseAll()
 			end,
-			function(message)
-				--print full trace to console
-				--snippet yoinked from default löve error handling
-				print((debug.traceback("Error loading level: " .. tostring(message), 1):gsub("\n[^\n]+$", "")))
-				ui:displayMessage("Failed to load level!\n(Probably due to lacking Void Update support)\nError message:\n"..tostring(message))
-			end
+			self.loadErrorHandler
 		)
 		if success then
 			self.latestHash = self.levelFile:getHash()
