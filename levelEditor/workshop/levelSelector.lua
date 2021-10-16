@@ -1,5 +1,5 @@
 local USER_DATA = require("levelhead.userData")
-local LEVEL_DETAILS = require("levelEditor.levelDetails")
+local LEVEL_DETAILS = require("levelEditor.workshop.levelDetails")
 
 local TREE_VIEWER = require("ui.tools.treeViewer")
 

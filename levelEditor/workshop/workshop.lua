@@ -1,14 +1,14 @@
 --local LEVEL_ROOT = require("ui.level.levelRoot")
 local TABS = require("ui.tools.tabs")
 --local LEVEL_ROOT = require("levelEditor.level.levelRoot")
-local LEVEL_SELECTOR = require("levelEditor.levelSelector")
+local LEVEL_SELECTOR = require("levelEditor.workshop.levelSelector")
 
 local UI = Class("WorkshopUI",require("ui.base.proxy"))
 
 function UI:initialize()
 	local tabs = TABS:new()
 	
-	self.levelSelector = LEVEL_SELECTOR:new()
+	self.levelSelector = LEVEL_SELECTOR:new(self)
 	tabs:addTab(self.levelSelector)
 	
 	--TabsUI needs buttons before getting resized (which always happens when added)
@@ -25,7 +25,7 @@ function UI:openEditor(path)
 		function(message)
 			--print full trace to console
 			--snippet yoinked from default löve error handling
-			print((debug.traceback("Error loading level: " .. tostring(message), 1):gsub("\n[^\n]+$", "")))
+			print(debug.traceback("Error loading level: " .. tostring(message), 1):gsub("\n[^\n]+$", ""))
 			ui:displayMessage("Failed to load level!\nError message:\n"..tostring(message))
 		end
 	)

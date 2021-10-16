@@ -1,6 +1,6 @@
 --local LEVEL_ROOT = require("ui.level.levelRoot")
 local TABS = require("ui.tools.tabs")
-local WORKSHOP = require("levelEditor.workshop")
+local WORKSHOP = require("levelEditor.workshop.workshop")
 local MISC = require("ui.misc")
 
 local UI = Class(require("ui.tools.modal"))
