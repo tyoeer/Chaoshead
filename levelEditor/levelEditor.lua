@@ -28,7 +28,7 @@ function UI:initialize(level,root)
 	self.selection = nil
 	self.selectionDetails = nil
 	
-	UI.super.initialize(self,HorDivide:new(
+	UI.super.initialize(self, HorDivide:new(
 		self.detailsUI, self.viewer,
 		settings.theme.levelEditor.detailsWorldDivisionStyle
 	))
@@ -42,13 +42,7 @@ function UI:addTab(tab)
 end
 
 function UI:removeTab(tab)
-	while tab.parent do
-		if tab.parent==self.detailsUI then
-			self.detailsUI:removeTab(tab)
-			break
-		end
-		tab = tab.parent
-	end
+	self.detailsUI:removeTab(tab)
 end
 
 function UI:reload(level)
