@@ -81,16 +81,7 @@ function UI:getActiveTab()
 end
 
 function UI:removeTab(ui)
-	local n
-	for i,tab in ipairs(self.tabContents) do
-		if tab==ui then
-			n = i
-			break
-		end
-	end
-	table.remove(self.tabContents,n)
-	table.remove(self.tabButtons,i)
-	self.contentButtonMap[ui] = nil
+	--change the active tab before removing because changing the actvie tab requires info that will get removed
 	if ui == self.activeTab then
 		--check if there's a tab to make active
 		if #self.tabContents >= 1 then
@@ -99,6 +90,17 @@ function UI:removeTab(ui)
 			self:removeActiveTab()
 		end
 	end
+	
+	local uiIndex
+	for i,tab in ipairs(self.tabContents) do
+		if tab==ui then
+			uiIndex = i
+			break
+		end
+	end
+	table.remove(self.tabContents,uiIndex)
+	table.remove(self.tabButtons,uiIndex)
+	self.contentButtonMap[ui] = nil
 end
 
 
