@@ -119,8 +119,33 @@ return {
 		listStyle = {
 			textIndentSize = 12,
 			entryMargin = 8,
-			defaultButtonPadding = 5,
-			
+			textStyle = {
+				horAlign = "left",
+				verAlign = "center",
+				color = {1,1,1},
+			},
+			buttonStyle = {
+				padding = 5,
+				border = true,
+				normal = {
+					backgroundColor = {0,0,0},
+					borderColor = {1,1,1},
+					textStyle = {
+						horAlign = "center",
+						verAlign = "center",
+						color = {1,1,1},
+					},
+				},
+				hover = {
+					backgroundColor = {0.5,0.5,0.5},
+					borderColor = {1,1,1},
+					textStyle = {
+						horAlign = "center",
+						verAlign = "center",
+						color = {1,1,1},
+					},
+				},
+			},
 		},
 		blockStyle = {
 			overlayColor = {0,0,0, 0.5},
