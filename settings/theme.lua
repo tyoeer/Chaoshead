@@ -78,6 +78,7 @@ return {
 		listDetailsDivisionStyle = {
 			divisionRatio = 0.25,
 			dividerColor = {1,1,1},
+			dividerWidth = 1,
 		},
 	},
 	details = {

@@ -14,8 +14,10 @@ function UI:initialize(left,right,style)
 	if not style.dividerColor then
 		error("Divider color not set!",2)
 	end
+	if not style.dividerWidth then
+		error("Divider width not set!",2)
+	end
 	self.divisionX = math.huge
-	self.divisionWidth = 1
 	
 	self:setLeftChild(left)
 	--self.leftChild
@@ -47,8 +49,8 @@ function UI:updateLeftChild()
 end
 
 function UI:updateRightChild()
-	self.rightChild:move(self.divisionX + self.divisionWidth, 0)
-	self.rightChild:resize(self.width - self.divisionX - self.divisionWidth, self.height)
+	self.rightChild:move(self.divisionX + self.style.dividerWidth, 0)
+	self.rightChild:resize(self.width - self.divisionX - self.style.dividerWidth, self.height)
 end
 
 function UI:updateChildren()
@@ -77,8 +79,8 @@ function UI:onDraw()
 		self.divisionX+0.5, self.height
 	)
 	love.graphics.line(
-		self.divisionX + self.divisionWidth-0.5, 0,
-		self.divisionX + self.divisionWidth-0.5, self.height
+		self.divisionX + self.style.dividerWidth-0.5, 0,
+		self.divisionX + self.style.dividerWidth-0.5, self.height
 	)
 end
 
