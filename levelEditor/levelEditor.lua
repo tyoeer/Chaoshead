@@ -37,8 +37,6 @@ end
 
 function UI:addTab(tab)
 	tab.editor = self
-	--TODO: move scrollbar to ui.tools.details
-	tab = Scrollbar:new(tab)
 	self.detailsUI:addTab(tab)
 	self.detailsUI:setActiveTab(tab)
 end
