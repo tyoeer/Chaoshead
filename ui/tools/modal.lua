@@ -43,9 +43,11 @@ end
 -- Preset modals
 
 
-function UI:displayMessage(text)
+function UI:displayMessage(...)
 	local ui = LIST:new(settings.theme.modal.listStyle)
-	ui:addTextEntry(text)
+	for _,text in ipairs({...}) do
+		ui:addTextEntry(text)
+	end
 	ui:addButtonEntry("Dismiss", function() self:removeModal() end)
 	self:setModal(ui)
 end

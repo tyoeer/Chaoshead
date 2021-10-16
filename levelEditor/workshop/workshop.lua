@@ -23,10 +23,14 @@ function UI:openEditor(path)
 			return LEVEL_ROOT:new(path)
 		end,
 		function(message)
-			--print full trace to console
-			--snippet yoinked from default löve error handling
-			print(debug.traceback("Error loading level: " .. tostring(message), 1):gsub("\n[^\n]+$", ""))
-			ui:displayMessage("Failed to load level!\nError message:\n"..tostring(message))
+			message = tostring(message)
+			--part of snippet yoinked from default löve error handling
+			local fullTrace = debug.traceback():gsub("\n[^\n]+$", "")
+			print(fullTrace)
+			--cut of the part of the trace that goes into the code that calls UI:openEditor()
+			local index = fullTrace:find("%s+%[C%]: in function 'xpcall'")
+			trace = fullTrace:sub(1,index-1)
+			ui:displayMessage("Failed to load level!","Error message: "..message,trace)
 		end
 	)
 	if success then
