@@ -23,9 +23,9 @@ return {
 				selected = {1,1,1 ,1},
 			},
 			pathNode = {
-				connection = {0,0,1, 0.6},
 				shape = {0,0,1, 0.4},
 				outline = {0,0,1, 1},
+				connection = {0,0,1, 1},
 				selected = {1,1,1 ,1},
 			},
 		},

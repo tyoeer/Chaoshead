@@ -49,9 +49,7 @@ function PN:drawConnection()
 	local drawY = (self.y+0.5)*TILE_SIZE
 	local toX = (self.next.x+0.5)*TILE_SIZE
 	local toY = (self.next.y+0.5)*TILE_SIZE
-	--TODO
-	love.graphics.setColor(colors.outline)
-	--TODO
+	love.graphics.setColor(colors.connection)
 	love.graphics.setLineWidth(5)
 	love.graphics.line(drawX,drawY, toX,toY)
 end
