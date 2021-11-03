@@ -4,11 +4,13 @@ local SCROLLBAR = require("ui.tools.scrollbar")
 
 local UI = Class("DetailsUI",require("ui.base.proxy"))
 
+local theme = settings.theme.details
+
 function UI:initialize(autoLoad)
 	self.list = LIST:new(
-		settings.theme.details.listStyle
+		theme.listStyle
 	)
-	local padding = PADDING:new(self.list, settings.theme.details.insetSize)
+	local padding = PADDING:new(self.list, theme.insetSize)
 	local scrollbar = SCROLLBAR:new(padding)
 	
 	--also load on nil/unspecified

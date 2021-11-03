@@ -4,11 +4,13 @@ local BLOCK = require("ui.layout.block")
 
 local UI = Class("ModalManagerUI",require("ui.base.container"))
 
+local theme = settings.theme.modal
+
 function UI:initialize(child)
 	UI.super.initialize(self)
 	--self.modal
 	--the stuff behind the modal
-	self.main = BLOCK:new(child, settings.theme.modal.blockStyle)
+	self.main = BLOCK:new(child, theme.blockStyle)
 	self:addChild(self.main)
 end
 
@@ -20,11 +22,11 @@ function UI:setModalRaw(ui)
 end
 
 function UI:setModal(ui)
-	self:setModalRaw(BOX:new(ui, settings.theme.modal.boxStyle))
+	self:setModalRaw(BOX:new(ui, theme.boxStyle))
 end
 
 function UI:resizeModal()
-	local modalWidth = settings.theme.modal.widthFactor * self.width
+	local modalWidth = theme.widthFactor * self.width
 	local modalHeight = self.modal:getMinimumHeight(modalWidth)
 	self.modal:resize(modalWidth,modalHeight)
 	
@@ -44,7 +46,7 @@ end
 
 
 function UI:displayMessage(...)
-	local ui = LIST:new(settings.theme.modal.listStyle)
+	local ui = LIST:new(theme.listStyle)
 	for _,text in ipairs({...}) do
 		ui:addTextEntry(text)
 	end

@@ -14,8 +14,10 @@ dataRetriever:
 
 ]]--
 
+local theme = settings.theme.treeViewer
+
 function UI:initialize(dataRetriever,onClick)
-	UI.super.initialize(self, settings.theme.treeViewer.listStyle)
+	UI.super.initialize(self, theme.listStyle)
 	
 	self.dataRetriever = dataRetriever
 	self.onClick = onClick

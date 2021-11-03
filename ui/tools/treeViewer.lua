@@ -23,6 +23,8 @@ dataHandler:
 
 ]]--
 
+local theme = settings.theme.treeViewer
+
 function UI:initialize(dataHandler)
 	--ui state
 	self.list = LIST:new(dataHandler,function(data)
@@ -32,7 +34,7 @@ function UI:initialize(dataHandler)
 	
 	UI.super.initialize(self,HOR_DIVIDE:new(
 		SCROLL:new(self.list), self.details,
-		settings.theme.treeViewer.listDetailsDivisionStyle
+		theme.listDetailsDivisionStyle
 	))
 end
 

@@ -15,6 +15,8 @@ local LevelDetails = require("levelEditor.details.level")
 
 local UI = Class("LevelEditorUI",require("ui.base.proxy"))
 
+local theme = settings.theme.levelEditor
+
 function UI:initialize(level,root)
 	self.level = level
 	self.root = root
@@ -30,7 +32,7 @@ function UI:initialize(level,root)
 	
 	UI.super.initialize(self, HorDivide:new(
 		self.detailsUI, self.viewer,
-		settings.theme.levelEditor.detailsWorldDivisionStyle
+		theme.detailsWorldDivisionStyle
 	))
 	self.title = "Level Editor"
 end
