@@ -2,6 +2,8 @@ local UTILS = require("utils.levelUtils")
 
 local UI = Class(require("ui.base.node"))
 
+local theme = settings.theme.levelEditor
+
 function UI:initialize(editor)
 	self.editor = editor
 	self.level = editor.level
@@ -115,7 +117,7 @@ function UI:draw()
 		love.graphics.translate(self.cameraX, self.cameraY)
 		
 		--bg
-		love.graphics.setColor(settings.col.editor.bg)
+		love.graphics.setColor(theme.colors.worldBackground)
 		love.graphics.rectangle(
 			"fill",
 			self.level.left *TILE_SIZE, self.level.top *TILE_SIZE,
@@ -123,7 +125,7 @@ function UI:draw()
 		)
 		
 		--resize circles
-		love.graphics.setColor(settings.col.editor.resizeCircles)
+		love.graphics.setColor(theme.colors.resizeCircles)
 		--ipairs used because for-looping with the difference as step size gets stuck when the difference is 0
 		for _,cornerX in ipairs({ self.level.left, self.level.right+1}) do
 			for _,cornerY in ipairs({self.level.top, self.level.bottom+1}) do
@@ -213,7 +215,7 @@ function UI:draw()
 		--area being selected
 		if self.selectStartX then
 			love.graphics.setLineWidth(2)
-			love.graphics.setColor(settings.col.editor.selectionAreaOutline)
+			love.graphics.setColor(theme.colors.selectingArea)
 			love.graphics.rectangle("line",
 				self.selectStartX +0.5, self.selectStartY+0.5,
 				self:toWorldX(self:getMouseX()) - self.selectStartX-1,

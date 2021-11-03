@@ -5,6 +5,30 @@ return {
 			dividerColor = {1,1,1},
 			dividerWidth = 1,
 		},
+		colors = {
+			worldBackground = {0,0.5,1, 1},
+			resizeCircles = {0.5,0.5,0.5, 0.5},
+			selectingArea = {1,1,1, 1},
+			
+			foregroundObject = {
+				shape = {0,1,0, 0.4},
+				outline = {0,1,0, 1},
+				text = {0,0,0, 1},
+				selected = {1,1,1 ,1},
+			},
+			backgroundObject = {
+				shape = {1,0,0, 0.4},
+				outline = {1,0,0, 1},
+				text = {0,0,0, 1},
+				selected = {1,1,1 ,1},
+			},
+			pathNode = {
+				connection = {0,0,1, 0.6},
+				shape = {0,0,1, 0.4},
+				outline = {0,0,1, 1},
+				selected = {1,1,1 ,1},
+			},
+		},
 	},
 	tabs = {
 		activeDividerColor = {0,0,0, 0},

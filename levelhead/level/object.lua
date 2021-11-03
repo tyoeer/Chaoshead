@@ -53,13 +53,15 @@ function OBJ:getDrawCoords()
 	return self.x*TILE_SIZE, self.y*TILE_SIZE
 end
 
+local colorsIndex = settings.theme.levelEditor.colors
+
 function OBJ:drawShape()
 	local x, y = self:getDrawCoords()
 	if self.layer=="foreground" then
-		love.graphics.setColor(settings.col.editor.objects.foreground.shape)
+		love.graphics.setColor(colorsIndex.foregroundObject.shape)
 		love.graphics.rectangle("fill",x,y,TILE_SIZE,TILE_SIZE)
 	else --background
-		love.graphics.setColor(settings.col.editor.objects.background.shape)
+		love.graphics.setColor(colorsIndex.backgroundObject.shape)
 		love.graphics.translate(x,y)
 		love.graphics.polygon("fill",self.backgroundShape)
 		love.graphics.translate(-x,-y)
@@ -69,10 +71,10 @@ end
 function OBJ:drawText()
 	local x, y = self:getDrawCoords()
 	if self.layer=="foreground" then
-		love.graphics.setColor(settings.col.editor.objects.foreground.text)
+		love.graphics.setColor(colorsIndex.foregroundObject.text)
 		love.graphics.print(self.id,x+2,y+2)
 	else --background
-		love.graphics.setColor(settings.col.editor.objects.background.text)
+		love.graphics.setColor(colorsIndex.backgroundObject.text)
 		love.graphics.print(self.id, x+20,y+51)
 	end
 end
@@ -80,11 +82,11 @@ end
 function OBJ:drawOutline()
 	local x, y = self:getDrawCoords()
 	if self.layer=="foreground" then
-		love.graphics.setColor(settings.col.editor.objects.foreground.outline)
+		love.graphics.setColor(colorsIndex.foregroundObject.outline)
 		love.graphics.setLineWidth(1)
 		love.graphics.rectangle("line",x+0.5,y+0.5,TILE_SIZE-1,TILE_SIZE-1)
 	else --background
-		love.graphics.setColor(settings.col.editor.objects.background.outline)
+		love.graphics.setColor(colorsIndex.backgroundObject.outline)
 		love.graphics.setLineWidth(1)
 		love.graphics.translate(x,y)
 		love.graphics.polygon("line",self.backgroundShape)

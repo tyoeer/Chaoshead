@@ -7,31 +7,4 @@ return {
 		yPadding = 0,
 	},
 	
-	editor = {
-		details = {
-			inset = 10,
-			tabHeight = 30,
-			level = {
-				entryMargin = 8,
-				textEntryIndentSize = 15,
-				buttonPadding = 5,
-			},
-			selection = {
-				entryMargin = 6,
-				textEntryIndentSize = 15,
-				buttonPadding = 5,
-				property = {
-					entryMargin = 0,
-					textEntryIndentSize = 15,
-					buttonPadding = 5,
-				},
-			},
-			pathNode = {
-				entryMargin = 6,
-				textEntryIndentSize = 15,
-				buttonPadding = 5,
-			},
-		},
-	},
-	
 }
