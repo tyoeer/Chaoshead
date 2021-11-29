@@ -80,7 +80,7 @@ return {
 	},
 	treeViewer = {
 		listStyle = {
-			textIndentSize = 0/0,--unused, NaN to help detect errors
+			textIndentSize = 0,--unused, weird values that can help detect errors unfortunately can't be saved
 			entryMargin = 0,
 			
 			indentCharacters = 2,
