@@ -6,11 +6,23 @@ if not love.filesystem.getInfo(S.folder) then
 	love.filesystem.createDirectory(S.folder)
 end
 
+function S.errorHandler(message)
+	message = tostring(message)
+	--part of snippet yoinked from default löve error handling
+	local fullTrace = debug.traceback("",2):gsub("\n[^\n]+$", "")
+	print(fullTrace)
+	--cut of the part of the trace that goes into the script
+	local index = fullTrace:find("%s+%[C%]: in function 'xpcall'%s+script/[a-zA-Z/]+.lua:%d+:")
+	trace = fullTrace:sub(1,index-1)
+	--trace = fullTrace
+	return message, trace
+end
+
 function S.runDangerously(path, level, selection)
 	local scriptText = love.filesystem.read(path)
-	local f, err = loadstring(scriptText)
-	if not f then
-		error("Error loading script at "..path..": "..err)
+	local script, err = loadstring(scriptText)
+	if not script then
+		return false, "Error loading script at "..path..":\n"..err
 	end
 	--provide the level as a global
 	local oldLevel = _G.level
@@ -18,13 +30,17 @@ function S.runDangerously(path, level, selection)
 	_G.level = level
 	_G.selection = selection
 	
-	f()
+	local success, errorMessage, trace = xpcall(script, S.errorHandler)
 	
 	level = _G.level
 	selection = _G.selection
 	_G.level = oldLevel
 	_G.selection = oldSelection
-	return level, selection
+	if success then
+		return level, selection
+	else
+		return false, "Error running script at "..path..":\n"..errorMessage, trace
+	end
 end
 
 return S
