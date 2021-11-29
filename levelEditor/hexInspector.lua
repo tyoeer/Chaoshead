@@ -17,11 +17,6 @@ function UI:initialize(levelFile)
 	
 	UI.super.initialize(self,true)
 	self.title = "Hex Inspector"
-	
-	-- self.indentSize = settings.dim.hexInspector.indentSize
-	-- self.rowHeight = settings.dim.hexInspector.rowHeight
-	-- self.xPadding = settings.dim.hexInspector.xPadding
-	-- self.yPadding = settings.dim.hexInspector.yPadding
 end
 
 -- Row shortcuts
