@@ -203,5 +203,8 @@ return {
 				},
 			},
 		},
-	}
+	},
+	modal = {
+		cancel = "key: escape",
+	},
 }
