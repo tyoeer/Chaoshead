@@ -1,7 +1,7 @@
-local BaseUI = require("ui.structure.base")
+local BaseUI = require("ui.tools.details")
 
 --LevelBytesUI
-local UI = Class(BaseUI)
+local UI = Class("HexInspectorUI",BaseUI)
 
 local function bytesToHex(bytes)
 	local out = love.data.encode("string","hex",bytes)
@@ -12,33 +12,25 @@ local function bytesToHex(bytes)
 end
 
 function UI:initialize(levelFile)
-	UI.super.initialize(self)
+	self.levelFile = levelFile
+	self.indent = 0
+	
+	UI.super.initialize(self,true)
 	self.title = "Hex Inspector"
 	
-	self.indentSize = settings.dim.hexInspector.indentSize
-	self.rowHeight = settings.dim.hexInspector.rowHeight
-	self.xPadding = settings.dim.hexInspector.xPadding
-	self.yPadding = settings.dim.hexInspector.yPadding
-	--self.i = 0
-	--self.indent = 1
-	
-	self:reload(levelFile)
+	-- self.indentSize = settings.dim.hexInspector.indentSize
+	-- self.rowHeight = settings.dim.hexInspector.rowHeight
+	-- self.xPadding = settings.dim.hexInspector.xPadding
+	-- self.yPadding = settings.dim.hexInspector.yPadding
 end
 
-function UI:reload(levelFile)
-	self.levelFile = levelFile
-end
-
-function UI:resetRows()
-	self.i = 0
-	self.indent = 1
-end
+-- Row shortcuts
 
 function UI:textRow(text,extraIndent)
 	extraIndent = extraIndent or 0
-	love.graphics.print(text, (self.indent+extraIndent)*self.indentSize +self.xPadding, self.i*self.rowHeight +self.yPadding)
-	self.i = self.i +1
+	self:getList():addTextEntry(text, self.indent+extraIndent)
 end
+
 function UI:headerRow(label,offset,length,extraIndent)
 	length = length or 1
 	local text = label
@@ -54,7 +46,7 @@ function UI:sectionRows(section, label)
 		self:textRow(hex,2)
 	end
 end
-function UI:propertyRows(section, label, isPath)
+function UI:propertyRows(section, label)
 	self:textRow(label..": ".. self.levelFile.rawContentEntries[section].nEntries)
 	for _,v in ipairs(self.levelFile.rawContentEntries[section].entries) do
 		local hex = bytesToHex(self.levelFile.raw:sub(v.startOffset,v.endOffset))
@@ -71,9 +63,13 @@ function UI:propertyRows(section, label, isPath)
 		end
 	end
 end
-function UI:draw()
-	self:resetRows(self)
-	love.graphics.setColor(1,1,1)
+
+function UI:onReload(list,levelFile)
+	if levelFile then
+		self.levelFile = levelFile
+	end
+	self.indent = 1
+	
 	self:textRow("Headers:",-1)
 		local h = self.levelFile.rawHeaders
 		self:headerRow("Prefix",1,6)
@@ -92,8 +88,8 @@ function UI:draw()
 		self:sectionRows("foregroundRows","Foreground Rows")
 		self:sectionRows("foregroundColumns","Foreground Columns")
 		if settings.misc.hexInspector.verbosePropertiesDisplay then
-			self:propertyRows("objectProperties","Object Properties",false)
-			self:propertyRows("pathProperties","Path Properties",true)
+			self:propertyRows("objectProperties","Object Properties")
+			self:propertyRows("pathProperties","Path Properties")
 		else
 			self:sectionRows("objectProperties","Object Properties")
 			self:sectionRows("pathProperties","Path Properties")

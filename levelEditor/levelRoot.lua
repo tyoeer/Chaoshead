@@ -26,8 +26,8 @@ function UI:initialize(levelPath)
 	
 	tabs = TABS:new()
 	
-	--self.hexInspector = require("ui.level.hexInspector"):new(self.levelFile)
-	--tabs:addTab(require("ui.utils.movableCamera"):new(self.hexInspector))
+	self.hexInspector = require("levelEditor.hexInspector"):new(self.levelFile)
+	tabs:addTab(self.hexInspector)
 	
 	self.levelEditor = require("levelEditor.levelEditor"):new(self.level, self)
 	tabs:addTab(self.levelEditor)
@@ -61,7 +61,7 @@ function UI:reload(level)
 		end
 	end
 	self.levelEditor:reload(self.level)
-	--self.hexInspector:reload(self.levelFile)
+	self.hexInspector:reload(self.levelFile)
 	self.title = self.level.settings:getTitle()
 end
 
