@@ -11,8 +11,8 @@ function UI:onReload(list)
 	-- INFORMATION
 	
 	
-	list:addButtonEntry("Open scripts folder",function()
-		local url = "file://"..love.filesystem.getSaveDirectory().."/"..require("script").folder
+	list:addButtonEntry("Open user data folder",function()
+		local url = "file://"..love.filesystem.getSaveDirectory()
 		love.system.openURL(url)
 	end)
 	
