@@ -1,7 +1,7 @@
 local UserData = require("levelhead.userData")
 local Script = require("script")
 
-local UI = Class(require("ui.utils.treeViewer"))
+local UI = Class(require("ui.tools.treeViewer"))
 
 function UI:initialize(root)
 	local treeData = {
@@ -32,8 +32,8 @@ function UI:initialize(root)
 			return out
 		end,
 		getDetailsUI = function(self,data)
-			local list = require("ui.structure.list"):new()
-			
+			local details = require("ui.tools.details"):new(false)
+			local list = details:getList()
 			list:addTextEntry("Path: ".. data.path)
 			
 			list:addButtonEntry(
@@ -45,11 +45,10 @@ function UI:initialize(root)
 				end
 			)
 			
-			return require("ui.structure.padding"):new(list,settings.dim.scriptInterface.detailsPadding)
+			return details
 		end,
 	}
 	UI.super.initialize(self,treeData)
-	self.child:setDivisionRatio(settings.dim.scriptInterface.horDivisionRatio)
 	self.title = "Scripts"
 end
 

@@ -2,8 +2,8 @@ local LHS = require("levelhead.lhs")
 local LIMITS = require("levelhead.level.limits")
 local LH_MISC = require("levelhead.misc")
 local TABS = require("ui.tools.tabs")
---levelRoot was the best name I could come up with, OK?
 
+--levelRoot was the best name I could come up with, OK?
 local UI = Class("LevelRootUI",require("ui.base.proxy"))
 
 function UI.loadErrorHandler(message)
@@ -33,8 +33,8 @@ function UI:initialize(levelPath)
 	tabs:addTab(self.levelEditor)
 	tabs:setActiveTab(self.levelEditor)
 	
-	--self.scriptInterface = require("ui.level.scriptInterface"):new(self)
-	--tabs:addTab(self.scriptInterface)
+	self.scriptInterface = require("levelEditor.scriptInterface"):new(self)
+	tabs:addTab(self.scriptInterface)
 	
 	UI.super.initialize(self,tabs)
 	self.title = self.level.settings:getTitle()
@@ -61,7 +61,7 @@ function UI:reload(level)
 		end
 	end
 	self.levelEditor:reload(self.level)
-	self.hexInspector:reload(self.levelFile)
+	--self.hexInspector:reload(self.levelFile)
 	self.title = self.level.settings:getTitle()
 end
 
@@ -112,7 +112,7 @@ function UI:runScript(path,disableSandbox)
 		error("Tried to run script in sandboxed mode, which is currently not yet implemented.")
 	end
 	--move to the levelEditor to show the scripts effects
-	self.child:setActive(self.levelEditor)
+	self.child:setActiveTab(self.levelEditor)
 	ui:displayMessage("Succesfully ran script!")
 end
 
