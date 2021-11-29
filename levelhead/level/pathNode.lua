@@ -23,9 +23,11 @@ PN.shape = {
 	0.5,  35.5
 }
 
+local colors = settings.theme.levelEditor.colors.pathNode
+
 function PN:drawShape()
 	local x, y = self:getDrawCoords()
-	love.graphics.setColor(settings.col.editor.pathNodes.shape)
+	love.graphics.setColor(colors.shape)
 	
 	love.graphics.translate(x,y)
 	love.graphics.polygon("fill",self.shape)
@@ -34,7 +36,7 @@ end
 
 function PN:drawOutline()
 	local x, y = self:getDrawCoords()
-	love.graphics.setColor(settings.col.editor.pathNodes.outline)
+	love.graphics.setColor(colors.outline)
 	love.graphics.setLineWidth(math.sqrt(2)/2)
 	
 	love.graphics.translate(x,y)
@@ -47,7 +49,7 @@ function PN:drawConnection()
 	local drawY = (self.y+0.5)*TILE_SIZE
 	local toX = (self.next.x+0.5)*TILE_SIZE
 	local toY = (self.next.y+0.5)*TILE_SIZE
-	love.graphics.setColor(settings.col.editor.pathNodes.outline)
+	love.graphics.setColor(colors.connection)
 	love.graphics.setLineWidth(5)
 	love.graphics.line(drawX,drawY, toX,toY)
 end

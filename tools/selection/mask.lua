@@ -50,6 +50,7 @@ end
 
 -- DRAWING
 
+local colors = settings.theme.levelEditor.colors
 
 function S:draw(startX,startY, endX,endY)
 	for x = startX, endX, 1 do
@@ -57,7 +58,7 @@ function S:draw(startX,startY, endX,endY)
 			if self.mask[x][y] then
 				local xx, yy = x*TILE_SIZE, y*TILE_SIZE
 				if self.layers.background then
-					love.graphics.setColor(settings.col.editor.objects.background.selected)
+					love.graphics.setColor(colors.backgroundObject.selected)
 					love.graphics.setLineWidth(1)
 					
 					love.graphics.translate(xx,yy)
@@ -65,7 +66,7 @@ function S:draw(startX,startY, endX,endY)
 					love.graphics.translate(-xx,-yy)
 				end
 				if self.layers.pathNodes then
-					love.graphics.setColor(settings.col.editor.pathNodes.selected)
+					love.graphics.setColor(colors.pathNode.selected)
 					love.graphics.setLineWidth(math.sqrt(2)/2)
 					
 					love.graphics.translate(xx,yy)
@@ -73,7 +74,7 @@ function S:draw(startX,startY, endX,endY)
 					love.graphics.translate(-xx,-yy)
 				end
 				if self.layers.foreground then
-					love.graphics.setColor(settings.col.editor.objects.foreground.selected)
+					love.graphics.setColor(colors.foregroundObject.selected)
 					love.graphics.setLineWidth(1)
 					love.graphics.rectangle("line",xx+0.5,yy+0.5,TILE_SIZE-1,TILE_SIZE-1)
 				end
