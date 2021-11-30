@@ -153,7 +153,7 @@ return {
 		},
 		up = {
 			type = "and",
-				triggers = {
+			triggers = {
 				"key: w",
 				{
 					type = "nor",
@@ -166,7 +166,7 @@ return {
 		},
 		down = {
 			type = "and",
-				triggers = {
+			triggers = {
 				"key: s",
 				{
 					type = "nor",
@@ -179,7 +179,7 @@ return {
 		},
 		left = {
 			type = "and",
-				triggers = {
+			triggers = {
 				"key: a",
 				{
 					type = "nor",
@@ -192,7 +192,7 @@ return {
 		},
 		right = {
 			type = "and",
-				triggers = {
+			triggers = {
 				"key: d",
 				{
 					type = "nor",
