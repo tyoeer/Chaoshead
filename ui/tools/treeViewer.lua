@@ -19,6 +19,7 @@ dataHandler:
 		entry format:
 			- title: title to display
 			- folder: wether or not this is a folder
+			- action: will get called on click (with data as arg) instead of getting details UI
 
 ]]--
 

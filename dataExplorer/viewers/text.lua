@@ -13,7 +13,7 @@ end
 
 function UI:onReload(list)
 	local text = NFS.read(ROOT_PATH..self.path)
-	list:addButtonEntry("Close Viewer", function()
+	list:addButtonEntry("Close viewer", function()
 		self.overview:closeViewer(self)
 	end)
 	list:addTextEntry(text)

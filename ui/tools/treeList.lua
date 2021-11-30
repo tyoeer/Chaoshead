@@ -11,6 +11,7 @@ dataRetriever:
 	entry format:
 		- title: title to display
 		- folder: wether or not this is a folder
+		- action: overwrite onClick
 
 ]]--
 
@@ -33,6 +34,7 @@ function UI:toCache(input)
 		out[i] = {
 			title = v.title,
 			folder = v.folder,
+			action = v.action,
 			data = v,
 			open = false,
 			children = nil,
@@ -43,10 +45,19 @@ end
 
 function UI:buildList(data,indentLevel)
 	for _,v in ipairs(data) do
-		if v.folder then
+		local indent = string.rep(" ",indentLevel*self.style.indentCharacters)
+		if v.action then
+			self:addButtonEntry(
+				indent..v.title,
+				function()
+					v:action(v.data)
+				end,
+				self.style.actionButtonStyle
+			)
+		elseif v.folder then
 			if v.open then
 				self:addButtonEntry(
-					string.rep(" ",indentLevel*self.style.indentCharacters).."V "..v.title,
+					indent.."V "..v.title,
 					function()
 						v.open = false
 						self:reload()
@@ -55,7 +66,7 @@ function UI:buildList(data,indentLevel)
 				self:buildList(v.children, indentLevel+1)
 			else
 				self:addButtonEntry(
-					string.rep(" ",indentLevel*self.style.indentCharacters).."> "..v.title,
+					indent.."> "..v.title,
 					function()
 						v.open = true
 						if not v.children then
@@ -67,7 +78,7 @@ function UI:buildList(data,indentLevel)
 			end
 		else
 			self:addButtonEntry(
-				string.rep(" ",indentLevel*self.style.indentCharacters)..v.title,
+				indent..v.title,
 				function()
 					self.onClick(v.data)
 				end

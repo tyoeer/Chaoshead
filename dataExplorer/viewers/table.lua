@@ -4,12 +4,20 @@ local UI = Class("TableViewerUI",require("ui.tools.treeViewer"))
 
 function UI:initialize(data,overview)
 	self.data = data
+	self.overview = overview
 	UI.super.initialize(self)
 	self.title = "Table Viewer"
 end
 
 function UI:getRootEntries()
-	local out = {}
+	local out = {
+		{
+			title = "Close viewer",
+			action = function()
+				self.overview:closeViewer(self)
+			end
+		}
+	}
 	for k,v in pairs(self.data) do
 		table.insert(out,{
 			title = k,

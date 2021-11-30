@@ -105,6 +105,28 @@ return {
 					},
 				},
 			},
+			actionButtonStyle = {
+				padding = 6,
+				border = true,
+				normal = {
+					backgroundColor = {0,0,0},
+					borderColor = {1,1,1},
+					textStyle = {
+						horAlign = "left",
+						verAlign = "center",
+						color = {1,1,1},
+					},
+				},
+				hover = {
+					backgroundColor = {0.5,0.5,0.5},
+					borderColor = {1,1,1},
+					textStyle = {
+						horAlign = "left",
+						verAlign = "center",
+						color = {1,1,1},
+					},
+				},
+			},
 		},
 		listDetailsDivisionStyle = {
 			divisionRatio = 0.25,
