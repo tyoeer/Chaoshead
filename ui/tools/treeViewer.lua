@@ -1,7 +1,6 @@
 local SCROLL = require("ui.tools.scrollbar")
 local HOR_DIVIDE = require("ui.layout.horDivide")
 local LIST = require("ui.tools.treeList")
-local PADDING = require("ui.layout.padding")
 local BASE = require("ui.base.node")
 
 local UI = Class("TreeViewerUI",require("ui.base.proxy"))
@@ -25,10 +24,10 @@ dataHandler:
 
 local theme = settings.theme.treeViewer
 
-function UI:initialize(dataHandler)
+function UI:initialize()
 	--ui state
-	self.list = LIST:new(dataHandler,function(data)
-		self:setDetailsUI(dataHandler:getDetailsUI(data))
+	self.list = LIST:new(self, function(data)
+		self:setDetailsUI(self:getDetailsUI(data))
 	end)
 	self.details = BASE:new()
 	
