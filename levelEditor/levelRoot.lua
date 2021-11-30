@@ -17,7 +17,8 @@ function UI.loadErrorHandler(message)
 	ui:displayMessage("Failed to load level!","Error message: "..message,trace)
 end
 
-function UI:initialize(levelPath)
+function UI:initialize(levelPath, workshop)
+	self.workshop = workshop
 	self.levelPath = levelPath
 	self.levelFile = LHS:new(levelPath)
 	self.levelFile:readAll()
@@ -124,7 +125,7 @@ end
 
 
 function UI:close()
-	ui:closeEditor(self)
+	self.workshop:closeEditor(self)
 end
 
 

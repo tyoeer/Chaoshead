@@ -21,7 +21,7 @@ end
 function UI:openEditor(path)
 	local success, editor = xpcall(
 		function()
-			return LEVEL_ROOT:new(path)
+			return LEVEL_ROOT:new(path,self)
 		end,
 		LEVEL_ROOT.loadErrorHandler
 	)
@@ -35,7 +35,7 @@ function UI:closeEditor(editorRoot)
 	if editorRoot==self.child:getActiveTab() then
 		self.child:setActiveTab(self.levelSelector)
 	end
-	self.child:removeChild(editorRoot)
+	self.child:removeTab(editorRoot)
 end
 
 
