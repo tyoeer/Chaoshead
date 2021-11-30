@@ -19,6 +19,7 @@ end
 
 
 function UI:openEditor(path)
+	--open the editor
 	local success, editor = xpcall(
 		function()
 			return LEVEL_ROOT:new(path,self)
@@ -28,6 +29,13 @@ function UI:openEditor(path)
 	if success then
 		self.child:addTab(editor)
 		self.child:setActiveTab(editor)
+		--remember we opened this one
+		storage.lastLevelOpened = {
+			when = os.time(),
+			name = editor.level.settings:getTitle(),
+			path = path,
+		}
+		storage.save()
 	end
 end
 

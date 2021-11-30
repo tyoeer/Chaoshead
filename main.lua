@@ -10,6 +10,7 @@ function love.load(arg)
 	
 	--globals
 	settings = require("settings")
+	storage = settings.storage
 	input = TU("input")
 	
 	--love2d state

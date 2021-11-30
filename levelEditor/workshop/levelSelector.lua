@@ -11,6 +11,14 @@ end
 
 function UI:getRootEntries()
 	local out = {}
+	if storage.lastLevelOpened then
+		table.insert(out,{
+			title = storage.lastLevelOpened.name,
+			action = function()
+				self.workshop:openEditor(storage.lastLevelOpened.path)
+			end
+		})
+	end
 	for _,code in ipairs(USER_DATA.getUserCodes()) do
 		table.insert(out,{
 			title = code,

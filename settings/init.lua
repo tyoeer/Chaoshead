@@ -1,9 +1,34 @@
 local JSON = require("libs.json")
 
 local SETTINGS_FOLDER = "settings/"
+local STORAGE_FOLDER = "storage/"
 
 local base = select(1, ...).."."
 local out = {}
+
+-- COMMON
+
+local function saveData(path,data)
+	local success, err = love.filesystem.write(path, JSON.encode(data))
+	if not success then
+		error("Error saving settings: "..tostring(err))
+	end
+end
+
+local function loadData(path)
+	--read settings
+	local data, err = love.filesystem.read(path)
+	if not data then
+		error("Error reading settings: "..tostring(err))
+	end
+	success, dataOrError = pcall(JSON.decode, data)
+	if not success then
+		error("Error parsing settings: "..tostring(dataOrError))
+	end
+	return dataOrError
+end
+
+-- SETTINGS
 
 --check if we have a "settings/" directory in the save directory
 if not love.filesystem.getRealDirectory(SETTINGS_FOLDER) ~= love.filesystem.getSaveDirectory() then
@@ -45,17 +70,7 @@ local function load(name, maxLevel, ...)
 	local filePath = SETTINGS_FOLDER..name..".json"
 	local fileInfo = love.filesystem.getInfo(filePath)
 	if fileInfo then
-		--read settings
-		local data, err = love.filesystem.read(filePath)
-		if not data then
-			error("Error reading settings: "..tostring(err))
-		end
-		success, dataOrError = pcall(JSON.decode, data)
-		if not data then
-			error("Error parsing settings: "..tostring(dataOrError))
-		end
-		
-		out[name] = dataOrError
+		out[name] = loadData(filePath)
 		
 		--check if a new setting has been added and save it
 		changed = addDefaults(out[name],defaults, maxLevel,1)
@@ -65,10 +80,7 @@ local function load(name, maxLevel, ...)
 	end
 	
 	if changed then
-		local success, err = love.filesystem.write(filePath, JSON.encode(out[name]))
-		if not success then
-			error("Error saving settings: "..tostring(err))
-		end
+		saveData(filePath, out[name])
 	end
 	
 	for _,alias in ipairs({...}) do
@@ -79,5 +91,30 @@ end
 load("bindings", 2, "keys")
 load("misc")
 load("theme")
+
+-- STORAGE
+
+--check if we have a "storage/" directory in the save directory
+if not love.filesystem.getRealDirectory(STORAGE_FOLDER) ~= love.filesystem.getSaveDirectory() then
+	love.filesystem.createDirectory(STORAGE_FOLDER)
+end
+
+local storagePath = STORAGE_FOLDER.."data.json"
+
+--load the storage
+if love.filesystem.getInfo(storagePath) then
+	out.storage = loadData(storagePath)
+else
+	out.storage = {}
+end
+
+local saveStorage = function()
+	--make sure we don't try svaing this function
+	out.storage.save = nil
+	saveData(storagePath, out.storage)
+	out.storage.save = saveStorage
+end
+
+out.storage.save = saveStorage
 
 return out
