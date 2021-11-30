@@ -1,11 +1,8 @@
-local D = Class("UserData")
+local D = Class("UserData",require("levelhead.dataFile"))
 
-function D:initialize(fileData,lookupCode)
+function D:initialize(fullPath,lookupCode)
 	self.lookupCode = lookupCode
-	local jsonData, mystery, hash = fileData:match("([^\r\n]+)[\r\n]([^\r\n]+)[\r\n]([^\r\n]+)")
-	self.raw = require("libs.json").decode(jsonData)
-	self.mystery = mystery
-	self.hash = hash
+	D.super.initialize(self,fullPath)
 end
 
 -- complex getters

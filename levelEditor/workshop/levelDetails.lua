@@ -40,14 +40,6 @@ function UI:onReload(list)
 			f:close()
 		end
 	)
-	--to be replaced with a seperate & mroe generic data viewing/exploration module
-	--[[list:addButtonEntry(
-		"Explore user data",
-		function()
-			local dv = require("ui.utils.dataViewer"):new(UserData.getUserData(data.user).raw)
-			ui.child.child:addChild(dv)
-		end
-	)]]
 end
 
 return UI

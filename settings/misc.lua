@@ -13,4 +13,7 @@ return {
 		buttonScrollSpeed = 100,
 		mouseWheelScrollSpeed = 100,
 	},
+	dataExplorer = {
+		maxDisplayStringLength = 5000,
+	},
 }

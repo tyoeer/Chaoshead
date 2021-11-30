@@ -16,11 +16,8 @@ function UD.getUserCodes()
 end
 
 function UD.getUserData(code)
-	local file = NFS.newFile(require("levelhead.misc").getUserDataPath()..code..dataFilePath)
-	file:open("r")
-	local data = file:read()
-	file:close()
-	return UD.class:new(data,code)
+	local path = require("levelhead.misc").getUserDataPath()..code..dataFilePath
+	return UD.class:new(path,code)
 end
 
 UD.class = require(select(1,...)..".class")
