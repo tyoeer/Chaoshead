@@ -101,7 +101,9 @@ function UI:removeTab(ui)
 		end
 	end
 	table.remove(self.tabContents,uiIndex)
+	self:removeChild(self.tabButtons[uiIndex])
 	table.remove(self.tabButtons,uiIndex)
+	self:updateButtons()
 	self.contentButtonMap[ui] = nil
 end
 
