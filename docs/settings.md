@@ -76,9 +76,8 @@ Whether or not the camera should stay between the _horizontal_ level sides. Is a
 title = settings:getTitle()
 ```
 - title: string containing the level title.
-  Probably contains more spaces than in Levelhead because I haven't figured out all the concatenation rules yet.
 
-There's currently no way to set the title because I didn't make something to work around name combobulator limitations.
+There's currently no way to set the title because I haven't made something yet to work around name combobulator limitations.
 
 ```Lua
 settings.prefix

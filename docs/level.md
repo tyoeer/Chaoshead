@@ -171,4 +171,4 @@ height = world:getHeight()
 ```Lua
 level.settings
 ```
-The __Settings__ of this level. Not available for __World__s.
+The __Settings__ of this level. Not available for **World**s.
