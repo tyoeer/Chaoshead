@@ -108,7 +108,8 @@ else
 	out.storage = {}
 end
 
-local saveStorage = function()
+local saveStorage
+saveStorage = function()
 	--make sure we don't try svaing this function
 	out.storage.save = nil
 	saveData(storagePath, out.storage)
