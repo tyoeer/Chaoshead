@@ -26,14 +26,14 @@ Power	23	#17	B		2000	2000	3500	None									(Trig)blaster
 Spin Speed	24	#18	B		0	-360	360	None									(Trig)blaster	
 Fire Delay	25	#19	C		0	0.5	2	None									Blaster	
 ???	26	#20	A															
-???	27	#21																
+Refills	27	#21	A														Refeuler	
 Rift ID	28	#1C	B		0	-1	999	Hybrid	None	-	-	-	-	-	-	-	Rift	
 Destination Rift ID	29	#1D	B	Defaults to 0 (it doesn't get saved if it's 0), while the editor default is 1	0	-1	999	Hybrid	None	-	-	-	-	-	-	-	Rift	
 Movement	30	#1E	A		0	0	3	Simple	!	Horizontal	Vertical	Circle	Stationary	!	!	!	Swoopadoop, Blobfush, Whizzblade, Fireball	
 Direction	31	#1F	A		3	0	3	Simple	!	Right	Up	Left	Down	!	!	!	Cromblers	
 Cooldown	32	#20	C		1	0.5	4	None									Cromblers	
 Time Offset	33	#21	C		0	0	4	None									(Look)cannon	
-???	34	#22																
+Distance	34	#22	A														Doomarang	
 Distance	35	#23	A		2	1	4	None									Swoopadoop, Blobfush, Whizzblade, Fireball	
 Speed	36	#24	A	Used for horizontal and vertical movement (types)	2	1	3	Simple	!	!	Slow	Medium	Fast	!	!	!	Swoopadoop, Blobfush, Whizzblade, Fireball	
 Active Speed	37	#25	B		200	-600	600	None									Path	
@@ -49,9 +49,9 @@ Powerup	46	#2E	A		0	0	66	Simple	!	None	Tiptow	Waylay	Zipper	Ripcord	Rebound	Shad
 Color	47	#2F	A		2	0	3	Simple	!	Blue	Gold	Fuchsia	Green	!	!	!	Hardlight, Rift, Key Chests, ...	
 Projectile	48	#30	A		0	0	4	Simple	!	Steel	Fire	Rubber	Rocket	Guided Missile	!	!	(Look)cannon	
 Receiving Channel	49	#31	B	Can be set to none.	-1	-1	999	Hybrid	None	-	-	-	-	-	-	-	Prizeblock, Hardlight, ...	
-???	50	#32																
+Direction	50	#32	A								Vertical						Sweep Laser	
 Bass Pitch	51	#33	A	Also gets saved for the "melody" instrument. Called "Pitch" in-game.	7	0	23	List	Bass Pitch								Boombox	
-???	52	#34																
+Laser Style	52	#34	A															
 ???	53	#35																
 Instrument	54	#36	A		0	0	2	Simple	!	Bass	Melody	Percussion	!	!	!	!	Boombox	
 Melody Pitch	55	#37	A	Also gets saved for the "bass" instrument. Called "Pitch" in-game.	7	0	28	List	Melody Pitch								Boombox	
@@ -61,12 +61,12 @@ Rotation Speed	58	#3A	B	Used for circular movement (type). Called "Speed" ingame
 Icon	59	#3B	A		0	0	49	List	Sign Icons								Sign	
 Switch Requirements	60	#3C	A		2	0	5	Simple	!	One Active	Any Active	All Active	One Inactive	Any Inactive	All Inactive	!	Prizeblock, Hardlight, ...	
 Visuals	61	#3D	A		2	0	16	List	Path Visuals								Path	
-???	62	#3E																
+Display	62	#3E	A														Instructions	
 Song	63	#3F	A		9	0	37	Music									Jukebox	
 Sharp	64	#40	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	Boombox	
 Delay Seconds	65	#41	C		3	0.25	600	None									Waitswitch	
 ???	66	#42																
-???	67	#43																
+Beam Type	67	#43		Doesn't actually work.	1	0	2	Simple	!	Harmless	Burns GR-18	Burns Everything	!	!	!	!	Sweep Laser	
 Volume	68	#44	A		100	0	100	None									Boombox	
 Zoom Level	69	#45	A		100	80	140	None									ZOOM-R	
 Gate Style	70	#46	A		0	0	2	Simple	!	Purge Powerups	Purge Items	Purge All	!	!	!	!	Purge Gate	
@@ -98,9 +98,9 @@ Beats Per Minute	95	#5F	A		120	60	240	None									Boombox
 Percussion Note	96	#60	A		0	0	14	List	Percussion								Boombox	
 Start Delay Beats	97	#61	C		0	0	1000	Hybrid	!	No Delay	-	-	-	-	-	-	Boombox	
 Repeat Count	98	#62	B	Always saved for some reason.	1	1	1000	Hybrid	!	!	Infinite	-	-	-	-	-	Boombox	
-???	99	#63																
-???	100	#64																
-???	101	#65																
+Swipe Button Start	99	#63	A														Swipe Teacher	
+Swipe Button End	100	#64	A														Swipe Teacher	
+Button Direction	101	#65	A														Movement Teacher	
 Input	102	#66	A		0	0	6	Simple	!	Run Right	Run Left	Up	Down	Jump	Grab / Kick	Use Powerup	Input Switch	
 Players Required	103	#67	A		0	0	5	Simple	!	Any Players	All Players	Player 1	Player 2	Player 3	Player 4	!	Input Switch	
 Target Type	104	#68	A		0	0	2	Simple	!	GR-18	Package	Enemies	!	!	!	!	Lookannon	
