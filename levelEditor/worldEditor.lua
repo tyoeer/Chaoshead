@@ -103,6 +103,96 @@ function UI:update(dt)
 	end
 end
 
+
+function UI:drawObjects(level, startX, startY, endX, endY)
+	local drawArea = math.abs( (startX-endX+1) * (startY-endY+1) )
+	local levelArea = level:getWidth() * level:getHeight()
+	--optimisation to just draw all the objects in the level instead of the viewport
+	--in case the viewport is bigger than the level and finding all the objects in the vieport would be more work
+	local drawGlobal = drawArea >= levelArea
+	
+	--get all objects that should be drawn
+	--storing them in a list should optimize when there's lots of empty space on the screen a.k.a. when zoomed out
+	--adds extra overheads that doesn't cause improvements when the whole screen is covered (every grid space and layer)
+	--but that scenario should be pretty rare (and then this is hopefully still performant enough
+	local fg = {} --foreground
+	local bg = {} --background
+	local pn = {} --path nodes
+	if drawGlobal then
+		for obj in level.objects:iterate() do
+			if obj.layer=="foreground" then
+				table.insert(fg,obj)
+			else
+				table.insert(bg,obj)
+			end
+		end
+		
+		for path in level.paths:iterate() do
+			for node in path:iterateNodes() do
+				table.insert(pn,node)
+			end
+		end
+	else
+		for x = startX, endX, 1 do
+			for y = startY, endY, 1 do
+				local bobj = level.background:get(x,y)
+				if bobj then table.insert(bg,bobj) end
+				
+				local node = level.pathNodes:get(x,y)
+				if node then table.insert(pn,node) end
+				
+				local obj = level.foreground:get(x,y)
+				if obj then table.insert(fg,obj) end
+			end
+		end
+	end
+	
+	--draw shapes
+	for _,v in ipairs(bg) do
+		v:drawShape()
+	end
+	for _,v in ipairs(pn) do
+		v:drawShape()
+	end
+	for _,v in ipairs(fg) do
+		v:drawShape()
+	end
+	
+	--draw path connections
+	for _,node in ipairs(pn) do
+		if node.next then
+			node:drawConnection()
+		end
+		--only draw connection with previous if it's offscreen and won't get drawn otherwise
+		if
+			node.prev and
+			(node.prev.x < startX or node.prev.x > endX or
+			node.prev.y < startY or node.prev.y > endY)
+		then
+			node.prev:drawConnection()
+		end
+	end
+	
+	--draw text
+	for _,v in ipairs(bg) do
+		v:drawText()
+	end
+	for _,v in ipairs(fg) do
+		v:drawText()
+	end
+	
+	--draw outlines
+	for _,v in ipairs(bg) do
+		v:drawOutline()
+	end
+	for _,v in ipairs(pn) do
+		v:drawOutline()
+	end
+	for _,v in ipairs(fg) do
+		v:drawOutline()
+	end
+end
+
 function UI:draw()
 	love.graphics.push()
 	--not exactly one to compensate for float weirdness
@@ -139,74 +229,7 @@ function UI:draw()
 		startX, startY = math.floor(startX/TILE_SIZE), math.floor(startY/TILE_SIZE)
 		endX, endY = math.floor(endX/TILE_SIZE), math.floor(endY/TILE_SIZE)
 		
-		--objects
-		do
-			
-			--get all objects between
-			--storing them in a list should optimize whne there's lots of empty space on teh screen a.k.a. when zoomed out
-			--adds extra overheads that doesn't cause improvements when the whole screen is covered (every grid space and layer)
-			--but that scenario should be pretty rare (and then this is hopefully still performant enough
-			local fg = {} --foreground
-			local bg = {} --background
-			local pn = {} --path nodes
-			for x = startX, endX, 1 do
-				for y = startY, endY, 1 do
-					local bobj = self.level.background:get(x,y)
-					if bobj then table.insert(bg,bobj) end
-					
-					local node = self.level.pathNodes:get(x,y)
-					if node then table.insert(pn,node) end
-					
-					local obj = self.level.foreground:get(x,y)
-					if obj then table.insert(fg,obj) end
-				end
-			end
-			
-			--draw shapes
-			for _,v in ipairs(bg) do
-				v:drawShape()
-			end
-			for _,v in ipairs(pn) do
-				v:drawShape()
-			end
-			for _,v in ipairs(fg) do
-				v:drawShape()
-			end
-			
-			--draw path connections
-			for _,node in ipairs(pn) do
-				if node.next then
-					node:drawConnection()
-				end
-				--only draw connection with previous if it's offscreen and won't get drawn otherwise
-				if
-					node.prev and
-					(node.prev.x < startX or node.prev.x > endX or
-					node.prev.y < startY or node.prev.y > endY)
-				then
-					node.prev:drawConnection()
-				end
-			end
-			
-			--draw text
-			for _,v in ipairs(bg) do
-				v:drawText()
-			end
-			for _,v in ipairs(fg) do
-				v:drawText()
-			end
-			
-			--draw outlines
-			for _,v in ipairs(bg) do
-				v:drawOutline()
-			end
-			for _,v in ipairs(pn) do
-				v:drawOutline()
-			end
-			for _,v in ipairs(fg) do
-				v:drawOutline()
-			end
-		end
+		self:drawObjects(self.level, startX,startY, endX,endY)
 		
 		--selection
 		if self.editor.selection then
