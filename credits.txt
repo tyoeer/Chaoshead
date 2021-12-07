@@ -12,4 +12,4 @@ tyoeerUtils by tyoeer, licensed under CC-BY 4.0 (see licenses/lib-tyoeerUtils-cc
 
 Fonts used:
 
-Anonymous Pro by Mark Simonson, licensed under SIL Open Font License (see licenses/font-anonymous_pro-sol_ofl.txt)
+Iosevka Aile by Renzhi Li (aka. Belleve Invis, belleve@typeof.net), licensed under SIL Open Font License (see licenses/font-iosevka-sol_ofl.txt)
