@@ -66,7 +66,7 @@ end
 function C:removeLayer(layer)
 	if layer=="foreground" then
 		for obj in self.foreground:iterate() do
-			self:removeObjectWithProperties(obj)
+			self:removeObjectProperties(obj)
 		end
 		self.nForeground = 0
 		self.foreground = nil
