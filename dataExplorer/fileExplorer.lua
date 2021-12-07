@@ -51,6 +51,10 @@ function UI:getDetailsUI(node)
 		list:addButtonEntry("Open in data file viewer",function()
 			self.overview:openDataFileViewer(node.path)
 		end)
+	elseif extension=="json" then
+		list:addButtonEntry("Open in JSON viewer",function()
+			self.overview:openJSONViewer(node.path)
+		end)
 	end
 	
 	return details

@@ -1,4 +1,3 @@
-local Details = require("ui.tools.details")
 local DataFile = require("levelhead.dataFile")
 
 local ROOT_PATH = require("levelhead.misc").getDataPath()

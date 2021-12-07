@@ -3,6 +3,7 @@ local FileExplorer = require("dataExplorer.fileExplorer")
 
 local TextViewer = require("dataExplorer.viewers.text")
 local DataFileViewer = require("dataExplorer.viewers.dataFile")
+local JSONViewer = require("dataExplorer.viewers.json")
 
 local UI = Class("DataExplorerUI",require("ui.base.proxy"))
 
@@ -20,6 +21,13 @@ end
 
 function UI:openTextViewer(path)
 	local ui = TextViewer:new(path,self)
+	ui.title = path
+	self.child:addTab(ui)
+	self.child:setActiveTab(ui)
+end
+
+function UI:openJSONViewer(path)
+	local ui = JSONViewer:new(path,self)
 	ui.title = path
 	self.child:addTab(ui)
 	self.child:setActiveTab(ui)
