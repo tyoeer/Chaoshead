@@ -108,7 +108,12 @@ end
 
 function UI:onMouseMoved(x,y,dx,dy)
 	if self.dragging then
-		self:scroll(self.scrollButtonOffset + dy)
+		-- it could have been released when hovering outside the this node
+		if input.isActive("click","main") then
+			self:scroll(self.scrollButtonOffset + dy)
+		else
+			dragging = false
+		end
 	end
 end
 
