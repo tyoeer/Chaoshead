@@ -92,6 +92,7 @@ Returns true if the given rectangle contains value, false otherwise.
 
 ```Lua
 bitplane:iterateFunction(func)
+bitplane:forEach(func)
 ```
 - func(x,y,value): the function to iterate over all the fields in the bitplane.
 	- x, y: the position of the current field

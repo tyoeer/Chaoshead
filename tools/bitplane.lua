@@ -55,6 +55,7 @@ function B:iterateFunction(func)
 		end
 	end
 end
+B.forEach = B.iterateFunction
 
 --static methods
 local Bitplane = {}
