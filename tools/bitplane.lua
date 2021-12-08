@@ -62,8 +62,11 @@ local Bitplane = {}
 
 --construction
 
-Bitplane.new = function(...)
-	return B:new(...)
+Bitplane.new = function(a, ...)
+	if a==Bitplane then
+		error("This should not called as OOP! (use . instead of :)",2)
+	end
+	return B:new(a, ...)
 end
 
 function Bitplane.newFromStrings(falseMask,trueMask,...)
