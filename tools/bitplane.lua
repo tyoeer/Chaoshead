@@ -49,8 +49,8 @@ function B:setRect(x,y, w,h, value)
 end
 
 function B:iterateFunction(func)
-	for y=1,self.width,1 do
-		for x=1,self.height,1 do
+	for y=1,self.height,1 do
+		for x=1,self.width,1 do
 			func(x,y,self:get(x,y))
 		end
 	end
