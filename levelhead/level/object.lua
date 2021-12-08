@@ -20,6 +20,14 @@ function OBJ:getName()
 	return E:getName(self.id)
 end
 
+function OBJ:clone()
+	local obj = OBJ:new(self.id)
+	for prop, val in pairs(self.properties) do
+		obj.properties[prop] = val
+	end
+	obj.contents = self.contents
+	return obj
+end
 
 -- CONTAINED OBJECTS
 

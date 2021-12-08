@@ -12,6 +12,11 @@ object = require("levelhead.level.object"):new(id)
 ```
 - id: the id or name of the level element this object is.
 
+```Lua
+newObject = object:clone()
+```
+- object: the object to duplicate
+- newObject: a new object that has the same properties as `object`, but is placed in its `world`
 
 ## Properties
 
