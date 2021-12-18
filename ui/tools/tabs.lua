@@ -100,6 +100,9 @@ function UI:removeTab(ui)
 			break
 		end
 	end
+	if not uiIndex then
+		error("Trying to remove UI we don't have: "..tostring(ui),2)
+	end
 	table.remove(self.tabContents,uiIndex)
 	self:removeChild(self.tabButtons[uiIndex])
 	table.remove(self.tabButtons,uiIndex)

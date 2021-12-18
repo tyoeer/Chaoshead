@@ -156,9 +156,11 @@ function UI:deselectSubArea(startX,startY,endX,endY)
 end
 
 function UI:deselectAll()
-	self.selection = nil
-	self:removeTab(self.selectionDetails)
-	self.selectionDetails = nil
+	if self.selection then
+		self.selection = nil
+		self:removeTab(self.selectionDetails)
+		self.selectionDetails = nil
+	end
 end
 
 function UI:removeSelectionLayer(layer)
