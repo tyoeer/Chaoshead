@@ -210,4 +210,4 @@ Jibber	207	#CF	2	2	205	Inherit	2
 Peanut	208	#D0	1	1	No	105,106	2	
 Thorny Peanut	209	#D1	1	1	208	Inherit	2	
 Explosive Peanut	210	#D2	1	1	208	Inherit	2	
-Stackable Armor	211	#D3	1	1	None	49,60	2	
+Stackable Armor	211	#D3	1	1	No	49,60	2	
