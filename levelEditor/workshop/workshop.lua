@@ -9,6 +9,7 @@ local UI = Class("WorkshopUI",require("ui.base.proxy"))
 function UI:initialize()
 	local tabs = TABS:new()
 	
+	--self.clipboard
 	self.levelSelector = LEVEL_SELECTOR:new(self)
 	tabs:addTab(self.levelSelector)
 	

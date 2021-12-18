@@ -145,6 +145,34 @@ return {
 				},
 			}
 		},
+		copy = {
+			type = "and",
+			triggers = {
+				"key: c",
+				{
+					type = "or",
+					triggers = {"lctrl","rctrl"}
+				},
+			}
+		},
+		paste = {
+			type = "and",
+			triggers = {
+				"key: v",
+				{
+					type = "or",
+					triggers = {"lctrl","rctrl"}
+				},
+			}
+		},
+		placeHand = {
+			trigger = "mouse: left",
+			isCursorBound = true,
+		},
+		releaseHand = {
+			trigger = "mouse: right",
+			isCursorBound = true,
+		},
 	},
 	camera = {
 		drag = {

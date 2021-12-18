@@ -1,14 +1,16 @@
+--LH interop
 local OBJ = require("levelhead.level.object")
 local PN = require("levelhead.level.pathNode")
 local PATH = require("levelhead.level.path")
-
+--editor tools
 local Selection = require("tools.selection.tracker")
-
+local Clipboard = require("tools.clipboard")
+--misc UIs
 local Padding = require("ui.layout.padding")
 local HorDivide = require("ui.layout.horDivide")
 local Tabs = require("ui.tools.tabs")
 local Scrollbar = require("ui.tools.scrollbar")
-
+--specific UIs
 local WorldEditor = require("levelEditor.worldEditor")
 local SelectionDetails = require("levelEditor.details.selection")
 local LevelDetails = require("levelEditor.details.level")
@@ -29,6 +31,7 @@ function UI:initialize(level,root)
 	--editor state
 	self.selection = nil
 	self.selectionDetails = nil
+	self.hand = nil
 	
 	UI.super.initialize(self, HorDivide:new(
 		self.detailsUI, self.viewer,
@@ -36,6 +39,7 @@ function UI:initialize(level,root)
 	))
 	self.title = "Level Editor"
 end
+
 
 function UI:addTab(tab)
 	tab.editor = self
@@ -187,7 +191,30 @@ function UI:deleteSelection()
 	end
 end
 
+function UI:copy()
+	if self.selection then
+		local cp = Clipboard:new(self.level, self.selection.mask)
+		self.root:setClipboard(cp)
+	end
+end
+
+-- hand stuff
+
+function UI:hold(item)
+	self.hand = item
+	self.viewer:initHand()
+end
+
 -- other stuff
+
+function UI:paste()
+	local cp = self.root:getClipboard()
+	if cp then
+		self:hold(cp)
+	else
+		ui:displayMessage("Nothing on clipboard to paste!")
+	end
+end
 
 function UI:resizeLevel(top,right,bottom,left)
 	self.level.top = top
@@ -197,7 +224,8 @@ function UI:resizeLevel(top,right,bottom,left)
 	self.levelDetails:reload()
 end
 
--- events (most are handled by the proxy super)
+
+-- EVENTS (most are handled by the proxy super)
 
 function UI:onInputActivated(name,group, isCursorBound)
 	if group=="editor" then
@@ -207,6 +235,10 @@ function UI:onInputActivated(name,group, isCursorBound)
 			self:deselectAll()
 		elseif name=="selectAll" then
 			self:selectAll()
+		elseif name=="copy" then
+			self:copy()
+		elseif name=="paste" then
+			self:paste()
 		end
 	end
 end

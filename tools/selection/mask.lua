@@ -1,4 +1,6 @@
 local DS = require("libs.tyoeerUtils.datastructures")
+local EntityPool = require("libs.tyoeerUtils.entitypool")
+local Bitplane = require("tools.bitplane")
 local OBJ = require("levelhead.level.object")
 local PN = require("levelhead.level.pathNode")
 
@@ -7,6 +9,7 @@ local S = Class()
 
 function S:initialize()
 	self.mask = DS.grid()
+	self.tiles = EntityPool:new()
 	self.layers = {
 		foreground = true,
 		background = true,
@@ -35,18 +38,49 @@ end
 
 function S:add(x,y)
 	if not self.mask[x][y] then
-		self.mask[x][y] = true
+		local tile = {
+			x = x,
+			y = y,
+		}
+		self.mask[x][y] = tile
 		self.nTiles = self.nTiles + 1
+		self.tiles:add(tile)
 	end
 end
 
 function S:remove(x,y)
 	if self.mask[x][y] then
+		self.tiles:remove(self.mask[x][y])
 		self.mask[x][y] = false
 		self.nTiles = self.nTiles - 1
 	end
 end
 
+-- RETRIEVING
+
+function S:getBounds()
+	local xMin, yMin = math.huge, math.huge
+	local xMax, yMax = -math.huge, -math.huge
+	for tile in self.tiles:iterate() do
+		if tile.x < xMin then xMin = tile.x end
+		if tile.x > xMax then xMax = tile.x end
+		if tile.y < yMin then yMin = tile.y end
+		if tile.y > yMax then yMax = tile.y end
+	end
+	return xMin, yMin, xMax, yMax
+end
+
+function S:getBitplane()
+	local xMin, yMin, xMax, yMax = self:getBounds()
+	
+	local plane = Bitplane.new(xMax-xMin+1, yMax-yMin+1)
+	for tile in self.tiles:iterate() do
+		-- +1 because the Bitplane starts at (1,1)
+		plane:set(tile.x-xMin+1, tile.y-yMin+1, true)
+	end
+	
+	return plane, xMin, yMin
+end
 
 -- DRAWING
 

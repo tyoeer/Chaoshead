@@ -1,4 +1,5 @@
 local UTILS = require("utils.levelUtils")
+local Clipboard = require("tools.clipboard")
 
 local UI = Class(require("ui.base.node"))
 
@@ -7,19 +8,27 @@ local theme = settings.theme.levelEditor
 function UI:initialize(editor)
 	self.editor = editor
 	self.level = editor.level
+	
 	--camera stuff
 	self.cameraX = 0
 	self.cameraY = 0
 	self.zoomFactor = 1
 	self.zoomSpeed = settings.misc.editor.zoomSpeed
 	self.moveSpeed = settings.misc.editor.cameraMoveSpeed
+	
 	--state stuff
+	self.holding = nil
+	self.handX = nil
+	self.handY = nil
+	
 	self.selecting = false
 	self.selectionStartX = nil
 	self.selectionStartY = nil
+	
 	self.resizing = false
 	self.resizeCornerX = 0
 	self.resizeCornerY = 0
+	
 	--misc
 	self.resizeCircleRadius = TILE_SIZE/2
 	
@@ -87,19 +96,42 @@ function UI:deselectArea()
 	self.selectStartY = nil
 end
 
+function UI:initHand()
+	self.holding = true
+	self.handX, self.handY = self:getMouseTile()
+	self.selecting = false
+	self.resizing = false
+end
+
+function UI:clearHand()
+	self.holding = false
+	self.handX, self.handY = nil, nil
+end
+
+-- EVENTS
 
 function UI:update(dt)
+	local moved = false
 	if input.isActive("up","camera") then
 		self.cameraY = self.cameraY + self.moveSpeed/self.zoomFactor*dt
+		moved = true
 	end
 	if input.isActive("down","camera") then
 		self.cameraY = self.cameraY - self.moveSpeed/self.zoomFactor*dt
+		moved = true
 	end
 	if input.isActive("left","camera") then
 		self.cameraX = self.cameraX + self.moveSpeed/self.zoomFactor*dt
+		moved = true
 	end
 	if input.isActive("right","camera") then
 		self.cameraX = self.cameraX - self.moveSpeed/self.zoomFactor*dt
+		moved = true
+	end
+	if moved then
+		--relative to the world, the mouse DID move
+		local mx, my = self:getMousePos()
+		self:mouseMoved(mx, my, 0, 0)
 	end
 end
 
@@ -194,7 +226,6 @@ function UI:drawObjects(level, startX, startY, endX, endY)
 end
 
 function UI:draw()
-	love.graphics.push()
 	--not exactly one to compensate for float weirdness
 	if self.zoomFactor < 0.999 then
 		love.graphics.setLineStyle("smooth")
@@ -202,6 +233,7 @@ function UI:draw()
 		love.graphics.setLineStyle("rough")
 	end
 	--camera
+	love.graphics.push()
 		love.graphics.translate(self.width/2, self.height/2)
 		love.graphics.scale(self.zoomFactor)
 		love.graphics.translate(self.cameraX, self.cameraY)
@@ -215,11 +247,13 @@ function UI:draw()
 		)
 		
 		--resize circles
-		love.graphics.setColor(theme.colors.resizeCircles)
-		--ipairs used because for-looping with the difference as step size gets stuck when the difference is 0
-		for _,cornerX in ipairs({ self.level.left, self.level.right+1}) do
-			for _,cornerY in ipairs({self.level.top, self.level.bottom+1}) do
-				love.graphics.circle("fill",cornerX*TILE_SIZE,cornerY*TILE_SIZE,self.resizeCircleRadius)
+		if not self.holding then
+			love.graphics.setColor(theme.colors.resizeCircles)
+			--ipairs used because for-looping with the difference as step size gets stuck when the difference is 0
+			for _,cornerX in ipairs({ self.level.left, self.level.right+1}) do
+				for _,cornerY in ipairs({self.level.top, self.level.bottom+1}) do
+					love.graphics.circle("fill",cornerX*TILE_SIZE,cornerY*TILE_SIZE,self.resizeCircleRadius)
+				end
 			end
 		end
 		
@@ -229,35 +263,138 @@ function UI:draw()
 		startX, startY = math.floor(startX/TILE_SIZE), math.floor(startY/TILE_SIZE)
 		endX, endY = math.floor(endX/TILE_SIZE), math.floor(endY/TILE_SIZE)
 		
+		--objects
 		self:drawObjects(self.level, startX,startY, endX,endY)
 		
+		if self.holding then
+			--object/clipboard to place
+			if self.editor.hand:isInstanceOf(Clipboard) then
+				love.graphics.push()
+					love.graphics.translate(self.handX*TILE_SIZE, self.handY*TILE_SIZE)
+					self:drawObjects(
+						self.editor.hand.world,
+						startX-self.handX, startY-self.handY,
+						endX-self.handX, endY-self.handY
+					)
+				love.graphics.pop()
+			end
+		else
+			--area being selected
+			if self.selectStartX then
+				love.graphics.setLineWidth(2)
+				love.graphics.setColor(theme.colors.selectingArea)
+				love.graphics.rectangle("line",
+					self.selectStartX +0.5, self.selectStartY+0.5,
+					self:toWorldX(self:getMouseX()) - self.selectStartX-1,
+					self:toWorldY(self:getMouseY()) - self.selectStartY-1
+				)
+			end
+			
+			--highlight
+			local x,y = self:getMouseTile()
+			love.graphics.setColor(1,1,1,0.5)
+			love.graphics.rectangle(
+				"fill",
+				x*TILE_SIZE, y*TILE_SIZE,
+				TILE_SIZE, TILE_SIZE
+			)
+		end
 		--selection
 		if self.editor.selection then
 			self.editor.selection:draw(startX,startY, endX,endY)
 		end
-		--area being selected
-		if self.selectStartX then
-			love.graphics.setLineWidth(2)
-			love.graphics.setColor(theme.colors.selectingArea)
-			love.graphics.rectangle("line",
-				self.selectStartX +0.5, self.selectStartY+0.5,
-				self:toWorldX(self:getMouseX()) - self.selectStartX-1,
-				self:toWorldY(self:getMouseY()) - self.selectStartY-1
-			)
-		end
-		
-		--hover
-		local x,y = self:getMouseTile()
-		love.graphics.setColor(1,1,1,0.5)
-		love.graphics.rectangle(
-			"fill",
-			x*TILE_SIZE, y*TILE_SIZE,
-			TILE_SIZE, TILE_SIZE
-		)
 	love.graphics.pop()
 end
 
+
+function UI:inputActivated(name,group, isCursorBound)
+	if group=="editor" then
+		if self.holding then
+			
+		else
+			if name=="selectOnly" or name=="selectAdd" or name=="deselectSub" or name=="deselectArea" then
+				if input.isActive("selectAreaModifier","editor") then
+					self.selectStartX = self:toWorldX(self:getMouseX())
+					self.selectStartY = self:toWorldY(self:getMouseY())
+					self.selecting = "area"
+				else
+					self.selecting = true
+				end
+			elseif name=="selectAreaModifier"  then
+				if input.isActive("selectOnly","editor")
+					or input.isActive("selectAdd","editor")
+					or input.isActive("deselectSub","editor")
+					or input.isActive("deselectArea","editor")
+				then
+					self.selectStartX = self:toWorldX(self:getMouseX())
+					self.selectStartY = self:toWorldY(self:getMouseY())
+					self.selecting = "area"
+				end
+			elseif name=="resize" then
+				local cx,cy = self:posNearCorner(self:toWorldX(self:getMouseX()),self:toWorldY(self:getMouseY()))
+				if cx then
+					self.resizing = true
+					self.resizeCornerX = cx
+					self.resizeCornerY = cy
+				end
+			end
+		end
+	end
+end
+
+function UI:inputDeactivated(name,group, isCursorBound)
+	if group=="editor" then
+		if self.holding then
+			
+		else
+			if name=="selectOnly" then
+				if self.selecting then
+					if self.selecting=="area" then
+						self:selectArea()
+					else
+						self.editor:selectOnly(self:getMouseTile())
+					end
+					self.selecting = false
+				end
+			elseif name=="selectAdd" then
+				if self.selecting then
+					if self.selecting=="area" then
+						self:selectArea()
+					else
+						self.editor:selectAdd(self:getMouseTile())
+					end
+					self.selecting = false
+				end
+			elseif name=="deselectSub" then
+				if self.selecting then
+					if self.selecting=="area" then
+						self:deselectArea()
+					else
+						self.editor:deselectSub(self:getMouseTile())
+					end
+					self.selecting = false
+				end
+			elseif name=="deselectArea" then
+				if self.selecting=="area" then
+					self:deselectArea()
+					self.selecting = false
+				end
+				--do nothing otherwise because this input is doubly mapped to camera.drag
+			elseif name=="resize" then
+				if self.resizing then
+					self.resizing = false
+				end
+			end
+		end
+	end
+end
+
+
 function UI:mouseMoved(x,y,dx,dy)
+	--TODO place and release
+	if self.holding then
+		self.handX, self.handY = self:getMouseTile()
+	end
 	if self.resizing then
 		--calculate new size
 		local top, bottom = self.level.top, self.level.bottom
@@ -300,7 +437,7 @@ function UI:mouseMoved(x,y,dx,dy)
 		end
 		--update cursor symbol
 		local cx,cy = self:posNearCorner(self:toWorldX(x),self:toWorldY(y))
-		if cx then
+		if cx and not self.holding then
 			if cx*cy==1 then
 				love.mouse.setCursor(love.mouse.getSystemCursor("sizenwse"))
 			else
@@ -318,80 +455,6 @@ function UI:mouseMoved(x,y,dx,dy)
 		and self.selecting~="area"
 	then
 		self.selecting = false
-	end
-end
-
-function UI:inputActivated(name,group, isCursorBound)
-	if group=="editor" then
-		if name=="selectOnly" or name=="selectAdd" or name=="deselectSub" or name=="deselectArea" then
-			if input.isActive("selectAreaModifier","editor") then
-				self.selectStartX = self:toWorldX(self:getMouseX())
-				self.selectStartY = self:toWorldY(self:getMouseY())
-				self.selecting = "area"
-			else
-				self.selecting = true
-			end
-		elseif name=="selectAreaModifier"  then
-			if input.isActive("selectOnly","editor")
-				or input.isActive("selectAdd","editor")
-				or input.isActive("deselectSub","editor")
-				or input.isActive("deselectArea","editor")
-			then
-				self.selectStartX = self:toWorldX(self:getMouseX())
-				self.selectStartY = self:toWorldY(self:getMouseY())
-				self.selecting = "area"
-			end
-		elseif name=="resize" then
-			local cx,cy = self:posNearCorner(self:toWorldX(self:getMouseX()),self:toWorldY(self:getMouseY()))
-			if cx then
-				self.resizing = true
-				self.resizeCornerX = cx
-				self.resizeCornerY = cy
-			end
-		end
-	end
-end
-
-function UI:inputDeactivated(name,group, isCursorBound)
-	if group=="editor" then
-		if name=="selectOnly" then
-			if self.selecting then
-				if self.selecting=="area" then
-					self:selectArea()
-				else
-					self.editor:selectOnly(self:getMouseTile())
-				end
-				self.selecting = false
-			end
-		elseif name=="selectAdd" then
-			if self.selecting then
-				if self.selecting=="area" then
-					self:selectArea()
-				else
-					self.editor:selectAdd(self:getMouseTile())
-				end
-				self.selecting = false
-			end
-		elseif name=="deselectSub" then
-			if self.selecting then
-				if self.selecting=="area" then
-					self:deselectArea()
-				else
-					self.editor:deselectSub(self:getMouseTile())
-				end
-				self.selecting = false
-			end
-		elseif name=="deselectArea" then
-			if self.selecting=="area" then
-				self:deselectArea()
-				self.selecting = false
-			end
-			--do nothing otherwise because this input is doubly mapped to camera.drag
-		elseif name=="resize" then
-			if self.resizing then
-				self.resizing = false
-			end
-		end
 	end
 end
 

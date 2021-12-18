@@ -124,10 +124,19 @@ function UI:runScript(path,disableSandbox)
 end
 
 
+function UI:setClipboard(cp)
+	self.workshop.clipboard = cp
+end
+
+function UI:getClipboard()
+	return self.workshop.clipboard
+end
+
 function UI:close()
 	self.workshop:closeEditor(self)
 end
 
+-- EVENTS
 
 function UI:onFocus(focus)
 	if focus then
