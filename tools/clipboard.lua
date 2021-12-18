@@ -17,6 +17,8 @@ function Clipboard:initialize(world,mask)
 	self:copy(world, self.world, startX-1,startY-1, 0,0)
 end
 
+--offset are from (1,1), so offsets should be 1 lower than the start position
+--(the start psoition of (1,1) need offset (0,0))
 function Clipboard:copy(srcWorld, dstWorld, srcOffsetX,srcOffsetY, dstOffsetX,dstOffsetY)
 	self.mask:forEach(function(x,y,value)
 		if value then

@@ -310,7 +310,9 @@ end
 function UI:inputActivated(name,group, isCursorBound)
 	if group=="editor" then
 		if self.holding then
-			
+			if name=="placeHand" or name=="releaseHand" then
+				self.placing = true
+			end
 		else
 			if name=="selectOnly" or name=="selectAdd" or name=="deselectSub" or name=="deselectArea" then
 				if input.isActive("selectAreaModifier","editor") then
@@ -345,7 +347,14 @@ end
 function UI:inputDeactivated(name,group, isCursorBound)
 	if group=="editor" then
 		if self.holding then
-			
+			if self.placing then
+				if name=="placeHand" then
+					self.editor:place(self.handX, self.handY)
+				elseif name=="releaseHand" then
+					self.editor:releaseHold()
+				end
+				self.placing = false
+			end
 		else
 			if name=="selectOnly" then
 				if self.selecting then
@@ -447,7 +456,7 @@ function UI:mouseMoved(x,y,dx,dy)
 			love.mouse.setCursor()
 		end
 	end
-	--stop selecting when you have moved the cursor
+	--stop selecting a single tile when you have moved the cursor
 	if (input.isActive("selectOnly","editor")
 		or input.isActive("selectAdd","editor")
 		or input.isActive("deselectSub","editor")
@@ -456,6 +465,9 @@ function UI:mouseMoved(x,y,dx,dy)
 	then
 		self.selecting = false
 	end
+	
+	--stop placing something
+	self.placing = false
 end
 
 function UI:wheelMoved(x,y)

@@ -205,6 +205,16 @@ function UI:hold(item)
 	self.viewer:initHand()
 end
 
+function UI:releaseHold()
+	self.hand = nil
+	self.viewer:clearHand()
+end
+
+function UI:place(x,y)
+	self.hand:copy(self.hand.world, self.level, 0,0, x,y)
+	self:releaseHold()
+end
+
 -- other stuff
 
 function UI:paste()
