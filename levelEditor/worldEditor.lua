@@ -98,9 +98,21 @@ end
 
 function UI:initHand()
 	self.holding = true
-	self.handX, self.handY = self:getMouseTile()
+	self:updateHandPosition(self:getMousePos())
 	self.selecting = false
 	self.resizing = false
+end
+
+function UI:updateHandPosition(x,y)
+	local w = self.editor.hand.world:getWidth()
+	local h = self.editor.hand.world:getHeight()
+	local wx = self:toWorldX(x)
+	local wy = self:toWorldY(y)
+	-- -0.5 because the clipboard world starts at (1,1)
+	-- only .5 because we want to move around the center, not the corner
+	-- (I think not sure if that part of explanation is completely, but testing shows that this works)
+	self.handX = math.floor(wx/TILE_SIZE - w/2 - 0.5)
+	self.handY = math.floor(wy/TILE_SIZE - h/2 - 0.5)
 end
 
 function UI:clearHand()
@@ -408,7 +420,7 @@ end
 function UI:mouseMoved(x,y,dx,dy)
 	--TODO place and release
 	if self.holding then
-		self.handX, self.handY = self:getMouseTile()
+		self:updateHandPosition(x,y)
 	end
 	if self.resizing then
 		--calculate new size
