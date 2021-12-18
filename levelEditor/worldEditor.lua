@@ -310,7 +310,7 @@ end
 function UI:inputActivated(name,group, isCursorBound)
 	if group=="editor" then
 		if self.holding then
-			if name=="placeHand" or name=="releaseHand" then
+			if name=="placeHand" or name=="releaseHand" or name=="placeAndReleaseHand" then
 				self.placing = true
 			end
 		else
@@ -348,12 +348,18 @@ function UI:inputDeactivated(name,group, isCursorBound)
 	if group=="editor" then
 		if self.holding then
 			if self.placing then
+				--only stop placing it's a related input
+				--otherwise unrelated inputs (on duplicate binds) prevent us from placing stuff
 				if name=="placeHand" then
-					self.editor:place(self.handX, self.handY)
+					self.editor:place(self.handX, self.handY, false)
+					self.placing = false
+				elseif name=="placeAndReleaseHand" then
+					self.editor:place(self.handX, self.handY, true)
+					self.placing = false
 				elseif name=="releaseHand" then
 					self.editor:releaseHold()
+					self.placing = false
 				end
-				self.placing = false
 			end
 		else
 			if name=="selectOnly" then

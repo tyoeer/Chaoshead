@@ -166,7 +166,25 @@ return {
 			}
 		},
 		placeHand = {
-			trigger = "mouse: left",
+			type = "and",
+			triggers = {
+				"mouse: left",
+				{
+					type = "or",
+					triggers = {"lctrl","rctrl"}
+				},
+			},
+			isCursorBound = true,
+		},
+		placeAndReleaseHand = {
+			type = "and",
+			triggers = {
+				"mouse: left",
+				{
+					type = "nor",
+					triggers = {"lctrl","rctrl"}
+				},
+			},
 			isCursorBound = true,
 		},
 		releaseHand = {

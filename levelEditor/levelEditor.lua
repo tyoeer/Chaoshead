@@ -210,9 +210,11 @@ function UI:releaseHold()
 	self.viewer:clearHand()
 end
 
-function UI:place(x,y)
+function UI:place(x,y,release)
 	self.hand:copy(self.hand.world, self.level, 0,0, x,y)
-	self:releaseHold()
+	if release then
+		self:releaseHold()
+	end
 end
 
 -- other stuff
