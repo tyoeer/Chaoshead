@@ -86,31 +86,43 @@ end
 
 local colors = settings.theme.levelEditor.colors
 
+function S:drawTile(x,y)
+	local xx, yy = x*TILE_SIZE, y*TILE_SIZE
+	if self.layers.background then
+		love.graphics.setColor(colors.backgroundObject.selected)
+		love.graphics.setLineWidth(1)
+		
+		love.graphics.translate(xx,yy)
+		love.graphics.polygon("line",OBJ.backgroundShape)
+		love.graphics.translate(-xx,-yy)
+	end
+	if self.layers.pathNodes then
+		love.graphics.setColor(colors.pathNode.selected)
+		love.graphics.setLineWidth(math.sqrt(2)/2)
+		
+		love.graphics.translate(xx,yy)
+		love.graphics.polygon("line",PN.shape)
+		love.graphics.translate(-xx,-yy)
+	end
+	if self.layers.foreground then
+		love.graphics.setColor(colors.foregroundObject.selected)
+		love.graphics.setLineWidth(1)
+		love.graphics.rectangle("line",xx+0.5,yy+0.5,TILE_SIZE-1,TILE_SIZE-1)
+	end
+end
+
 function S:draw(startX,startY, endX,endY)
-	for x = startX, endX, 1 do
-		for y = startY, endY, 1 do
-			if self.mask[x][y] then
-				local xx, yy = x*TILE_SIZE, y*TILE_SIZE
-				if self.layers.background then
-					love.graphics.setColor(colors.backgroundObject.selected)
-					love.graphics.setLineWidth(1)
-					
-					love.graphics.translate(xx,yy)
-					love.graphics.polygon("line",OBJ.backgroundShape)
-					love.graphics.translate(-xx,-yy)
-				end
-				if self.layers.pathNodes then
-					love.graphics.setColor(colors.pathNode.selected)
-					love.graphics.setLineWidth(math.sqrt(2)/2)
-					
-					love.graphics.translate(xx,yy)
-					love.graphics.polygon("line",PN.shape)
-					love.graphics.translate(-xx,-yy)
-				end
-				if self.layers.foreground then
-					love.graphics.setColor(colors.foregroundObject.selected)
-					love.graphics.setLineWidth(1)
-					love.graphics.rectangle("line",xx+0.5,yy+0.5,TILE_SIZE-1,TILE_SIZE-1)
+	local drawArea = math.abs( (startX-endX+1) * (startY-endY+1) )
+	
+	if drawArea >= self.nTiles then
+		for tile in self.tiles:iterate() do
+			self:drawTile(tile.x, tile.y)
+		end
+	else
+		for x = startX, endX, 1 do
+			for y = startY, endY, 1 do
+				if self.mask[x][y] then
+					self:drawTile(x,y)
 				end
 			end
 		end

@@ -301,6 +301,7 @@ function UI:draw()
 					end
 				end
 			end
+			
 			--object/clipboard to place
 			if self.editor.hand:isInstanceOf(Clipboard) then
 				love.graphics.push()
