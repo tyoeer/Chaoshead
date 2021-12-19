@@ -44,4 +44,12 @@ function Clipboard:copy(srcWorld, dstWorld, srcOffsetX,srcOffsetY, dstOffsetX,ds
 	end)
 end
 
+function Clipboard:getWidth()
+	return self.mask.width
+end
+
+function Clipboard:getHeight()
+	return self.mask.height
+end
+
 return Clipboard

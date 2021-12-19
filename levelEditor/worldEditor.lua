@@ -280,11 +280,24 @@ function UI:draw()
 		
 		if self.holding then
 			--highlight where the stuff to place is
+			local drawArea = math.abs( (startX-endX+1) * (startY-endY+1) )
+			local levelArea = self.editor.hand:getWidth() * self.editor.hand:getHeight()
+			
 			love.graphics.setColor(theme.colors.handHighlight)
-			for x = startX-self.handX, endX-self.handX, 1 do
-				for y = startY-self.handY, endY-self.handY, 1 do
-					if self.editor.hand.mask:get(x,y) then
-						love.graphics.rectangle("fill", (x+self.handX)*TILE_SIZE, (y+self.handY)*TILE_SIZE, TILE_SIZE, TILE_SIZE)
+			if drawArea >= levelArea then
+				for x = 1, self.editor.hand:getWidth(), 1 do
+					for y = 1, self.editor.hand:getHeight(), 1 do
+						if self.editor.hand.mask:get(x,y) then
+							love.graphics.rectangle("fill", (x+self.handX)*TILE_SIZE, (y+self.handY)*TILE_SIZE, TILE_SIZE, TILE_SIZE)
+						end
+					end
+				end
+			else
+				for x = startX-self.handX, endX-self.handX, 1 do
+					for y = startY-self.handY, endY-self.handY, 1 do
+						if self.editor.hand.mask:get(x,y) then
+							love.graphics.rectangle("fill", (x+self.handX)*TILE_SIZE, (y+self.handY)*TILE_SIZE, TILE_SIZE, TILE_SIZE)
+						end
 					end
 				end
 			end
