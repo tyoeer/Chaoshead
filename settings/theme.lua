@@ -10,6 +10,7 @@ return {
 			resizeCircles = {0.5,0.5,0.5, 0.5},
 			selectingArea = {1,1,1, 1},
 			handHighlight = {1,1,1, 0.5},
+			hoverHighlight = {1,1,1, 0.5},
 			
 			foregroundObject = {
 				shape = {0,1,0, 0.4},

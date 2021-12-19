@@ -313,7 +313,7 @@ function UI:draw()
 			
 			--highlight
 			local x,y = self:getMouseTile()
-			love.graphics.setColor(1,1,1,0.5)
+			love.graphics.setColor(theme.colors.hoverHighlight)
 			love.graphics.rectangle(
 				"fill",
 				x*TILE_SIZE, y*TILE_SIZE,
