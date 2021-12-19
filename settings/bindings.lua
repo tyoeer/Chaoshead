@@ -165,7 +165,7 @@ return {
 				},
 			}
 		},
-		placeHand = {
+		placeAndReleaseHand = {
 			type = "and",
 			triggers = {
 				"mouse: left",
@@ -176,7 +176,7 @@ return {
 			},
 			isCursorBound = true,
 		},
-		placeAndReleaseHand = {
+		placeHand = {
 			type = "and",
 			triggers = {
 				"mouse: left",
