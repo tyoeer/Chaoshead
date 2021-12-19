@@ -279,6 +279,15 @@ function UI:draw()
 		self:drawObjects(self.level, startX,startY, endX,endY)
 		
 		if self.holding then
+			--highlight where the stuff to place is
+			love.graphics.setColor(theme.colors.handHighlight)
+			for x = startX-self.handX, endX-self.handX, 1 do
+				for y = startY-self.handY, endY-self.handY, 1 do
+					if self.editor.hand.mask:get(x,y) then
+						love.graphics.rectangle("fill", (x+self.handX)*TILE_SIZE, (y+self.handY)*TILE_SIZE, TILE_SIZE, TILE_SIZE)
+					end
+				end
+			end
 			--object/clipboard to place
 			if self.editor.hand:isInstanceOf(Clipboard) then
 				love.graphics.push()
