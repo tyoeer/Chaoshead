@@ -70,10 +70,19 @@ function P:addNodeBetween(n,prev,next)
 		--no next means this is the tail
 		self.tail = n
 	end
-	--close if closed property(38) is set to Yes(1)
-	--a single connected to itself doesn't make sense,
+	-- if this node was added to a closed path, the head and/or tail won't have updated properly
+	-- first check if we've been added before the head so the new node will be the tail/appended
+	-- if there's only one other node
+	if next==self.head then
+		self.tail = n
+	end
+	if prev==self.tail then
+		self.head = n
+	end
+	--close if the closed property (38) is set to Yes(1)
+	--a single node connected to itself doesn't make sense,
 	--but it allows new nodes to be connected while maintaining a closed loop
-	if prev==nil and next==nil and self.properties[38]==1 then
+	if prev==nil and next==nil and self.properties[CLOSED_PROPERTY_ID]==1 then
 		n.next = n
 		n.prev = n
 	end
