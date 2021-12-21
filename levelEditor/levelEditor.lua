@@ -173,24 +173,31 @@ end
 
 function UI:deleteSelection()
 	local c = self.selection.contents
+	
+	if self.selection:hasLayer("foreground") then
+		for obj in c.foreground:iterate() do
+			self.level:removeObject(obj)
+		end
+	end
+	if self.selection:hasLayer("background") then
+		for obj in c.background:iterate() do
+			self.level:removeObject(obj)
+		end
+	end
+	if self.selection:hasLayer("pathNodes") then
+		for node in c.pathNodes:iterate() do
+			local p = node.path
+			p:removeNode(node)
+			--removed all nodes?
+			if not p.tail then
+				self.level:removePath(p)
+			end
+		end
+	end
+	
 	self.selection = nil
 	self:removeTab(self.selectionDetails)
 	self.selectionDetails = nil
-	
-	for obj in c.foreground:iterate() do
-		self.level:removeObject(obj)
-	end
-	for obj in c.background:iterate() do
-		self.level:removeObject(obj)
-	end
-	for node in c.pathNodes:iterate() do
-		local p = node.path
-		p:removeNode(node)
-		--removed all nodes?
-		if not p.tail then
-			self.level:removePath(p)
-		end
-	end
 end
 
 function UI:copy()
