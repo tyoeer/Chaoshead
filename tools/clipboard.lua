@@ -72,6 +72,7 @@ function Clipboard:copy(srcWorld, dstWorld, srcOffsetX,srcOffsetY, dstOffsetX,ds
 			path:setClosed(closed and "Yes" or "No")
 			dstWorld:addPath(path)
 			--copy nodes
+			startNode = node
 			while self.mask:get(node.x - srcOffsetX, node.y - srcOffsetY) do
 				path:append(node.x - srcOffsetX + dstOffsetX, node.y - srcOffsetY + dstOffsetY)
 				done[node] = true
