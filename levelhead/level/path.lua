@@ -15,6 +15,14 @@ function P:initialize()
 	self.properties = {}
 end
 
+function P:cloneWithoutNodes()
+	local p = P:new()
+	for prop, val in pairs(self.properties) do
+		p.properties[prop] = val
+	end
+	return p
+end
+
 function P:iterateNodes()
 	return function(path,node)
 		if node then
