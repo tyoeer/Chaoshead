@@ -107,7 +107,7 @@ path:setProperty(selector, mapping)
 ```Lua
 for propertyId in path:iterateProperties() do
 ```
-Iterates over all the properties this object has.
+Iterates over all the properties paths have.
 
 ```Lua
 has = path:hasProperty(propId)
