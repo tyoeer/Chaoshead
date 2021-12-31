@@ -64,6 +64,7 @@ function UI:onReload(list,levelFile)
 		self.levelFile = levelFile
 	end
 	self.indent = 1
+	list:resetList()
 	
 	self:textRow("Headers:",-1)
 		local h = self.levelFile.rawHeaders
