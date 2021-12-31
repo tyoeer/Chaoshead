@@ -74,6 +74,9 @@ function C:removeLayer(layer)
 		self.nBackground = 0
 		self.background = nil
 	elseif layer=="pathNodes" then
+		for node in self.pathNodes:iterate() do
+			self:removePathNodeProperties(node)
+		end
 		self.nPathNodes = 0
 		self.pathNodes = nil
 	else
