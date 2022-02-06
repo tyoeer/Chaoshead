@@ -441,7 +441,6 @@ end
 
 
 function UI:mouseMoved(x,y,dx,dy)
-	--TODO place and release
 	if self.holding then
 		self:updateHandPosition(x,y)
 	end

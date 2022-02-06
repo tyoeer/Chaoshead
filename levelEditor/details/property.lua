@@ -24,13 +24,6 @@ function UI:reload()
 		else
 			self:addTextEntry(string.format("%s-%s (%d-%d)",P:valueToMapping(pl.propId,pl.min),P:valueToMapping(pl.propId,pl.max),pl.min,pl.max),1)
 		end
-		--[[self:addButtonEntry(
-			"WIP",
-			function()
-				--
-			end,
-			Settings.dim.editor.details.selection.property.buttonPadding
-		)]]--
 	end
 end
 
