@@ -83,7 +83,7 @@ function UI:preDraw()
 	else
 		subStyle = self.style.normal
 	end
-	if self.managingContents and self.contents.style ~= substyle then
+	if self.managingContents and self.contents.style ~= subStyle then
 		self.contents:setStyle(subStyle.textStyle)
 	end
 	

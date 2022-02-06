@@ -3,7 +3,7 @@ local Clipboard = require("tools.clipboard")
 
 local UI = Class(require("ui.base.node"))
 
-local theme = settings.theme.levelEditor
+local theme = Settings.theme.levelEditor
 
 function UI:initialize(editor)
 	self.editor = editor
@@ -13,8 +13,8 @@ function UI:initialize(editor)
 	self.cameraX = 0
 	self.cameraY = 0
 	self.zoomFactor = 1
-	self.zoomSpeed = settings.misc.editor.zoomSpeed
-	self.moveSpeed = settings.misc.editor.cameraMoveSpeed
+	self.zoomSpeed = Settings.misc.editor.zoomSpeed
+	self.moveSpeed = Settings.misc.editor.cameraMoveSpeed
 	
 	--state stuff
 	self.holding = nil
@@ -124,19 +124,19 @@ end
 
 function UI:update(dt)
 	local moved = false
-	if input.isActive("up","camera") then
+	if Input.isActive("up","camera") then
 		self.cameraY = self.cameraY + self.moveSpeed/self.zoomFactor*dt
 		moved = true
 	end
-	if input.isActive("down","camera") then
+	if Input.isActive("down","camera") then
 		self.cameraY = self.cameraY - self.moveSpeed/self.zoomFactor*dt
 		moved = true
 	end
-	if input.isActive("left","camera") then
+	if Input.isActive("left","camera") then
 		self.cameraX = self.cameraX + self.moveSpeed/self.zoomFactor*dt
 		moved = true
 	end
-	if input.isActive("right","camera") then
+	if Input.isActive("right","camera") then
 		self.cameraX = self.cameraX - self.moveSpeed/self.zoomFactor*dt
 		moved = true
 	end
@@ -270,10 +270,10 @@ function UI:draw()
 		end
 		
 		--get position of objects at the screen edges
-		startX, startY = self:toWorldX(0), self:toWorldY(0)
-		endX, endY = self:toWorldX(self.width), self:toWorldY(self.height)
-		startX, startY = math.floor(startX/TILE_SIZE), math.floor(startY/TILE_SIZE)
-		endX, endY = math.floor(endX/TILE_SIZE), math.floor(endY/TILE_SIZE)
+		local startX, startY = self:toWorldX(0), self:toWorldY(0)
+		local endX, endY = self:toWorldX(self.width), self:toWorldY(self.height)
+		local startX, startY = math.floor(startX/TILE_SIZE), math.floor(startY/TILE_SIZE)
+		local endX, endY = math.floor(endX/TILE_SIZE), math.floor(endY/TILE_SIZE)
 		
 		--objects
 		self:drawObjects(self.level, startX,startY, endX,endY)
@@ -350,7 +350,7 @@ function UI:inputActivated(name,group, isCursorBound)
 			end
 		else
 			if name=="selectOnly" or name=="selectAdd" or name=="deselectSub" or name=="deselectArea" then
-				if input.isActive("selectAreaModifier","editor") then
+				if Input.isActive("selectAreaModifier","editor") then
 					self.selectStartX = self:toWorldX(self:getMouseX())
 					self.selectStartY = self:toWorldY(self:getMouseY())
 					self.selecting = "area"
@@ -358,10 +358,10 @@ function UI:inputActivated(name,group, isCursorBound)
 					self.selecting = true
 				end
 			elseif name=="selectAreaModifier"  then
-				if input.isActive("selectOnly","editor")
-					or input.isActive("selectAdd","editor")
-					or input.isActive("deselectSub","editor")
-					or input.isActive("deselectArea","editor")
+				if Input.isActive("selectOnly","editor")
+					or Input.isActive("selectAdd","editor")
+					or Input.isActive("deselectSub","editor")
+					or Input.isActive("deselectArea","editor")
 				then
 					self.selectStartX = self:toWorldX(self:getMouseX())
 					self.selectStartY = self:toWorldY(self:getMouseY())
@@ -480,7 +480,7 @@ function UI:mouseMoved(x,y,dx,dy)
 		--resize
 		self.editor:resizeLevel(top, right, bottom, left)
 	else
-		if input.isActive("drag","camera") then
+		if Input.isActive("drag","camera") then
 			self.selecting = false
 			self.cameraX = self.cameraX + dx/self.zoomFactor
 			self.cameraY = self.cameraY + dy/self.zoomFactor
@@ -498,10 +498,10 @@ function UI:mouseMoved(x,y,dx,dy)
 		end
 	end
 	--stop selecting a single tile when you have moved the cursor
-	if (input.isActive("selectOnly","editor")
-		or input.isActive("selectAdd","editor")
-		or input.isActive("deselectSub","editor")
-		or input.isActive("deselectArea","editor"))
+	if (Input.isActive("selectOnly","editor")
+		or Input.isActive("selectAdd","editor")
+		or Input.isActive("deselectSub","editor")
+		or Input.isActive("deselectArea","editor"))
 		and self.selecting~="area"
 	then
 		self.selecting = false

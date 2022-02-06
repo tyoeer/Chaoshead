@@ -4,7 +4,7 @@ local SCROLLBAR = require("ui.tools.scrollbar")
 
 local UI = Class("DetailsUI",require("ui.base.proxy"))
 
-local theme = settings.theme.details
+local theme = Settings.theme.details
 
 function UI:initialize(autoLoad)
 	self.list = LIST:new(

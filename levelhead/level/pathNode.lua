@@ -23,7 +23,7 @@ PN.shape = {
 	0.5,  35.5
 }
 
-local colors = settings.theme.levelEditor.colors.pathNode
+local colors = Settings.theme.levelEditor.colors.pathNode
 
 function PN:drawShape()
 	local x, y = self:getDrawCoords()

@@ -10,9 +10,7 @@ local function preprocess(item)
 end
 
 function csv.parseString(text,seperator)
-	parser = parser or csv.noParser
 	local SEP = seperator or ","
-	--print(parser("hey(hey)",false))
 	local END = "\n"
 	
 	local out

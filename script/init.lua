@@ -13,7 +13,7 @@ function S.errorHandler(message)
 	print(fullTrace)
 	--cut of the part of the trace that goes into the script
 	local index = fullTrace:find("%s+%[C%]: in function 'xpcall'%s+script/[a-zA-Z/]+.lua:%d+:")
-	trace = fullTrace:sub(1,index-1)
+	local trace = fullTrace:sub(1,index-1)
 	--trace = fullTrace
 	return message, trace
 end

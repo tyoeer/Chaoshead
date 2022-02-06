@@ -29,7 +29,7 @@ function UI:reload()
 			function()
 				--
 			end,
-			settings.dim.editor.details.selection.property.buttonPadding
+			Settings.dim.editor.details.selection.property.buttonPadding
 		)]]--
 	end
 end

@@ -46,7 +46,7 @@ function UI:getDetailsUI(data)
 	
 	local t = type(data.raw)
 	if t=="string" then
-		if data.raw:len() > settings.misc.dataExplorer.maxDisplayStringLength then
+		if data.raw:len() > Settings.misc.dataExplorer.maxDisplayStringLength then
 			list:addTextEntry("String: too long to display!")
 		else
 			list:addTextEntry("String:")

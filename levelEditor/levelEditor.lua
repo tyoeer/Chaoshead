@@ -17,7 +17,7 @@ local LevelDetails = require("levelEditor.details.level")
 
 local UI = Class("LevelEditorUI",require("ui.base.proxy"))
 
-local theme = settings.theme.levelEditor
+local theme = Settings.theme.levelEditor
 
 function UI:initialize(level,root)
 	self.level = level
@@ -233,7 +233,7 @@ function UI:paste()
 	if cp then
 		self:hold(cp)
 	else
-		ui:displayMessage("Nothing on clipboard to paste!")
+		MainUI:displayMessage("Nothing on clipboard to paste!")
 	end
 end
 

@@ -21,7 +21,7 @@ local function loadData(path)
 	if not data then
 		error("Error reading settings: "..tostring(err))
 	end
-	success, dataOrError = pcall(JSON.decode, data)
+	local success, dataOrError = pcall(JSON.decode, data)
 	if not success then
 		error("Error parsing settings: "..tostring(dataOrError))
 	end

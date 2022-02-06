@@ -32,7 +32,9 @@ function m.parseLevelName(parts)
 					part = require("levelhead.data.elements"):getName(tonumber(le))
 				else
 					part = part:match(".+%_.+%_(.+)")
-					if not part then table.print(name) end
+					if not part then
+						error(string.format("Error parsing level name part %q",part))
+					end
 					local first = part:sub(1,1)
 					local notFirst = part:sub(2)
 					part = first:upper()..notFirst

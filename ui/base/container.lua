@@ -117,7 +117,7 @@ function UI:inputActivated(name,group, isCursorBound)
 	end
 	self:onInputActivated(name,group, isCursorBound)
 end
-function UI:onInputActivated() end
+function UI:onInputActivated(name,group, isCursorBound) end
 
 function UI:inputDeactivated(name,group, isCursorBound)
 	if isCursorBound then
@@ -132,7 +132,7 @@ function UI:inputDeactivated(name,group, isCursorBound)
 	end
 	self:onInputDeactivated(name,group, isCursorBound)
 end
-function UI:onInputDeactivated() end
+function UI:onInputDeactivated(name,group, isCursorBound) end
 
 rAll("textInput")
 
@@ -148,7 +148,7 @@ function UI:mouseMoved(x,y, dx,dy)
 	end
 	self:onMouseMoved(x,y, dx,dy)
 end
-function UI:onMouseMoved() end
+function UI:onMouseMoved(x,y, dx,dy) end
 
 function UI:wheelMoved(dx,dy)
 	local child = self:findChildAt(self:getMousePos())
@@ -157,6 +157,6 @@ function UI:wheelMoved(dx,dy)
 	end
 	self:onWheelMoved(dx,dy)
 end
-function UI:onWheelMoved() end
+function UI:onWheelMoved(dx,dy) end
 
 return UI

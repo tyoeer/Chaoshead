@@ -18,6 +18,7 @@ function LHS:loadFile(fullPath)
 	local success,err = file:open("r")
 	if not success then error(err) end
 	self.path = fullPath
+	---@type string
 	self.raw = file:read()
 	file:close()
 end
@@ -278,7 +279,7 @@ function LHS:readRepeatedPropertySets()
 		entry.rows = {}
 		offset = offset + 4
 		for j=1, entry.nRows, 1 do
-			subentry = {
+			local subentry = {
 				x = self:getNumber1(offset),
 				y = self:getNumber1(offset+1),
 				length = self:getNumber2(offset+2)
@@ -291,7 +292,7 @@ function LHS:readRepeatedPropertySets()
 		entry.columns = {}
 		offset = offset + 2
 		for j=1, entry.nColumns, 1 do
-			subentry = {
+			local subentry = {
 				x = self:getNumber1(offset),
 				y = self:getNumber1(offset+1),
 				length = self:getNumber2(offset+2)
@@ -304,7 +305,7 @@ function LHS:readRepeatedPropertySets()
 		entry.single = {}
 		offset = offset + 2
 		for j=1, entry.nSingle, 1 do
-			subentry = {
+			local subentry = {
 				x = self:getNumber1(offset),
 				y = self:getNumber1(offset+1)
 			}

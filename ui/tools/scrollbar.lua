@@ -3,7 +3,7 @@ local Button = require("ui.widgets.button")
 
 local UI = Class("ScrollbarUI",require("ui.base.container"))
 
-local theme = settings.theme.scrollbar
+local theme = Settings.theme.scrollbar
 
 function UI:initialize(contents)
 	UI.super.initialize(self)
@@ -17,13 +17,13 @@ function UI:initialize(contents)
 	self:addChild(contents)
 	
 	self.upButton = Button:new("Λ", function()
-		self:scrollToOffset(self.contentOffset - settings.misc.scrollbar.buttonScrollSpeed)
+		self:scrollToOffset(self.contentOffset - Settings.misc.scrollbar.buttonScrollSpeed)
 	end, theme.buttonStyle)
 	self:addChild(self.upButton)
 	self.upButton:resize(theme.width, theme.buttonHeight)
 	
 	self.downButton = Button:new("V", function()
-		self:scrollToOffset(self.contentOffset + settings.misc.scrollbar.buttonScrollSpeed)
+		self:scrollToOffset(self.contentOffset + Settings.misc.scrollbar.buttonScrollSpeed)
 	end, theme.buttonStyle)
 	self:addChild(self.downButton)
 	self.downButton:resize(theme.width, theme.buttonHeight)
@@ -109,16 +109,16 @@ end
 function UI:onMouseMoved(x,y,dx,dy)
 	if self.dragging then
 		-- it could have been released when hovering outside the this node
-		if input.isActive("click","main") then
+		if Input.isActive("click","main") then
 			self:scroll(self.scrollButtonOffset + dy)
 		else
-			dragging = false
+			self.dragging = false
 		end
 	end
 end
 
 function UI:onWheelMoved(dx,dy)
-	self:scrollToOffset(self.contentOffset + -dy*settings.misc.scrollbar.mouseWheelScrollSpeed)
+	self:scrollToOffset(self.contentOffset + -dy*Settings.misc.scrollbar.mouseWheelScrollSpeed)
 end
 
 return UI

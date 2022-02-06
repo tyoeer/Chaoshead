@@ -211,7 +211,7 @@ function P:setProperty(id, value)
 	if value==nil then
 		error(string.format("Can't set property %q to nil!",id),2)
 	end
-	id2 = processSelector(id)
+	local id2 = processSelector(id)
 	if not self:hasProperty(id2) then
 		error(string.format("Paths don't have a property %q (%i) to set!",PROP:getName(id2),id2),2)
 	end
@@ -220,7 +220,7 @@ function P:setProperty(id, value)
 end
 
 function P:getProperty(id)
-	id2 = processSelector(id)
+	local id2 = processSelector(id)
 	if not self:hasProperty(id2) then
 		error(string.format("Paths don't have a property %q (%i) to get!",PROP:getName(id2),id2),2)
 	end

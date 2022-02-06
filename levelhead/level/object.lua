@@ -61,7 +61,7 @@ function OBJ:getDrawCoords()
 	return self.x*TILE_SIZE, self.y*TILE_SIZE
 end
 
-local colorsIndex = settings.theme.levelEditor.colors
+local colorsIndex = Settings.theme.levelEditor.colors
 
 function OBJ:drawShape()
 	local x, y = self:getDrawCoords()

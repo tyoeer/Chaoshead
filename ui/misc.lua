@@ -100,7 +100,7 @@ function UI:onReload(list)
 			end
 		end
 		local beepr = B:new("Will beep when a save_data gets modified. Alt+F4 to stop.",0)
-		ui:setModal(beepr)
+		MainUI:setModal(beepr)
 	end)
 	
 end

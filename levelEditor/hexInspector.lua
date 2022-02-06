@@ -41,7 +41,7 @@ function UI:sectionRows(section, label)
 		self:textRow(hex,2)
 	end
 end
-function UI:propertyRows(section, label)
+function UI:propertyRows(section, label, isPath)
 	self:textRow(label..": ".. self.levelFile.rawContentEntries[section].nEntries)
 	for _,v in ipairs(self.levelFile.rawContentEntries[section].entries) do
 		local hex = bytesToHex(self.levelFile.raw:sub(v.startOffset,v.endOffset))
@@ -83,9 +83,9 @@ function UI:onReload(list,levelFile)
 		self:sectionRows("singleForeground","Single Foreground Objects")
 		self:sectionRows("foregroundRows","Foreground Rows")
 		self:sectionRows("foregroundColumns","Foreground Columns")
-		if settings.misc.hexInspector.verbosePropertiesDisplay then
-			self:propertyRows("objectProperties","Object Properties")
-			self:propertyRows("pathProperties","Path Properties")
+		if Settings.misc.hexInspector.verbosePropertiesDisplay then
+			self:propertyRows("objectProperties","Object Properties",true)
+			self:propertyRows("pathProperties","Path Properties",false)
 		else
 			self:sectionRows("objectProperties","Object Properties")
 			self:sectionRows("pathProperties","Path Properties")

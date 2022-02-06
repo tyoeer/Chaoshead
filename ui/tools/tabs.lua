@@ -3,7 +3,7 @@ local Text = require("ui.widgets.text")
 
 local UI = Class("TabsUI",require("ui.base.container"))
 
-local theme = settings.theme.tabs
+local theme = Settings.theme.tabs
 
 function UI:initialize()
 	UI.super.initialize(self)

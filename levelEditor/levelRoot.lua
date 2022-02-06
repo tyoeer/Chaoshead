@@ -13,8 +13,8 @@ function UI.loadErrorHandler(message)
 	print(fullTrace)
 	--cut of the part of the trace that goes into the code that calls UI:openEditor()
 	local index = fullTrace:find("%s+%[C%]: in function 'xpcall'")
-	trace = fullTrace:sub(1,index-1)
-	ui:displayMessage("Failed to load level!","Error message: "..message,trace)
+	local trace = fullTrace:sub(1,index-1)
+	MainUI:displayMessage("Failed to load level!","Error message: "..message,trace)
 end
 
 function UI:initialize(levelPath, workshop)
@@ -25,7 +25,7 @@ function UI:initialize(levelPath, workshop)
 	self.latestHash = self.levelFile:getHash()
 	self.level = self.levelFile:parseAll()
 	
-	tabs = TABS:new()
+	local tabs = TABS:new()
 	
 	self.hexInspector = require("levelEditor.hexInspector"):new(self.levelFile)
 	tabs:addTab(self.hexInspector)
@@ -70,7 +70,7 @@ function UI:save()
 	if self:checkLimits("Can't save level:\n") then
 		self.levelFile:serializeAll(self.level)
 		self.levelFile:writeAll()
-		ui:displayMessage("Succesfully saved level!")
+		MainUI:displayMessage("Succesfully saved level!")
 	end
 end
 
@@ -87,7 +87,7 @@ function UI:checkLimits(prefix)
 		for _,limit in ipairs(list) do
 			local failed = {limit.check(self.level)}
 			if failed[1] then
-				ui:displayMessage(prefix..string.format(limit.message,unpack(failed)))
+				MainUI:displayMessage(prefix..string.format(limit.message,unpack(failed)))
 				return false
 			end
 		end
@@ -106,17 +106,17 @@ function UI:runScript(path,disableSandbox)
 		end
 		local level, selectionOrMessage, errTrace = require("script").runDangerously(path, self.level, sel)
 		if level then
-			selection = selectionOrMessage
+			local selection = selectionOrMessage
 			self:reload(level)
 			if selection and selection.mask then
 				self.levelEditor:newSelection(selection.mask)
 			end
 			--move to the levelEditor to show the scripts effects
 			self.child:setActiveTab(self.levelEditor)
-			ui:displayMessage("Succesfully ran script!")
+			MainUI:displayMessage("Succesfully ran script!")
 		else
-			message = selectionOrMessage
-			ui:displayMessage(message, trace)
+			local message = selectionOrMessage
+			MainUI:displayMessage(message, errTrace)
 		end
 	else
 		error("Tried to run script in sandboxed mode, which is currently not yet implemented.")
@@ -155,7 +155,7 @@ function UI:onInputActivated(name,group, isCursorBound)
 			self:save()
 		elseif name=="checkLimits" then
 			if self:checkLimits() then
-				ui:displayMessage("Level doesn't break any limits!")
+				MainUI:displayMessage("Level doesn't break any limits!")
 			end
 		end
 	end

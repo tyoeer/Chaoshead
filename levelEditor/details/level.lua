@@ -53,14 +53,14 @@ function UI:onReload(list,level)
 		"Check level limits",
 		function()
 			if self.editor.root:checkLimits() then
-				ui:displayMessage("Level doesn't break any limits!")
+				MainUI:displayMessage("Level doesn't break any limits!")
 			end
 		end
 	)
 	-- settings
 	list:addTextEntry("Level settings:")
 	for _, v in ipairs(levelSettings) do
-		data = level.settings[v[1]]
+		local data = level.settings[v[1]]
 		if type(data)=="function" then
 			if v[3] then
 				list:addTextEntry(v[2]..": "..data(level.settings),1)

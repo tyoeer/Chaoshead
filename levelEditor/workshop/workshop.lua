@@ -31,12 +31,12 @@ function UI:openEditor(path)
 		self.child:addTab(editor)
 		self.child:setActiveTab(editor)
 		--remember we opened this one
-		storage.lastLevelOpened = {
+		Storage.lastLevelOpened = {
 			when = os.time(),
 			name = editor.level.settings:getTitle(),
 			path = path,
 		}
-		storage.save()
+		Storage.save()
 	end
 end
 

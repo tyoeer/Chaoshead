@@ -11,11 +11,11 @@ end
 
 function UI:getRootEntries()
 	local out = {}
-	if storage.lastLevelOpened then
+	if Storage.lastLevelOpened then
 		table.insert(out,{
-			title = storage.lastLevelOpened.name,
+			title = Storage.lastLevelOpened.name,
 			action = function()
-				self.workshop:openEditor(storage.lastLevelOpened.path)
+				self.workshop:openEditor(Storage.lastLevelOpened.path)
 			end
 		})
 	end

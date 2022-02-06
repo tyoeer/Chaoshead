@@ -4,7 +4,7 @@ local BLOCK = require("ui.layout.block")
 
 local UI = Class("ModalManagerUI",require("ui.base.container"))
 
-local theme = settings.theme.modal
+local theme = Settings.theme.modal
 
 function UI:initialize(child)
 	UI.super.initialize(self)
