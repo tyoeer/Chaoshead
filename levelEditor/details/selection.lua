@@ -18,6 +18,21 @@ function UI:setSelectionTracker(tracker)
 	self:reload()
 end
 
+function UI:formatPosition(o,at)
+	if at==nil then
+		at = true
+	end
+	if at then
+		return string.format(" at (%d,%d)", o.x, o.y)
+	else
+		return string.format("(%d,%d)", o.x, o.y)
+	end
+end
+
+function UI:formatElement(obj)
+	return string.format("element: %s (%d)", obj:getName(), obj.id)
+end
+
 function UI:onReload(list)
 	list:resetList()
 	local s = self.selection
@@ -56,26 +71,41 @@ function UI:onReload(list)
 	list:addButtonEntry("Delete",function()
 		self.editor:deleteSelection()
 	end)
-	-- info of single object
-	do
+	
+	-- info
+	do -- single object info
+		if s.mask.nTiles==1 then
+			local t = s.mask.tiles:getTop()
+			list:addTextEntry("Position: "..self:formatPosition(t, false))
+		end
 		--foreground
-		if c.nForeground==1 and c.nBackground==0 and c.nPathNodes==0 then
+		if c.nForeground==1 then
 			local o = c.foreground:getTop()
-			list:addTextEntry("Position: ("..o.x..","..o.y..")")
-			list:addTextEntry("Element: "..o:getName().." ("..o.id..")")
-			list:addTextEntry("Layer: Foreground")
+			
+			local elem = "Foreground "..self:formatElement(o)
+			if s.mask.nTiles ~= 1 then
+				elem = elem .. self:formatPosition(o, true)
+			end
+			list:addTextEntry(elem)
+			-- list:addTextEntry("Layer: Foreground")
 			if o.contents then
 				list:addTextEntry("Contents: "..o:getContents().." ("..o.contents..")")
 			else
 				list:addTextEntry("Contents: None")
 			end
-		elseif c.nForeground==0 and c.nBackground==1 and c.nPathNodes==0 then
+		end
+		if c.nBackground==1 then
 			--background
 			local o = c.background:getTop()
-			list:addTextEntry("Position: ("..o.x..","..o.y..")")
-			list:addTextEntry("Element: "..o:getName().." ("..o.id..")")
-			list:addTextEntry("Layer: Background")
-		elseif c.nForeground==0 and c.nBackground==0 and c.nPathNodes==1 then
+			
+			local elem = "Background "..self:formatElement(o)
+			if s.mask.nTiles ~= 1 then
+				elem = elem .. self:formatPosition(o, true)
+			end
+			list:addTextEntry(elem)
+			-- list:addTextEntry("Layer: Background")
+		end
+		if c.nPathNodes==1 and s.mask.nTiles~=1 then
 			local n = c.pathNodes:getTop()
 			--mark it as a path node to prevent possible confusion
 			list:addTextEntry("Path Node Position: ("..n.x..","..n.y..")")
