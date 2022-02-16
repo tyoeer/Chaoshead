@@ -40,39 +40,41 @@ function UI:onReload(list)
 	--counts + filters
 	do
 		list:addTextEntry("Tiles: "..s.mask.nTiles)
-		list:addButtonEntry("Deselect",function()
+		list:addButtonEntry("Deselect all",function()
 			self.editor:deselect()
 		end)
 		if s:hasLayer("foreground") then
-			list:addTextEntry("Foreground objects: "..c.nForeground)
-			if c.nForeground ~= 0 then
-				list:addButtonEntry("Deselect foreground layer",function()
-					self.editor:removeSelectionLayer("foreground")
-				end)
-			end
+			local text = string.format("Deselect foreground (%d object%s)", c.nForeground, c.nForeground==1 and "" or "s")
+			list:addButtonEntry(text, function()
+				self.editor:removeSelectionLayer("foreground")
+			end)
 		end
 		if s:hasLayer("background") then
-			list:addTextEntry("Background objects: "..c.nBackground)
-			if c.nBackground ~= 0 then
-				list:addButtonEntry("Deselect background layer",function()
-					self.editor:removeSelectionLayer("background")
-				end)
-			end
+			local text = string.format("Deselect background (%d object%s)", c.nBackground, c.nBackground==1 and "" or "s")
+			list:addButtonEntry(text, function()
+				self.editor:removeSelectionLayer("background")
+			end)
+			-- list:addTextEntry("Background objects: "..c.nBackground)
+			-- if c.nBackground ~= 0 then
+			-- 	list:addButtonEntry("Deselect background layer",function()
+			-- 		self.editor:removeSelectionLayer("background")
+			-- 	end)
+			-- end
 		end
 		if s:hasLayer("pathNodes") then
-			list:addTextEntry("Path nodes: "..c.nPathNodes)
-			if c.nPathNodes ~= 0 then
-				list:addButtonEntry("Deselect path layer",function()
-					self.editor:removeSelectionLayer("pathNodes")
-				end)
-			end
+			local text = string.format("Deselect path nodes (%d node%s)", c.nPathNodes, c.nPathNodes==1 and "" or "s")
+			list:addButtonEntry(text, function()
+				self.editor:removeSelectionLayer("pathNodes")
+			end)
 		end
 	end
+	--add a divider
+	list:addTextEntry(" ",0)
+	
+	-- info & co
 	list:addButtonEntry("Delete",function()
 		self.editor:deleteSelection()
 	end)
-	
-	-- info
 	do -- single object info
 		if s.mask.nTiles==1 then
 			local t = s.mask.tiles:getTop()
