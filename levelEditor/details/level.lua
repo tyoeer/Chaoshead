@@ -29,8 +29,6 @@ function UI:onReload(list,level)
 	end
 	list:resetList()
 	
-	list:addTextEntry("Width:  "..level:getWidth())
-	list:addTextEntry("Height: "..level:getHeight())
 	list:addButtonEntry(
 		"Save Level",
 		function()
@@ -49,6 +47,9 @@ function UI:onReload(list,level)
 			self.editor.root:close()
 		end
 	)
+	
+	list:addTextEntry(" ") -- seperator
+	
 	list:addButtonEntry(
 		"Check level limits",
 		function()
@@ -57,6 +58,8 @@ function UI:onReload(list,level)
 			end
 		end
 	)
+	list:addTextEntry("Width:  "..level:getWidth())
+	list:addTextEntry("Height: "..level:getHeight())
 	-- settings
 	list:addTextEntry("Level settings:")
 	for _, v in ipairs(levelSettings) do
