@@ -22,10 +22,23 @@ end
 
 function UI:getValues()
 	local pl = self.propertyList
+	if pl:isRangeProperty() then
 	if pl.min==pl.max then
-		return string.format("%s (%d)",P:valueToMapping(pl.propId,pl.min),pl.min)
+			return string.format("%s (%d)", P:valueToMapping(pl.propId, pl.min), pl.min)
 	else
-		return string.format("%s-%s (%d-%d)",P:valueToMapping(pl.propId,pl.min),P:valueToMapping(pl.propId,pl.max),pl.min,pl.max)
+			return string.format("%s-%s (%d-%d)", P:valueToMapping(pl.propId, pl.min), P:valueToMapping(pl.propId, pl.max), pl.min, pl.max)
+		end
+	else
+		local out = {}
+		local done = {}
+		for obj in pl.pool:iterate() do
+			local val = string.format("%s (%d)", obj:getProperty(pl.propId), obj:getPropertyRaw(pl.propId))
+			if not done[val] then
+				done[val] = true
+				table.insert(out, val)
+			end
+		end
+		return table.concat(out, ", ")
 	end
 end
 

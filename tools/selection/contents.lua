@@ -1,5 +1,6 @@
 local EP = require("libs.tyoeerUtils.entitypool")
 local E = require("levelhead.data.elements")
+local P = require("levelhead.data.properties")
 
 --PropertyLists
 local PL = Class()
@@ -21,6 +22,11 @@ do
 		end
 		self.max = max
 		self.min = min
+	end
+	
+	function PL:isRangeProperty()
+		local mapping = P:getMappingType(self.propId)
+		return mapping=="Hybrid" or mapping=="None"
 	end
 	
 	function PL:isEmpty()
