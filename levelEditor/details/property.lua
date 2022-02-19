@@ -2,8 +2,6 @@ local P = require("levelhead.data.properties")
 
 local UI = Class(require("ui.layout.list"))
 
-local SEPERATOR =":  "
-
 function UI:initialize(propertyList,listStyle)
 	UI.super.initialize(self,listStyle)
 	
@@ -23,9 +21,9 @@ end
 function UI:getValues()
 	local pl = self.propertyList
 	if pl:isRangeProperty() then
-	if pl.min==pl.max then
+		if pl.min==pl.max then
 			return string.format("%s (%d)", P:valueToMapping(pl.propId, pl.min), pl.min)
-	else
+		else
 			return string.format("%s-%s (%d-%d)", P:valueToMapping(pl.propId, pl.min), P:valueToMapping(pl.propId, pl.max), pl.min, pl.max)
 		end
 	else
@@ -49,9 +47,9 @@ end
 function UI:reloadWithWidth(width)
 	self:resetList()
 	if self.propertyList then
-		local name = self:getName()
+		local name = self:getName()..":"
 		local values = self:getValues()
-		local both = name..SEPERATOR..values
+		local both = name.."  "..values
 		local _, lines = love.graphics.getFont():getWrap(both, width)
 		if #lines > 1 then
 			self:addTextEntry(name)
