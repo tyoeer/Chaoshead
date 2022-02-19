@@ -9,7 +9,7 @@ function DataFile:initialize(fullPath)
 		error(string.format("Error reading file at %q: %s",fullPath,err))
 	end
 	local jsonData, mystery, hash = raw:match("([^\r\n]+)[\r\n]([^\r\n]+)[\r\n]([^\r\n]+)")
-	self.raw = require("libs.json").decode(jsonData)
+	self.raw = JSON.decode(jsonData)
 	self.mystery = mystery
 	self.hash = hash
 end
