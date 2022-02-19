@@ -66,17 +66,17 @@ function UI:onReload(list,level)
 		local data = level.settings[v[1]]
 		if type(data)=="function" then
 			if v[3] or Settings.misc.editor.showRawNumbers==false then
-				list:addTextEntry(v[2]..": "..data(level.settings),1)
+				list:addTextEntry(v[2]..":  "..data(level.settings),1)
 			else
-				list:addTextEntry(v[2]..": "..data(level.settings).." ("..level.settings[v[1]:sub(4):lower()]..")",1)
+				list:addTextEntry(v[2]..":  "..data(level.settings).." ("..level.settings[v[1]:sub(4):lower()]..")",1)
 			end
 		elseif type(data)=="number" then
-			list:addTextEntry(v[2]..": "..data,1)
+			list:addTextEntry(v[2]..":  "..data,1)
 		elseif type(data)=="boolean" then
 			if Settings.misc.editor.showRawNumbers then
-				list:addTextEntry(v[2]..": "..(data and "Yes" or "No").." ("..(data and 1 or 0)..")",1)
+				list:addTextEntry(v[2]..":  "..(data and "Yes" or "No").." ("..(data and 1 or 0)..")",1)
 			else
-				list:addTextEntry(v[2]..": "..(data and "Yes" or "No"),1)
+				list:addTextEntry(v[2]..":  "..(data and "Yes" or "No"),1)
 			end
 		end
 	end
