@@ -41,7 +41,7 @@ function UI:onReload(list)
 	do
 		list:addTextEntry("Tiles: "..s.mask.nTiles)
 		list:addButtonEntry("Deselect all",function()
-			self.editor:deselect()
+			self.editor:deselectAll()
 		end)
 		if s:hasLayer("foreground") then
 			local text = string.format("Deselect foreground (%d object%s)", c.nForeground, c.nForeground==1 and "" or "s")
