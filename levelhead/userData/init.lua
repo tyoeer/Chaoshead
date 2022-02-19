@@ -17,7 +17,11 @@ end
 
 function UD.getUserData(code)
 	local path = require("levelhead.misc").getUserDataPath()..code..dataFilePath
-	return UD.class:new(path,code)
+	if NFS.getInfo(path) then
+		return UD.class:new(path,code)
+	else
+		return nil, string.format("No userdata found for %q", code)
+	end
 end
 
 UD.class = require(select(1,...)..".class")

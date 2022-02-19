@@ -1,5 +1,7 @@
-local USER_DATA = require("levelhead.userData")
-local LEVEL_DETAILS = require("levelEditor.workshop.levelDetails")
+local UserData = require("levelhead.userData")
+local LevelDetails = require("levelEditor.workshop.levelDetails")
+local LhMisc = require("levelhead.misc")
+local NFS = require("libs.nativefs")
 
 local UI = Class("LevelSelectorUI",require("ui.tools.treeViewer"))
 
@@ -19,7 +21,7 @@ function UI:getRootEntries()
 			end
 		})
 	end
-	for _,code in ipairs(USER_DATA.getUserCodes()) do
+	for _,code in ipairs(UserData.getUserCodes()) do
 		table.insert(out,{
 			title = code,
 			code = code,
@@ -30,20 +32,39 @@ function UI:getRootEntries()
 end
 
 function UI:getChildren(parent)
-	local out = {}
-	for _,level in ipairs(USER_DATA.getUserData(parent.code):getWorkshopLevels()) do
-		table.insert(out,{
-			raw = level,
-			user = parent.code,
-			title = level.name,
-			folder = false,
-		})
+	local userData = UserData.getUserData(parent.code)
+	if userData then
+		local out = {}
+		for _,level in ipairs(userData:getWorkshopLevels()) do
+			table.insert(out,{
+				raw = level,
+				user = parent.code,
+				title = level.name,
+				folder = false,
+			})
+		end
+		return out
+	else
+		local out = {}
+		for _,item in ipairs(NFS.getDirectoryItems(LhMisc.getUserDataPath()..parent.code)) do
+			if item:match("%.(.+)$") == "lhs" then
+				table.insert(out,{
+					raw = {
+						path = LhMisc.getUserDataPath()..parent.code.."/"..item,
+						name = item,
+						id = item:match("^(.+)%."),
+					},
+					title = item,
+					folder = false,
+				})
+			end
+		end
+		return out
 	end
-	return out
 end
 
 function UI:getDetailsUI(data)
-	return LEVEL_DETAILS:new(self.workshop, data.raw)
+	return LevelDetails:new(self.workshop, data.raw)
 end
 
 return UI
