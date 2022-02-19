@@ -15,22 +15,39 @@ end
 
 function UI:getName()
 	local pl = self.propertyList
-	return string.format("%s (%d)", P:getName(pl.propId), pl.propId)
+	local val = P:getName(pl.propId)
+	if Settings.misc.editor.showRawNumbers then
+		val = val.." ("..pl.propId..")"
+	end
+	return val
 end
 
 function UI:getValues()
 	local pl = self.propertyList
 	if pl:isRangeProperty() then
 		if pl.min==pl.max then
-			return string.format("%s (%d)", P:valueToMapping(pl.propId, pl.min), pl.min)
+			local val = P:valueToMapping(pl.propId, pl.min)
+			if Settings.misc.editor.showRawNumbers then
+				val = val.." ("..pl.min..")"
+			end
+			return val
 		else
-			return string.format("%s-%s (%d-%d)", P:valueToMapping(pl.propId, pl.min), P:valueToMapping(pl.propId, pl.max), pl.min, pl.max)
+			local valMin = P:valueToMapping(pl.propId, pl.min)
+			local valMax = P:valueToMapping(pl.propId, pl.max)
+			if Settings.misc.editor.showRawNumbers then
+				valMin = valMin.." ("..pl.min..")"
+				valMax = valMax.." ("..pl.max..")"
+			end
+			return valMin.." - "..valMax
 		end
 	else
 		local out = {}
 		local done = {}
 		for obj in pl.pool:iterate() do
-			local val = string.format("%s (%d)", obj:getProperty(pl.propId), obj:getPropertyRaw(pl.propId))
+			local val = obj:getProperty(pl.propId)
+			if Settings.misc.editor.showRawNumbers then
+				val = val.." ("..obj:getPropertyRaw(pl.propId)..")"
+			end
 			if not done[val] then
 				done[val] = true
 				table.insert(out, val)

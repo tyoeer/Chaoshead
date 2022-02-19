@@ -8,6 +8,7 @@ return {
 	editor = {
 		zoomSpeed = math.sqrt(2),
 		cameraMoveSpeed = 25*60,
+		showRawNumbers = false,
 	},
 	scrollbar = {
 		buttonScrollSpeed = 100,
