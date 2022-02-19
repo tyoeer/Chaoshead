@@ -9,7 +9,7 @@ local levelSettings = {
 	{"weather","Weather"},
 	{"minimumPlayers","Minimum Players"},
 	{"playerSharePowerups","Player Share Powerups"},
-	{"multiplayerRespawnStyle","Multiplayer Respawn Style"},
+	{"getMultiplayerRespawnStyle","Multiplayer Respawn Style"},
 	{"stopCameraAtLevelSides","Stop Camera At Level Sides"},
 	{"getLanguage","Language"},
 }
