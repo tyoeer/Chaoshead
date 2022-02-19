@@ -1,15 +1,9 @@
---LH interop
-local OBJ = require("levelhead.level.object")
-local PN = require("levelhead.level.pathNode")
-local PATH = require("levelhead.level.path")
 --editor tools
 local Selection = require("tools.selection.tracker")
 local Clipboard = require("tools.clipboard")
 --misc UIs
-local Padding = require("ui.layout.padding")
 local HorDivide = require("ui.layout.horDivide")
 local Tabs = require("ui.tools.tabs")
-local Scrollbar = require("ui.tools.scrollbar")
 --specific UIs
 local WorldEditor = require("levelEditor.worldEditor")
 local SelectionDetails = require("levelEditor.details.selection")
