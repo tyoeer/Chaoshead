@@ -1,4 +1,5 @@
 local NFS = require("libs.nativefs")
+local Utf8 = require("utf8")
 
 local UI = Class("TextViewerUI",require("ui.tools.details"))
 
@@ -13,10 +14,16 @@ end
 
 function UI:onReload(list)
 	local text = NFS.read(ROOT_PATH..self.path)
+	local isValid = Utf8.len(text)
+	if not isValid then
+		list:addTextEntry("File contains invalid UTF-8!")
+	end
 	list:addButtonEntry("Close viewer", function()
 		self.overview:closeViewer(self)
 	end)
-	list:addTextEntry(text)
+	if isValid then
+		list:addTextEntry(text)
+	end
 end
 
 return UI
