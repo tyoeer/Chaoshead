@@ -201,6 +201,13 @@ function UI:copy()
 	end
 end
 
+function UI:cut()
+	if self.selection then
+		self:copy()
+		self:deleteSelection()
+	end
+end
+
 -- hand stuff
 
 function UI:hold(item)
@@ -254,6 +261,8 @@ function UI:onInputActivated(name,group, isCursorBound)
 			self:copy()
 		elseif name=="paste" then
 			self:paste()
+		elseif name=="cut" then
+			self:cut()
 		end
 	end
 end

@@ -165,6 +165,16 @@ return {
 				},
 			}
 		},
+		cut = {
+			type = "and",
+			triggers = {
+				"key: x",
+				{
+					type = "or",
+					triggers = {"lctrl","rctrl"}
+				},
+			}
+		},
 		placeAndReleaseHand = {
 			type = "and",
 			triggers = {
