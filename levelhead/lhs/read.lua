@@ -1,5 +1,4 @@
 local LHS = {}
-local bit = require("bit")
 
 local P = require("levelhead.data.properties")
 local NFS = require("libs.nativefs")
@@ -11,7 +10,6 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 ]]--
 
 --io
-
 
 function LHS:loadFile(fullPath)
 	local file = NFS.newFile(fullPath)
@@ -39,6 +37,13 @@ end
 
 function LHS:getNumber2(offset)
 	return math.bytesToNumberLE(self:getBytes(offset,2))
+end
+
+function LHS:verifyTag(tag,offset)
+	local actual = self:getNumber1(offset)
+	if actual ~= tag then
+		error(string.format("Expected 0x%02x at offset %d, found 0x%02x",tag,offset,actual),2)
+	end
 end
 
 --data reading
@@ -125,48 +130,6 @@ function LHS:readStructure(section,prev)
 	local c = {}
 	self.rawContentEntries[section] = c
 	c.startOffset = self.rawContentEntries[prev].endOffset+1
-	c.nEntries = self:getNumber2(c.startOffset+1)
-	c.entries = {}
-	local offset = c.startOffset+3
-	for i=1,c.nEntries,1 do
-		local entry = {}
-		entry.startOffset = offset
-		entry.x = self:getNumber1(offset)
-		entry.y = self:getNumber1(offset+1)
-		entry.id = self:getNumber2(offset+2)
-		entry.length = self:getNumber1(offset+4)
-		offset = offset + 5
-		entry.endOffset = offset - 1
-		c.entries[i] = entry
-	end
-	c.endOffset = offset-1
-end
-
-function LHS:readForegroundRows()
-	local c = {}
-	self.rawContentEntries.foregroundRows = c
-	c.startOffset = self.rawContentEntries.singleForeground.endOffset+1
-	c.nEntries = self:getNumber2(c.startOffset+1)
-	c.entries = {}
-	local offset = c.startOffset+3
-	for i=1,c.nEntries,1 do
-		local entry = {}
-		entry.startOffset = offset
-		entry.x = self:getNumber1(offset)
-		entry.y = self:getNumber1(offset+1)
-		entry.id = self:getNumber2(offset+2)
-		entry.length = self:getNumber1(offset+4)
-		offset = offset + 5
-		entry.endOffset = offset - 1
-		c.entries[i] = entry
-	end
-	c.endOffset = offset-1
-end
-
-function LHS:readForegroundColumns()
-	local c = {}
-	self.rawContentEntries.foregroundColumns = c
-	c.startOffset = self.rawContentEntries.foregroundRows.endOffset+1
 	c.nEntries = self:getNumber2(c.startOffset+1)
 	c.entries = {}
 	local offset = c.startOffset+3
@@ -316,48 +279,6 @@ function LHS:readRepeatedPropertySets()
 		table.insert(c.entries, entry)
 	end
 	c.endOffset = offset - 1
-end
-
-function LHS:readBackgroundRows()
-	local c = {}
-	self.rawContentEntries.backgroundRows = c
-	c.startOffset = self.rawContentEntries.singleBackground.endOffset+1
-	c.nEntries = self:getNumber2(c.startOffset+1)
-	c.entries = {}
-	local offset = c.startOffset+3
-	for i=1,c.nEntries,1 do
-		local entry = {}
-		entry.startOffset = offset
-		entry.x = self:getNumber1(offset)
-		entry.y = self:getNumber1(offset+1)
-		entry.id = self:getNumber2(offset+2)
-		entry.length = self:getNumber1(offset+4)
-		offset = offset + 5
-		entry.endOffset = offset - 1
-		c.entries[i] = entry
-	end
-	c.endOffset = offset-1
-end
-
-function LHS:readBackgroundColumns()
-	local c = {}
-	self.rawContentEntries.backgroundColumns = c
-	c.startOffset = self.rawContentEntries.backgroundRows.endOffset+1
-	c.nEntries = self:getNumber2(c.startOffset+1)
-	c.entries = {}
-	local offset = c.startOffset+3
-	for i=1,c.nEntries,1 do
-		local entry = {}
-		entry.startOffset = offset
-		entry.x = self:getNumber1(offset)
-		entry.y = self:getNumber1(offset+1)
-		entry.id = self:getNumber2(offset+2)
-		entry.length = self:getNumber1(offset+4)
-		offset = offset + 5
-		entry.endOffset = offset - 1
-		c.entries[i] = entry
-	end
-	c.endOffset = offset-1
 end
 
 function LHS:readAll()
