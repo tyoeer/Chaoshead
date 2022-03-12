@@ -39,10 +39,11 @@ function LHS:getNumber2(offset)
 	return math.bytesToNumberLE(self:getBytes(offset,2))
 end
 
-function LHS:verifyTag(tag,offset)
+function LHS:verifyTag(section,offset)
+	local tag = self.tags[section]
 	local actual = self:getNumber1(offset)
 	if actual ~= tag then
-		error(string.format("Expected 0x%02x at offset %d, found 0x%02x",tag,offset,actual),2)
+		error(string.format("Expected %s's tag 0x%02x at offset %d, found 0x%02x",section,tag,offset,actual),2)
 	end
 end
 
@@ -104,6 +105,7 @@ function LHS:readSingle(section,prev)
 	self.rawContentEntries[section] = c
 	--use prev as the name for the previous layer if it's a string, and as the direct start offset otherwise
 	c.startOffset = type(prev)=="string" and (self.rawContentEntries[prev].endOffset + 1) or prev
+	self:verifyTag(section,c.startOffset)
 	c.nEntries = self:getNumber2(c.startOffset+1)
 	c.entries = {}
 	local offset = c.startOffset+3
@@ -130,6 +132,7 @@ function LHS:readStructure(section,prev)
 	local c = {}
 	self.rawContentEntries[section] = c
 	c.startOffset = self.rawContentEntries[prev].endOffset+1
+	self:verifyTag(section,c.startOffset)
 	c.nEntries = self:getNumber2(c.startOffset+1)
 	c.entries = {}
 	local offset = c.startOffset+3
@@ -156,6 +159,7 @@ function LHS:readProperties(isPath)
 	else
 		self.rawContentEntries.objectProperties = c
 		c.startOffset = self.rawContentEntries.foregroundColumns.endOffset+1
+		self:verifyTag("properties",c.startOffset)
 	end
 	c.nEntries = self:getNumber1(c.startOffset+1)
 	c.entries = {}
@@ -228,6 +232,7 @@ function LHS:readRepeatedPropertySets()
 	local c = {}
 	self.rawContentEntries.repeatedPropertySets = c
 	c.startOffset = self.rawContentEntries.pathProperties.endOffset + 1
+	self:verifyTag("repeatedPropertySets",c.startOffset)
 	c.nEntries = self:getNumber2(c.startOffset+1)
 	c.entries = {}
 	local offset = c.startOffset + 3

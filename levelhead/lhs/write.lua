@@ -61,9 +61,9 @@ function LHS:writeHeaders()
 	self:write(deHex("0000803F"))
 end
 
-function LHS:writeSingle(section,id)
+function LHS:writeSingle(section)
 	local c = self.rawContentEntries[section]
-	self:write(id)
+	self:write(self.tags[section])
 	self:write2(c.nEntries)
 	for _,v in ipairs(c.entries) do
 		self:write2(v.id)
@@ -75,9 +75,9 @@ function LHS:writeSingle(section,id)
 	end
 end
 
-function LHS:writeStructure(section,id)
+function LHS:writeStructure(section)
 	local c =self.rawContentEntries[section]
-	self:write(id)
+	self:write(self.tags[section])
 	self:write2(c.nEntries)
 	for _,v in ipairs(c.entries) do
 		self:write(v.x)
@@ -93,7 +93,7 @@ function LHS:writeProperties(isPath)
 		c = self.rawContentEntries.pathProperties
 	else
 		c = self.rawContentEntries.objectProperties
-		self:write(0x63)
+		self:write(self.tags.properties)
 	end
 	self:write(c.nEntries)
 	for _,entry in ipairs(c.entries) do
@@ -140,7 +140,7 @@ function LHS:writeProperties(isPath)
 end
 
 function LHS:writeHash()
-	self:write(0x61)
+	self:write(self.tags.hash)
 	--get current file contents
 	self.saveHandle:close()
 	self.saveHandle:open("r")
@@ -170,21 +170,21 @@ function LHS:writeAll()
 	
 	self:writeHeaders()
 	
-	self:writeSingle("singleForeground",0x0D)
-	self:writeStructure("foregroundRows",0x13)
-	self:writeStructure("foregroundColumns",0x0B)
+	self:writeSingle("singleForeground")
+	self:writeStructure("foregroundRows")
+	self:writeStructure("foregroundColumns")
 	self:writeProperties(false)
 	self:writeProperties(true)
 	--RPS
-	self:write(0x43)
-	self:write2(0x00)
+	self:write(self.tags.repeatedPropertySets)
+	self:write2(0) -- aka no RPS
 	--Contained Objects
-	self:writeSingle("containedObjects",0x3A)
+	self:writeSingle("containedObjects")
 	
-	self:writeSingle("paths",0x15)
-	self:writeSingle("singleBackground",0x19)
-	self:writeStructure("backgroundRows",0x1B)
-	self:writeStructure("backgroundColumns",0x0D)
+	self:writeSingle("paths")
+	self:writeSingle("singleBackground")
+	self:writeStructure("backgroundRows")
+	self:writeStructure("backgroundColumns")
 	self:writeHash()
 	
 	self.saveHandle:close()

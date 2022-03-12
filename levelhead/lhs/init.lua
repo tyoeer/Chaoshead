@@ -10,7 +10,7 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 LHS.floatFormat = "<f"
 -- f is defined as a float with "native size", which I think is system-dependent, so a sanity check
 assert(love.data.getPackedSize(LHS.floatFormat)==4,"Floats are not four bytes, float reading/decoding won't work!")
---which id correspodns to which setting
+--which id corresponds to which setting
 LHS.settingsList = {
 	[0] = "music",
 	"mode",
@@ -32,6 +32,21 @@ LHS.settingsListBooleans = {
 	false,
 	true,
 }
+-- The byte at the start of each section in the file
+LHS.tags = {
+	singleForeground = 0x0D,
+	foregroundRows = 0x13,
+	foregroundColumns = 0x0B,
+	properties = 0x63,
+	repeatedPropertySets = 0x43,
+	containedObjects = 0x3A,
+	paths = 0x15,
+	singleBackground = 0x19,
+	backgroundRows = 0x1B,
+	backgroundColumns = 0x0D,
+	hash = 0x61,
+}
+
 
 function LHS:initialize(path)
 	self:loadFile(path)
