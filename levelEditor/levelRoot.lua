@@ -1,6 +1,5 @@
 local LHS = require("levelhead.lhs")
 local LIMITS = require("levelhead.level.limits")
-local LH_MISC = require("levelhead.misc")
 local TABS = require("ui.tools.tabs")
 
 --levelRoot was the best name I could come up with, OK?

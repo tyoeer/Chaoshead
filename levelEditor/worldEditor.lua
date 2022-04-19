@@ -1,4 +1,3 @@
-local UTILS = require("utils.levelUtils")
 local Clipboard = require("tools.clipboard")
 
 local UI = Class(require("ui.base.node"))

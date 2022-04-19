@@ -1,6 +1,3 @@
-local P = require("levelhead.data.properties")
-local E = require("levelhead.data.elements")
-
 local PUI = require("levelEditor.details.property")
 
 local UI = Class(require("ui.tools.details"))
