@@ -1,6 +1,9 @@
 local LHS = require("levelhead.lhs")
 local LIMITS = require("levelhead.level.limits")
 local TABS = require("ui.tools.tabs")
+local HexInspector = require("levelEditor.hexInspector")
+local LevelEditor = require("levelEditor.levelEditor")
+local ScriptInterface = require("levelEditor.scriptInterface")
 
 --levelRoot was the best name I could come up with, OK?
 local UI = Class("LevelRootUI",require("ui.base.proxy"))
@@ -9,6 +12,7 @@ function UI.loadErrorHandler(message)
 	message = tostring(message)
 	--part of snippet yoinked from default löve error handling
 	local fullTrace = debug.traceback("",2):gsub("\n[^\n]+$", "")
+	print(message)
 	print(fullTrace)
 	--cut of the part of the trace that goes into the code that calls UI:openEditor()
 	local index = fullTrace:find("%s+%[C%]: in function 'xpcall'")
@@ -26,14 +30,14 @@ function UI:initialize(levelPath, workshop)
 	
 	local tabs = TABS:new()
 	
-	self.hexInspector = require("levelEditor.hexInspector"):new(self.levelFile)
+	self.hexInspector = HexInspector:new(self.levelFile)
 	tabs:addTab(self.hexInspector)
 	
-	self.levelEditor = require("levelEditor.levelEditor"):new(self.level, self)
+	self.levelEditor = LevelEditor:new(self.level, self)
 	tabs:addTab(self.levelEditor)
 	tabs:setActiveTab(self.levelEditor)
 	
-	self.scriptInterface = require("levelEditor.scriptInterface"):new(self)
+	self.scriptInterface = ScriptInterface:new(self)
 	tabs:addTab(self.scriptInterface)
 	
 	UI.super.initialize(self,tabs)
