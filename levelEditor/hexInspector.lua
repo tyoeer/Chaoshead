@@ -60,11 +60,14 @@ function UI:propertyRows(section, label, isPath)
 end
 
 function UI:onReload(list,levelFile)
+	list:resetList()
+	self.indent = 1
 	if levelFile then
 		self.levelFile = levelFile
+	elseif levelFile==false then
+		self:textRow("The cached binary file data has diverged significantly from the actual level.\nReload from disk to re-enable inspection.",-1)
+		return
 	end
-	self.indent = 1
-	list:resetList()
 	
 	self:textRow("Headers:",-1)
 		local h = self.levelFile.rawHeaders

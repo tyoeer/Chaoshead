@@ -43,6 +43,7 @@ end
 function UI:reload(level)
 	if level then
 		self.level = level
+		self.hexInspector:reload(false)
 	else
 		local success, level = xpcall(
 			function()
@@ -56,12 +57,12 @@ function UI:reload(level)
 		if success then
 			self.latestHash = self.levelFile:getHash()
 			self.level = level
+			self.hexInspector:reload(self.levelFile)
 		else
 			return
 		end
 	end
 	self.levelEditor:reload(self.level)
-	self.hexInspector:reload(self.levelFile)
 	self.title = self.level.settings:getTitle()
 end
 
@@ -69,6 +70,7 @@ function UI:save()
 	if self:checkLimits("Can't save level:\n") then
 		self.levelFile:serializeAll(self.level)
 		self.levelFile:writeAll()
+		self.hexInspector:reload(false)
 		MainUI:displayMessage("Succesfully saved level!")
 	end
 end
