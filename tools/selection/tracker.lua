@@ -38,8 +38,8 @@ function T:fillContentsFromMask()
 	end
 end
 
-function T:draw(sx,sy,ex,ey)
-	self.mask:draw(sx,sy,ex,ey)
+function T:draw(sx,sy,ex,ey,zf)
+	self.mask:draw(sx,sy,ex,ey,zf)
 end
 
 

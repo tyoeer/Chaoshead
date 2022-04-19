@@ -111,18 +111,43 @@ function S:drawTile(x,y)
 	end
 end
 
-function S:draw(startX,startY, endX,endY)
+function S:draw(startX,startY, endX,endY, zoomFactor)
+	local draw
+	if zoomFactor < 6/TILE_SIZE then
+		if self.layers.foreground then
+			love.graphics.setColor(colors.foregroundObject.selected)
+		elseif self.layers.pathNodes then
+			love.graphics.setColor(colors.pathNode.selected)
+		else
+			love.graphics.setColor(colors.backgroundObject.selected)
+		end
+		if zoomFactor < 3/TILE_SIZE then
+			love.graphics.setPointSize(TILE_SIZE*zoomFactor)
+			draw = function(_, x, y)
+				local xx, yy = x*TILE_SIZE, y*TILE_SIZE
+				love.graphics.points(xx+TILE_SIZE/2,yy+TILE_SIZE/2)
+			end
+		else
+			love.graphics.setLineWidth(1)
+			draw = function(_, x, y)
+				local xx, yy = x*TILE_SIZE, y*TILE_SIZE
+				love.graphics.rectangle("line",xx+0.5,yy+0.5,TILE_SIZE-1,TILE_SIZE-1)
+			end
+		end
+	else
+		draw = self.drawTile
+	end
 	local drawArea = math.abs( (startX-endX+1) * (startY-endY+1) )
 	
 	if drawArea >= self.nTiles then
 		for tile in self.tiles:iterate() do
-			self:drawTile(tile.x, tile.y)
+			draw(self,tile.x, tile.y)
 		end
 	else
 		for x = startX, endX, 1 do
 			for y = startY, endY, 1 do
 				if self.mask[x][y] then
-					self:drawTile(x,y)
+					draw(self,x,y)
 				end
 			end
 		end

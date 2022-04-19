@@ -335,7 +335,7 @@ function UI:draw()
 		end
 		--selection
 		if self.editor.selection then
-			self.editor.selection:draw(startX,startY, endX,endY)
+			self.editor.selection:draw(startX,startY, endX,endY, self.zoomFactor)
 		end
 	love.graphics.pop()
 end
