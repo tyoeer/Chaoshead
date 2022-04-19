@@ -12,11 +12,7 @@ object = require("levelhead.level.object"):new(id)
 ```
 - id: the id or name of the level element this object is.
 
-```Lua
-newObject = object:clone()
-```
-- object: the object to duplicate
-- newObject: a new object that has the same properties as `object`, but is placed in its `world`
+Also see `Object:clone()`
 
 ## Properties
 
@@ -123,3 +119,10 @@ The __World__ this object belongs to. Nil if it's not bound to a level. DO NOT e
 object.layer
 ```
 Whether this object is on the "foreground" or "background" layer of a __Level__. Nil if it's not bound to a level. DO NOT edit this directly.
+
+## Other
+
+```Lua
+newObject = object:clone()
+```
+- newObject: a new object that is a duplicate of `object`

@@ -11,7 +11,7 @@ instance = require("levelhead.level.path"):new()
 ```
 Creates a new path.
 
-Also see `Level:newPath()`
+Also see `Level:newPath()` and `path:cloneWithoutNodes()`
 
 ## Editing nodes
 
@@ -131,6 +131,13 @@ The __World__ this path belongs to. Nil if it's not bound to a level. DO NOT edi
 for node in path:iterateNodes() do
 ```
 A generic for iterator that iterates over all the nodes in this path from head to tail.
+
+## Other
+
+```Lua
+newPath = path:cloneWithoutNodes()
+```
+- newPath: a new path that has the same properties as `path`
 
 # PathNode
 
