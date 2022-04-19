@@ -6,6 +6,26 @@ return {
 		},
 	},
 	editor = {
+		gotoLevelEditor = {
+			type="and",
+			triggers = {
+				"key: e",
+				{
+					type = "or",
+					triggers = {"lshift","rshift"}
+				},
+			}
+		},
+		gotoScripts = {
+			type="and",
+			triggers = {
+				"key: s",
+				{
+					type = "or",
+					triggers = {"lshift","rshift"}
+				},
+			}
+		},
 		reload = {
 			type = "and",
 			triggers = {

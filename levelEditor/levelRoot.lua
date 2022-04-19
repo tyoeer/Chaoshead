@@ -158,6 +158,10 @@ function UI:onInputActivated(name,group, isCursorBound)
 			if self:checkLimits() then
 				MainUI:displayMessage("Level doesn't break any limits!")
 			end
+		elseif name=="gotoLevelEditor" then
+			self.child:setActiveTab(self.levelEditor)
+		elseif name=="gotoScripts" then
+			self.child:setActiveTab(self.scriptInterface)
 		end
 	end
 end
