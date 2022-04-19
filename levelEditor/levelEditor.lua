@@ -196,6 +196,17 @@ function UI:deleteSelection()
 	end
 end
 
+function UI:setProperty(id, val)
+	if self.selection then
+		local pl = self.selection.contents.properties[id]
+		for obj in pl.pool:iterate() do
+			obj:setPropertyRaw(id, val)
+		end
+		pl:findBounds()
+		self.selectionDetails:reload()
+	end
+end
+
 function UI:copy()
 	if self.selection then
 		local cp = Clipboard:new(self.level, self.selection.mask)

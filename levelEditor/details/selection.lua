@@ -1,4 +1,5 @@
 local PUI = require("levelEditor.details.property")
+local PEDIT = require("levelEditor.details.propertyEditor")
 
 local UI = Class(require("ui.tools.details"))
 
@@ -131,7 +132,13 @@ function UI:onReload(list)
 	end
 	--properties
 	for _,pl in pairs(c.properties) do
-		list:addUIEntry(PUI:new(pl,list.style))
+		if not pl:isRangeProperty() then
+			list:addButtonEntry(PUI:new(pl,list.style),function()
+				MainUI:displayMessage(PEDIT:new(pl,list.style, self.editor))
+			end)
+		else
+			list:addUIEntry(PUI:new(pl,list.style))
+		end
 	end
 end
 
