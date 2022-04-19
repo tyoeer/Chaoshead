@@ -1,6 +1,7 @@
 local LIST = require("ui.layout.list")
 local BOX = require("ui.layout.box")
 local BLOCK = require("ui.layout.block")
+local NODE = require("ui.base.node")
 
 local UI = Class("ModalManagerUI",require("ui.base.container"))
 
@@ -54,9 +55,18 @@ end
 -- Preset modals
 
 function UI:displayMessage(...)
+	local ui
+	if select("#",...)==1 then
+		local arg = select(1,...)
+		if type(arg)=="table" and NODE.isInstanceOf(arg,NODE) then
+			ui = arg
+		end
+	end
+	if not ui then
 	local ui = LIST:new(theme.listStyle)
-	for _,text in ipairs({...}) do
-		ui:addTextEntry(text)
+		for _,text in ipairs({...}) do
+			ui:addTextEntry(text)
+		end
 	end
 	local dismiss = function() self:removeModal() end
 	ui:addButtonEntry("Dismiss", dismiss)

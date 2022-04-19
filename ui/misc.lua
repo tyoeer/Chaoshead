@@ -16,6 +16,74 @@ function UI:onReload(list)
 		love.system.openURL(url)
 	end)
 	
+	list:addButtonEntry("Show keybinds",function()
+		local function parseName(name)
+			return name:gsub("[A-Z]",function(s)
+				return " "..s
+			end):gsub("^.",string.upper)
+		end
+		
+		local function parseBind(bind)
+			if type(bind)=="string" then
+				local m = bind:match("mouse: ?(.)")
+				if m then
+					return m:upper().."mouse"
+				end
+				local k = bind:match("key: ?(.+)")
+				if k then
+					return parseName(k)
+				end
+				return parseName(bind)
+			end
+			if bind.type then
+				if bind.type=="not" then
+					return "NOT "..bind.trigger
+				else
+					local out = ""
+					if bind.type=="nor" or bind.type=="nand" then
+						out = "NOT ("
+					end
+					
+					local sep = ";"
+					if bind.type:match("and") then
+						sep = " AND "
+					elseif bind.type:match("or") then
+						sep = " OR "
+					end
+					
+					local first = true
+					for _,trig in ipairs(bind.triggers) do
+						if not first then
+							out = out..sep
+						end
+						if trig.type and (trig.type=="and" or trig.type=="or") then
+							out = out.."("..parseBind(trig)..")"
+						else
+							out = out..parseBind(trig)
+						end
+						first = false
+					end
+					
+					if bind.type=="nor" or bind.type=="nand" then
+						out = out..")"
+					end
+					return out
+				end
+			else
+				return parseBind(bind.trigger)
+			end
+		end
+
+		local l = require("ui.layout.list"):new(Settings.theme.details.listStyle)
+		for category, binds in pairs(Settings.bindings) do
+			l:addTextEntry(parseName(category), 0)
+			for name, val in pairs(binds) do
+				l:addTextEntry(parseName(name)..": "..parseBind(val), 1)
+			end
+		end
+		MainUI:displayMessage(l)
+	end)
+	
 	
 	-- CAMPAIGN
 	
