@@ -1,6 +1,6 @@
 local LIST = require("ui.layout.list")
 local PADDING = require("ui.layout.padding")
-local SCROLLBAR = require("ui.tools.scrollbar")
+local SCROLLBAR = require("ui.tools.optionalScrollbar")
 
 local UI = Class("DetailsUI",require("ui.base.proxy"))
 

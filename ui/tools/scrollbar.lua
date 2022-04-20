@@ -89,6 +89,10 @@ function UI:childMinimumHeightChanged(child)
 	local ch = child:getMinimumHeight(cw)
 	self.contents:resize(cw, math.max(ch,self.height))
 	self:updateScrollButton()
+	if ch <= self.height then
+		--signal to the optional scrollbar that we might not be neccesary anymore
+		self:minimumHeightChanged()
+	end
 end
 
 function UI:resized(w,h)
