@@ -1,7 +1,6 @@
 local LIST = require("ui.layout.list")
 local BOX = require("ui.layout.box")
 local BLOCK = require("ui.layout.block")
-local NODE = require("ui.base.node")
 
 local UI = Class("ModalManagerUI",require("ui.base.container"))
 
@@ -30,13 +29,11 @@ function UI:setModal(ui)
 end
 
 function UI:resizeModal()
-	local modalWidth = theme.widthFactor * self.width
-	local modalHeight = self.modal:getMinimumHeight(modalWidth)
-	self.modal:resize(modalWidth,modalHeight)
+	local modalWidth = math.ceil(theme.widthFactor * self.width)
+	self.modal:resize(modalWidth, self.height)
 	
 	local x = math.floor((self.width-modalWidth)/2)
-	local y = math.floor((self.height-modalHeight)/2)
-	self.modal:move(x,y)
+	self.modal:move(x,0)
 end
 
 function UI:removeModal()

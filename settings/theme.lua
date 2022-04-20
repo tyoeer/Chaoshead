@@ -179,6 +179,7 @@ return {
 			padding = 10,
 			backgroundColor = MAIN_BG,
 			borderColor = {1,1,1},
+			minMargin = 20,
 		},
 		listStyle = {
 			textIndentSize = 12,
