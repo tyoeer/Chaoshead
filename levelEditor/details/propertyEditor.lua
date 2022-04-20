@@ -21,6 +21,7 @@ function UI:reloadWithWidth(width)
 		else
 			self:addTextEntry(both)
 		end
+		self:addTextEntry(" ") -- spacing
 		local id = self.propertyList.propId
 		for i = P:getMin(id), P:getMax(id) do
 			local val = P:valueToMapping(id, i)
@@ -29,6 +30,7 @@ function UI:reloadWithWidth(width)
 				MainUI:removeModal()
 			end)
 		end
+		self:addTextEntry(" ") -- spacing between property values and dismiis button
 	end
 end
 
