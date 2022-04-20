@@ -10,6 +10,7 @@ function UI:onReload(list)
 	
 	-- INFORMATION
 	
+	list:addTextEntry("Chaoshead version "..VERSION)
 	
 	list:addButtonEntry("Open user data folder",function()
 		local url = "file://"..love.filesystem.getSaveDirectory()

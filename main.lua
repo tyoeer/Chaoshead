@@ -9,6 +9,10 @@ function love.load(arg)
 	TILE_SIZE = 71
 	
 	--globals
+	VERSION = love.filesystem.read("version.txt")
+	if not VERSION then
+		VERSION = "DEV"
+	end
 	DISABLE_EDITOR_LIMITS = false
 	Settings = require("settings")
 	Storage = Settings.storage
@@ -27,6 +31,9 @@ function love.load(arg)
 	UiRoot = require("ui.base.root"):new(MainUI)
 	UiRoot:hookIntoLove()
 	UiRoot:resize(love.graphics.getWidth(), love.graphics.getHeight())
+	
+	--show reset settings dialog
+	require("ui.updateSettings")
 	
 	--bind ui and input
 	Input.parseActions(Settings.bindings)

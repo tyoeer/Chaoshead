@@ -4,7 +4,9 @@ local SETTINGS_FOLDER = "settings/"
 local STORAGE_FOLDER = "storage/"
 
 local base = select(1, ...).."."
-local out = {}
+local out = {
+	folder = SETTINGS_FOLDER
+}
 
 -- COMMON
 
