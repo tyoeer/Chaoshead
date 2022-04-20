@@ -31,16 +31,15 @@ function love.load(arg)
 	--bind ui and input
 	Input.parseActions(Settings.bindings)
 	Input.inputActivated = function(...)
-		MainUI:inputActivated(...)
+		UiRoot:inputActivated(...)
 	end
 	Input.inputDeactivated = function(...)
-		MainUI:inputDeactivated(...)
+		UiRoot:inputDeactivated(...)
 	end
 end
 
 function love.keypressed(key, scancode, isrepeat)
 	Input.keypressed(key, scancode, isrepeat)
-	--ui:keypressed(key, scancode, isrepeat)
 end
 function love.keyreleased(key, scancode)
 	Input.keyreleased(key, scancode)
@@ -48,9 +47,7 @@ end
 
 function love.mousepressed(x, y, button, isTouch, presses)
 	Input.mousepressed(x,y, button, isTouch, presses)
-	--ui:mousepressed(x,y, button, isTouch)
 end
 function love.mousereleased(x, y, button, isTouch, presses)
 	Input.mousereleased(x,y, button, isTouch, presses)
-	--ui:mousereleased(x,y, button, isTouch)
 end
