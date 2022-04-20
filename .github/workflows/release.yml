@@ -26,6 +26,8 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
+      # let the program now its version
+      - run: echo ${{ github.event.inputs.version-number }} > version.txt
       - name: "Build binaries"
         id: "love-build"
         uses: nhartland/love-build@v1-beta2
