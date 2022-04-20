@@ -237,6 +237,7 @@ function UI:drawObjects(level, startX, startY, endX, endY)
 end
 
 function UI:draw()
+	love.graphics.clear(theme.colors.outsideWorld)
 	--not exactly one to compensate for float weirdness
 	if self.zoomFactor < 0.999 then
 		love.graphics.setLineStyle("smooth")

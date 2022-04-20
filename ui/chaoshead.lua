@@ -23,4 +23,9 @@ function UI:initialize()
 	UI.super.initialize(self,self.mainTabs)
 end
 
+function UI:draw()
+	love.graphics.clear(Settings.theme.main.background)
+	UI.super.draw(self)
+end
+
 return UI
