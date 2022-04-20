@@ -28,8 +28,6 @@ local old = Storage.version
 Storage.version = VERSION
 Storage.save()
 
-print(old,VERSION)
-
 if old and old~=VERSION then
 	if old=="DEV" then
 		update = true
