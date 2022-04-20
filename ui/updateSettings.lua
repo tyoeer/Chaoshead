@@ -36,6 +36,9 @@ if old and old~=VERSION then
 		local after = parseVersion(UPDATE_SETTINGS_AFTER)
 		update = isHigherEquals(after,old)
 	end
+-- 2.3.1 and older: version not tracked yet, but we have something else to check if this is a new installation
+elseif Storage.lastLevelOpened then
+	update = true
 end
 
 if update then
