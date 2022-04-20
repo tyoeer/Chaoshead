@@ -30,9 +30,7 @@ Storage.save()
 
 print(old,VERSION)
 
-if not old then
-	update = true
-elseif old~=VERSION then
+if old and old~=VERSION then
 	if old=="DEV" then
 		update = true
 	else
