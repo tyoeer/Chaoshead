@@ -37,7 +37,7 @@ if old and old~=VERSION then
 		update = isHigherEquals(after,old)
 	end
 -- 2.3.1 and older: version not tracked yet, but we have something else to check if this is a new installation
-elseif Storage.lastLevelOpened then
+elseif not old and Storage.lastLevelOpened then
 	update = true
 end
 
