@@ -283,4 +283,11 @@ return {
 	modal = {
 		cancel = "key: escape",
 	},
+	textInput = {
+		left = "key: left",
+		right = "key: right",
+		removeLeft = "key: backspace",
+		removeRight = "key: delete",
+		defocusDetection = "mouse: left",
+	},
 }
