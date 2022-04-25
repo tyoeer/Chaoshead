@@ -4,20 +4,19 @@ Every UI has a parent except ui.base.root, which should be used as the root of t
 For a list of events, check the stubs at the end of /base/node.lua
 
 /widgets/:
-Leaf nodes without children. Extend ui.base.node
-Use :[event]() to handle events were needed.
+Basic functionality. No suer speicifed child-nodes required.
 
 Required dimension/color information should be gotten from a "style" table passed as an argument to the constructor.
 The constructor should explicitly check for all the requird fields of the style and error if they're not set.
 (To have a concise place were all the field are mentioned)
-Non-required (style) fields should also be mentioned somewhere in the constrcutor.
+Non-required (style) fields should also be mentioned somewhere in the constructor.
 Dynamically changing the style should work (by :setStyle())
 
 /layout/:
 These UIs are containers that position and resize their children. Extend ui.base.container
 They should specify their own :resized() event handler.
 Use :on[Event]() to execute events after they're normally executed.
-Overwriting :[event]() prevents the event from propagating trough to the children.
+Overwriting :[event]() prevents the event from propagating through to the children.
 :preDraw() exists to draw something before/behind the children.
 
 Styles work the same as in widgets, except dynamically changing them doesn't need to be supported.
