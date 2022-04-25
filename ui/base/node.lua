@@ -40,11 +40,6 @@ function UI:resize(width,height)
 	self:resized(width,height)
 end
 
-function UI:setTheme(theme)
-	self.theme = theme
-	self:themeChanged(theme)
-end
-
 function UI:move(x,y)
 	self.x = x
 	self.y = y

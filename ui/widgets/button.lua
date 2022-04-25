@@ -25,6 +25,9 @@ function UI:initialize(contents,onClick,style,triggerOnActivate)
 end
 
 function UI:setStyle(style)
+	if not style then
+		error("No style specified!",2)
+	end
 	if not style.padding then
 		error("Padding not specified!",2)
 	end

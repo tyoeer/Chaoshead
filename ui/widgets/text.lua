@@ -8,11 +8,13 @@ function UI:initialize(text,indention,style)
 	self.text = text
 	self.indention = indention or 0
 	self:setStyle(style)
-	self.style = style
 	self.offsetY = 0
 end
 
 function UI:setStyle(style)
+	if not style then
+		error("No style specified!",2)
+	end
 	if style.horAlign then
 		local ha = style.horAlign
 		if not (ha=="left" or ha=="center" or ha=="right") then
@@ -33,6 +35,11 @@ function UI:setStyle(style)
 		error("Color not specified!",2)
 	end
 	self.style = style
+	self:updateOffset()
+end
+
+function UI:setText(text)
+	self.text = text
 	self:updateOffset()
 end
 
