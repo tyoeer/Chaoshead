@@ -172,6 +172,24 @@ return {
 				},
 			},
 		},
+		inputStyle = {
+			listStyle = {
+				textIndentSize = 15,
+				entryMargin = 6,
+			},
+			inputStyle = {
+				textColor = {1,1,1},
+				caretColor = {1,1,1},
+				borderColor = {1,1,1},
+				backgroundColor = {0.1, 0.1, 0.1},
+				padding = 6,
+			},
+			errorStyle = {
+				color = {1,0.2,0.2},
+				horAlign = "left",
+				verAlign = "center",
+			}
+		},
 		insetSize = 10,
 	},
 	modal = {

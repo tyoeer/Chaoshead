@@ -1,10 +1,32 @@
 local P = require("levelhead.data.properties")
+local ParsedInput = require("ui.layout.parsedInput")
+
+local intParser = function(text)
+	if text:match("%.") then
+		return false, "Not a valid integer"
+	else
+		return tonumber(text), "Not a valid integer"
+	end
+end
 
 local UI = Class(require("levelEditor.details.property"))
 
-function UI:initialize(propertyList,listStyle, editor)
-	UI.super.initialize(self,propertyList,listStyle)
+local theme = Settings.theme.details
+
+function UI:initialize(propertyList, editor)
+	UI.super.initialize(self,propertyList,theme.listStyle)
 	self.editor = editor
+	--self.input
+end
+
+function UI:addPropertyChanger(id, op)
+	self:addButtonEntry(op, function()
+		local v = self.input:getParsed()
+		if v then
+			self.editor:changeProperty(id, v, op)
+			self:reload()
+		end
+	end)
 end
 
 function UI:reloadWithWidth(width)
@@ -23,14 +45,34 @@ function UI:reloadWithWidth(width)
 		end
 		self:addTextEntry(" ") -- spacing
 		local id = self.propertyList.propId
-		for i = P:getMin(id), P:getMax(id) do
-			local val = P:valueToMapping(id, i)
-			self:addButtonEntry(val, function()
-				self.editor:setProperty(id, i)
-				MainUI:removeModal()
-			end)
+		local mapType = P:getMappingType(id)
+		
+		if self.propertyList:isRangeProperty() then -- aka numerical
+			if not self.input then
+				self.input = ParsedInput:new(P:getSaveFormat(id)=="C" and tonumber or intParser, theme.inputStyle)
+			end
+			self:addUIEntry(self.input)
+			self:addPropertyChanger(id, "=")
+			self:addPropertyChanger(id, "+")
+			self:addPropertyChanger(id, "-")
+			self:addPropertyChanger(id, "*")
+			self:addPropertyChanger(id, "/")
+			
+			if mapType=="Hybrid" then
+				self:addTextEntry(" ") -- spacing between numerical values and special ones
+			end
 		end
-		self:addTextEntry(" ") -- spacing between property values and dismiis button
+		if mapType~="None" then
+			for i = P:getMin(id), P:getMax(id) do
+				local val = P:valueToMapping(id, i)
+				if val==i then break end
+				self:addButtonEntry(val, function()
+					self.editor:changeProperty(id, i)
+					MainUI:removeModal()
+				end)
+			end
+		end
+		self:addTextEntry(" ") -- spacing between property values and dismiss button
 	end
 end
 

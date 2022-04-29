@@ -1,3 +1,4 @@
+local P = require("levelhead.data.properties")
 --editor tools
 local Selection = require("tools.selection.tracker")
 local Clipboard = require("tools.clipboard")
@@ -196,11 +197,30 @@ function UI:deleteSelection()
 	end
 end
 
-function UI:setProperty(id, val)
+function UI:changeProperty(id, val, op)
+	op = op or "="
 	if self.selection then
 		local pl = self.selection.contents.properties[id]
 		for obj in pl.pool:iterate() do
-			obj:setPropertyRaw(id, val)
+			local old = obj:getPropertyRaw(id)
+			local new
+			if op=="=" then
+				new = val
+			elseif op=="+" then
+				new = old + val
+			elseif op=="-" then
+				new = old - val
+			elseif op=="*" then
+				new = old * val
+			elseif op=="/" then
+				new = old / val
+			else
+				error("Ivalid operator "..tostring(op),2)
+			end
+			if P:getSaveFormat(id)~="C" then
+				new = math.floor(new+0.5)
+			end
+			obj:setPropertyRaw(id, new)
 		end
 		pl:findBounds()
 		self.selectionDetails:reload()

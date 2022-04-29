@@ -132,13 +132,9 @@ function UI:onReload(list)
 	end
 	--properties
 	for _,pl in pairs(c.properties) do
-		if not pl:isRangeProperty() then
-			list:addButtonEntry(PUI:new(pl,list.style),function()
-				MainUI:displayMessage(PEDIT:new(pl,list.style, self.editor))
-			end)
-		else
-			list:addUIEntry(PUI:new(pl,list.style))
-		end
+		list:addButtonEntry(PUI:new(pl,list.style),function()
+			MainUI:displayMessage(PEDIT:new(pl, self.editor))
+		end)
 	end
 end
 
