@@ -29,6 +29,8 @@ function UI:getValues()
 			local val = P:valueToMapping(pl.propId, pl.min)
 			if Settings.misc.editor.showRawNumbers then
 				val = val.." ("..pl.min..")"
+			elseif type(val)=="string" and (val:sub(1,1)=="$" or P:getMappingType(pl.propId)=="Hybrid") then
+				val = val.."/"..pl.min
 			end
 			return val
 		else
@@ -37,6 +39,13 @@ function UI:getValues()
 			if Settings.misc.editor.showRawNumbers then
 				valMin = valMin.." ("..pl.min..")"
 				valMax = valMax.." ("..pl.max..")"
+			else
+				if type(valMin)=="string" and (valMin:sub(1,2)=="$" or P:getMappingType(pl.propId)=="Hybrid") then
+					valMin = valMin.."/"..pl.min
+				end
+				if type(valMax)=="string" and (valMax:sub(1,2)=="$" or P:getMappingType(pl.propId)=="Hybrid") then
+					valMax = valMax.."/"..pl.max
+				end
 			end
 			return valMin.." - "..valMax
 		end
