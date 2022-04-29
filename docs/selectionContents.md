@@ -25,7 +25,7 @@ contents.background
 An __EntityPool__ containing all the background __Object__s in the selection.
 
 ```Lua
-contents.background
+contents.pathNodes
 ```
 An __EntityPool__ containing all the background __PathNode__s in the selection.
 
@@ -42,6 +42,6 @@ contents.nBackground
 How many background objects there are in the selection.
 
 ```Lua
-contents.npathNodes
+contents.nPathNodes
 ```
 How many path nodes there are in the selection.
