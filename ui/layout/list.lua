@@ -45,6 +45,7 @@ function UI:addUIEntry(child)
 	end
 	child:move(0,y)
 	self:addChild(child)
+	self:minimumHeightChanged()
 end
 
 function UI:resetList()
@@ -62,6 +63,10 @@ function UI:getMinimumHeight(width)
 end
 
 -- events
+
+function UI:childMinimumHeightChanged(child)
+	self:resized(self.width, self.height)
+end
 
 function UI:resized(w,h)
 	local y = 0

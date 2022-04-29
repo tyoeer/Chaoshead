@@ -29,7 +29,9 @@ function UI:getMousePos()
 end
 
 function UI:minimumHeightChanged()
-	self.parent:childMinimumHeightChanged(self)
+	if self.parent then
+		self.parent:childMinimumHeightChanged(self)
+	end
 end
 
 --actions on this UI to be called by it's parent
