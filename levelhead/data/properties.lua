@@ -4,7 +4,8 @@ local L = require("levelhead.data.propertyLists")
 
 local P = Class(require("levelhead.data.base"))
 
-local SIMPLE_MAPPING_SIZE = 6
+local SIMPLE_MAPPING_MIN = -1
+local SIMPLE_MAPPING_MAX = 6
 
 function P:initialize()
 	--parse data file
@@ -33,7 +34,7 @@ function P:initialize()
 		elseif raw:match("^default$") then
 			self.headers.default = v
 		else
-			for i=-1,SIMPLE_MAPPING_SIZE,1 do
+			for i=SIMPLE_MAPPING_MIN, SIMPLE_MAPPING_MAX, 1 do
 				if raw:match(string.depatternize("map"..tostring(i))) then
 					self.headers.map[i] = v
 				end
@@ -74,7 +75,7 @@ function P:mappingToValue(selector, mapping)
 	if mappingType=="None" then
 		return tonumber(mapping)
 	elseif mappingType=="Simple" then
-		for i=-1,SIMPLE_MAPPING_SIZE,1 do
+		for i=-1,SIMPLE_MAPPING_MAX,1 do
 			if mapping == p[self.headers.map[i]] then
 				return i
 			end
@@ -83,7 +84,7 @@ function P:mappingToValue(selector, mapping)
 		if tonumber(mapping) then
 			return tonumber(mapping)
 		end
-		for i=-1,SIMPLE_MAPPING_SIZE,1 do
+		for i=-1,SIMPLE_MAPPING_MAX,1 do
 			if mapping == p[self.headers.map[i]] then
 				return i
 			end
@@ -125,7 +126,7 @@ function P:valueToMapping(selector, value)
 	elseif mappingType=="Simple" then
 		return p[self.headers.map[value]] or "$UnknownMappedValue"
 	elseif mappingType=="Hybrid" then
-		if value > SIMPLE_MAPPING_SIZE then
+		if value > SIMPLE_MAPPING_MAX or value < SIMPLE_MAPPING_MIN then
 			return value
 		end
 		local m = p[self.headers.map[value]]
