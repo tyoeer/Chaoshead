@@ -3,8 +3,9 @@ local Text = require("ui.widgets.text")
 
 local UI = Class("TextInputUI",require("ui.base.proxy"))
 
-function UI:initialize(style)
+function UI:initialize(onChange, style)
 	self:setStyleRaw(style)
+	self.onChange = onChange
 	self.focussed = false
 	-- self.timer
 	
@@ -69,6 +70,11 @@ function UI:getButtonStyle()
 	}
 end
 
+function UI:changed()
+	self.onChange()
+	self:updateDisplayText()
+end
+
 function UI:updateDisplayText()
 	local text = self:getText()
 	if text=="" then
@@ -123,7 +129,7 @@ end
 function UI:onTextInput(input)
 	if self.focussed then
 		self.left = self.left .. input
-		self:updateDisplayText()
+		self:changed()
 		self.timer = 0
 	end
 end
@@ -138,10 +144,10 @@ function UI:onInputActivated(name,group,isCursorBound)
 			self.right = self.right:sub(2)
 		elseif name=="removeLeft" then
 			self.left = self.left:sub(1,-2)
-			self:updateDisplayText()
+			self:changed()
 		elseif name=="removeRight" then
 			self.right = self.right:sub(2)
-			self:updateDisplayText()
+			self:changed()
 		elseif name=="defocusDetection" then
 			-- this one isn't cursor bound, so will trigger when clicked outside the textbox
 			if self.timer~=0 then
