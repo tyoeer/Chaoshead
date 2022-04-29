@@ -24,6 +24,7 @@ function UI:hideError()
 		self.errorMessage = nil
 		self.child:resetList()
 		self.child:addUIEntry(self.input)
+		self:minimumHeightChanged()
 	end
 end
 
@@ -34,6 +35,7 @@ function UI:showError(mes)
 		end
 		self.errorMessage = Text:new(mes, 0, self.style.errorStyle)
 		self.child:addUIEntry(self.errorMessage)
+		self:minimumHeightChanged()
 	end
 	self.errorMessage:setText(mes)
 end

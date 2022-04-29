@@ -21,6 +21,10 @@ function UI:initialize(contents,style)
 	UI.super.initialize(self, Scrollbar:new(self.padding))
 end
 
+function UI:childMinimumHeightChanged()
+	self:resized(self.width, self.height)
+end
+
 function UI:resized(width,height)
 	local minH = self.padding:getMinimumHeight(width)
 	local maxH = height - 2*self.style.minMargin

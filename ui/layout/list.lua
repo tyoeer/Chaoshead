@@ -45,7 +45,6 @@ function UI:addUIEntry(child)
 	end
 	child:move(0,y)
 	self:addChild(child)
-	self:minimumHeightChanged()
 end
 
 function UI:resetList()
@@ -66,6 +65,7 @@ end
 
 function UI:childMinimumHeightChanged(child)
 	self:resized(self.width, self.height)
+	self:minimumHeightChanged()
 end
 
 function UI:resized(w,h)
@@ -74,7 +74,9 @@ function UI:resized(w,h)
 		child:move(0,y)
 		local width = w
 		local height = child:getMinimumHeight(width)
-		child:resize(width,height)
+		if child.width ~= width or child.height ~= height then -- prevent resize <-> callback loop
+			child:resize(width,height)
+		end
 		y = y + child.height + self.style.entryMargin
 	end
 end

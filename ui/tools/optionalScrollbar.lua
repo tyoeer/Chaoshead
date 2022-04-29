@@ -23,6 +23,7 @@ end
 
 function UI:childMinimumHeightChanged()
 	self:updateScrollbar()
+	self:minimumHeightChanged() -- parent might care
 end
 
 function UI:resized(w,h)
