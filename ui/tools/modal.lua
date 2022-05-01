@@ -10,6 +10,7 @@ function UI:initialize(child)
 	UI.super.initialize(self)
 	--self.modal
 	--self.cancelAction
+	self.stack = {}
 	--the stuff behind the modal
 	self.main = BLOCK:new(child, theme.blockStyle)
 	self:addChild(self.main)
@@ -24,8 +25,24 @@ function UI:setModalRaw(ui)
 	self:resizeModal()
 end
 
-function UI:setModal(ui)
-	self:setModalRaw(BOX:new(ui, theme.boxStyle))
+function UI:setModal(ui, cancelAction, box)
+	if box==nil then
+		box = true
+	end
+	if box then
+		ui = BOX:new(ui, theme.boxStyle)
+	end
+	
+	if self.modal then
+		table.insert(self.stack, {
+			modal = self.modal,
+			cancelAction = self.cancelAction
+		})
+		self:removeModalRaw()
+	end
+	
+	self.cancelAction = cancelAction
+	self:setModalRaw(ui)
 end
 
 function UI:resizeModal()
@@ -36,11 +53,19 @@ function UI:resizeModal()
 	self.modal:move(x,0)
 end
 
-function UI:removeModal()
+function UI:removeModalRaw()
 	self.main:setBlock(false)
 	self:removeChild(self.modal)
-	self:setCancelAction(nil)
+	self.cancelAction = nil
 	self.modal = nil
+end
+
+function UI:removeModal()
+	self:removeModalRaw()
+	if #self.stack > 0 then
+		local old = table.remove(self.stack)
+		self:setModal(old.modal, old.cancelAction, false)
+	end
 end
 
 -- actions
@@ -62,8 +87,7 @@ function UI:displayMessage(...)
 	end
 	local dismiss = function() self:removeModal() end
 	ui:addButtonEntry("Dismiss", dismiss)
-	self:setCancelAction(dismiss)
-	self:setModal(ui)
+	self:setModal(ui, dismiss)
 end
 
 -- events
