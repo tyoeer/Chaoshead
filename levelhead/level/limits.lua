@@ -1,5 +1,43 @@
 local P = require("levelhead.data.properties")
 
+local function formatNumber(num)
+	if num == math.huge then
+		return "$Infinity"
+	elseif num == -math.huge then
+		return "-$Infinity"
+	elseif num ~= num then
+		return "$Nan"
+	else
+		return num
+	end
+end
+
+local function checkPropRange(level, func)
+	--objects
+	for obj in level.objects:iterate() do
+		for prop in obj:iterateProperties() do
+			local val,min,max = func(prop,obj:getPropertyRaw(prop))
+			if val then
+				local name = P:getName(prop)
+				if name=="$UnknownName" then name = prop end
+				return name, "object", obj.x,obj.y, min,max, formatNumber(val)
+			end
+		end
+	end
+	
+	--paths
+	for path in level.paths:iterate() do
+		for prop in path:iterateProperties() do
+			local val,min,max = func(prop,path:getPropertyRaw(prop))
+			if val then
+				local name = P:getName(prop)
+				if name=="$UnknownName" then name = prop end
+				return name, "path", path.head.x,path.head.y, min,max, formatNumber(val)
+			end
+		end
+	end
+end
+
 return {
 	--[[
 		message: which message to display if check return true
@@ -86,9 +124,17 @@ return {
 			end,
 		},
 		{
-			message = "The property %q in the %s at (%i,%i) is outside its saveable range (%i-%i) with the value %i!",
+			message = "The property %q in the %s at (%i,%i) is $Nan!",
 			check = function(level)
-				local function checkProp(prop,val)
+				return checkPropRange(level, function(_,val)
+					return val~=val
+				end)
+			end,
+		},
+		{
+			message = "The property %q in the %s at (%i,%i) is outside its saveable range (%i-%i) with the value %s!",
+			check = function(level)
+				return checkPropRange(level, function(prop,val)
 					local sf = P:getSaveFormat(prop)
 					--unknown save formats have already been checked for
 					local min,max
@@ -112,31 +158,7 @@ return {
 					else
 						return false
 					end
-				end
-				
-				--objects
-				for obj in level.objects:iterate() do
-					for prop in obj:iterateProperties() do
-						local val,min,max = checkProp(prop,obj:getPropertyRaw(prop))
-						if val then
-							local name = P:getName(prop)
-							if name=="$UnknownName" then name = prop end
-							return name, "object", obj.x,obj.y, min,max, val
-						end
-					end
-				end
-				
-				--paths
-				for path in level.paths:iterate() do
-					for prop in path:iterateProperties() do
-						local val,min,max = checkProp(prop,path:getPropertyRaw(prop))
-						if val then
-							local name = P:getName(prop)
-							if name=="$UnknownName" then name = prop end
-							return name, "path", path.head.x,path.head.y, min,max, val
-						end
-					end
-				end
+				end)
 			end,
 		},
 	},
@@ -165,6 +187,19 @@ return {
 				else
 					return false
 				end
+			end,
+		},
+		-- properties
+		{
+			message = "The property %q in the %s at (%i,%i) is outside its valid range (%i-%i) with the value %s!",
+			check = function(level)
+				return checkPropRange(level, function(prop,val)
+					if val < P:getMin(prop) or val > P:getMax(prop) then
+						return val,P:getMin(prop),P:getMax(prop)
+					else
+						return false
+					end
+				end)
 			end,
 		},
 	},
