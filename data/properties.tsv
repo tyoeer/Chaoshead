@@ -45,7 +45,7 @@ Length	42	#2A	A		4	1	5	None									Burny Whirler, Spike Chainer
 Gap	43	#2B	A		1	1	2	Simple	!	!	No	Yes	!	!	!	!	Burny Whirler	
 Spike Size 	44	#2C	A		1	1	3	Simple	!	!	Regular	Medium	Venti	!	!	!	Spike Chainer	
 Chains	45	#2D	A		1	1	4	None									Burny Whirler, Spike Chainer, Spinny Platform	
-Powerup	46	#2E	A		0	0	66	Simple	!	None	Tiptow	Waylay	Zipper	Ripcord	Rebound	Shade	GR-18	
+Powerup	46	#2E	A		0	0	6	Simple	!	None	Tiptow	Waylay	Zipper	Ripcord	Rebound	Shade	GR-18	
 Color	47	#2F	A		2	0	3	Simple	!	Blue	Gold	Fuchsia	Green	!	!	!	Hardlight, Rift, Key Chests, ...	
 Projectile	48	#30	A		0	0	4	Simple	!	Steel	Fire	Rubber	Rocket	Guided Missile	!	!	(Look)cannon	
 Receiving Channel	49	#31	B	Can be set to none.	-1	-1	999	Hybrid	None	-	-	-	-	-	-	-	Prizeblock, Hardlight, ...	
@@ -66,7 +66,7 @@ Song	63	#3F	A		9	0	37	Music									Jukebox
 Sharp	64	#40	A		0	0	1	Simple	!	No	Yes	!	!	!	!	!	Boombox	
 Delay Seconds	65	#41	C		3	0.25	600	None									Waitswitch	
 ???	66	#42																
-Beam Type	67	#43		Doesn't actually work.	1	0	2	Simple	!	Harmless	Burns GR-18	Burns Everything	!	!	!	!	Sweep Laser	
+Beam Type	67	#43	A	Doesn't actually work.	1	0	2	Simple	!	Harmless	Burns GR-18	Burns Everything	!	!	!	!	Sweep Laser	
 Volume	68	#44	A		100	0	100	None									Boombox	
 Zoom Level	69	#45	A		100	80	140	None									ZOOM-R	
 Gate Style	70	#46	A		0	0	2	Simple	!	Purge Powerups	Purge Items	Purge All	!	!	!	!	Purge Gate	
