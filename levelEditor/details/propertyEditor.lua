@@ -37,7 +37,13 @@ end
 function UI:reloadWithWidth(width)
 	self:resetList()
 	if self.propertyList then
+		local id = self.propertyList.propId
+		local mapType = P:getMappingType(id)
+		
 		self:addTextEntry(self:getName()..":")
+		if self.propertyList:isRangeProperty() then
+			self:addTextEntry("Valid range: "..self:formatValue(P:getMin(id)).." - "..self:formatValue(P:getMax(id)))
+		end
 		local cur = "Currently:"
 		local values = self:getValues()
 		local both = cur.."  "..values
@@ -48,9 +54,8 @@ function UI:reloadWithWidth(width)
 		else
 			self:addTextEntry(both)
 		end
+		
 		self:addTextEntry(" ") -- spacing
-		local id = self.propertyList.propId
-		local mapType = P:getMappingType(id)
 		
 		if self.propertyList:isRangeProperty() then -- aka numerical
 			if not self.input then
@@ -76,6 +81,7 @@ function UI:reloadWithWidth(width)
 				end)
 			end
 		end
+		
 		self:addTextEntry(" ") -- spacing between property values and dismiss button
 	end
 end
