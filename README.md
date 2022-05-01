@@ -20,7 +20,7 @@ Chaoshead Update Awareness Day is annually on february 27, in order to spread aw
 
 ### Currently not supported
 
-- Campaign-only objects and their properties
+- Campaign-only and dev-only elements are only partially supported
   - Unsupported properties error upon file load (because the .lhs is can't be loaded)
   - Unsupported objects will only error when placed in a row or column, otherwise they will simply show up with only their internal ID
 - Multiple path nodes in the same tile
