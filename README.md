@@ -32,6 +32,11 @@ Chaoshead Update Awareness Day is annually on february 27, in order to spread aw
   - Levelhead doesn't even load them
 	- I felt like documenting this somewhere, and this was the best place I could think of
 
+### Built-in scripts
+
+Chaoshead comes with some built-in scripts, which are shown in the `.built-in` folder in the scripting interface.
+More information about the scripts can be found in comments at their top. Scripts files can be found in the [scripts/.built-in](scripts/.built-in)
+
 ## Terminology
 
 - World: the part of a level that contains all the level (world = level - metadata).
