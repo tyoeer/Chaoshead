@@ -315,7 +315,7 @@ function UI:draw()
 			end
 		else
 			--area being selected
-			if self.selectStartX then
+			if self.selecting == "area" then
 				love.graphics.setLineWidth(2)
 				love.graphics.setColor(theme.colors.selectingArea)
 				love.graphics.rectangle("line",
@@ -480,7 +480,6 @@ function UI:mouseMoved(x,y,dx,dy)
 		self.editor:resizeLevel(top, right, bottom, left)
 	else
 		if Input.isActive("drag","camera") then
-			self.selecting = false
 			self.cameraX = self.cameraX + dx/self.zoomFactor
 			self.cameraY = self.cameraY + dy/self.zoomFactor
 		end
