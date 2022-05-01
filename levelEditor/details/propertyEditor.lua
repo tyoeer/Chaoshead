@@ -23,8 +23,12 @@ function UI:addPropertyChanger(id, op)
 	self:addButtonEntry(op, function()
 		local v = self.input:getParsed()
 		if v then
-			self.editor:changeProperty(id, v, op)
-			self:reload()
+			if op=="/" and v==0 then
+				MainUI:displayMessage("Can't divide by zero!")
+			else
+				self.editor:changeProperty(id, v, op)
+				self:reload()
+			end
 		end
 	end)
 end
