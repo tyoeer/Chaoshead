@@ -19,7 +19,7 @@ return {
 		gotoScripts = {
 			type="and",
 			triggers = {
-				"key: s",
+				"key: q",
 				{
 					type = "or",
 					triggers = {"lshift","rshift"}
