@@ -28,7 +28,11 @@ function UI:formatPosition(o,at)
 end
 
 function UI:formatElement(obj)
-	return string.format("element: %s (%d)", obj:getName(), obj.id)
+	if Settings.misc.editor.showRawNumbers then
+		return string.format("element: %s (%d)", obj:getName(), obj.id)
+	else
+		return string.format("element: %s", obj:getName())
+	end
 end
 
 function UI:onReload(list)
@@ -89,7 +93,11 @@ function UI:onReload(list)
 			list:addTextEntry(elem)
 			-- list:addTextEntry("Layer: Foreground")
 			if o.contents then
-				list:addTextEntry("Contents: "..o:getContents().." ("..o.contents..")")
+				if Settings.misc.editor.showRawNumbers then
+					list:addTextEntry("Contents: "..o:getContents().." ("..o.contents..")")
+				else
+					list:addTextEntry("Contents: "..o:getContents())
+				end
 			else
 				list:addTextEntry("Contents: None")
 			end
