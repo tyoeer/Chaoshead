@@ -1,13 +1,14 @@
 local P = require("levelhead.data.properties")
 local ParsedInput = require("ui.layout.parsedInput")
 
-local intParser = function(text)
+local function intParser(text)
 	if text:match("%.") then
 		return false, "Not a valid integer"
 	else
 		return tonumber(text), "Not a valid integer"
 	end
 end
+
 
 local UI = Class(require("levelEditor.details.property"))
 
@@ -68,9 +69,8 @@ function UI:reloadWithWidth(width)
 		end
 		if mapType~="None" then
 			for i = P:getMin(id), P:getMax(id) do
-				local val = P:valueToMapping(id, i)
-				if val==i then break end
-				self:addButtonEntry(val, function()
+				if P:valueToMapping(id, i)==i then break end -- no mapped stuff here (or beyond)
+				self:addButtonEntry(self:formatValue(i), function()
 					self.editor:changeProperty(id, i)
 					MainUI:removeModal()
 				end)

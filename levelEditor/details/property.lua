@@ -22,32 +22,24 @@ function UI:getName()
 	return val
 end
 
+function UI:formatValue(rawValue)
+	local propId = self.propertyList.propId
+	local val = P:valueToMapping(propId, rawValue)
+	if Settings.misc.editor.showRawNumbers then
+		val = val.." ("..rawValue..")"
+	elseif type(val)=="string" and (val:sub(1,1)=="$" or P:getMappingType(propId)=="Hybrid") then
+		val = val.."/"..rawValue
+	end
+	return val
+end
+
 function UI:getValues()
 	local pl = self.propertyList
 	if pl:isRangeProperty() then
 		if pl.min==pl.max then
-			local val = P:valueToMapping(pl.propId, pl.min)
-			if Settings.misc.editor.showRawNumbers then
-				val = val.." ("..pl.min..")"
-			elseif type(val)=="string" and (val:sub(1,1)=="$" or P:getMappingType(pl.propId)=="Hybrid") then
-				val = val.."/"..pl.min
-			end
-			return val
+			return self:formatValue(pl.min)
 		else
-			local valMin = P:valueToMapping(pl.propId, pl.min)
-			local valMax = P:valueToMapping(pl.propId, pl.max)
-			if Settings.misc.editor.showRawNumbers then
-				valMin = valMin.." ("..pl.min..")"
-				valMax = valMax.." ("..pl.max..")"
-			else
-				if type(valMin)=="string" and (valMin:sub(1,2)=="$" or P:getMappingType(pl.propId)=="Hybrid") then
-					valMin = valMin.."/"..pl.min
-				end
-				if type(valMax)=="string" and (valMax:sub(1,2)=="$" or P:getMappingType(pl.propId)=="Hybrid") then
-					valMax = valMax.."/"..pl.max
-				end
-			end
-			return valMin.." - "..valMax
+			return self:formatValue(pl.min).." - "..self:formatValue(pl.max)
 		end
 	else
 		local out = {}
