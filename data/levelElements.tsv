@@ -124,7 +124,7 @@ Charge Switch	121	#79	1	1	No	0,2,9	2
 Refueler	122	#7A			No	27	1	Used in Airmail mode
 Golf Package	123	#7B	1	1	No	None	2	The round one used by golf mode. Actually called "Package" in the name combobulator (a different name is used here to have unique names for everything for better API).
 Ball Stopper	124	#7C	1	1	No	49	1	Used in Golf Mode
-Bumper	125	#7D	1	1	No	49,60	2	
+Bumper	125	#7D	1	1	No	47,49,60	2	
 Canoodle Core	126	#7E	1	1	No	49,60	2	
 Wingarang	127	#7F	1	1	No	49,60	2	
 Slurb Juice	128	#80	1	1	No	49,60	2	
