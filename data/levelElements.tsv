@@ -3,7 +3,7 @@ Delete	0	#00			No		2
 Environment	1	#01	1	1	No	None	1	
 Spiketron	2	#02	1	1	No	109	2	
 Vacrat	3	#03	1	1	No	None	2	
-Falltrough Ledge	4	#04	1	1	No	None	2	
+Fallthrough Ledge	4	#04	1	1	No	None	2	
 Long Flyblock	5	#05	3	1	50	Inherit	2	
 Dense Fog	6	#06	1	1	No	None	2	
 Hardlight	7	#07	1	1	No	47,49,60	2	
@@ -174,9 +174,9 @@ Kronkrete Enclosure	171	#AB	1	1	No	None
 Rickety Enclosure	172	#AC	1	1	No	None		
 Spookstone Enclosure	173	#AD	1	1	No	None		
 Secret Eye	174	#AE	1	1	No	1,60	2	
-Falltrough Wood	175	#AF	1	1	No	None	2	
-Falltrough Spookstone	176	#B0	1	1	No	None	2	
-Falltrough Kronkrete	177	#B1	1	1	No	None	2	
+Fallthrough Wood	175	#AF	1	1	No	None	2	
+Fallthrough Spookstone	176	#B0	1	1	No	None	2	
+Fallthrough Kronkrete	177	#B1	1	1	No	None	2	
 Powered Gate (hor.)	178	#B2	3	1	25	Inherit		
 Battle Gate (hor.)	179	#B3	3	1	21	Inherit		
 Key Gate (hor.)	180	#B4	3	1	30	Inherit		
