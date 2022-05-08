@@ -204,7 +204,7 @@ Movement Teacher	201	#C9	1	1	No	1,60,101	1
 Input Switch	202	#CA	1	1	No	0,2,5,49,60,85,102,103	2	
 Shade	203	#CB	1	1	No	49,60	2	
 Puncher	204	#CC	1	1	No	4,47,49,60	2	
-Jabber	205	#CD	1	1	No	35,36,49,60	2	
+Jabber	205	#CD	1	1	No	30,35,36,40,49,58,60	2	
 Mad Jabber	206	#CE	1	1	205	Inherit	2	
 Jibber	207	#CF	2	2	205	Inherit	2	
 Peanut	208	#D0	1	1	No	105,106	2	
