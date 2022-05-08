@@ -36,7 +36,7 @@ Vacsteak	33	#21	1	1	No	49,60	2
 Lizumi	34	#22	1	1	No	None	2	
 Pressure Switch	35	#23	1	1	No	0,2,3,76,85	2	
 Hard Clay	36	#24	1	1	No	None	2	
-Clock Switch	37	#25	1	1	No	0,2,5,10,11	2	
+Clock Switch	37	#25	1	1	No	0,2,5,10,11,76	2	
 Rift	38	#26	1	1	No	28,29,47,49,60	2	
 Trigblaster	39	#27	1	1	No	4,23,24,72,73,75,79	2	
 Prize Block	40	#28	1	1	No	3,5,49,60	2	
