@@ -3,7 +3,7 @@ Delete	0	#00			No		2
 Environment	1	#01	1	1	No	None	1	
 Spiketron	2	#02	1	1	No	109	2	
 Vacrat	3	#03	1	1	No	None	2	
-Falltrough Ledge	4	#04	1	1	No	None	2	
+Fallthrough Ledge	4	#04	1	1	No	None	2	
 Long Flyblock	5	#05	3	1	50	Inherit	2	
 Dense Fog	6	#06	1	1	No	None	2	
 Hardlight	7	#07	1	1	No	47,49,60	2	
@@ -36,7 +36,7 @@ Vacsteak	33	#21	1	1	No	49,60	2
 Lizumi	34	#22	1	1	No	None	2	
 Pressure Switch	35	#23	1	1	No	0,2,3,76,85	2	
 Hard Clay	36	#24	1	1	No	None	2	
-Clock Switch	37	#25	1	1	No	0,2,5,10,11	2	
+Clock Switch	37	#25	1	1	No	0,2,5,10,11,76	2	
 Rift	38	#26	1	1	No	28,29,47,49,60	2	
 Trigblaster	39	#27	1	1	No	4,23,24,72,73,75,79	2	
 Prize Block	40	#28	1	1	No	3,5,49,60	2	
@@ -124,7 +124,7 @@ Charge Switch	121	#79	1	1	No	0,2,9	2
 Refueler	122	#7A			No	27	1	Used in Airmail mode
 Golf Package	123	#7B	1	1	No	None	2	The round one used by golf mode. Actually called "Package" in the name combobulator (a different name is used here to have unique names for everything for better API).
 Ball Stopper	124	#7C	1	1	No	49	1	Used in Golf Mode
-Bumper	125	#7D	1	1	No	49,60	2	
+Bumper	125	#7D	1	1	No	47,49,60	2	
 Canoodle Core	126	#7E	1	1	No	49,60	2	
 Wingarang	127	#7F	1	1	No	49,60	2	
 Slurb Juice	128	#80	1	1	No	49,60	2	
@@ -166,7 +166,7 @@ Rickety Backdrop	163	#A3	1	1	No	None	1
 Spookstone	164	#A4	1	1	No	None	2	
 Spookstone Backdrop	165	#A5	1	1	No	None	1	
 Kronkrete Backdrop	166	#A6	1	1	No	None	1	
-Slipy Goo Backdrop	167	#A7	1	1	No	None	1	
+Slippy Goo Backdrop	167	#A7	1	1	No	None	1	
 Window	168	#A8	1	1	No	None	1	
 2x2 Jackdrop	169	#A9	2	2	27	Inherit	0	
 3x3 Jackdrop	170	#AA	3	3	27	Inherit		
@@ -174,9 +174,9 @@ Kronkrete Enclosure	171	#AB	1	1	No	None
 Rickety Enclosure	172	#AC	1	1	No	None		
 Spookstone Enclosure	173	#AD	1	1	No	None		
 Secret Eye	174	#AE	1	1	No	1,60	2	
-Falltrough Wood	175	#AF	1	1	No	None	2	
-Falltrough Spookstone	176	#B0	1	1	No	None	2	
-Falltrough Kronkrete	177	#B1	1	1	No	None	2	
+Fallthrough Wood	175	#AF	1	1	No	None	2	
+Fallthrough Spookstone	176	#B0	1	1	No	None	2	
+Fallthrough Kronkrete	177	#B1	1	1	No	None	2	
 Powered Gate (hor.)	178	#B2	3	1	25	Inherit		
 Battle Gate (hor.)	179	#B3	3	1	21	Inherit		
 Key Gate (hor.)	180	#B4	3	1	30	Inherit		
@@ -204,7 +204,7 @@ Movement Teacher	201	#C9	1	1	No	1,60,101	1
 Input Switch	202	#CA	1	1	No	0,2,5,49,60,85,102,103	2	
 Shade	203	#CB	1	1	No	49,60	2	
 Puncher	204	#CC	1	1	No	4,47,49,60	2	
-Jabber	205	#CD	1	1	No	35,36,49,60	2	
+Jabber	205	#CD	1	1	No	30,35,36,40,49,58,60	2	
 Mad Jabber	206	#CE	1	1	205	Inherit	2	
 Jibber	207	#CF	2	2	205	Inherit	2	
 Peanut	208	#D0	1	1	No	105,106	2	
