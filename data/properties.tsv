@@ -24,7 +24,7 @@ Direction	21	#15	D	0 has the graphics of left, but doesn't move things	1	-1	1	Si
 Speed	22	#16	B		300	100	700	None									Toe Slider	
 Power	23	#17	B		2000	2000	3500	None									(Trig)blaster	
 Spin Speed	24	#18	B		0	-360	360	None									(Trig)blaster	
-Fire Delay	25	#19	C		0	0	2	None									Blaster	
+Fire Delay	25	#19	C		0	0.5	2	None									Blaster	
 ???	26	#20	A															
 Refills	27	#21	A														Refeuler	
 Rift ID	28	#1C	B		0	-1	999	Hybrid	None	-	-	-	-	-	-	-	Rift	
