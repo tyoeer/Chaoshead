@@ -68,7 +68,7 @@ function UI:onReload(list,level)
 			if v[3] or Settings.misc.editor.showRawNumbers==false then
 				list:addTextEntry(v[2]..":  "..data(level.settings),1)
 			else
-				list:addTextEntry(v[2]..":  "..data(level.settings).." ("..level.settings[v[1]:sub(4):lower()]..")",1)
+				list:addTextEntry(v[2]..":  "..data(level.settings).." ("..level.settings[v[1]:sub(4):gsub("^.", string.lower)]..")",1)
 			end
 		elseif type(data)=="number" then
 			list:addTextEntry(v[2]..":  "..data,1)
