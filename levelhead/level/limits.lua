@@ -132,7 +132,7 @@ return {
 			end,
 		},
 		{
-			message = "The property %q in the %s at (%i,%i) is outside its saveable range (%i-%i) with the value %s!",
+			message = "The property %q in the %s at (%i,%i) is outside its saveable range (%s-%s) with the value %s!",
 			check = function(level)
 				return checkPropRange(level, function(prop,val)
 					local sf = P:getSaveFormat(prop)
@@ -191,7 +191,7 @@ return {
 		},
 		-- properties
 		{
-			message = "The property %q in the %s at (%i,%i) is outside its valid range (%i-%i) with the value %s!",
+			message = "The property %q in the %s at (%i,%i) is outside its valid range (%s-%s) with the value %s!",
 			check = function(level)
 				return checkPropRange(level, function(prop,val)
 					if val < P:getMin(prop) or val > P:getMax(prop) then
