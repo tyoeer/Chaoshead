@@ -13,8 +13,13 @@ function UI:onReload(list)
 	list:addTextEntry("Chaoshead version "..VERSION)
 	list:addTextEntry(string.format("LÖVE version %d.%d.%d %s",love.getVersion()))
 	
-	list:addButtonEntry("Open user data folder",function()
+	list:addButtonEntry("Open Chaoshead data folder",function()
 		local url = "file://"..love.filesystem.getSaveDirectory()
+		love.system.openURL(url)
+	end)
+	
+	list:addButtonEntry("Open Levelhead data folder",function()
+		local url = "file://"..require("levelhead.misc").getDataPath()
 		love.system.openURL(url)
 	end)
 	
