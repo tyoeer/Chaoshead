@@ -88,7 +88,7 @@ function UI:drawChild(child)
 		--make sure the child can't draw outside it's bounding box
 		love.graphics.intersectScissor(startX, startY, endX-startX, endY-startY)
 		child:draw()
-	love.graphics.pop("all")
+	love.graphics.pop()
 end
 
 function UI:draw()
