@@ -25,19 +25,34 @@ function UI:onReload(list)
 	list:addButtonEntry(
 		"Rehash",
 		function()
+			local function err(mes)
+				MainUI:displayMessage(
+					"Error while rehashing, file might be corrupted",
+					mes
+				)
+			end
 			local f = NFS.newFile(self.path)
-			f:open("r")
+			local suc, mes = f:open("r")
+			if not suc then return err(mes) end
 			local size = f:getSize()
 			local notHash = f:read(size-33)
 			--local oldHash = f:read("*a"):sub(1,-1)
 			--print(oldHash)
-			f:close()
-			f:open(self.path,"w")
-			f:write(notHash)
+			local suc, mes = f:close()
+			if not suc then return err(mes) end
+			local suc, mes = f:open("w")
+			if not suc then return err(mes) end
+			local suc, mes = f:write(notHash)
+			if not suc then return err(mes) end
 			local hash = require("levelhead.lhs").hash(notHash)
-			f:write(hash)
-			f:write(string.char(0))
-			f:close()
+			local suc, mes = f:write(hash)
+			if not suc then return err(mes) end
+			local suc, mes = f:write(string.char(0))
+			if not suc then return err(mes) end
+			local suc, mes = f:close()
+			if not suc then return err(mes) end
+
+			MainUI:displayMessage("Succesfully rehashed level")
 		end
 	)
 end
