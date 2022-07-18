@@ -118,7 +118,7 @@ function UI:runScript(path,disableSandbox)
 			end
 			--move to the levelEditor to show the scripts effects
 			self.child:setActiveTab(self.levelEditor)
-			MainUI:displayMessage("Succesfully ran script!")
+			MainUI:displayMessage("Succesfully ran "..path)
 		else
 			local message = selectionOrMessage
 			MainUI:displayMessage(message, errTrace)

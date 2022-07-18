@@ -112,7 +112,7 @@ end
 
 local saveStorage
 saveStorage = function()
-	--make sure we don't try svaing this function
+	--make sure we don't try to save this function
 	out.storage.save = nil
 	saveData(storagePath, out.storage)
 	out.storage.save = saveStorage
