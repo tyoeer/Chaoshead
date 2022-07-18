@@ -95,6 +95,10 @@ In any case, try looking at the Trello (linked above) for the tings that still n
 When CH crashes because of an invalid property save-format, it outputs the hex of the sub-entry.
 Just looks how many bytes there are before the first position to see which save-format it is.
 
+### Debugging
+
+CHaoshead has some integration with the [Local Lua Debugger VSCode extension](https://marketplace.visualstudio.com/items?itemName=tomblind.local-lua-debugger-vscode), automatically hooknig into it if it's active.
+
 ## License
 
 Chaoshead itself is licensed under the Apache 2.0 license (see LICENSE.txt)<br>

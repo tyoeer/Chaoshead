@@ -1,4 +1,8 @@
-function love.load(arg)
+if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
+	require("lldebugger").start()
+end
+
+function love.load(args)
 	--load stuff
 	require("utils.utils")
 	
