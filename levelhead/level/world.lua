@@ -131,11 +131,8 @@ end
 function World:addPath(p)
 	self.paths:add(p)
 	p.world = self
-	--add all the path's nodes to the world
-	local n = p.head
-	while n do
-		self:addPathNodeRaw(n)
-		n = n.next
+	for node in p:iterateNodes() do
+		self:addPathNodeRaw(node)
 	end
 end
 
