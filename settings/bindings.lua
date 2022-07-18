@@ -6,6 +6,16 @@ return {
 		},
 	},
 	editor = {
+		quickRunScript = {
+			type="and",
+			triggers = {
+				"key: b",
+				{
+					type="or",
+					triggers = {"lctrl","rctrl"}
+				}
+			}
+		},
 		gotoLevelEditor = {
 			type="and",
 			triggers = {

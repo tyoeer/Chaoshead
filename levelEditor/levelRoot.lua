@@ -166,6 +166,12 @@ function UI:onInputActivated(name,group, isCursorBound)
 			self.child:setActiveTab(self.levelEditor)
 		elseif name=="gotoScripts" then
 			self.child:setActiveTab(self.scriptInterface)
+		elseif name=="quickRunScript" then
+			if Storage.quickRunScriptPath then
+				self:runScript(Storage.quickRunScriptPath, true)
+			else
+				MainUI:displayMessage("No script bound to the quick run hotkey!")
+			end
 		end
 	end
 end
