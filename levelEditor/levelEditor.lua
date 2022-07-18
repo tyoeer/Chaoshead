@@ -64,6 +64,10 @@ function UI:newSelection(mask)
 	self:addTab(self.selectionDetails)
 end
 
+function UI:refreshSelection()
+	self.selection = Selection:new(self.level, self.selection.mask)
+	self.selectionDetails:setSelectionTracker(self.selection)
+end
 
 -- public editor stuff
 
@@ -225,6 +229,20 @@ function UI:changeProperty(id, val, op)
 		pl:findBounds()
 		self.selectionDetails:reload()
 	end
+end
+
+function UI:disconnectNodes()
+	for node in self.selection.contents.pathNodes:iterate() do
+		local node = self.level.pathNodes[node.x][node.y]
+		if node.next and self.selection.mask:has(node.next.x, node.next.y) then
+			node:disconnectAfter()
+		end
+		local node = self.level.pathNodes[node.x][node.y]
+		if node.prev and self.selection.mask:has(node.prev.x, node.prev.y) then
+			node.prev:disconnectAfter()
+		end
+	end
+	self:refreshSelection()
 end
 
 function UI:copy()

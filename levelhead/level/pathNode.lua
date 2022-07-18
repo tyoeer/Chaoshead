@@ -10,6 +10,43 @@ function PN:initialize(x,y)
 	--self.path = nil
 end
 
+function PN:splitAfter()
+	if (not self.next) or self.next==self or self==self.path.tail then
+		error("No nodes to split off!",2)
+	end
+	
+	local new = self.path:cloneWithoutNodes()
+	local node = self.next
+	while node and (node ~= self.path.head) do
+		new:append(node.x, node.y)
+		local old = node
+		node = node.next
+		self.path:removeNode(old) --cant use node.prev cause node might have become nil
+	end
+	if self.path.world then
+		self.path.world:addPath(new)
+	end
+	
+	return new
+end
+
+function PN:makeHead()
+	local closed = self.path:getClosed()
+	self.path:setClosed("Yes")
+	self.path.head = self
+	self.path.tail = self.prev
+	self.path:setClosed(closed)
+end
+
+function PN:disconnectAfter()
+	if self.path:getClosed()=="Yes" then
+		self.next:makeHead()
+		self.path:setClosed("No")
+	else
+		return self:splitAfter()
+	end
+end
+
 -- DRAWING
 
 function PN:getDrawCoords()

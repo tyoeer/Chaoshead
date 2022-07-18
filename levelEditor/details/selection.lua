@@ -77,6 +77,14 @@ function UI:onReload(list)
 	list:addButtonEntry("Delete",function()
 		self.editor:deleteSelection()
 	end)
+	if c.nPathNodes >= 2 then
+		list:addButtonEntry(
+			"Disconnect path nodes",
+			function()
+				self.editor:disconnectNodes()
+			end
+		)
+	end
 	do -- single object info
 		if s.mask.nTiles==1 then
 			local t = s.mask.tiles:getTop()
