@@ -276,6 +276,7 @@ function UI:place(x,y,release)
 	if release then
 		self:releaseHold()
 	end
+	self:refreshSelection()
 end
 
 -- other stuff
