@@ -61,7 +61,7 @@ jobs:
         uses: vimtor/action-zip@v1
         with:
           files: release/
-          dest: build-win32.zip
+          dest: chaoshead-win32.zip
       # Collect commits since last release to make making the changelog easier
       - run: git log $(git describe --tags --abbrev=0)..HEAD --format=format:"> %s%+b" > commits.txt
       - name: Create release
@@ -71,7 +71,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           body_path: commits.txt
-          files: build-win32.zip
+          files: chaoshead-win32.zip
           tag_name: "v${{ github.event.inputs.version-number }}"
           name: "Chaoshead v${{ github.event.inputs.version-number }}"
           draft: true
