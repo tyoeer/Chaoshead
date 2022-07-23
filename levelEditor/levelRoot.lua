@@ -1,6 +1,7 @@
 local LHS = require("levelhead.lhs")
 local LIMITS = require("levelhead.level.limits")
 local TABS = require("ui.tools.tabs")
+local Script = require("script")
 local HexInspector = require("levelEditor.hexInspector")
 local LevelEditor = require("levelEditor.levelEditor")
 local ScriptInterface = require("levelEditor.scriptInterface")
@@ -109,7 +110,7 @@ function UI:runScript(path,disableSandbox)
 				contents = self.levelEditor.selection.contents,
 			}
 		end
-		local level, selectionOrMessage, errTrace = require("script").runDangerously(path, self.level, sel)
+		local level, selectionOrMessage, errTrace = Script.runDangerously(path, self.level, sel)
 		if level then
 			local selection = selectionOrMessage
 			self:reload(level)
