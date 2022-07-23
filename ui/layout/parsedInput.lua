@@ -30,9 +30,6 @@ end
 
 function UI:showError(mes)
 	if not self.errorMessage then
-		for k,v in pairs(self.style) do
-			print(k,v)
-		end
 		self.errorMessage = Text:new(mes, 0, self.style.errorStyle)
 		self.child:addUIEntry(self.errorMessage)
 		self:minimumHeightChanged()
