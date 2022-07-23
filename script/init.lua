@@ -2,7 +2,7 @@ local S = {}
 
 S.folder = "scripts/"
 
-if not love.filesystem.getInfo(S.folder) then
+if not love.filesystem.getRealDirectory(S.folder) ~= love.filesystem.getSaveDirectory() then
 	love.filesystem.createDirectory(S.folder)
 end
 
