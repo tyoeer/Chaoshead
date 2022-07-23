@@ -124,7 +124,38 @@ function UI:onReload(list)
 		if c.nPathNodes==1 and s.mask.nTiles~=1 then
 			local n = c.pathNodes:getTop()
 			--mark it as a path node to prevent possible confusion
-			list:addTextEntry("Path Node Position: ("..n.x..","..n.y..")")
+			list:addTextEntry("Path Node position: ("..n.x..","..n.y..")")
+		end
+		if c.nPathNodes==1 then
+			local n = c.pathNodes:getTop()
+			if n.next and (n.next~=n) then
+				local dx = n.next.x - n.x
+				local dy = n.next.y - n.y
+				local a = math.atan2(dy,dx)/math.pi*4
+				local dir = "$Error"
+				if a >= 3.5 then
+					dir = "left"
+				elseif a > 2.5 then
+					dir = "down left"
+				elseif a >= 1.5 then
+					dir = "down"
+				elseif a > 0.5 then
+					dir = "down right"
+				elseif a >= -0.5 then
+					dir = "right"
+				elseif a > -1.5 then
+					dir = "up right"
+				elseif a >= -2.5 then
+					dir = "up"
+				elseif a > -3.5 then
+					dir = "up left"
+				elseif a >= -4.5 then
+					dir = "left"
+				end
+				list:addTextEntry("Path direction: "..dir)
+			elseif n.path.tail==n then
+				list:addTextEntry("Path direction: end node")
+			end
 		end
 	end
 	--add a divider
