@@ -175,6 +175,26 @@ pathNode.path
 ```
 The __Path__ this node belongs to. Nil if it's not bound to a path. DO NOT edit this directly.
 
+## Path manipulation
+
+```Lua
+new = pathNode:append(x,y)
+```
+- x, y: the position to create a new path node at.
+- new: the newly created node.
+
+Adds a new node to the path right after this one. \
+Errors if this node is not part of a path.
+
+```Lua
+new = pathNode:prepend(x,y)
+```
+- x, y: the position to create a new path node at.
+- new: the newly created node.
+
+Adds a new node to the path right before this one. \
+Errors if this node is not part of a path.
+
 ## Manipulation
 
 ```Lua

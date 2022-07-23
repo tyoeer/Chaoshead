@@ -10,6 +10,28 @@ function PN:initialize(x,y)
 	--self.path = nil
 end
 
+-- Adding nodes
+
+function PN:append(x,y)
+	if not self.path then
+		error("Can't append a node to a node without a path!",2)
+	end
+	local new = self.class:new(x,y)
+	self.path:addNodeAfter(new, self)
+	return new
+end
+
+function PN:prepend(x,y)
+	if not self.path then
+		error("Can't append a node to a node without a path!",2)
+	end
+	local new = self.class:new(x,y)
+	self.path:addNodeBefore(new, self)
+	return new
+end
+
+-- Misc manip
+
 function PN:splitAfter()
 	if (not self.next) or self.next==self or self==self.path.tail then
 		error("No nodes to split off!",2)
