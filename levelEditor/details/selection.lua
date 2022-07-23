@@ -85,6 +85,22 @@ function UI:onReload(list)
 			end
 		)
 	end
+	if c.nPathNodes == 2 then
+		list:addButtonEntry(
+			"Connect path nodes",
+			function()
+				self.editor:connectNodes()
+			end
+		)
+	end
+	if c.nPathNodes >= 1 then
+		list:addButtonEntry(
+			"Reverse path(s)",
+			function()
+				self.editor:reversePaths()
+			end
+		)
+	end
 	do -- single object info
 		if s.mask.nTiles==1 then
 			local t = s.mask.tiles:getTop()

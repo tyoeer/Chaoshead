@@ -245,6 +245,53 @@ function UI:disconnectNodes()
 	self:refreshSelection()
 end
 
+function UI:connectNodes()
+	local a = self.selection.contents.pathNodes:getTop()
+	local b = self.selection.contents.pathNodes:getBottom()
+	if a.next and a.prev then
+		MainUI:displayMessage(string.format("The path node at (%i,%i) is already connected!",a.x,a.y))
+		return
+	end
+	if b.next and b.prev then
+		MainUI:displayMessage(string.format("The path node at (%i,%i) is already connected!",b.x,b.y))
+		return
+	end
+	if a.prev==nil and b.next==nil then
+		a,b = b,a
+	elseif (a.prev and b.prev) or (a.next and b.next) then
+		MainUI:displayMessage("Can't connect: the paths point towards each other!")
+		return
+	end
+	--a is a last node, b is a first
+	for prop in a.path:iterateProperties() do
+		if a.path:getPropertyRaw(prop)~=b.path:getPropertyRaw(prop) then
+			MainUI:displayMessage(string.format("Can't connect: property %s differs!",P:getName(prop)))
+			return
+		end
+	end
+	
+	if a.path==b.path then
+		a.path:setClosed("Yes")
+	else
+		for node in b.path:iterateNodes() do
+			a.path:append(node.x, node.y)
+		end
+	end
+	self:refreshSelection()
+end
+
+function UI:reversePaths()
+	local done = {}
+	for node in self.selection.contents.pathNodes:iterate() do
+		local p = node.path
+		if not done[p] then
+			p:reverse()
+			done[p] = true
+		end
+	end
+	self:refreshSelection()
+end
+
 function UI:copy()
 	if self.selection then
 		local cp = Clipboard:new(self.level, self.selection.mask)

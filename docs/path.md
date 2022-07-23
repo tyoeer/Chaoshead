@@ -141,6 +141,11 @@ newPath = path:cloneWithoutNodes()
 
 Only copies properties, both nodes and which __World__ this path is in is _not_ copied.
 
+```Lua
+path:reverse()
+```
+Flips the direction this path is going.
+
 # PathNode
 
 Nodes contain some internal drawing code, which is why they're a whole datastructure.

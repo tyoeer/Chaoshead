@@ -35,6 +35,19 @@ function P:iterateNodes()
 	end, self, nil
 end
 
+function P:reverse()
+	local nodes = {}
+	--the default iteration uses direction. If we start editing that
+	-- while iterating, things will probably go wrong
+	for node in self:iterateNodes() do
+		table.insert(nodes,node)
+	end
+	for _,node in ipairs(nodes) do
+		node.next, node.prev = node.prev, node.next
+	end
+	self.head, self.tail = self.tail, self.head
+end
+
 -- nodes editing
 
 function P:append(x,y)
