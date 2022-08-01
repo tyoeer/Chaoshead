@@ -97,7 +97,7 @@ Just looks how many bytes there are before the first position to see which save-
 
 ### Debugging
 
-CHaoshead has some integration with the [Local Lua Debugger VSCode extension](https://marketplace.visualstudio.com/items?itemName=tomblind.local-lua-debugger-vscode), automatically hooknig into it if it's active.
+Chaoshead has some integration with the [Local Lua Debugger VSCode extension](https://marketplace.visualstudio.com/items?itemName=tomblind.local-lua-debugger-vscode), automatically hooking into it if it's active.
 
 ## License
 
