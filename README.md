@@ -96,7 +96,21 @@ Just looks how many bytes there are before the first position to see which save-
 
 ### Debugging
 
-Chaoshead has some integration with the [Local Lua Debugger VSCode extension](https://marketplace.visualstudio.com/items?itemName=tomblind.local-lua-debugger-vscode), automatically hooking into it if it's active.
+Chaoshead has some integration with the [Local Lua Debugger VSCode extension](https://marketplace.visualstudio.com/items?itemName=tomblind.local-lua-debugger-vscode), automatically hooking into it if it's active. The following launch configuration works:
+```json
+{
+	"type": "lua-local",
+	"request": "launch",
+	"name": "Run",
+	"program": {
+		"command": "love",
+	},
+	"args": [
+		".",
+	],
+},
+```
+With the local lua interpreter set to `love`, and the `love` binary available in the PATH.
 
 ## License
 
