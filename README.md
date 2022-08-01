@@ -1,15 +1,14 @@
 # Chaoshead
 
-A WIP scripting interface/reverse engineering tool/level editor for [Levelhead](lvlhd.co) levels/stages,
+A WIP scripting interface/reverse engineering tool/level editor for [Levelhead](https://lvlhd.co) levels/stages,
 made using [LÖVE](http://www.love2d.org).
 
-Please don't use Chaoshead for making stuff that would not be theoratically possible to be made in the normal editor
-(if it would have just require a lot more work otherwise, it's still ok),
-without express approval of the devs.
+What's allowed and not: https://www.bscotch.net/feedbag/levelhead/entries/62db1e2954be7407b6953856
+![](allowedStuff.png)
 
 As Chaoshead is still in development it is recommended to backup all your levels before using it
 (though so far it has only irrevocably corrupted the level it was interacting with,
-so perhaps only backupping the specific level you're working on is enough).
+so perhaps only back-upping the specific level you're working on is enough).
 
 Binary release that can be run without manually installing LÖVE can be found
 [somewhere in that bar on the right](https://github.com/tyoeer/Chaoshead/releases).
@@ -83,7 +82,7 @@ https://docs.google.com/spreadsheets/d/1wongis8qvVj3-cHEa4HhmzpL1XkP1TXjWYjV5Rob
 
 There's always data that needs collecting, which just involves editing some stuff in Levelhead,
 and looking at it in Chaoshead to get the internal IDs and stuff.
-There's also still parts that need to be reverse engineered in which case the Hex Inpector is your friend.
+There's also still parts that need to be reverse engineered in which case the Hex Inspector is your friend.
 Though if you want to help program this thing, that's also possible.
 
 In any case, try looking at the Trello (linked above) for the tings that still need to be done.
