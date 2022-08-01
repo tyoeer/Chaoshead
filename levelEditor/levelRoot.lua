@@ -83,12 +83,7 @@ end
 function UI:checkLimits(prefix)
 	prefix = prefix or "Level broke limit:\n"
 	
-	local toCheck = {"file"}
-	if not DISABLE_EDITOR_LIMITS then
-		table.insert(toCheck,"editor")
-	end
-	
-	for _,v in ipairs(toCheck) do
+	for _,v in ipairs(Settings.misc.editor.checkLimits) do
 		local list = LIMITS[v]
 		for _,limit in ipairs(list) do
 			local failed = {limit.check(self.level)}

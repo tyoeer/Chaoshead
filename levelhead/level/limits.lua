@@ -162,6 +162,21 @@ return {
 			end,
 		},
 	},
+	game = {
+		-- properties
+		{
+			message = "The property %q in the %s at (%i,%i) is outside its valid range (%s-%s) with the value %s!",
+			check = function(level)
+				return checkPropRange(level, function(prop,val)
+					if val < P:getMin(prop) or val > P:getMax(prop) then
+						return val,P:getMin(prop),P:getMax(prop)
+					else
+						return false
+					end
+				end)
+			end,
+		},
+	},
 	editor = {
 		-- level size
 		{
@@ -187,19 +202,6 @@ return {
 				else
 					return false
 				end
-			end,
-		},
-		-- properties
-		{
-			message = "The property %q in the %s at (%i,%i) is outside its valid range (%s-%s) with the value %s!",
-			check = function(level)
-				return checkPropRange(level, function(prop,val)
-					if val < P:getMin(prop) or val > P:getMax(prop) then
-						return val,P:getMin(prop),P:getMax(prop)
-					else
-						return false
-					end
-				end)
 			end,
 		},
 	},

@@ -9,6 +9,7 @@ return {
 		zoomSpeed = math.sqrt(2),
 		cameraMoveSpeed = 25*60,
 		showRawNumbers = false,
+		checkLimits = {"file","game"}, -- "editor"
 	},
 	scrollbar = {
 		buttonScrollSpeed = 100,
