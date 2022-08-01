@@ -65,8 +65,10 @@ function UI:newSelection(mask)
 end
 
 function UI:refreshSelection()
-	self.selection = Selection:new(self.level, self.selection.mask)
-	self.selectionDetails:setSelectionTracker(self.selection)
+	if self.selection then
+		self.selection = Selection:new(self.level, self.selection.mask)
+		self.selectionDetails:setSelectionTracker(self.selection)
+	end
 end
 
 -- public editor stuff
