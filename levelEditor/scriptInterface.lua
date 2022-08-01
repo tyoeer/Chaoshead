@@ -3,8 +3,9 @@ local Script = require("script")
 
 local DetUI = Class(require("ui.tools.details"))
 
-function DetUI:initialize(data)
+function DetUI:initialize(data,root)
 	self.data = data
+	self.root = root
 	DetUI.super.initialize(self, true)
 end
 
@@ -77,7 +78,7 @@ function UI:getChildren(parent)
 end
 
 function UI:getDetailsUI(data)
-	return DetUI:new(data)
+	return DetUI:new(data,self.root)
 end
 
 return UI
