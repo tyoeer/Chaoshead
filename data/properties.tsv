@@ -25,8 +25,8 @@ Speed	22	#16	B		300	100	700	None									Toe Slider
 Power	23	#17	B		2000	2000	3500	None									(Trig)blaster	
 Spin Speed	24	#18	B		0	-360	360	None									(Trig)blaster	
 Fire Delay	25	#19	C		0.5	0	2	None									Blaster	
-???	26	#20	A															
-Refills	27	#21	A														Refeuler	
+???	26	#1A	A															
+Refills	27	#1B	A		0	0	30	Hybrid	!	Infinite	-	-	-	-	-	-	Refeuler	
 Rift ID	28	#1C	B		0	-1	999	Hybrid	None	-	-	-	-	-	-	-	Rift	
 Destination Rift ID	29	#1D	B	Defaults to 0 (it doesn't get saved if it's 0), while the editor default is 1	0	-1	999	Hybrid	None	-	-	-	-	-	-	-	Rift	
 Movement	30	#1E	A		0	0	3	Simple	!	Horizontal	Vertical	Circle	Stationary	!	!	!	Swoopadoop, Blobfush, Whizzblade, Fireball	
