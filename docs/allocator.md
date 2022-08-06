@@ -11,20 +11,20 @@ allocator = require("tools.allocator"):new(level,settings)
 ```
 - level: the level to allocate stuff in
 - settings: a table containing the settings:
-	- immediate: whether the allocator should place objects immediatly upon allocation, or wait untill allocator:finalize().
+	- immediate: whether the allocator should place objects immediately upon allocation, or wait until allocator:finalize().
 	  Default is `false`.
 	- size: table containing the size of the area in which things should be allocated in the format `{width,height}`.
 	  Use together with `setTopLeftCorner()` to limit the allocator to a specific area.
 	  Defaults to the level size.
-	- objectMask: wether the allocator should have a mask that limits where objects can be placed.
-	  See `getObjectMask()` for more info.
+	- objectMask: whether the allocator should have a mask that limits where objects can be placed.
+	  Required for area allocation. See `getObjectMask()` for more info.
 	  Defaults to `false`
-	- channelMask: wether the allocator should have a mask that limits which channels can be used.
+	- channelMask: whether the allocator should have a mask that limits which channels can be used.
 	  See `getChannelMask()` for more info.
 	  Defaults to `false`
-	- preScan: wether to automatically scan the level and mask away anything already used.
+	- preScan: whether to automatically scan the level and mask away anything already used.
 	  Does not properly work with objects bigger than 1x1 due to data that still needs to be collected.
-	  (Objects bigegr than 1x1 will not get masked off completely, causing overlap, causing undefined behaviour in Levelhead.)
+	  (Objects bigger than 1x1 will not get masked off completely, causing overlap, causing undefined behaviour in Levelhead.)
 	  Defaults to `false`.
 
 ## Allocating
@@ -41,7 +41,7 @@ obj = allocator:allocateObject(element)
 - obj: an object that the allocator will make sure gets placed somewhere
 
 ```Lua
-channel = allocater:allocateChannel()
+channel = allocator:allocateChannel()
 ```
 - channel: a new unused channel  
 
@@ -54,9 +54,9 @@ It is possible to allocate a whole range of channels at once. This will allocate
 area = allocator:allocateArea(width, height)
 ```
 - width, height: the size fo the area to allocate
-- area: an allocator limited to the spcified area
+- area: an allocator limited to the specified area
 
-An objectMask is required for to prevent an area getting used for mutliple things simultaneously.
+An objectMask is required for to prevent an area getting used for multiple things simultaneously.
 There're no guarantees about the order in which areas are allocated, relating to objects and each other.
 
 ## Misc
@@ -64,8 +64,8 @@ There're no guarantees about the order in which areas are allocated, relating to
 ```Lua
 ralloc, calloc = allocator:getShortcuts()
 ```
-- ralloc: a wrapper around `allocator:allocateRelay()` so you don't have to reference the allocator everytime
-- calloc: a wrapper around `allocator:allocateChannel()` so you don't have to reference the allocator everytime
+- ralloc: a wrapper around `allocator:allocateRelay()` so you don't have to reference the allocator every time
+- calloc: a wrapper around `allocator:allocateChannel()` so you don't have to reference the allocator every time
 
 ```Lua
 allocator:finalize()
@@ -93,4 +93,4 @@ allocator:setTopLeftCorner(x,y)
 - x, y: the position of the top-left corner (inclusive)
 
 Sets the top-left corner of the area in which things should be allocated.
-Use togetether with the `size` setting to limit the allocator to a specific area.
+Use together with the `size` setting to limit the allocator to a specific area.

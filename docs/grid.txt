@@ -1,4 +1,4 @@
-This structure is for a 2d infinitely sized grid-like datastructure.
+This structure is for a 2d infinitely sized grid-like data structure.
 It doesn't check if indexes are integers, so other values will probably work to if you use the right method.
 	
 table:set(x,y,value) {uses raw access}
@@ -12,5 +12,5 @@ table(x,y[,value]) {uses table:set/table:get}
 
 table[x][y] {uses to raw access}
 	raw access redirect
-	WARNING: x will choose the values used for internals over data access, so be carefull
+	WARNING: x will choose the values used for internals over data access, so be careful
 	the values used for internals are: call, set, get, data

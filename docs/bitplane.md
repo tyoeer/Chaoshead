@@ -23,7 +23,7 @@ The next string is further along the positive y-axis.
 (If (0,0) is the top-left corner, the strings as displayed in the source code match the orientation of the resulting bitplane.)
 If a character is in the falseMask, the value in the bitplane at that position is false, and vice-verse for the trueMask.
 The falseMask takes precedence over the trueMask, and if a character is in neither mask, it errors.
-If the strings don't form a rectangle the behavior is undefined
+If the strings don't form a rectangle the behaviour is undefined
 
 ```Lua
 bitplane = require("tools.bitplane").invert(source)

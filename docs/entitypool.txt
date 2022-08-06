@@ -4,14 +4,14 @@ Provides fast adding/removing (in the complexity of a map) and fast iteration (n
 	Pool(), Pool:new()
 ----functions:
 	:has(v)
-		returns wether or not v is in the pool
+		returns whether or not v is in the pool
 	
 	:addAtTop(v)
 		adds v at the top of the pool
-		returns true upon succes, false if v already exists
+		returns true upon success, false if v already exists
 	:addAtBottom(v)
 		adds v at the top of the pool
-		returns true upon succes, false if v already exists
+		returns true upon success, false if v already exists
 	:add(v)
 		alias for :addAtTop(v)
 	
@@ -22,7 +22,7 @@ Provides fast adding/removing (in the complexity of a map) and fast iteration (n
 	
 	:remove(v)
 		removes v from the pool
-		returns true upon succes, false if v wasn't in the pool in the first place
+		returns true upon success, false if v wasn't in the pool in the first place
 	:removeTop()
 		removes and returns the value at the top of the pool, returns nil if there's no value there
 	:removeBottom()

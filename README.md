@@ -83,7 +83,7 @@ and looking at it in Chaoshead to get the internal IDs and stuff.
 There's also still parts that need to be reverse engineered in which case the Hex Inspector is your friend.
 Though if you want to help program this thing, that's also possible.
 
-In any case, try looking at the Trello (linked above) for the tings that still need to be done.
+In any case, try looking at the Trello (linked above) for the things that still need to be done.
 
 ### Data collecting tips
 

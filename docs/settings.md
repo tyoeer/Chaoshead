@@ -35,7 +35,7 @@ music = settings:getMusic()
 ```Lua
 settings.minimumPlayers
 ```
-The minimum amonut of players required to play this level. Should be a number between 1 and 4 inclusive.
+The minimum amount of players required to play this level. Should be a number between 1 and 4 inclusive.
 
 ```Lua
 settings.playersSharePowerups
@@ -77,7 +77,7 @@ title = settings:getTitle()
 ```
 - title: string containing the level title.
 
-There's currently no way to set the title because I haven't made something yet to work around name combobulator limitations.
+There's currently no way to set the title because I haven't made something yet to work around Name Combobulator limitations.
 
 ```Lua
 settings.prefix

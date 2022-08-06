@@ -51,7 +51,7 @@ Currently an alias for `Level:addForegroundObject(...)`
 ```Lua
 object = world:place[element](x,y)
 ```
-- element: concatanated name of the level element you're placing, where each word starts with with an uppercase letter
+- element: concatenated name of the level element you're placing, where each word starts with with an uppercase letter
 - x, y: the position where to place the object
 - obj: the __Object__ that has been placed
 
@@ -70,7 +70,7 @@ world:removeForegroundAt(x,y)
 ```
 - x, y: the position of the foreground __Object__ to remove
 
-In case there's no foreground object at the specified coördinates, nothing will happen.
+In case there's no foreground object at the specified coordinates, nothing will happen.
 
 ### Background
 
@@ -81,7 +81,7 @@ world:addBackgroundObject(object,x,y)
 - x, y: the position where to place the object
 
 ```Lua
-world:movebackgroundObject(obj,x,y)
+world:moveBackgroundObject(obj,x,y)
 ```
 - obj: the background __Object__ to move.
 - x, y: the position to move it to..
@@ -93,7 +93,7 @@ world:removeBackgroundAt(x,y)
 ```
 - x, y: the position of the foreground __Object__ to remove
 
-In case there's no background object at the specified coördinates, nothing will happen.
+In case there's no background object at the specified coordinates, nothing will happen.
 
 ### Paths
 
@@ -123,7 +123,7 @@ world:removePathNodeAt(x,y)
 ```
 - x,y: the position of the path node to remove
 
-In case there's no path node at the specified coördinates, nothing will happen.
+In case there's no path node at the specified coordinates, nothing will happen.
 
 
 ## Misc

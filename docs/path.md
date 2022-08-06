@@ -1,7 +1,7 @@
 # Path
 
 Represents a path.
-Nodes are their own datastructure, they're described further down.
+Nodes are their own data structure, they're described further down.
 Paths don't require be bound to a level (see Level:addPath) before nodes are added.
 
 ## Creation
@@ -148,7 +148,7 @@ Flips the direction this path is going.
 
 # PathNode
 
-Nodes contain some internal drawing code, which is why they're a whole datastructure.
+Nodes contain some internal drawing code, which is why they're a whole data structure.
 
 ## Creation
 
@@ -167,7 +167,7 @@ The Read-only position of this node
 ```Lua
 pathNode.prev, pathNode.next
 ```
-The Read-only nodes before and after this one repsectively. Nil if those don't exist.
+The Read-only nodes before and after this one respectively. Nil if those don't exist.
 In case of a closed path, these can point to itself.
 
 ```Lua
@@ -202,7 +202,7 @@ other = pathNode:disconnectAfter()
 ```
 - other: The new path containing all the nodes after this one if the path was split into two, nil otherwise.
 
-Breaks the conenction to the next node.
+Breaks the connection to the next node.
 Opens up a closed path, splits an open path into 2.
 
 ```Lua
