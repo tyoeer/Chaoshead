@@ -141,9 +141,16 @@ end
 
 function UI:onFocus(focus)
 	if focus then
-		self.levelFile:reload()
-		if self.latestHash ~= self.levelFile:getHash() then
-			self:reload()
+		local success = xpcall(
+			function()
+				self.levelFile:reload()
+			end,
+			self.loadErrorHandler
+		)
+		if success then
+			if self.latestHash ~= self.levelFile:getHash() then
+				self:reload()
+			end
 		end
 	end
 end
