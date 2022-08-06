@@ -148,7 +148,8 @@ Flips the direction this path is going.
 
 # PathNode
 
-Nodes contain some internal drawing code, which is why they're a whole data structure.
+Represents a single node in a path.
+Can exist outside of a path, but only unconnected.
 
 ## Creation
 

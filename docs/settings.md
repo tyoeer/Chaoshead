@@ -77,7 +77,7 @@ title = settings:getTitle()
 ```
 - title: string containing the level title.
 
-There's currently no way to set the title because I haven't made something yet to work around Name Combobulator limitations.
+There's currently no way to set the title because I haven't made something yet to work around/with Name Combobulator limitations.
 
 ```Lua
 settings.prefix
@@ -87,9 +87,9 @@ Unknown what it does, probably related to the level version. See the File Format
 ```Lua
 settings.campaignMarker
 ```
-partially unknown what it does, but can differ between levels. _You probably shouldn't edit this._ See the File Format document for more info. Is a byte.
+Partially unknown what it does, but can differ between levels. _You probably shouldn't edit this._ See the File Format document for more info. Is a byte.
 
 ```Lua
 settings.mode
 ```
-Used for dev-only stuff. _You probably shouldn't touch this._ See the File Format document for more info. Is a byte.
+Represents which mode a level is in. See the File Format document for more info. Is a byte.
