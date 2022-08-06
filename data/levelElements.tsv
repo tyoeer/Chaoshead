@@ -117,13 +117,13 @@ Long Dropblock	103	#67	3	1	96	None
 Baddie Eyeswitch	115	#73	1	1	No	0,2,5,8,14,16,80,81,82,83,84	2	
 Bomb	116	#74	1	1	No	None	2	
 Package	117	#75	1	1	No	None	2	
-Booster	118	#76	2	2	No	49	1	Used in Scooter Mode
-Brake	119	#77	2	2	No	49	1	Used in Scooter Mode
+Booster	118	#76	2	2	No	49,60	1	Used in Scooter Mode
+Brake	119	#77	2	2	No	49,60	1	Used in Scooter Mode
 Battery	120	#78	1	1	No	49,60	2	
 Charge Switch	121	#79	1	1	No	0,2,9	2	
-Refueler	122	#7A			No	27	1	Used in Airmail mode
+Refueler	122	#7A	2	1	No	27	1	Used in Airmail mode
 Golf Package	123	#7B	1	1	No	None	2	The round one used by golf mode. Actually called "Package" in the name combobulator (a different name is used here to have unique names for everything for better API).
-Ball Stopper	124	#7C	1	1	No	49	1	Used in Golf Mode
+Ball Stopper	124	#7C	1	1	No	49,60	1	Used in Golf Mode
 Bumper	125	#7D	1	1	No	47,49,60	2	
 Canoodle Core	126	#7E	1	1	No	49,60	2	
 Wingarang	127	#7F	1	1	No	49,60	2	
@@ -137,7 +137,7 @@ Regret Gate	133	#85	1	1	No	3,49,60	2
 2x2 Hardlight	135	#87	2	2	7	Inherit		
 2x2 Robo Factory	136	#88	2	2	101	Inherit		
 3x3 Robo Factory	137	#89	3	3	101	Inherit		
-Sweep Laser	138	#8A	1	1	No	49,50,52,60,67	1	Singel Laser Style Directions still missing
+Sweep Laser	138	#8A	1	1	No	31,49,50,52,60,67	1	
 Boombox	139	#8B	1	1	No	3,5,49,51,54,55,60,64,68,93,94,95,96,97,98	2	
 Recycler	140	#8C	1	1	No	49,60	1	
 Blopsack	141	#8D	1	1	No	49,60	2	

@@ -1,57 +1,57 @@
-Value(the number the mappnig in the lists to the right correspond to. A mapping of ! means out of range)	Jingle	Bass Pitch	Melody Pitch	Percussion	Items	Path Visuals	Enemies	Sign Icons
-0	Reveal	C2	C4	Kick Deep	Armor Plate	None	Vacrat	Danger
-1	Surprise	D2	D4	Kick Thump	Ripcord	Mudwood	Flipwip	Hazard
-2	Long Sad	E2	E4	Snare Tough	Tiptow	Cable	Blopfush	Enemy
-3	Short Sad	F2	F4	Snare Slap	Zipper	Spurkles	Flapjack	Path
-4	Long Happy	G2	G4	Snare Reverb	Waylay	Square Chains	Lizumi	Puzzle
-5	Short Happy	A2	A4	Hi-Hat Tap	Rebound	Alien Webbing	Swoopadoop	Look
-6	Crashlands Happy	B2	B4	Hi-Hat Close	Shade	Wiggly Vines	Canoodle	Package
-7	Crashlands Sad	C3	C5	Hi-Hat Open	DBot	Digital Blue	Popjaw	Key
-8	Crashlands Reveal	D3	D5	Crash	Recycler	Digital Gold	Scrubb	Throw
-9	Chill Reveal	E3	E5	Tom Low	Slurb Juice	Digital Fuchsia	Ocula	Boom
-10	Chil Success	F3	F5	Tom High	Lectroshield	Digital Green	Jabber	Question
-11	Tense Reveal	G3	G5	Tom Low Soft	Bomb	Frozen	Mad Jabber	BUDD-E
-12	Tense Success	A3	A5	Tom High Soft	Keycard	Maximum Power	Peanut	Jem
-13	Spooky Reveal	B3	B5	Click	Battery	Bones	Thorny Peanut	Zipper
-14	Spooky Success	C4	C6	Click Soft	Blopsack	Merriment	Explosive Peanut	Waylay
-15	Puzzle Success	D4	D6		Canoodle Core	Fortress		Sneak
-16		E4	E6		Flapsack	Rope		Propeller
-17		F4	F6		Flipegg			Jet
-18		G4	G6		Lizumi thorn			Popjaw
-19		A4	A6		Pop Medaillon			Blopfush
-20		B4	B6		Wingarang			Swoopadoop
-21		C5	C7		Vacsteak			Vacrat
-22		A1	C3		Squished Ocula			Flipwip
-23		B1	D3		Squished Scrubb			Lizumi
-24			E3		Stackable Armor			Grab
-25			F3					Jump
-26			G3					Flapjack
-27			A3					No
-28			B3					Reset
-29								Yes
-30								Jet
-31								Ocula
-32								Scrubb
-33								Sprint
-34								Key Chest
-35								Goal
-36								GR-18
-37								Heart
-38								Blue
-39								Gold
-40								Fuchsia
-41								Green
-42								Music
-43								Jabber
-44								Puncher
-45								Canoodle
-46								Shade
-47								Peanut
-48								Shade Rune
-49								Use Powerup
-50								
-51								
-52								
-53								
-54								
-55								
+Value(the number the mappnig in the lists to the right correspond to. A mapping of ! means out of range)	Jingle	Bass Pitch	Melody Pitch	Percussion	Items	Path Visuals	Enemies	Sign Icons	Instructions	Movement Teacher
+0	Reveal	C2	C4	Kick Deep	Armor Plate	None	Vacrat	Danger	Grappler	Right
+1	Surprise	D2	D4	Kick Thump	Ripcord	Mudwood	Flipwip	Hazard	Powerup	Up + Right
+2	Long Sad	E2	E4	Snare Tough	Tiptow	Cable	Blopfush	Enemy	Box Jump	Up
+3	Short Sad	F2	F4	Snare Slap	Zipper	Spurkles	Flapjack	Path	Movement	Up + Left
+4	Long Happy	G2	G4	Snare Reverb	Waylay	Square Chains	Lizumi	Puzzle	Jump	Left
+5	Short Happy	A2	A4	Hi-Hat Tap	Rebound	Alien Webbing	Swoopadoop	Look	Kick	Down + Left
+6	Crashlands Happy	B2	B4	Hi-Hat Close	Shade	Wiggly Vines	Canoodle	Package	Jet	Down
+7	Crashlands Sad	C3	C5	Hi-Hat Open	DBot	Digital Blue	Popjaw	Key	Propeller	Down + Right
+8	Crashlands Reveal	D3	D5	Crash	Recycler	Digital Gold	Scrubb	Throw	Rebound Shoot	
+9	Chill Reveal	E3	E5	Tom Low	Slurb Juice	Digital Fuchsia	Ocula	Boom	Rebound Bounce	
+10	Chil Success	F3	F5	Tom High	Lectroshield	Digital Green	Jabber	Question	Drop	
+11	Tense Reveal	G3	G5	Tom Low Soft	Bomb	Frozen	Mad Jabber	BUDD-E	Kick Jump	
+12	Tense Success	A3	A5	Tom High Soft	Keycard	Maximum Power	Peanut	Jem	Sprint	
+13	Spooky Reveal	B3	B5	Click	Battery	Bones	Thorny Peanut	Zipper	Hang	
+14	Spooky Success	C4	C6	Click Soft	Blopsack	Merriment	Explosive Peanut	Waylay	Fan Hover Down	
+15	Puzzle Success	D4	D6		Canoodle Core	Fortress		Sneak		
+16		E4	E6		Flapsack	Rope		Propeller		
+17		F4	F6		Flipegg			Jet		
+18		G4	G6		Lizumi thorn			Popjaw		
+19		A4	A6		Pop Medaillon			Blopfush		
+20		B4	B6		Wingarang			Swoopadoop		
+21		C5	C7		Vacsteak			Vacrat		
+22		A1	C3		Squished Ocula			Flipwip		
+23		B1	D3		Squished Scrubb			Lizumi		
+24			E3		Stackable Armor			Grab		
+25			F3					Jump		
+26			G3					Flapjack		
+27			A3					No		
+28			B3					Reset		
+29								Yes		
+30								Jet		
+31								Ocula		
+32								Scrubb		
+33								Sprint		
+34								Key Chest		
+35								Goal		
+36								GR-18		
+37								Heart		
+38								Blue		
+39								Gold		
+40								Fuchsia		
+41								Green		
+42								Music		
+43								Jabber		
+44								Puncher		
+45								Canoodle		
+46								Shade		
+47								Peanut		
+48								Shade Rune		
+49								Use Powerup		
+50										
+51										
+52										
+53										
+54										
+55										
