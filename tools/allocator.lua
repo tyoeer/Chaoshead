@@ -101,23 +101,25 @@ function A:allocateObject(element)
 end
 
 function A:allocateArea(w,h)
-	if self.objectMask then
-		local sub_settings = {}
-		for k,v in pairs(self.settings) do
-			sub_settings[k] = v
-		end
-		sub_settings.size = {w, h}
-
-		local sub = A:new(self.level, sub_settings)
-		if self.settings.immediate then
-			self:placeArea(sub)
-		else
-			table.insert(self.areaQueue,sub)
-		end
-		return sub
-	else
+	if not self.objectMask then
 		error("Can't allocate area without an object mask!",2)
 	end
+	if w > self.width or h > self.height then
+		error("Can't allocate an area bigger than the allocator!",2)
+	end
+	local sub_settings = {}
+	for k,v in pairs(self.settings) do
+		sub_settings[k] = v
+	end
+	sub_settings.size = {w, h}
+
+	local sub = A:new(self.level, sub_settings)
+	if self.settings.immediate then
+		self:placeArea(sub)
+	else
+		table.insert(self.areaQueue,sub)
+	end
+	return sub
 end
 
 function A:allocateRelay(cin,cond,cout)
