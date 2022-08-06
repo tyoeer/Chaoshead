@@ -25,7 +25,7 @@ end
 function B:rectContains(x,y, w,h, value)
 	for i=x, x+w-1, 1 do
 		for j=y, y+h-1, 1 do
-			if self:get(x,y)==value then
+			if self:get(i,j)==value then
 				return true
 			end
 		end
