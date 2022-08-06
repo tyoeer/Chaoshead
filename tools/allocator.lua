@@ -1,4 +1,5 @@
 local OBJ = require("levelhead.level.object")
+local Bitplane = require("tools.bitplane")
 
 local A = Class()
 
@@ -32,7 +33,7 @@ function A:initialize(level,settings)
 		self.areaQueue = {}
 	end
 	if self.settings.objectMask then
-		self.objectMask = require("tools.bitplane").new(self.width, self.height, true)
+		self.objectMask = Bitplane.new(self.width, self.height, true)
 	end
 	if self.settings.channelMask then
 		self.channelMask = {}
@@ -162,7 +163,10 @@ function A:placeArea(area)
 	local y = self.freeY
 	while true do
 		--check if the area can be placed
-		if not self.objectMask:rectContains(x,y, area.width, area.height, false) then
+		if y+area.height-1 > self.maxY then
+			error("Allocation Error: level/area too small!",3)
+		end
+		if x+area.width-1 <= self.maxX and not self.objectMask:rectContains(x,y, area.width, area.height, false) then
 			area:setTopLeftCorner(x,y)
 			self.objectMask:setRect(x,y, area.width, area.height, false)
 			if not area.settings.immediate then
