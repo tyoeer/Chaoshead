@@ -4,6 +4,7 @@ return {
 			trigger = "mouse: left",
 			isCursorBound = true,
 		},
+		toggleFullscreen = "key: f11",
 	},
 	editor = {
 		quickRunScript = {

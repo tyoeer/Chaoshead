@@ -24,7 +24,11 @@ function love.load(args)
 	love.graphics.setPointSize(1)
 	love.graphics.setLineStyle("rough")
 	--maximize window
-	love.window.maximize()
+	if Storage.fullscreen then
+		love.window.setFullscreen(true)
+	else
+		love.window.maximize()
+	end
 	
 	--build ui
 	MainUI = require("ui.chaoshead"):new()

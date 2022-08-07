@@ -37,4 +37,18 @@ function UI:verifyDataFound()
 	end
 end
 
+function UI:toggleFullscreen()
+	local fullscreen = not love.window.getFullscreen()
+	Storage.fullscreen = fullscreen
+	Storage.save()
+	love.window.setFullscreen(fullscreen)
+	UiRoot:resize(love.graphics.getWidth(), love.graphics.getHeight())
+end
+
+function UI:onInputActivated(name,group,isCursorBOund)
+	if group=="main" and name=="toggleFullscreen" then
+		self:toggleFullscreen()
+	end
+end
+
 return UI
