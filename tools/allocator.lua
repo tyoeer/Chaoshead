@@ -284,8 +284,8 @@ function A:getChannelMask()
 end
 
 function A:getRiftIdMask()
-	if self.riftidMask then
-		return self.riftidMask
+	if self.riftIdMask then
+		return self.riftIdMask
 	else
 		error("Trying to get the rift ID mask of an allocator that doesn't have it!",2)
 	end
