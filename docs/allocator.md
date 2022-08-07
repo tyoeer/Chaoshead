@@ -34,9 +34,13 @@ allocator = require("tools.allocator"):new(level,settings)
 
 ```Lua
 relay = allocator:allocateRelay(receivingChannel, switchRequirements, sendingChannel)
+```
+Allocates a relay and returns the allocated object. Function arguments correspond to their in-game properties.
+
+```Lua
 rift = allocator:allocateRift(riftId, receivingChannel, switchRequirements, destinationRiftId)
 ```
-Allocates a relay or rift and returns the allocated object. Function arguments correspond to their ingame properties.
+Allocates a rift and returns the allocated object. Function arguments correspond to their in-game properties.
 
 ```Lua
 obj = allocator:allocateObject(element)
@@ -47,13 +51,16 @@ obj = allocator:allocateObject(element)
 ```Lua
 channel = allocator:allocateChannel()
 channels = allocator:allocateChannels(n)
-
-id = allocator:allocateRiftId()
-ids = allocator:allocateRiftIds(n)
 ```
 - `channel`: a new unused channel
 - `channels`: a table containing `n` distinct unused channels
-- corresponding functions for rift ID allocation
+
+```Lua
+id = allocator:allocateRiftId()
+ids = allocator:allocateRiftIds(n)
+```
+- `id`: a new unused rift id
+- `ids`: a table containing `n` distinct unused rift ids
 
 ```Lua
 area = allocator:allocateArea(width, height)
@@ -71,7 +78,7 @@ ralloc, calloc, idalloc = allocator:getShortcuts()
 ```
 - `ralloc`: a wrapper around `allocator:allocateRelay()` so you don't have to reference the allocator every time
 - `calloc`: a wrapper around `allocator:allocateChannel()` so you don't have to reference the allocator every time
-- `idalloc`: a wrapper around `allocator:allocateRiftId()` so you don't have to reference the allocator every time
+- `ridalloc`: a wrapper around `allocator:allocateRiftId()` so you don't have to reference the allocator every time
 
 ```Lua
 allocator:finalize()
@@ -87,12 +94,18 @@ Set a position to `false` to block it off from the allocator. All spaces default
 
 ```Lua
 cmask = allocator:getChannelMask()
-idmask = allocator:getRiftIdMask()
 ```
 - `cmask`: (a reference to) the table masking which channels can be used by the allocator.
-- `idmask`: (a reference to) the table masking which rift IDs can be used by the allocator.
 
-Channels/Rift IDs are the keys in the tables.
+Channels are the keys in the tables.
+Set one to `false` to block it off from the allocator. The tables default to all `true`.
+
+```Lua
+ridmask = allocator:getRiftIdMask()
+```
+- `ridmask`: (a reference to) the table masking which rift IDs can be used by the allocator.
+
+Rift IDs are the keys in the tables.
 Set one to `false` to block it off from the allocator. The tables default to all `true`.
 
 ```Lua

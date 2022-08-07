@@ -56,8 +56,9 @@ function A:initialize(level,settings)
 				self.objectMask:set(obj.x, obj.y, false)
 			end
 	
+			-- {Sending Channel, Receiving Channel, Receving Channel (optional variant), Sending Channel (optional variant)}
 			local channelProperties = {0, 1, 49, 90}
-				-- {Sending Channel, Receiving Channel, Receving Channel (again), Sending Channel (again)}
+			
 			if self.channelMask then
 				for _,propId in ipairs(channelProperties) do
 					local p = obj:getPropertyRaw(propId)
@@ -67,13 +68,14 @@ function A:initialize(level,settings)
 				end
 			end
 			
+			-- {Rift ID, Destination Rift ID}
 			local riftIdProperties = {30, 31}
-				-- {Rift ID, Destination Rift ID}
+			
 			if self.riftIdMask then
-				for _,propId in ipairs(riftidProperties) do
+				for _,propId in ipairs(riftIdProperties) do
 					local p = obj:getPropertyRaw(propId)
 					if p ~= nil then
-						self.riftidMask[p] = false
+						self.riftIdMask[p] = false
 					end
 				end
 			end
@@ -90,7 +92,8 @@ function A:initialize(level,settings)
 	self.maxX
 	self.maxY
 	]]--
-	self.channelCounter = -1 -- it gets incremented before returning a channel
+	-- they get incremented before returning a channel
+	self.channelCounter = -1
 	self.riftIdCounter = -1
 end
 
