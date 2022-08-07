@@ -26,11 +26,6 @@ function UI:initialize()
 	self:verifyDataFound()
 end
 
-function UI:draw()
-	love.graphics.clear(Settings.theme.main.background)
-	UI.super.draw(self)
-end
-
 function UI:verifyDataFound()
 	if not NFS.getInfo(LH_MISC.getDataPath(),"directory") then
 		self:displayMessage("Could not find Levelhead data at "..LH_MISC.getDataPath())
@@ -43,6 +38,11 @@ function UI:toggleFullscreen()
 	Storage.save()
 	love.window.setFullscreen(fullscreen)
 	UiRoot:resize(love.graphics.getWidth(), love.graphics.getHeight())
+end
+
+
+function UI:preDraw()
+	love.graphics.clear(Settings.theme.main.background)
 end
 
 function UI:onInputActivated(name,group,isCursorBOund)
