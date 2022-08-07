@@ -59,7 +59,7 @@ Scripts get provided access to the following globals:
     Does not update if you change the level or the mask.
     Modifications and overwriting get ignored (the new contents get constructed based on the new mask).
 
-For documentation on how to use these globals and other stuff, have a look at the [docs](docs/) folder.
+For documentation on how to use these globals and other stuff, have a look at the [docs/](docs/) folder.
 
 ## Useful links
 
@@ -82,6 +82,8 @@ There's also still parts that need to be reverse engineered in which case the He
 Though if you want to help program this thing, that's also possible.
 
 In any case, try looking at the Trello (linked above) for the things that still need to be done.
+
+A basic overview of the code architecture/what goes where can be found in [design.md](design.md)
 
 ### Data collecting tips
 
