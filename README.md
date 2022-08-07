@@ -4,7 +4,7 @@ A WIP level editor/scripting interface/reverse engineering tool for [Levelhead](
 made using [LÖVE](http://www.love2d.org).
 
 What's allowed and not: https://www.bscotch.net/feedbag/levelhead/entries/62db1e2954be7407b6953856
-![](allowedStuff.png)
+![](resources/allowedStuff.png)
 I do recommend testing every broken limit though, to make sure you don't accidentally upload a level that can crash the game. I don't expect it, but this is kind of unexplored territory.
 
 Chaoshead still has the occasional bug, consider making a backup of a level before editing it with Chaoshead. \

@@ -19,7 +19,7 @@ function love.load(args)
 	Input = TU("input")
 	
 	--love2d state
-	love.graphics.setFont(love.graphics.newFont("font/iosevka-aile-regular.ttf",16))
+	love.graphics.setFont(love.graphics.newFont("resources/iosevka-aile-regular.ttf",16))
 	love.graphics.setLineWidth(1)
 	love.graphics.setPointSize(1)
 	love.graphics.setLineStyle("rough")
