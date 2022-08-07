@@ -64,4 +64,10 @@ if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
 		require("lldebugger").start()
 		error(msg,2)
 	end
+	local p = print
+	print = function(...)
+		require("lldebugger").start(false)
+		p(...)
+		require("lldebugger").stop()
+	end
 end
