@@ -1,7 +1,3 @@
-if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
-	require("lldebugger").start()
-end
-
 function love.load(args)
 	--load stuff
 	require("utils.utils")
@@ -61,4 +57,11 @@ function love.mousepressed(x, y, button, isTouch, presses)
 end
 function love.mousereleased(x, y, button, isTouch, presses)
 	Input.mousereleased(x,y, button, isTouch, presses)
+end
+
+if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
+	love.errorhandler = function(msg)
+		require("lldebugger").start()
+		error(msg,2)
+	end
 end
