@@ -5,6 +5,9 @@ local OBJ = Class("Object")
 
 function OBJ:initialize(id)
 	self.id = E:getID(id)
+	if self.id=="$UnknownId" then
+		error("Unknown object id: "..id,3)
+	end
 	self.properties = {}
 	--self.x = nil
 	--self.y = nil
