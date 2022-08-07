@@ -16,6 +16,9 @@ function A:initialize(level,settings)
 	if self.settings.channelMask==nil then
 		self.settings.channelMask = false
 	end
+	if self.settings.riftIdMask==nil then
+		self.settings.riftIdMask = false
+	end
 	if self.settings.preScan==nil then
 		self.settings.preScan = false
 	end
@@ -41,35 +44,39 @@ function A:initialize(level,settings)
 			self.channelMask[i] = true
 		end
 	end
-	if self.settings.preScan then
-		local scan
-		local channelProperties = {0,1,49,90}
-		if self.objectMask and self.channelMask then
-			scan = function(obj)
-				self.objectMask:set(obj.x, obj.y, false)
-				for _,propId in ipairs(channelProperties) do
-					local p = obj:getPropertyRaw(propId)
-					if p~=nil then
-						self.channelMask[p] = false
-					end
-				end
-			end
-		elseif self.objectMask then
-			scan = function(obj)
-				self.objectMask:set(obj.x, obj.y, false)
-			end
-		elseif self.channelMask then
-			scan = function(obj)
-				for _,propId in ipairs(channelProperties) do
-					local p = obj:getPropertyRaw(propId)
-					if p~=nil then
-						self.channelMask[p] = false
-					end
-				end
-			end
+	if self.settings.riftIdMask then
+		self.riftIdMask = {}
+		for i=0,999,1 do
+			self.riftIdMask[i] = true
 		end
+	end
+	if self.settings.preScan then
 		for obj in level.objects:iterate() do
-			scan(obj)
+			if self.objectMask then
+				self.objectMask:set(obj.x, obj.y, false)
+			end
+	
+			local channelProperties = {0, 1, 49, 90}
+				-- {Sending Channel, Receiving Channel, Receving Channel (again), Sending Channel (again)}
+			if self.channelMask then
+				for _,propId in ipairs(channelProperties) do
+					local p = obj:getPropertyRaw(propId)
+					if p ~= nil then
+						self.channelMask[p] = false
+					end
+				end
+			end
+			
+			local riftIdProperties = {30, 31}
+				-- {Rift ID, Destination Rift ID}
+			if self.riftIdMask then
+				for _,propId in ipairs(riftidProperties) do
+					local p = obj:getPropertyRaw(propId)
+					if p ~= nil then
+						self.riftidMask[p] = false
+					end
+				end
+			end
 		end
 	end
 	
@@ -84,6 +91,7 @@ function A:initialize(level,settings)
 	self.maxY
 	]]--
 	self.channelCounter = -1 -- it gets incremented before returning a channel
+	self.riftIdCounter = -1
 end
 
 
@@ -122,11 +130,21 @@ function A:allocateArea(w,h)
 	return sub
 end
 
-function A:allocateRelay(cin,cond,cout)
+function A:allocateRelay(cin, cond, cout)
 	local r = self:allocateObject("Relay")
 	r:setReceivingChannel(cin)
 	r:setSwitchRequirements(cond)
 	r:setSendingChannel(cout)
+	return r
+end
+
+function A:allocateRift(id_in, cin, cond, id_out)
+	local r = self:allocateObject("Rift")
+	r:setRiftId(id_in)
+	r:setReceivingChannel(cin)
+	r:setSwitchRequirements(cond)
+	r:setDestinationRiftId(id_out)
+	return r
 end
 
 function A:nextPos(x,y)
@@ -204,7 +222,6 @@ end
 
 -- CHANNELS
 
-
 function A:allocateChannel()
 	if self.channelMask then
 		while not self.channelMask[self.channelCounter] do
@@ -224,8 +241,28 @@ function A:allocateChannels(count)
 	return result
 end
 
--- MISC
+-- RIFT IDS
 
+function A:allocateRiftId()
+	if self.riftIdMask then
+		while not self.riftIdMask[self.riftIdCounter] do
+			self.riftIdCounter = self.riftIdCounter + 1
+		end
+	else
+		self.riftIdCounter = self.riftIdCounter + 1
+	end
+	return self.riftIdCounter
+end
+
+function A:allocateRiftIds(count)
+	local result = {}
+	for i=1,count do
+		result[i] = self:allocateRiftId()
+	end
+	return result
+end
+
+-- MISC
 
 function A:getObjectMask()
 	if self.objectMask then
@@ -243,6 +280,14 @@ function A:getChannelMask()
 	end
 end
 
+function A:getRiftIdMask()
+	if self.riftidMask then
+		return self.riftidMask
+	else
+		error("Trying to get the rift ID mask of an allocator that doesn't have it!",2)
+	end
+end
+
 function A:setTopLeftCorner(x,y)
 	self.minX = x
 	self.minY = y
@@ -257,6 +302,8 @@ function A:getShortcuts()
 		self:allocateRelay(...)
 	end, function()
 		return self:allocateChannel()
+	end, function()
+		return self:allocateRiftId()
 	end
 end
 
