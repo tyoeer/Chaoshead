@@ -15,7 +15,7 @@ function S.errorHandler(message)
 	local index = fullTrace:find("%s+%[C%]: in function 'xpcall'%s+script/[a-zA-Z/]+.lua:%d+:")
 	local trace = fullTrace:sub(1,index-1)
 	--trace = fullTrace
-	return message, trace
+	return {message, trace}
 end
 
 function S.runDangerously(path, level, selection)
@@ -30,7 +30,7 @@ function S.runDangerously(path, level, selection)
 	_G.level = level
 	_G.selection = selection
 	
-	local success, errorMessage, trace = xpcall(script, S.errorHandler)
+	local success, errInfo = xpcall(script, S.errorHandler)
 	
 	level = _G.level
 	selection = _G.selection
@@ -39,7 +39,7 @@ function S.runDangerously(path, level, selection)
 	if success then
 		return level, selection
 	else
-		return false, "Error running script at "..path..":\n"..errorMessage, trace
+		return false, "Error running script at "..path..":\n"..errInfo[1], errInfo[2]
 	end
 end
 

@@ -8,10 +8,22 @@ end
 function UI:onReload(list)
 	
 	
-	-- INFORMATION
+	-- BASIC INFORMATION
 	
 	list:addTextEntry("Chaoshead version "..VERSION)
 	list:addTextEntry(string.format("LÖVE version %d.%d.%d %s",love.getVersion()))
+	
+	-- DO STUFF
+	
+	list:addButtonEntry("Toggle fullscreen",function()
+		MainUI:toggleFullscreen()
+	end)
+	
+	list:addButtonEntry("Exit Chaoshead",function()
+		love.event.quit()
+	end)
+	
+	-- SHOW STUFF
 	
 	list:addButtonEntry("Open Chaoshead data folder",function()
 		local url = "file://"..love.filesystem.getSaveDirectory()
@@ -91,6 +103,9 @@ function UI:onReload(list)
 		MainUI:displayMessage(l)
 	end)
 	
+	
+	-- DIVIDER
+	list:addTextEntry("")
 	
 	-- CAMPAIGN
 	

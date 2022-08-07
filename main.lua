@@ -1,7 +1,3 @@
-if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
-	require("lldebugger").start()
-end
-
 function love.load(args)
 	--load stuff
 	require("utils.utils")
@@ -23,12 +19,16 @@ function love.load(args)
 	Input = TU("input")
 	
 	--love2d state
-	love.graphics.setFont(love.graphics.newFont("font/iosevka-aile-regular.ttf",16))
+	love.graphics.setFont(love.graphics.newFont("resources/iosevka-aile-regular.ttf",16))
 	love.graphics.setLineWidth(1)
 	love.graphics.setPointSize(1)
 	love.graphics.setLineStyle("rough")
 	--maximize window
-	love.window.maximize()
+	if Storage.fullscreen then
+		love.window.setFullscreen(true)
+	else
+		love.window.maximize()
+	end
 	
 	--build ui
 	MainUI = require("ui.chaoshead"):new()
@@ -61,4 +61,17 @@ function love.mousepressed(x, y, button, isTouch, presses)
 end
 function love.mousereleased(x, y, button, isTouch, presses)
 	Input.mousereleased(x,y, button, isTouch, presses)
+end
+
+if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
+	love.errorhandler = function(msg)
+		require("lldebugger").start()
+		error(msg,2)
+	end
+	local p = print
+	print = function(...)
+		require("lldebugger").start(false)
+		p(...)
+		require("lldebugger").stop()
+	end
 end

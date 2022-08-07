@@ -1,16 +1,14 @@
 # Chaoshead
 
-A WIP scripting interface/reverse engineering tool/level editor for [Levelhead](https://lvlhd.co) levels/stages,
+A WIP level editor/scripting interface/reverse engineering tool for [Levelhead](https://lvlhd.co) levels/stages,
 made using [LÖVE](http://www.love2d.org).
 
 What's allowed and not: https://www.bscotch.net/feedbag/levelhead/entries/62db1e2954be7407b6953856
-![](allowedStuff.png)
+![](resources/allowedStuff.png)
 I do recommend testing every broken limit though, to make sure you don't accidentally upload a level that can crash the game. I don't expect it, but this is kind of unexplored territory.
 
-As Chaoshead is still in development it is recommended to backup all your levels before using it
-(though so far it has only irrevocably corrupted the level it was interacting with,
-so perhaps only back-upping the specific level you're working on is enough).
-
+Chaoshead still has the occasional bug, consider making a backup of a level before editing it with Chaoshead. \
+There's a button that shows all the keybinds in the misc. tab. \
 Binary release that can be run without manually installing LÖVE can be found
 [somewhere in that bar on the right](https://github.com/tyoeer/Chaoshead/releases).
 
@@ -61,7 +59,7 @@ Scripts get provided access to the following globals:
     Does not update if you change the level or the mask.
     Modifications and overwriting get ignored (the new contents get constructed based on the new mask).
 
-For documentation on how to use these globals and other stuff, have a look at the [docs](docs/) folder.
+For documentation on how to use these globals and other stuff, have a look at the [docs/](docs/) folder.
 
 ## Useful links
 
@@ -84,6 +82,8 @@ There's also still parts that need to be reverse engineered in which case the He
 Though if you want to help program this thing, that's also possible.
 
 In any case, try looking at the Trello (linked above) for the things that still need to be done.
+
+A basic overview of the code architecture/what goes where can be found in [design.md](design.md)
 
 ### Data collecting tips
 

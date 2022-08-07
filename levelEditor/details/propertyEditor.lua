@@ -74,7 +74,7 @@ function UI:reloadWithWidth(width)
 		end
 		if mapType~="None" then
 			for i = P:getMin(id), P:getMax(id) do
-				if P:valueToMapping(id, i)==i then break end -- no mapped stuff here (or beyond)
+				if mapType=="Hybrid" and P:valueToMapping(id, i)==i then break end -- no mapped stuff here (or beyond)
 				self:addButtonEntry(self:formatValue(i), function()
 					self.editor:changeProperty(id, i)
 					MainUI:removeModal()
