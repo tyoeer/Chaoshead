@@ -171,25 +171,28 @@ function UI:onReload(list)
 		function B:update()
 			for _,v in ipairs(userCodes) do
 				local path = dataPath..v.."/save_data"
-				local time = NFS.getInfo(path).modtime
-				if time > lastTime then
-					lastTime = time
-					beep:stop()
-					beep:play()
-				end
-				local f = NFS.newFile(path)
-				local success,error = f:open("a")
-				if success then
-					f:close()
-				else
-					self.text = self.text .. "\n"..error
-					if not beep:isPlaying() then
+				local info = NFS.getInfo(path)
+				if info then
+					local time = info.modtime
+					if time > lastTime then
+						lastTime = time
+						beep:stop()
 						beep:play()
+					end
+					local f = NFS.newFile(path)
+					local success,error = f:open("a")
+					if success then
+						f:close()
+					else
+						self.text = self.text .. "\n"..error
+						if not beep:isPlaying() then
+							beep:play()
+						end
 					end
 				end
 			end
 		end
-		local beepr = B:new("Will beep when a save_data gets modified. Alt+F4 to stop.",0)
+		local beepr = B:new("Will beep when a save_data gets modified. Alt+F4 to stop.",0,Settings.theme.modal.listStyle.textStyle)
 		MainUI:setModal(beepr)
 	end)
 	
