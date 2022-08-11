@@ -521,12 +521,18 @@ function UI:mouseMoved(x,y,dx,dy)
 	self.placing = false
 end
 
-function UI:wheelMoved(x,y)
-	if y>0 then
+function UI:wheelMoved(sx,sy)
+	local ax,ay = self:getMouseWorldPos()
+	if sy>0 then
 		self.zoomFactor = self.zoomFactor * self.zoomSpeed
-	elseif y<0 then
+	elseif sy<0 then
 		self.zoomFactor = self.zoomFactor / self.zoomSpeed
 	end
+	local bx,by = self:getMouseWorldPos()
+	-- make sure the point under the cursor stays under the cursor
+	self.cameraX = self.cameraX + bx - ax
+	self.cameraY = self.cameraY + by - ay
+	--Prevent tiny little offsets from messing with lines when zoomed out
 	self.cameraX = math.roundPrecision(self.cameraX,self.zoomFactor)
 	self.cameraY = math.roundPrecision(self.cameraY,self.zoomFactor)
 end
