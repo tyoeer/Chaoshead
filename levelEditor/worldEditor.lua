@@ -40,10 +40,34 @@ function UI:reload(level)
 	self.level = level
 end
 
-function UI:getMouseTile(x,y)
-	x = self:toWorldX(x or self:getMouseX())
-	y = self:toWorldY(y or self:getMouseY())
+function UI:toWorldX(x)
+	x = x - self.width/2
+	x = x / self.zoomFactor
+	x = x - self.cameraX
+	return x
+end
+function UI:toWorldY(y)
+	y = y - self.height/2
+	y = y / self.zoomFactor
+	y = y - self.cameraY
+	return y
+end
+
+
+function UI:getWorldPos(x,y)
+	return self:toWorldX(x), self:toWorldY(y)
+end
+
+function UI:getMouseWorldPos()
+	return self:getWorldPos(self:getMousePos())
+end
+
+function UI:getTileAt(x,y)
 	return math.floor(x/TILE_SIZE), math.floor(y/TILE_SIZE)
+end
+
+function UI:getMouseTile()
+	return self:getTileAt(self:getMouseWorldPos())
 end
 
 function UI:posNearCorner(worldX,worldY)
@@ -60,18 +84,6 @@ function UI:posNearCorner(worldX,worldY)
 	return false
 end
 
-function UI:toWorldX(x)
-	x = x - self.width/2
-	x = x / self.zoomFactor
-	x = x - self.cameraX
-	return x
-end
-function UI:toWorldY(y)
-	y = y - self.height/2
-	y = y / self.zoomFactor
-	y = y - self.cameraY
-	return y
-end
 
 function UI:selectArea()
 	local fromX, fromY = math.floor(self.selectStartX/TILE_SIZE), math.floor(self.selectStartY/TILE_SIZE)
