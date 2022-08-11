@@ -16,7 +16,7 @@ The stuff on which the rest of CH is built.
   - `data/`: Wrappers around the data files.
   - `lhs/`: All the code directly dealing with a `.lhs` file.
   - `level/`: Everything dealing with the Lua representation of a LH level.
-    - `limits.lua`: A list of function for checking various limits imposed by several different things.
+    - `limits.lua`: A list of functions for checking various limits imposed by several different things.
 - `ui/`: The main UI system, and UI parts that aren't their own module. Has its own design.md describing (some of) the design of the UI system.
 - `settings/`: The settings & storage systems.
   - `init.lua`: The actual code. The other files are default settings.
