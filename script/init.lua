@@ -12,7 +12,8 @@ function S.errorHandler(message)
 	local fullTrace = debug.traceback("",2):gsub("\n[^\n]+$", "")
 	print(fullTrace)
 	--cut of the part of the trace that goes into the script
-	local index = fullTrace:find("%s+%[C%]: in function 'xpcall'%s+script/[a-zA-Z/]+.lua:%d+:")
+	--Match both type of slashes because of https://github.com/tomblind/local-lua-debugger-vscode/issues/69
+	local index = fullTrace:find("%s+%[C%]: in function 'xpcall'%s+script[\\/][a-zA-Z/\\]+.lua:%d+:")
 	local trace = fullTrace:sub(1,index-1)
 	--trace = fullTrace
 	return {message, trace}
