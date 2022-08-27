@@ -45,9 +45,11 @@ function UI:preDraw()
 	love.graphics.clear(Settings.theme.main.background)
 end
 
-function UI:onInputActivated(name,group,isCursorBOund)
+function UI:onInputActivated(name,group,isCursorBound)
 	if group=="main" and name=="toggleFullscreen" then
 		self:toggleFullscreen()
+	else
+		UI.super.onInputActivated(self, name,group,isCursorBound)
 	end
 end
 
