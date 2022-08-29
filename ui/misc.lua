@@ -109,6 +109,23 @@ function UI:onReload(list)
 	
 	-- CAMPAIGN
 	
+	list:addButtonEntry("Unpack campaign_hardfile",function()
+		local i =love.filesystem.getInfo("campaign_hardfile")
+		if i then
+			require("levelhead.campaign.packing").unpack("campaign_test")
+		else
+			print("No campaign_hardfile found!")
+		end
+	end)
+	
+	list:addButtonEntry("Pack campaign_hardfile",function()
+		local i =love.filesystem.getInfo("campaign_test")
+		if i then
+			require("levelhead.campaign.packing").pack("campaign_test")
+		else
+			print("No campaign_hardfile found!")
+		end
+	end)
 	
 	list:addButtonEntry("Decompress campaign (move the hardfile to the chaoshead data folder first)",function()
 		local i =love.filesystem.getInfo("campaign_hardfile")
