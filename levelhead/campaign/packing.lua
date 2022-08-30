@@ -3,7 +3,8 @@ local LHS = require("levelhead.lhs")
 
 local h = string.char
 local PREFIX_EXPECTED = h(0xFB)..h(0x08)..string.rep(h(0x00),6)..h(0x12)
-local SEPERATOR_EXPECTED = h(0x57)..h(0x5F)..string.rep(h(0x00),3)
+local SEPERATOR_A_EXPECTED = h(0x57)
+local SEPERATOR_B_EXPECTED = h(0x00)..h(0x00)
 
 local function unpack(to)
 	if to:sub(-1,1)~="/" then
@@ -82,13 +83,24 @@ local function unpack(to)
 	
 	-- SEPERATOR
 	
-	local seperator = get("<c5")
-	if seperator ~= SEPERATOR_EXPECTED then
+	local seperatorA = get("<c1")
+	if seperatorA ~= SEPERATOR_A_EXPECTED then
 		print("Seperator not as expected!")
 	end
-	local success, mes = love.filesystem.write(to.."seperator.bin", seperator)
+	local success, mes = love.filesystem.write(to.."seperatorA.bin", seperatorA)
 	if not success then
-		error("Failed writing "..to.."seperator.bin: "..mes)
+		error("Failed writing "..to.."seperatorA.bin: "..mes)
+	end
+	
+	local expectedLevelCount = get("<I2")
+	
+	local seperatorB = get("<c2")
+	if seperatorB ~= SEPERATOR_B_EXPECTED then
+		print("Seperator not as expected!")
+	end
+	local success, mes = love.filesystem.write(to.."seperatorB.bin", seperatorB)
+	if not success then
+		error("Failed writing "..to.."seperatorB.bin: "..mes)
 	end
 	
 	-- LEVELS
@@ -96,6 +108,7 @@ local function unpack(to)
 	if not love.filesystem.createDirectory(to.."levels/") then
 		error("Failed creating levels directory at "..to)
 	end
+	local nLevels = 0
 	while get("B",true)==0x1C do
 		get("B") -- move internal offset
 		local marker = get("z")
@@ -105,6 +118,11 @@ local function unpack(to)
 		if not success then
 			error("Failed writing at"..path..": "..mes)
 		end
+		nLevels = nLevels + 1
+	end
+	
+	if nLevels ~= expectedLevelCount then
+		print("Expected "..expectedLevelCount.." levels, instead found "..nLevels)
 	end
 	
 	-- CHECK HASH IS COMING
@@ -164,28 +182,44 @@ local function pack(from, compressionLevel)
 	
 	-- SEPERATOR
 	
-	local seperator, err = love.filesystem.read(from.."seperator.bin")
-	if not seperator then
-		error("Failed reading seperator: "..err)
+	local seperatorA, err = love.filesystem.read(from.."seperatorA.bin")
+	if not seperatorA then
+		error("Failed reading seperatorA: "..err)
 	end
-	if #seperator~=5 then
-		print("WARN: seperator is not 5 bytes long")
+	if #seperatorA~=1 then
+		print("WARN: seperatorA is not 1 byte long")
 	end
-	putRaw(seperator)
+	putRaw(seperatorA)
+	
+	putRaw("")
+	local levelCountPos = #aggregate
+	
+	local seperatorB, err = love.filesystem.read(from.."seperatorB.bin")
+	if not seperatorB then
+		error("Failed reading seperatorB: "..err)
+	end
+	if #seperatorB~=2 then
+		print("WARN: seperatorB is not 2 bytes long")
+	end
+	putRaw(seperatorB)
 	
 	-- LEVELS
 	
 	local levels = love.filesystem.getDirectoryItems(from.."levels/")
+	local nLevels = 0
 	for _,file in ipairs(levels) do
 		local marker = file:match("(.+)%.lhs")
 		local level, err = love.filesystem.read(from.."levels/"..file)
 		if not level then
 			error("Failed reading data at "..file..": "..err)
 		end
+		nLevels = nLevels + 1
 		put("B",0x1C)
 		put("z",marker)
 		put("<s4",level)
 	end
+	
+	aggregate[levelCountPos] = love.data.pack("string","<I2",nLevels)
 	
 	-- HASH
 	
