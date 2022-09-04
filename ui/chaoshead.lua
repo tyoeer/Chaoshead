@@ -1,5 +1,6 @@
 local TABS = require("ui.tools.tabs")
 local WORKSHOP = require("levelEditor.workshop.workshop")
+local CAMPAIGNS = require("campaignEditor.overview.overview")
 local DATA_EXPLORER = require("dataExplorer.overview")
 local MISC = require("ui.misc")
 local LH_MISC = require("levelhead.misc")
@@ -12,6 +13,9 @@ function UI:initialize()
 	
 	self.workshop = WORKSHOP:new()
 	self.mainTabs:addTab(self.workshop)
+	
+	self.campaigns = CAMPAIGNS:new()
+	self.mainTabs:addTab(self.campaigns)
 	
 	self.dataExplorer = DATA_EXPLORER:new()
 	self.mainTabs:addTab(self.dataExplorer)

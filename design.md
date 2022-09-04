@@ -7,6 +7,8 @@ Independent pieces with their own goal. Have their own top level tab.
   - `details/`: All the stuff that appears in the left pane of the level editor.
 - `dataExplorer/`: Module for investigating/reverse engineering misc. stuff in the `PlatformerBuilder` folder.
   - `viewers/`: The lasses that display the contents of a file in various ways.
+- `campaignEditor/`: Module for editing campaigns.
+  - `overview/`: All the code that doesn't deal with editing an individual campaign
 
 ## Core systems
 
