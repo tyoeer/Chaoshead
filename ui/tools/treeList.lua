@@ -89,6 +89,7 @@ end
 
 function UI:reload()
 	self:resetList()
+	self.dataCache = self:toCache(self.dataRetriever:getRootEntries())
 	self:buildList(self.dataCache,0)
 	self:minimumHeightChanged()
 end
