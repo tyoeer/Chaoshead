@@ -1,5 +1,9 @@
 if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
 	require("lldebugger").start()
+	-- Extra error because it otherwise misses them if they happen during love.load()
+	function love.errorhandler(msg)
+		error(msg,2)
+	end
 end
 
 function love.load(args)
