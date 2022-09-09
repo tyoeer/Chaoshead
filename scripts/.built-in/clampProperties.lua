@@ -11,14 +11,12 @@ local function clamp(obj)
 	for prop in obj:iterateProperties() do
 		local min, max = P:getMin(prop), P:getMax(prop)
 		local val = obj:getPropertyRaw(prop)
-		print(prop, val)
 		if val < min then
 			val = min
 		elseif val > max then
 			val = max
 		end
-		print(val, min, max)
-		obj:setPropertyRaw(val)
+		obj:setPropertyRaw(prop,val)
 	end
 end
 
