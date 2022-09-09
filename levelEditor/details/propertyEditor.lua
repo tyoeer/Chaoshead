@@ -1,15 +1,6 @@
 local P = require("levelhead.data.properties")
 local ParsedInput = require("ui.layout.parsedInput")
 
-local function intParser(text)
-	if text:match("%.") then
-		return false, "Not a valid integer"
-	else
-		return tonumber(text), "Not a valid integer"
-	end
-end
-
-
 local UI = Class(require("levelEditor.details.property"))
 
 local theme = Settings.theme.details
@@ -59,7 +50,7 @@ function UI:reloadWithWidth(width)
 		
 		if self.propertyList:isRangeProperty() then -- aka numerical
 			if not self.input then
-				self.input = ParsedInput:new(P:getSaveFormat(id)=="C" and tonumber or intParser, theme.inputStyle)
+				self.input = ParsedInput:new(tonumber, theme.inputStyle)
 			end
 			self:addUIEntry(self.input)
 			self:addPropertyChanger(id, "=")
