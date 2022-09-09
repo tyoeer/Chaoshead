@@ -14,8 +14,10 @@ function UI:initialize()
 	self.workshop = WORKSHOP:new()
 	self.mainTabs:addTab(self.workshop)
 	
-	self.campaigns = CAMPAIGNS:new()
-	self.mainTabs:addTab(self.campaigns)
+	if VERSION=="DEV" then
+		self.campaigns = CAMPAIGNS:new()
+		self.mainTabs:addTab(self.campaigns)
+	end
 	
 	self.dataExplorer = DATA_EXPLORER:new()
 	self.mainTabs:addTab(self.dataExplorer)
