@@ -60,7 +60,7 @@ function UI:buildList(data,indentLevel)
 					indent.."V "..v.title,
 					function()
 						v.open = false
-						self:reload()
+						self:rebuildList()
 					end
 				)
 				self:buildList(v.children, indentLevel+1)
@@ -72,7 +72,7 @@ function UI:buildList(data,indentLevel)
 						if not v.children then
 							v.children = self:toCache(self.dataRetriever:getChildren(v.data))
 						end
-						self:reload()
+						self:rebuildList()
 					end
 				)
 			end
@@ -87,11 +87,15 @@ function UI:buildList(data,indentLevel)
 	end
 end
 
-function UI:reload()
+function UI:rebuildList()
 	self:resetList()
-	self.dataCache = self:toCache(self.dataRetriever:getRootEntries())
 	self:buildList(self.dataCache,0)
 	self:minimumHeightChanged()
+end
+
+function UI:reload()
+	self.dataCache = self:toCache(self.dataRetriever:getRootEntries())
+	self:rebuildList()
 end
 
 return UI
