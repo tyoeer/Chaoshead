@@ -1,4 +1,3 @@
-local Text = require("ui.widgets.text")
 local Button = require("ui.widgets.button")
 
 local UI = Class("ScrollbarUI",require("ui.base.container"))
@@ -42,7 +41,11 @@ function UI:updateScrollButton()
 	which gets clamped(math.min) down to 1 to prevent the scroll button from becoming bigger than it's available area
 	which then gets multiplied by the area available to the scroll button to get its height
 	]]
-	local height = math.min(1, self.height / self.contents.height ) * self.scrollAreaHeight
+	local displayContentsRatio = self.height / self.contents.height
+	if displayContentsRatio~=displayContentsRatio then--test for NaN: content height could still be 0, in which case a NaN would scroll it all the way to the bottom
+		displayContentsRatio = 1
+	end
+	local height = math.min(1, displayContentsRatio) * self.scrollAreaHeight
 	self.scrollButton:resize(theme.width, math.floor(0.5+height) )
 	--math.min to prevent scrolling beyond the height of the contents (it could have been reduced due to an update in them)
 	self:scrollToOffset(math.min(self.contentOffset,self.contents.height))
