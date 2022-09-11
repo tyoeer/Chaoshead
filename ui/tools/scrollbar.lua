@@ -42,10 +42,10 @@ function UI:updateScrollButton()
 	which gets clamped(math.min) down to 1 to prevent the scroll button from becoming bigger than it's available area
 	which then gets multiplied by the area available to the scroll button to get its height
 	]]
-	local height = math.min(1, self.height / self.contents:getMinimumHeight() ) * self.scrollAreaHeight
+	local height = math.min(1, self.height / self.contents.height ) * self.scrollAreaHeight
 	self.scrollButton:resize(theme.width, math.floor(0.5+height) )
 	--math.min to prevent scrolling beyond the height of the contents (it could have been reduced due to an update in them)
-	self:scrollToOffset(math.min(self.contentOffset,self.contents:getMinimumHeight()))
+	self:scrollToOffset(math.min(self.contentOffset,self.contents.height))
 end
 
 function UI:scroll(scrollButtonOffset)
@@ -64,7 +64,7 @@ function UI:scroll(scrollButtonOffset)
 		self.contentOffset = math.floor(
 			self.scrollButtonOffset
 			/ (self.scrollAreaHeight-self.scrollButton.height)
-			* (self.contents:getMinimumHeight()-self.height)
+			* (self.contents.height-self.height)
 		)
 		self.contents:move(0,-self.contentOffset)
 	end
@@ -77,7 +77,7 @@ function UI:scrollToOffset(offset)
 	]]
 	self:scroll(math.floor(0.5+
 		offset
-		/ (self.contents:getMinimumHeight()-self.height)
+		/ (self.contents.height-self.height)
 		* (self.scrollAreaHeight-self.scrollButton.height)
 	))
 end
