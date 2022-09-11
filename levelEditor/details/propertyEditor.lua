@@ -64,6 +64,7 @@ function UI:reload()
 	local both = cur.."  "..values
 	local _, lines = love.graphics.getFont():getWrap(both, self.width)
 	if #lines > 1 then
+		local _, lines = love.graphics.getFont():getWrap(values, self.width)
 		self.lines = #lines + 1
 		self:addTextEntry(cur)
 		self:addTextEntry(values, 1)
@@ -114,11 +115,19 @@ function UI:getMinimumHeight(width)
 	--use the method from the List class
 	local base = UI.super.super.getMinimumHeight(self, width)
 	local font = love.graphics.getFont()
-	local lineHeight = font:getHeight() * font:getLineHeight() + self.style.entryMargin
+	local lineHeight = font:getHeight() * font:getLineHeight()
 	local _, lines = font:getWrap("Currently: "..self:getValues(), width)
 	local n = #lines
-	if #lines>1 then
-		n = n + 1
+	if n>1 then
+		local _, lines = font:getWrap(self:getValues(), width)
+		n = #lines + 1
+		if self.lines==1 then
+			--we used 1 text widget, but for this width should use 2
+			base = base + self.style.entryMargin
+		end
+	elseif self.lines>1 then
+		--we used 2 text widgets, but for this width should use only 1
+		base = base - self.style.entryMargin
 	end
 	return base + lineHeight*(n-self.lines)
 end

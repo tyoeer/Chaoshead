@@ -80,9 +80,12 @@ end
 
 function UI:getMinimumHeight(width)
 	local font = love.graphics.getFont()
-	local _, lines = font:getWrap(self.name.." "..self.values, width)
+	local _, lines = font:getWrap(self.name.."  "..self.values, width)
 	if #lines > 1 then
-		return 2 * font:getHeight() * font:getLineHeight() + self.style.entryMargin
+		local _, nLines = font:getWrap(self.name, width)
+		local _, vLines = font:getWrap(self.values, width-self.style.textIndentSize)
+		local lines = #nLines + #vLines
+		return lines * font:getHeight() * font:getLineHeight() + self.style.entryMargin
 	else
 		return font:getHeight() * font:getLineHeight()
 	end
