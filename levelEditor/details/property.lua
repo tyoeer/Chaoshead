@@ -1,8 +1,11 @@
 local P = require("levelhead.data.properties")
 
-local UI = Class(require("ui.layout.list"))
+local UI = Class("PropertyDetailsUI",require("ui.layout.list"))
 
 function UI:initialize(propertyList,listStyle)
+	-- self.name = ""
+	-- self.values = ""
+	
 	UI.super.initialize(self,listStyle)
 	
 	self:setPropertyList(propertyList)
@@ -59,32 +62,30 @@ function UI:getValues()
 end
 
 function UI:reload()
-	self:reloadWithWidth(self.width)
-end
-
-function UI:reloadWithWidth(width)
 	self:resetList()
-	if self.propertyList then
-		local name = self:getName()..":"
-		local values = self:getValues()
-		local both = name.."  "..values
-		local _, lines = love.graphics.getFont():getWrap(both, width)
-		if #lines > 1 then
-			self:addTextEntry(name)
-			self:addTextEntry(values, 1)
-		else
-			self:addTextEntry(both)
-		end
+	
+	self.name = self:getName()..":"
+	self.values = self:getValues()
+	local both = self.name.."  "..self.values
+	local _, lines = love.graphics.getFont():getWrap(both, self.width)
+	if #lines > 1 then
+		self:addTextEntry(self.name)
+		self:addTextEntry(self.values, 1)
+	else
+		self:addTextEntry(both)
 	end
+	
+	self:minimumHeightChanged()
 end
 
 function UI:getMinimumHeight(width)
-	--Workaround until I make a better system for getMinimumHeight in list when their items might change depending on their width
-	-- Probable solution: don't use a list
-	self:reloadWithWidth(width)
-	local out = UI.super.getMinimumHeight(self, width)
-	self:reloadWithWidth(self.width)
-	return out
+	local font = love.graphics.getFont()
+	local _, lines = font:getWrap(self.name.." "..self.values, width)
+	if #lines > 1 then
+		return 2 * font:getHeight() * font:getLineHeight() + self.style.entryMargin
+	else
+		return font:getHeight() * font:getLineHeight()
+	end
 end
 
 function UI:resized(...)
