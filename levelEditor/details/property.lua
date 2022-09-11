@@ -74,7 +74,6 @@ function UI:reload()
 	else
 		self:addTextEntry(both)
 	end
-	
 	self:minimumHeightChanged()
 end
 
@@ -91,11 +90,13 @@ function UI:getMinimumHeight(width)
 	end
 end
 
-function UI:resized(...)
-	UI.super.resized(self, ...)
-	--reload on resize so we can change whether or not some properties and their values
-	-- are put on 1 line or 2
-	self:reload()
+function UI:resized(w,h)
+	local oldWidth = self.width
+	UI.super.resized(self, w,h)
+	if w~=oldWidth then
+		--reload so we can change whether or not some properties and their values are put on 1 or more lines
+		self:reload()
+	end
 end
 
 return UI
