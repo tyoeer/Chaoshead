@@ -23,14 +23,16 @@ function UI:setBlock(block)
 	if self.blocking==block then return end
 	self.blocking = block
 	if block then
-		--self:removeChild(self.child)
-		--it gets removed automatically
+		--prevent potential double resizes where the contents first resize to blockRoot initial size, then back to their proper one
+		-- cant use blockRoot:resize() first because it expects to have a child
+		self.blockRoot.width = self.width
+		self.blockRoot.height = self.height
+		--self:removeChild(self.child) not neccesary, it gets removed automatically
 		self.blockRoot:setChild(self.contents)
 		--make sure the child keeps the right size
 		self.blockRoot:resize(self.width,self.height)
 	else
-		--self.blockRoot:unsetChild()
-		--it gets unset automatically
+		--self.blockRoot:unsetChild() not neccesary, it gets unset automatically
 		self:setChild(self.contents)
 	end
 end

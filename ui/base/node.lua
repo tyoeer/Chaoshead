@@ -37,9 +37,11 @@ end
 --actions on this UI to be called by it's parent
 
 function UI:resize(width,height)
-	self.width = width
-	self.height = height
-	self:resized(width,height)
+	if self.width~=width or self.height~=height then
+		self.width = width
+		self.height = height
+		self:resized(width,height)
+	end
 end
 
 function UI:move(x,y)
