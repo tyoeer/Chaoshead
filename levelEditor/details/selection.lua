@@ -1,7 +1,7 @@
 local PUI = require("levelEditor.details.property")
 local PEDIT = require("levelEditor.details.propertyEditor")
 
-local UI = Class(require("ui.tools.details"))
+local UI = Class("SelectionDetailsUI",require("ui.tools.details"))
 
 function UI:initialize(tracker)
 	--it gets (re)loaded in setSelectionTracker
@@ -39,7 +39,7 @@ function UI:onReload(list)
 	list:resetList()
 	local s = self.selection
 	local c = s.contents
-	--counts + filters
+	--counts + layer filters
 	do
 		list:addTextEntry("Tiles: "..s.mask.nTiles)
 		list:addButtonEntry("Deselect all",function()

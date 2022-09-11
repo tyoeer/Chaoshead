@@ -6,7 +6,7 @@ local MISC = require("ui.misc")
 local LH_MISC = require("levelhead.misc")
 local NFS = require("libs.nativefs")
 
-local UI = Class(require("ui.tools.modal"))
+local UI = Class("ChaosheadUI",require("ui.tools.modal"))
 
 function UI:initialize()
 	self.mainTabs = TABS:new()
