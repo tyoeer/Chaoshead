@@ -10,6 +10,7 @@ function UI:initialize(child)
 	UI.super.initialize(self)
 	--self.modal
 	--self.cancelAction
+	--self.oldCursor
 	self.stack = {}
 	--the stuff behind the modal
 	self.main = BLOCK:new(child, theme.blockStyle)
@@ -36,9 +37,13 @@ function UI:setModal(ui, cancelAction, box)
 	if self.modal then
 		table.insert(self.stack, {
 			modal = self.modal,
-			cancelAction = self.cancelAction
+			cancelAction = self.cancelAction,
+			cursor = love.mouse.getCursor(),
 		})
 		self:removeModalRaw()
+	else
+		self.oldCursor = love.mouse.getCursor()
+		love.mouse.setCursor()
 	end
 	
 	self.cancelAction = cancelAction
@@ -65,6 +70,9 @@ function UI:removeModal()
 	if #self.stack > 0 then
 		local old = table.remove(self.stack)
 		self:setModal(old.modal, old.cancelAction, false)
+		love.mouse.setCursor(old.cursor)
+	else
+		love.mouse.setCursor(self.oldCursor)
 	end
 end
 
