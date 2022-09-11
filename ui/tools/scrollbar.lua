@@ -31,8 +31,8 @@ function UI:initialize(contents)
 		self.dragging = true
 	end, theme.buttonStyle, true)
 	self:addChild(self.scrollButton)
-	self:updateScrollButton()
 	
+	self:updateScrollButton()
 end
 
 function UI:updateScrollButton()
