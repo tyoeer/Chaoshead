@@ -8,9 +8,9 @@ local theme = Settings.theme.details
 function UI:initialize(propertyList, editor)
 	self.input = ParsedInput:new(tonumber, theme.inputStyle)
 	self.editor = editor
-	self.filter = false
-	UI.super.initialize(self,propertyList,theme.listStyle)
+	self.filtering = false
 	self.lines = 0
+	UI.super.initialize(self,propertyList,theme.listStyle)
 end
 
 function UI:addPropertyChanger(id, op)
@@ -31,8 +31,13 @@ function UI:addFilter(op)
 	self:addButtonEntry(op, function()
 		local v = self.input:getParsed()
 		if v then
-			-- TODO do thingy
-			self:reload()
+			local propList = self.editor:filter(self.propertyList.propId,v, op)
+			if not propList then
+				--filtered out every object with this modal
+				MainUI:removeModal()
+				return
+			end
+			self:setPropertyList(propList) --also reloads
 		end
 	end)
 end
@@ -43,11 +48,21 @@ function UI:reload()
 	local id = self.propertyList.propId
 	local mapType = P:getMappingType(id)
 	
-	self:addButtonEntry(self.filter and "Filtering" or "Editing",function()
-		self.filter = not self.filter
-		if self.filter then
+	self:addButtonEntry(self.filtering and "Filtering" or "Editing", function()
+		self.filtering = not self.filtering
+		if self.filtering then
 			self.input = ParsedInput:new(function(str)
-				return false, "TODO"
+				if self.propertyList:isRangeProperty() then
+					-- allow numbers
+					local n = tonumber(str)
+					if n then
+						return n
+					end
+				end
+				if P:isValidMapping(id, str) then
+					return P:mappingToValue(id, str)
+				end
+				return false, "Entered value is neither a number nor a valid property value"
 			end, theme.inputStyle)
 		else
 			self.input = ParsedInput:new(tonumber, theme.inputStyle)
@@ -74,14 +89,30 @@ function UI:reload()
 	end
 	
 	self:addTextEntry(" ") -- spacing
-	if self.filter then
+	if self.filtering then
 		self:addUIEntry(self.input)
+		
+		self:addTextEntry("") -- spacing
+		
 		self:addFilter("==")
 		self:addFilter("!=")
-		self:addFilter(">")
-		self:addFilter(">=")
-		self:addFilter("<")
-		self:addFilter("<=")
+		if self.propertyList:isRangeProperty() then
+			self:addFilter(">")
+			self:addFilter(">=")
+			self:addFilter("<")
+			self:addFilter("<=")
+		end
+		
+		self:addTextEntry("") -- spacing
+		
+		if mapType~="None" then
+			for i = P:getMin(id), P:getMax(id) do
+				if mapType=="Hybrid" and P:valueToMapping(id, i)==i then break end -- no mapped stuff here (or beyond)
+				self:addButtonEntry(self:formatValue(i), function()
+					self.input:setRaw(P:valueToMapping(id, i))
+				end)
+			end
+		end
 	else
 		if self.propertyList:isRangeProperty() then -- aka numerical
 			self:addUIEntry(self.input)

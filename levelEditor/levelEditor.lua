@@ -164,11 +164,41 @@ function UI:deselectAll()
 	end
 end
 
+-- filter
+
 function UI:removeSelectionLayer(layer)
 	self.selection:removeLayer(layer)
 	self.selectionDetails:reload()
 end
 
+function UI:filter(prop, filterValue, operation)
+	if self.selection then
+		local pl = self.selection.contents.properties[prop]
+		for obj in pl.pool:iterate() do
+			local actualValue = obj:getPropertyRaw(prop)
+			local allow = true
+			if operation=="==" then
+				allow = actualValue==filterValue
+			elseif operation=="!=" then
+				allow = actualValue~=filterValue
+			elseif operation==">" then
+				allow = actualValue>filterValue
+			elseif operation==">=" then
+				allow = actualValue>=filterValue
+			elseif operation=="<" then
+				allow = actualValue<filterValue
+			elseif operation=="<=" then
+				allow = actualValue<=filterValue
+			end
+			if not allow then
+				--edit mask to prevent update at every obj that gets edited
+				self.selection.mask:remove(obj.x, obj.y)
+			end
+		end
+		self:refreshSelection() --handles mask changes
+		return self.selection.contents.properties[prop] -- so the modal can update itself
+	end
+end
 
 -- do stuff with the selection
 

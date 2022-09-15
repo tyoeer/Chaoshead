@@ -37,6 +37,11 @@ function UI:showError(mes)
 	self.errorMessage:setText(mes)
 end
 
+function UI:setRaw(str)
+	self.input:setText(str)
+	self:contentsChanged()
+end
+
 function UI:getParsed()
 	return self.parsed
 end
