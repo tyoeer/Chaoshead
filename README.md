@@ -3,10 +3,6 @@
 A WIP level editor/scripting interface/reverse engineering tool for [Levelhead](https://lvlhd.co) levels/stages,
 made using [LÖVE](http://www.love2d.org).
 
-What's allowed and not: https://www.bscotch.net/feedbag/levelhead/entries/62db1e2954be7407b6953856
-![](resources/allowedStuff.png)
-I do recommend testing every broken limit though, to make sure you don't accidentally upload a level that can crash the game. I don't expect it, but this is kind of unexplored territory.
-
 Chaoshead still has the occasional bug, consider making a backup of a level before editing it with Chaoshead. \
 There's a button that shows all the keybinds in the misc. tab. \
 Binary release that can be run without manually installing LÖVE can be found
@@ -15,6 +11,29 @@ Binary release that can be run without manually installing LÖVE can be found
 If you have any questions, feel free to ask.
 
 Chaoshead Update Awareness Day is annually on february 27, in order to spread awareness about Chaoshead updates.
+
+What's allowed and not: https://www.bscotch.net/feedbag/levelhead/entries/62db1e2954be7407b6953856
+![](resources/allowedStuff.png)
+[Overview of all the limits so far (and how to break them)](http://levelmod.epizy.com/wiki/doku.php?id=blocked_stuff)
+I do recommend testing every broken limit though, to make sure you don't accidentally upload a level that can crash the game. I don't expect it, but this is kind of unexplored territory.
+
+### Main Editor Features
+
+- Resize at all four corners
+- Edit properties of multiple objects at once (supporting addition, subtraction, multiplication, and division)
+- Selection:
+	- No limits
+	- Supports paths
+	- You can select air
+	- You can limit your selection to only layers you want
+	- Filter the selection based on properties
+- Copy/cut/paste:
+	- Supports everything the selection supports: paths, layer selection, air, etc.
+	- Works between levels
+- Script support:
+	- User defined scripts that let you do everything you want
+	- Built-in scripts (see [further down this readme](#built-in-scripts))
+		- E.g. Excel-like auto-fill
 
 ### Currently not supported
 
@@ -30,7 +49,7 @@ Chaoshead Update Awareness Day is annually on february 27, in order to spread aw
 ### Built-in scripts
 
 Chaoshead comes with some built-in scripts, which are shown in the `.built-in` folder in the scripting interface.
-More information about the scripts can be found in comments at their top. Scripts files can be found in the [scripts/.built-in](scripts/.built-in)
+More information about the scripts can be found in comments at the top of their files. Their files can be found in the [scripts/.built-in](scripts/.built-in)
 
 ## Terminology
 
