@@ -6,13 +6,13 @@ return {
 	main = {
 		background = MAIN_BG,
 	},
-	levelEditor = {
+	editor = {
 		detailsWorldDivisionStyle = {
 			divisionRatio = 0.25,
 			dividerColor = {1,1,1},
 			dividerWidth = 1,
 		},
-		colors = {
+		level = {
 			worldBackground = {0,0.5,1},
 			outsideWorld = {0.1, 0.1, 0.1},
 			resizeCircles = {0.5,0.5,0.5, 0.5},
@@ -38,6 +38,10 @@ return {
 				connection = {0,0,1, 0.5},
 				selected = {1,1,1},
 			},
+		},
+		campaign = {
+			background = {0.2, 0, 0.8},
+			origin = {1,1,1},
 		},
 	},
 	tabs = {

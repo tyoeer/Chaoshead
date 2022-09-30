@@ -22,7 +22,7 @@ local function isHigherEquals(a,b)
 	return true
 end
 
-local UPDATE_SETTINGS_AFTER = "2.3.1"
+local UPDATE_SETTINGS_AFTER = "2.9.0"
 
 local old = Storage.version
 Storage.version = VERSION

@@ -13,7 +13,7 @@ function UI:onReload(list)
 	list:addButtonEntry(
 		"Open in editor",
 		function()
-			self.overview:openEditor(self.path)
+			self.overview:openEditor(self.subpath)
 		end
 	)
 	list:addButtonEntry(

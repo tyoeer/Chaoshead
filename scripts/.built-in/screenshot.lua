@@ -10,7 +10,7 @@ local ZOOM = 4
 local TEXT = false
 
 ---@diagnostic disable-next-line: undefined-global
-local bg = Settings.theme.levelEditor.colors.worldBackground
+local bg = Settings.theme.editor.level.worldBackground
 
 local canvas = love.graphics.newCanvas(level:getWidth()*TILE_SIZE/ZOOM, level:getHeight()*TILE_SIZE/ZOOM)
 

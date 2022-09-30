@@ -1,6 +1,6 @@
 local TABS = require("ui.tools.tabs")
 local SELECTOR = require("campaignEditor.overview.selector")
---local CAMPAIGN_EDITOR = require("campaignEditor.campaignEditor")
+local CAMPAIGN_EDITOR = require("campaignEditor.mapEditor")
 
 local UI = Class("CampaignSelectorUI",require("ui.base.proxy"))
 
@@ -22,9 +22,11 @@ function UI:openEditor(subpath)
 	--open the editor
 	local success, editor = xpcall(
 		function()
-			return CAMPAIGN_EDITOR:new(subpath,self)
+			local c = require("levelhead.campaign.campaign"):new() -- TODO move into to be created campaignRoot
+			c:load(self.FOLDER..subpath)
+			return CAMPAIGN_EDITOR:new(c,self)
 		end,
-		CAMPAIGN_EDITOR.loadErrorHandler
+		require("levelEditor.levelRoot").loadErrorHandler
 	)
 	if success then
 		self.child:addTab(editor)

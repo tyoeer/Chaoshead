@@ -9,7 +9,7 @@ function UI:initialize(overview)
 	self.overview = overview
 	self.folder = overview.FOLDER --can't require it because that would lead to recursive require()s
 	UI.super.initialize(self)
-	self.title = "Level Selection"
+	self.title = "Campaign Selection"
 end
 
 function UI:getRootEntries()

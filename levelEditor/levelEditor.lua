@@ -12,7 +12,7 @@ local LevelDetails = require("levelEditor.details.level")
 
 local UI = Class("LevelEditorUI",require("ui.base.proxy"))
 
-local theme = Settings.theme.levelEditor
+local theme = Settings.theme.editor
 
 function UI:initialize(level,root)
 	self.level = level

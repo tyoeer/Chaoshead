@@ -84,7 +84,7 @@ end
 
 -- DRAWING
 
-local colors = Settings.theme.levelEditor.colors
+local colors = Settings.theme.editor.level
 
 function S:drawTile(x,y)
 	local xx, yy = x*TILE_SIZE, y*TILE_SIZE

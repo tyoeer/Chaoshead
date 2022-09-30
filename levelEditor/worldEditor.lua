@@ -2,7 +2,7 @@ local Clipboard = require("tools.clipboard")
 
 local UI = Class(require("ui.base.node"))
 
-local theme = Settings.theme.levelEditor
+local theme = Settings.theme.editor
 
 function UI:initialize(editor)
 	self.editor = editor
@@ -249,7 +249,7 @@ function UI:drawObjects(level, startX, startY, endX, endY)
 end
 
 function UI:draw()
-	love.graphics.clear(theme.colors.outsideWorld)
+	love.graphics.clear(theme.level.outsideWorld)
 	--not exactly one to compensate for float weirdness
 	if self.zoomFactor < 0.999 then
 		love.graphics.setLineStyle("smooth")
@@ -263,7 +263,7 @@ function UI:draw()
 		love.graphics.translate(self.cameraX, self.cameraY)
 		
 		--bg
-		love.graphics.setColor(theme.colors.worldBackground)
+		love.graphics.setColor(theme.level.worldBackground)
 		love.graphics.rectangle(
 			"fill",
 			self.level.left *TILE_SIZE, self.level.top *TILE_SIZE,
@@ -272,7 +272,7 @@ function UI:draw()
 		
 		--resize circles
 		if not self.holding then
-			love.graphics.setColor(theme.colors.resizeCircles)
+			love.graphics.setColor(theme.level.resizeCircles)
 			--ipairs used because for-looping with the difference as step size gets stuck when the difference is 0
 			for _,cornerX in ipairs({ self.level.left, self.level.right+1}) do
 				for _,cornerY in ipairs({self.level.top, self.level.bottom+1}) do
@@ -295,7 +295,7 @@ function UI:draw()
 			local drawArea = math.abs( (startX-endX+1) * (startY-endY+1) )
 			local levelArea = self.editor.hand:getWidth() * self.editor.hand:getHeight()
 			
-			love.graphics.setColor(theme.colors.handHighlight)
+			love.graphics.setColor(theme.level.handHighlight)
 			if drawArea >= levelArea then
 				for x = 1, self.editor.hand:getWidth(), 1 do
 					for y = 1, self.editor.hand:getHeight(), 1 do
@@ -329,7 +329,7 @@ function UI:draw()
 			--area being selected
 			if self.selecting == "area" then
 				love.graphics.setLineWidth(2)
-				love.graphics.setColor(theme.colors.selectingArea)
+				love.graphics.setColor(theme.level.selectingArea)
 				love.graphics.rectangle("line",
 					self.selectStartX +0.5, self.selectStartY+0.5,
 					self:toWorldX(self:getMouseX()) - self.selectStartX-1,
@@ -339,7 +339,7 @@ function UI:draw()
 			
 			--highlight
 			local x,y = self:getMouseTile()
-			love.graphics.setColor(theme.colors.hoverHighlight)
+			love.graphics.setColor(theme.level.hoverHighlight)
 			love.graphics.rectangle(
 				"fill",
 				x*TILE_SIZE, y*TILE_SIZE,
