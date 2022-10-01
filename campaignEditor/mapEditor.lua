@@ -138,11 +138,44 @@ end
 
 
 function UI:drawNodes()
-	love.graphics.setColor(0.5,1,0.5)
+	
 	for node in self.campaign.nodes:iterate() do
-		love.graphics.circle("fill", node.x, node.y, 32)
+		--the node itself
+		love.graphics.setColor(theme.nodes[node.type] or theme.nodes["$UnknownNodeType"])
+		if node.type=="level" then
+			love.graphics.circle("fill", node.x, node.y, 64 * node.scale)
+		elseif node.type=="path" then
+			love.graphics.circle("fill", node.x, node.y, 16)
+		else
+			love.graphics.circle("fill", node.x, node.y, 32)
+		end
+		
+		-- direct connections
+		love.graphics.setColor(theme.directConnections)
 		for _,pNode in ipairs(node.prev) do
 			love.graphics.line(node.x,node.y, pNode.x,pNode.y)
+		end
+		
+		-- smooth connections
+		local stack = {}
+		local function process(node)
+			table.insert(stack, node.x)
+			table.insert(stack, node.y)
+			if node.type=="path" or #stack<=2 then
+				for _,node in ipairs(node.prev) do
+					process(node)
+				end
+			else
+				local bez = love.math.newBezierCurve(stack)
+				love.graphics.line(bez:render())
+			end
+			table.remove(stack)
+			table.remove(stack)
+		end
+		
+		if node.type~="path" then
+			love.graphics.setColor(theme.smoothConnections)
+			process(node)
 		end
 	end
 end

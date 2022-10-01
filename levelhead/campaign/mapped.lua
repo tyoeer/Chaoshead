@@ -1,4 +1,4 @@
-local JM = Class("mapped")
+local JM = Class("Mapped")
 
 function JM:initialize(...)
 	self.mappings = {}

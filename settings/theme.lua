@@ -40,8 +40,19 @@ return {
 			},
 		},
 		campaign = {
-			background = {0.2, 0, 0.8},
-			origin = {1,1,1},
+			background = {0.2, 0, 0.6},
+			origin = {0.5,0.5,0.5},
+			
+			directConnections = {0.8,0,0.4},
+			smoothConnections = {1,1,1},
+			
+			nodes = {
+				level = {0,1,0},
+				["icon pack"] = {1,1,0},
+				path = {1,0,1},
+				presentation = {0,1,1},
+				["$UnknownNodeType"] = {0,0,0},
+			},
 		},
 	},
 	tabs = {

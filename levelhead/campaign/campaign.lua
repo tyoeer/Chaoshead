@@ -1,6 +1,7 @@
 local EP = require("libs.tyoeerUtils.entityPool")
 local JSON = require("libs.json")
 local Node = require("levelhead.campaign.node")
+local LevelNode = require("levelhead.campaign.node.level")
 
 local C = Class("Campaign")
 
@@ -13,21 +14,30 @@ function C:getNode(id)
 	return self.nodesById[id]
 end
 
+function C:addNode(node)
+	self.nodes:add(node)
+	self.nodesById[node.id] = node
+end
+
 function C:newNode(id)
 	id = id or "CH_$WhatHaveYouDone"
 	local n = Node:new(id)
-	self.nodes:add(n)
-	self.nodesById[id] = n
+	self:addNode(n)
 	return n
 end
 
-
+function C:newLevelNode(id)
+	id = id or "CH_$WhatHaveYouDone"
+	local n = LevelNode:new(id)
+	self:addNode(n)
+	return n
+end
 
 function C:loadNodes(rawData)
 	-- load nodes
 	for id,data in pairs(rawData) do
-		local n = self:newNode(id)
-		n:fromMapped(data)
+		local n = Node:newFromMapped(id, data)
+		self:addNode(n)
 	end
 	
 	-- fix connections
