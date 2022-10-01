@@ -14,14 +14,7 @@ end
 
 function UI:getRootEntries()
 	local out = {}
-	if Storage.lastCampaignOpened then
-		table.insert(out,{
-			title = Storage.lastCampaignOpened.subpath,
-			action = function()
-				self.overview:openEditor(Storage.lastCampaignOpened.subpath)
-			end
-		})
-	end
+	
 	table.insert(out,{
 		title = "Unpack campaign_hardfile",
 		action = function()
@@ -59,6 +52,16 @@ function UI:getRootEntries()
 			end
 		end,
 	})
+	
+	if Storage.lastCampaignOpened then
+		table.insert(out,{
+			title = Storage.lastCampaignOpened.subpath,
+			action = function()
+				self.overview:openEditor(Storage.lastCampaignOpened.subpath)
+			end
+		})
+	end
+	
 	-- make sure folder exists
 	local info = love.filesystem.getInfo(self.folder)
 	if not info then
