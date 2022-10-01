@@ -24,17 +24,18 @@ end
 
 
 function C:loadNodes(rawData)
+	-- load nodes
 	for id,data in pairs(rawData) do
 		local n = self:newNode(id)
 		n:fromMapped(data)
 	end
 	
-	for id,data in pairs(rawData) do
-		local node = self:getNode(id)
-		for _,preId in ipairs(data.pre) do
-			local prev = self:getNode(preId)
-			table.insert(node.prev, prev)
-			table.insert(prev.next, node)
+	-- fix connections
+	for node in self.nodes:iterate() do
+		for i,preId in ipairs(node.prev) do
+			local prevNode = self:getNode(preId)
+			node.prev[i] = prevNode
+			table.insert(prevNode.next, node)
 		end
 	end
 end
