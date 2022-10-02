@@ -21,7 +21,6 @@ function love.load(args)
 	if not VERSION then
 		VERSION = "DEV"
 	end
-	DISABLE_EDITOR_LIMITS = false
 	Settings = require("settings")
 	Storage = Settings.storage
 	Input = TU("input")
