@@ -17,13 +17,11 @@ function love.load(args)
 	TILE_SIZE = 71
 	
 	--globals
-	VERSION = love.filesystem.read("version.txt")
-	if not VERSION then
-		VERSION = "DEV"
-	end
 	Settings = require("settings")
 	Storage = Settings.storage
 	Input = TU("input")
+	--make sure which version of CH we're using is stored on disk
+	require("utils.version")
 	
 	--love2d state
 	love.graphics.setFont(love.graphics.newFont("resources/iosevka-aile-regular.ttf",16))

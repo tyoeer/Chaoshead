@@ -10,7 +10,7 @@ function UI:onReload(list)
 	
 	-- BASIC INFORMATION
 	
-	list:addTextEntry("Chaoshead version "..VERSION)
+	list:addTextEntry("Chaoshead version "..require("utils.version").current)
 	list:addTextEntry(string.format("LÖVE version %d.%d.%d %s",love.getVersion()))
 	
 	-- DO STUFF
