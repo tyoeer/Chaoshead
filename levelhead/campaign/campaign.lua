@@ -47,6 +47,10 @@ function C:loadNodes(rawData)
 			node.prev[i] = prevNode
 			table.insert(prevNode.next, node)
 		end
+		if node.type=="path" then
+			node.prevActual = self:getNode(node.prevActual)
+			node.nextActual = self:getNode(node.nextActual)
+		end
 	end
 end
 

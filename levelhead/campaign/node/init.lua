@@ -37,6 +37,10 @@ function N:newFromMapped(id, data)
 		local n = require("levelhead.campaign.node.level"):new(id)
 		n:fromMapped(data)
 		return n
+	elseif data.t==2 then
+		local n = require("levelhead.campaign.node.path"):new(id)
+		n:fromMapped(data)
+		return n
 	else
 		local n = self:new(id)
 		n:fromMapped(data)

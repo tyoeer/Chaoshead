@@ -1,411 +1,392 @@
+-- local P = require("levelhead.data.properties")
+-- --editor tools
+-- local Selection = require("tools.selection.tracker")
 -- local Clipboard = require("tools.clipboard")
+--misc UIs
+local HorDivide = require("ui.layout.horDivide")
+local Tabs = require("ui.tools.tabs")
+--specific UIs
+local Map = require("campaignEditor.map")
+-- local SelectionDetails = require("levelEditor.details.selection")
+-- local LevelDetails = require("levelEditor.details.level")
 
-local UI = Class("CampaignMapEditor",require("ui.base.node"))
+local UI = Class("LevelEditorUI",require("ui.base.proxy"))
 
-local theme = Settings.theme.editor.campaign
+local theme = Settings.theme.editor
 
-function UI:initialize(campaign)
-	-- self.editor = editor
+function UI:initialize(campaign,root)
 	self.campaign = campaign
+	self.root = root
+	--ui state
+	self.viewer = Map:new(self)
+	self.detailsUI = Tabs:new()
+	-- self.levelDetails = LevelDetails:new(level,self)
+	self:addTab(require("ui.base.node"):new()) -- TODO map details
 	
-	--camera stuff
-	self.cameraX = 0
-	self.cameraY = 0
-	self.zoomFactor = 1
-	self.zoomSpeed = Settings.misc.editor.zoomSpeed
-	self.moveSpeed = Settings.misc.editor.cameraMoveSpeed
+	--editor state
+	-- self.selection = nil
+	-- self.selectionDetails = nil
+	-- self.hand = nil
 	
-	-- --state stuff
-	-- self.holding = nil
-	-- self.handX = nil
-	-- self.handY = nil
-	
-	-- self.selecting = false
-	-- self.selectionStartX = nil
-	-- self.selectionStartY = nil
-	
-	-- self.resizing = false
-	-- self.resizeCornerX = 0
-	-- self.resizeCornerY = 0
-	
-	-- --misc
-	-- self.resizeCircleRadius = TILE_SIZE/2
-	
-	
-	--UI stuff
-	UI.super.initialize(self)
+	UI.super.initialize(self, HorDivide:new(
+		self.detailsUI, self.viewer,
+		theme.detailsWorldDivisionStyle
+	))
+	self.title = "Map Editor"
+end
+
+
+function UI:addTab(tab)
+	tab.editor = self
+	self.detailsUI:addTab(tab)
+	self.detailsUI:setActiveTab(tab)
+end
+
+function UI:removeTab(tab)
+	self.detailsUI:removeTab(tab)
 end
 
 function UI:reload(campaign)
 	self.campaign = campaign
+	self.viewer:reload(campaign)
+	--self.levelDetails:reload(campaign)
+	if self.selection then
+		self:deselectAll()
+	end
 end
 
-function UI:toWorldX(x)
-	x = x - self.width/2
-	x = x / self.zoomFactor
-	x = x - self.cameraX
-	return x
-end
-function UI:toWorldY(y)
-	y = y - self.height/2
-	y = y / self.zoomFactor
-	y = y - self.cameraY
-	return y
-end
+-- private editor stuff
 
-
-function UI:getWorldPos(x,y)
-	return self:toWorldX(x), self:toWorldY(y)
-end
-
-function UI:getMouseWorldPos()
-	return self:getWorldPos(self:getMousePos())
-end
-
-
--- function UI:selectArea()
--- 	local fromX, fromY = math.floor(self.selectStartX/TILE_SIZE), math.floor(self.selectStartY/TILE_SIZE)
--- 	local endX, endY = self:getMouseTile()
--- 	self.editor:selectAddArea(
--- 		math.min(fromX,endX), math.min(fromY,endY),
--- 		math.max(fromX,endX), math.max(fromY,endY)
--- 	)
--- 	self.selectStartX = nil
--- 	self.selectStartY = nil
+--mask is optional
+-- function UI:newSelection(mask)
+-- 	self.selection = Selection:new(self.level,mask)
+-- 	self.selectionDetails = SelectionDetails:new(self.selection)
+-- 	self:addTab(self.selectionDetails)
 -- end
 
--- function UI:deselectArea()
--- 	local fromX, fromY = math.floor(self.selectStartX/TILE_SIZE), math.floor(self.selectStartY/TILE_SIZE)
--- 	local endX, endY = self:getMouseTile()
--- 	self.editor:deselectSubArea(
--- 		math.min(fromX,endX), math.min(fromY,endY),
--- 		math.max(fromX,endX), math.max(fromY,endY)
--- 	)
--- 	self.selectStartX = nil
--- 	self.selectStartY = nil
+-- function UI:refreshSelection()
+-- 	if self.selection then
+-- 		self.selection = Selection:new(self.level, self.selection.mask)
+-- 		self.selectionDetails:setSelectionTracker(self.selection)
+-- 	end
 -- end
 
--- function UI:initHand()
--- 	self.holding = true
--- 	self:updateHandPosition(self:getMousePos())
--- 	self.selecting = false
--- 	self.resizing = false
+-- public editor stuff
+
+-- selection manipulation
+
+-- function UI:selectOnly(tileX,tileY)
+-- 	if self.selection then
+-- 		self:deselectAll()
+-- 	end
+-- 	--deselectAll() destroys the selection
+-- 	self:newSelection()
+-- 	self.selection:add(tileX,tileY)
+-- 	self.selectionDetails:reload()
 -- end
 
--- function UI:updateHandPosition(x,y)
--- 	local w = self.editor.hand.world:getWidth()
--- 	local h = self.editor.hand.world:getHeight()
--- 	local wx = self:toWorldX(x)
--- 	local wy = self:toWorldY(y)
--- 	-- -0.5 because the clipboard world starts at (1,1)
--- 	-- only .5 because we want to move around the center, not the corner
--- 	-- (I think not sure if that part of explanation is completely, but testing shows that this works)
--- 	self.handX = math.floor(wx/TILE_SIZE - w/2 - 0.5)
--- 	self.handY = math.floor(wy/TILE_SIZE - h/2 - 0.5)
+-- function UI:selectAdd(tileX,tileY)
+-- 	if self.selection then
+-- 		self.selection:add(tileX,tileY)
+-- 		self.selectionDetails:reload()
+-- 	else
+-- 		self:selectOnly(tileX,tileY)
+-- 	end
 -- end
 
--- function UI:clearHand()
--- 	self.holding = false
--- 	self.handX, self.handY = nil, nil
+-- function UI:selectAddArea(startX,startY,endX,endY)
+-- 	if not self.selection then
+-- 		self:newSelection()
+-- 	end
+-- 	for x = startX, endX, 1 do
+-- 		for y = startY, endY, 1 do
+-- 			self.selection:add(x,y)
+-- 		end
+-- 	end
+-- 	self.selectionDetails:reload()
 -- end
 
--- EVENTS
+-- function UI:selectAll()
+-- 	if not self.selection then
+-- 		self:newSelection()
+-- 	end
+-- 	--select everything in bounds
+-- 	for x=self.level.left, self.level.right, 1 do
+-- 		for y=self.level.top, self.level.bottom, 1 do
+-- 			self.selection:add(x,y)
+-- 		end
+-- 	end
+-- 	--select all the objects (they can be out-of-bounds)
+-- 	for obj in self.level.objects:iterate() do
+-- 		self.selection:add(obj.x,obj.y)
+-- 	end
+-- 	--select all the path nodes (they can be out-of-bounds)
+-- 	for path in self.level.paths:iterate() do
+-- 		for node in path:iterateNodes() do
+-- 			self.selection:add(node.x,node.y)
+-- 		end
+-- 	end
+-- 	self.selectionDetails:reload()
+-- end
 
-function UI:update(dt)
-	local moved = false
-	if Input.isActive("up","camera") then
-		self.cameraY = self.cameraY + self.moveSpeed/self.zoomFactor*dt
-		moved = true
-	end
-	if Input.isActive("down","camera") then
-		self.cameraY = self.cameraY - self.moveSpeed/self.zoomFactor*dt
-		moved = true
-	end
-	if Input.isActive("left","camera") then
-		self.cameraX = self.cameraX + self.moveSpeed/self.zoomFactor*dt
-		moved = true
-	end
-	if Input.isActive("right","camera") then
-		self.cameraX = self.cameraX - self.moveSpeed/self.zoomFactor*dt
-		moved = true
-	end
-	if moved then
-		--relative to the world, the mouse DID move
-		local mx, my = self:getMousePos()
-		self:mouseMoved(mx, my, 0, 0)
-	end
-end
-
-
-function UI:drawNodes()
-	
-	for node in self.campaign.nodes:iterate() do
-		--the node itself
-		love.graphics.setColor(theme.nodes[node.type] or theme.nodes["$UnknownNodeType"])
-		if node.type=="level" then
-			love.graphics.circle("fill", node.x, node.y, 64 * node.scale)
-		elseif node.type=="path" then
-			love.graphics.circle("fill", node.x, node.y, 16)
-		else
-			love.graphics.circle("fill", node.x, node.y, 32)
-		end
-		
-		-- direct connections
-		love.graphics.setColor(theme.directConnections)
-		for _,pNode in ipairs(node.prev) do
-			love.graphics.line(node.x,node.y, pNode.x,pNode.y)
-		end
-		
-		-- smooth connections
-		local stack = {}
-		local function process(node)
-			table.insert(stack, node.x)
-			table.insert(stack, node.y)
-			if node.type=="path" or #stack<=2 then
-				for _,node in ipairs(node.prev) do
-					process(node)
-				end
-			else
-				local bez = love.math.newBezierCurve(stack)
-				love.graphics.line(bez:render())
-			end
-			table.remove(stack)
-			table.remove(stack)
-		end
-		
-		if node.type~="path" then
-			love.graphics.setColor(theme.smoothConnections)
-			process(node)
-		end
-	end
-end
-
-function UI:draw()
-	love.graphics.clear(theme.background)
-	--not exactly one to compensate for float weirdness
-	if self.zoomFactor < 0.999 then
-		love.graphics.setLineStyle("smooth")
-	else
-		love.graphics.setLineStyle("rough")
-	end
-	--camera
-	love.graphics.push()
-		love.graphics.translate(self.width/2, self.height/2)
-		love.graphics.scale(self.zoomFactor)
-		love.graphics.translate(self.cameraX, self.cameraY)
-		
-		--screen edge
-		local startX, startY = self:toWorldX(0), self:toWorldY(0)
-		local endX, endY = self:toWorldX(self.width), self:toWorldY(self.height)
-		
-		self:drawNodes()
-		
-		-- origin axis
-		love.graphics.setColor(theme.origin)
-		love.graphics.line(0,startY, 0,endY)
-		love.graphics.line(startX,0, endX,0)
-		
-		-- if self.holding then
-		-- 	--highlight where the stuff to place is
-		-- 	local drawArea = math.abs( (startX-endX+1) * (startY-endY+1) )
-		-- 	local levelArea = self.editor.hand:getWidth() * self.editor.hand:getHeight()
-			
-		-- 	love.graphics.setColor(theme.level.handHighlight)
-		-- 	if drawArea >= levelArea then
-		-- 		for x = 1, self.editor.hand:getWidth(), 1 do
-		-- 			for y = 1, self.editor.hand:getHeight(), 1 do
-		-- 				if self.editor.hand.mask:get(x,y) then
-		-- 					love.graphics.rectangle("fill", (x+self.handX)*TILE_SIZE, (y+self.handY)*TILE_SIZE, TILE_SIZE, TILE_SIZE)
-		-- 				end
-		-- 			end
-		-- 		end
-		-- 	else
-		-- 		for x = startX-self.handX, endX-self.handX, 1 do
-		-- 			for y = startY-self.handY, endY-self.handY, 1 do
-		-- 				if self.editor.hand.mask:get(x,y) then
-		-- 					love.graphics.rectangle("fill", (x+self.handX)*TILE_SIZE, (y+self.handY)*TILE_SIZE, TILE_SIZE, TILE_SIZE)
-		-- 				end
-		-- 			end
-		-- 		end
-		-- 	end
-			
-		-- 	--object/clipboard to place
-		-- 	if self.editor.hand:isInstanceOf(Clipboard) then
-		-- 		love.graphics.push()
-		-- 			love.graphics.translate(self.handX*TILE_SIZE, self.handY*TILE_SIZE)
-		-- 			self:drawObjects(
-		-- 				self.editor.hand.world,
-		-- 				startX-self.handX, startY-self.handY,
-		-- 				endX-self.handX, endY-self.handY
-		-- 			)
-		-- 		love.graphics.pop()
-		-- 	end
-		-- else
-		-- 	--area being selected
-		-- 	if self.selecting == "area" then
-		-- 		love.graphics.setLineWidth(2)
-		-- 		love.graphics.setColor(theme.level.selectingArea)
-		-- 		love.graphics.rectangle("line",
-		-- 			self.selectStartX +0.5, self.selectStartY+0.5,
-		-- 			self:toWorldX(self:getMouseX()) - self.selectStartX-1,
-		-- 			self:toWorldY(self:getMouseY()) - self.selectStartY-1
-		-- 		)
-		-- 	end
-			
-		-- 	--highlight
-		-- 	local x,y = self:getMouseTile()
-		-- 	love.graphics.setColor(theme.level.hoverHighlight)
-		-- 	love.graphics.rectangle(
-		-- 		"fill",
-		-- 		x*TILE_SIZE, y*TILE_SIZE,
-		-- 		TILE_SIZE, TILE_SIZE
-		-- 	)
-		-- end
-		
-		-- --selection
-		-- if self.editor.selection then
-		-- 	self.editor.selection:draw(startX,startY, endX,endY, self.zoomFactor)
-		-- end
-	love.graphics.pop()
-end
-
-
--- function UI:inputActivated(name,group, isCursorBound)
--- 	if group=="editor" then
--- 		if self.holding then
--- 			if name=="placeHand" or name=="releaseHand" or name=="placeAndReleaseHand" then
--- 				self.placing = true
--- 			end
+-- function UI:deselectSub(tileX,tileY)
+-- 	if self.selection then
+-- 		self.selection:remove(tileX,tileY)
+-- 		if self.selection.mask.nTiles==0 then
+-- 			self:deselectAll()
 -- 		else
--- 			if name=="selectOnly" or name=="selectAdd" or name=="deselectSub" or name=="deselectArea" then
--- 				if Input.isActive("selectAreaModifier","editor") then
--- 					self.selectStartX = self:toWorldX(self:getMouseX())
--- 					self.selectStartY = self:toWorldY(self:getMouseY())
--- 					self.selecting = "area"
--- 				else
--- 					self.selecting = true
--- 				end
--- 			elseif name=="selectAreaModifier"  then
--- 				if Input.isActive("selectOnly","editor")
--- 					or Input.isActive("selectAdd","editor")
--- 					or Input.isActive("deselectSub","editor")
--- 					or Input.isActive("deselectArea","editor")
--- 				then
--- 					self.selectStartX = self:toWorldX(self:getMouseX())
--- 					self.selectStartY = self:toWorldY(self:getMouseY())
--- 					self.selecting = "area"
--- 				end
--- 			elseif name=="resize" then
--- 				local cx,cy = self:posNearCorner(self:toWorldX(self:getMouseX()),self:toWorldY(self:getMouseY()))
--- 				if cx then
--- 					self.resizing = true
--- 					self.resizeCornerX = cx
--- 					self.resizeCornerY = cy
--- 				end
--- 			end
+-- 			self.selectionDetails:reload()
 -- 		end
 -- 	end
 -- end
 
--- function UI:inputDeactivated(name,group, isCursorBound)
--- 	if group=="editor" then
--- 		if self.holding then
--- 			if self.placing then
--- 				--only stop placing it's a related input
--- 				--otherwise unrelated inputs (on duplicate binds) prevent us from placing stuff
--- 				if name=="placeHand" then
--- 					self.editor:place(self.handX, self.handY, false)
--- 					self.placing = false
--- 				elseif name=="placeAndReleaseHand" then
--- 					self.editor:place(self.handX, self.handY, true)
--- 					self.placing = false
--- 				elseif name=="releaseHand" then
--- 					self.editor:releaseHold()
--- 					self.placing = false
--- 				end
--- 			end
--- 		else
--- 			if name=="selectOnly" then
--- 				if self.selecting then
--- 					if self.selecting=="area" then
--- 						self:selectArea()
--- 					else
--- 						self.editor:selectOnly(self:getMouseTile())
--- 					end
--- 					self.selecting = false
--- 				end
--- 			elseif name=="selectAdd" then
--- 				if self.selecting then
--- 					if self.selecting=="area" then
--- 						self:selectArea()
--- 					else
--- 						self.editor:selectAdd(self:getMouseTile())
--- 					end
--- 					self.selecting = false
--- 				end
--- 			elseif name=="deselectSub" then
--- 				if self.selecting then
--- 					if self.selecting=="area" then
--- 						self:deselectArea()
--- 					else
--- 						self.editor:deselectSub(self:getMouseTile())
--- 					end
--- 					self.selecting = false
--- 				end
--- 			elseif name=="deselectArea" then
--- 				if self.selecting=="area" then
--- 					self:deselectArea()
--- 					self.selecting = false
--- 				end
--- 				--do nothing otherwise because this input is doubly mapped to camera.drag
--- 			elseif name=="resize" then
--- 				if self.resizing then
--- 					self.resizing = false
--- 				end
--- 			end
+-- function UI:deselectSubArea(startX,startY,endX,endY)
+-- 	if not self.selection then
+-- 		return nil
+-- 	end
+-- 	for x = startX, endX, 1 do
+-- 		for y = startY, endY, 1 do
+-- 			self.selection:remove(x,y)
 -- 		end
+-- 	end
+-- 	if self.selection.mask.nTiles==0 then
+-- 		self:deselectAll()
+-- 	else
+-- 		self.selectionDetails:reload()
 -- 	end
 -- end
 
+-- function UI:deselectAll()
+-- 	if self.selection then
+-- 		self.selection = nil
+-- 		self:removeTab(self.selectionDetails)
+-- 		self.selectionDetails = nil
+-- 	end
+-- end
 
-function UI:mouseMoved(x,y,dx,dy)
-	-- if self.holding then
-	-- 	self:updateHandPosition(x,y)
-	-- end
-	
-	if Input.isActive("drag","camera") then
-		self.cameraX = self.cameraX + dx/self.zoomFactor
-		self.cameraY = self.cameraY + dy/self.zoomFactor
-	end
-	
-	-- --stop selecting a single tile when you have moved the cursor
-	-- if (Input.isActive("selectOnly","editor")
-	-- 	or Input.isActive("selectAdd","editor")
-	-- 	or Input.isActive("deselectSub","editor")
-	-- 	or Input.isActive("deselectArea","editor"))
-	-- 	and self.selecting~="area"
-	-- then
-	-- 	self.selecting = false
-	-- end
-	
-	-- --stop placing something
-	-- self.placing = false
-end
+-- filter
 
-function UI:wheelMoved(sx,sy)
-	local ax,ay = self:getMouseWorldPos()
-	if sy>0 then
-		self.zoomFactor = self.zoomFactor * self.zoomSpeed
-	elseif sy<0 then
-		self.zoomFactor = self.zoomFactor / self.zoomSpeed
+-- function UI:removeSelectionLayer(layer)
+-- 	self.selection:removeLayer(layer)
+-- 	self.selectionDetails:reload()
+-- end
+
+-- function UI:filter(prop, filterValue, operation)
+-- 	if self.selection then
+-- 		local pl = self.selection.contents.properties[prop]
+-- 		for obj in pl.pool:iterate() do
+-- 			local actualValue = obj:getPropertyRaw(prop)
+-- 			local allow = true
+-- 			if operation=="==" then
+-- 				allow = actualValue==filterValue
+-- 			elseif operation=="!=" then
+-- 				allow = actualValue~=filterValue
+-- 			elseif operation==">" then
+-- 				allow = actualValue>filterValue
+-- 			elseif operation==">=" then
+-- 				allow = actualValue>=filterValue
+-- 			elseif operation=="<" then
+-- 				allow = actualValue<filterValue
+-- 			elseif operation=="<=" then
+-- 				allow = actualValue<=filterValue
+-- 			end
+-- 			if not allow then
+-- 				--edit mask to prevent update at every obj that gets edited
+-- 				self.selection.mask:remove(obj.x, obj.y)
+-- 			end
+-- 		end
+-- 		self:refreshSelection() --handles mask changes
+-- 		return self.selection.contents.properties[prop] -- so the modal can update itself
+-- 	end
+-- end
+
+-- do stuff with the selection
+
+-- function UI:deleteSelection()
+-- 	if self.selection then
+-- 		local c = self.selection.contents
+		
+-- 		if self.selection:hasLayer("foreground") then
+-- 			for obj in c.foreground:iterate() do
+-- 				self.level:removeObject(obj)
+-- 			end
+-- 		end
+-- 		if self.selection:hasLayer("background") then
+-- 			for obj in c.background:iterate() do
+-- 				self.level:removeObject(obj)
+-- 			end
+-- 		end
+-- 		if self.selection:hasLayer("pathNodes") then
+-- 			for node in c.pathNodes:iterate() do
+-- 				local p = node.path
+-- 				p:removeNode(node)
+-- 				--removed all nodes?
+-- 				if not p.tail then
+-- 					self.level:removePath(p)
+-- 				end
+-- 			end
+-- 		end
+		
+-- 		self.selection = nil
+-- 		self:removeTab(self.selectionDetails)
+-- 		self.selectionDetails = nil
+-- 	end
+-- end
+
+-- function UI:changeProperty(id, val, op)
+-- 	op = op or "="
+-- 	if self.selection then
+-- 		local pl = self.selection.contents.properties[id]
+-- 		for obj in pl.pool:iterate() do
+-- 			local old = obj:getPropertyRaw(id)
+-- 			local new
+-- 			if op=="=" then
+-- 				new = val
+-- 			elseif op=="+" then
+-- 				new = old + val
+-- 			elseif op=="-" then
+-- 				new = old - val
+-- 			elseif op=="*" then
+-- 				new = old * val
+-- 			elseif op=="/" then
+-- 				new = old / val
+-- 			else
+-- 				error("Ivalid operator "..tostring(op),2)
+-- 			end
+-- 			if P:getSaveFormat(id)~="C" then
+-- 				new = math.floor(new+0.5)
+-- 			end
+-- 			obj:setPropertyRaw(id, new)
+-- 		end
+-- 		pl:findBounds()
+-- 		self.selectionDetails:reload()
+-- 	end
+-- end
+
+-- function UI:disconnectNodes()
+-- 	for node in self.selection.contents.pathNodes:iterate() do
+-- 		local node = self.level.pathNodes[node.x][node.y]
+-- 		if node.next and self.selection.mask:has(node.next.x, node.next.y) then
+-- 			node:disconnectAfter()
+-- 		end
+-- 		local node = self.level.pathNodes[node.x][node.y]
+-- 		if node.prev and self.selection.mask:has(node.prev.x, node.prev.y) then
+-- 			node.prev:disconnectAfter()
+-- 		end
+-- 	end
+-- 	self:refreshSelection()
+-- end
+
+-- function UI:connectNodes()
+-- 	local a = self.selection.contents.pathNodes:getTop()
+-- 	local b = self.selection.contents.pathNodes:getBottom()
+-- 	if a.next and a.prev then
+-- 		MainUI:displayMessage(string.format("The path node at (%i,%i) is already connected!",a.x,a.y))
+-- 		return
+-- 	end
+-- 	if b.next and b.prev then
+-- 		MainUI:displayMessage(string.format("The path node at (%i,%i) is already connected!",b.x,b.y))
+-- 		return
+-- 	end
+-- 	if a.prev==nil and b.next==nil then
+-- 		a,b = b,a
+-- 	elseif (a.prev and b.prev) or (a.next and b.next) then
+-- 		MainUI:displayMessage("Can't connect: the paths point towards each other!")
+-- 		return
+-- 	end
+-- 	--a is a last node, b is a first
+-- 	for prop in a.path:iterateProperties() do
+-- 		if a.path:getPropertyRaw(prop)~=b.path:getPropertyRaw(prop) then
+-- 			MainUI:displayMessage(string.format("Can't connect: property %s differs!",P:getName(prop)))
+-- 			return
+-- 		end
+-- 	end
+	
+-- 	if a.path==b.path then
+-- 		a.path:setClosed("Yes")
+-- 	else
+-- 		for node in b.path:iterateNodes() do
+-- 			a.path:append(node.x, node.y)
+-- 		end
+-- 	end
+-- 	self:refreshSelection()
+-- end
+
+-- function UI:reversePaths()
+-- 	local done = {}
+-- 	for node in self.selection.contents.pathNodes:iterate() do
+-- 		local p = node.path
+-- 		if not done[p] then
+-- 			p:reverse()
+-- 			done[p] = true
+-- 		end
+-- 	end
+-- 	self:refreshSelection()
+-- end
+
+-- function UI:copy()
+-- 	if self.selection then
+-- 		local cp = Clipboard:new(self.level, self.selection.mask)
+-- 		self.root:setClipboard(cp)
+-- 	end
+-- end
+
+-- function UI:cut()
+-- 	if self.selection then
+-- 		self:copy()
+-- 		self:deleteSelection()
+-- 	end
+-- end
+
+-- hand stuff
+
+-- function UI:hold(item)
+-- 	self.hand = item
+-- 	self.viewer:initHand()
+-- end
+
+-- function UI:releaseHold()
+-- 	self.hand = nil
+-- 	self.viewer:clearHand()
+-- end
+
+-- function UI:place(x,y,release)
+-- 	self.hand:copy(self.hand.world, self.level, 0,0, x,y)
+-- 	if release then
+-- 		self:releaseHold()
+-- 	end
+-- 	self:refreshSelection()
+-- end
+
+-- other stuff
+
+-- function UI:paste()
+-- 	local cp = self.root:getClipboard()
+-- 	if cp then
+-- 		self:hold(cp)
+-- 	else
+-- 		MainUI:displayMessage("Nothing on clipboard to paste!")
+-- 	end
+-- end
+
+-- EVENTS (most are handled by the proxy super)
+
+function UI:onInputActivated(name,group, isCursorBound)
+	if group=="editor" then
+		-- if name=="delete" then
+		-- 	self:deleteSelection()
+		-- elseif name=="deselectAll" then
+		-- 	self:deselectAll()
+		-- elseif name=="selectAll" then
+		-- 	self:selectAll()
+		-- elseif name=="copy" then
+		-- 	self:copy()
+		-- elseif name=="paste" then
+		-- 	self:paste()
+		-- elseif name=="cut" then
+		-- 	self:cut()
+		-- end
 	end
-	local bx,by = self:getMouseWorldPos()
-	-- make sure the point under the cursor stays under the cursor
-	self.cameraX = self.cameraX + bx - ax
-	self.cameraY = self.cameraY + by - ay
-	--Prevent tiny little offsets from messing with lines when zoomed out
-	self.cameraX = math.roundPrecision(self.cameraX,self.zoomFactor)
-	self.cameraY = math.roundPrecision(self.cameraY,self.zoomFactor)
 end
 
 return UI
