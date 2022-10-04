@@ -16,6 +16,9 @@ function C:initialize(path)
 	-- self.nodes
 	-- self.nodesById
 	self:clearNodes()
+	
+	self.campaignVersion = 0
+	self.contentVersion = "0"
 end
 
 function C:getNode(id)
@@ -46,12 +49,17 @@ function C:clearNodes()
 	self.nodesById = {}
 end
 
-function C:reloadNodes()
-	local nodes, err = love.filesystem.read(self.path.."data/nodes.json")
-	if not nodes then
-		error("Error reading nodes: "..err, 2)
+function C:loadData(name)
+	local path = self.path.."data/"..name..".json"
+	local data, err = love.filesystem.read(path)
+	if not data then
+		error(string.format("Error reading %s data at %s:\n%s", name,path, err), 3)
 	end
-	local rawData = JSON.decode(nodes)
+	return JSON.decode(data)
+end
+
+function C:reloadNodes()
+	local rawData = self:loadData("nodes")
 	
 	self:clearNodes()
 	
@@ -75,6 +83,13 @@ function C:reloadNodes()
 	end
 end
 
+function C:reloadVersions()
+	local raw = self:loadData("versions")
+	
+	self.campaignVersion = raw.campaign_version
+	self.contentVersion = raw.content_version
+end
+
 function C:reload(path)
 	if path then
 		if path:sub(-1)~="/" then
@@ -83,6 +98,7 @@ function C:reload(path)
 		self.path = path
 	end
 	
+	self:reloadVersions()
 	self:reloadNodes()
 end
 
