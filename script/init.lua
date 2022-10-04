@@ -21,7 +21,8 @@ end
 
 function S.runDangerously(path, level, selection)
 	local scriptText = love.filesystem.read(path)
-	local script, err = loadstring(scriptText)
+	local name = path:match("scripts?[/\\](.+)") or path
+	local script, err = loadstring(scriptText, name)
 	if not script then
 		return false, "Error loading script at "..path..":\n"..err
 	end
