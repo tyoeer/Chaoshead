@@ -1,4 +1,3 @@
--- local P = require("levelhead.data.properties")
 -- --editor tools
 -- local Selection = require("tools.selection.tracker")
 -- local Clipboard = require("tools.clipboard")
@@ -8,7 +7,7 @@ local Tabs = require("ui.tools.tabs")
 --specific UIs
 local Map = require("campaignEditor.map")
 -- local SelectionDetails = require("levelEditor.details.selection")
--- local LevelDetails = require("levelEditor.details.level")
+local CampaignDetails = require("campaignEditor.details.campaign")
 
 local UI = Class("LevelEditorUI",require("ui.base.proxy"))
 
@@ -20,8 +19,8 @@ function UI:initialize(root)
 	--ui state
 	self.viewer = Map:new(self)
 	self.detailsUI = Tabs:new()
-	-- self.levelDetails = LevelDetails:new(level,self)
-	self:addTab(require("ui.base.node"):new()) -- TODO map details
+	self.campaignDetails = CampaignDetails:new(self.campaign,self)
+	self:addTab(self.campaignDetails)
 	
 	--editor state
 	-- self.selection = nil
@@ -49,7 +48,7 @@ end
 function UI:reload(campaign)
 	self.campaign = campaign
 	self.viewer:reload(campaign)
-	--self.levelDetails:reload(campaign)
+	self.campaignDetails:reload(campaign)
 	if self.selection then
 		self:deselectAll()
 	end

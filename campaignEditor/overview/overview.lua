@@ -42,7 +42,7 @@ end
 
 function UI:closeEditor(campaignEditor)
 	if campaignEditor==self.child:getActiveTab() then
-		self.child:setActiveTab(self.levelSelector)
+		self.child:setActiveTab(self.selector)
 	end
 	self.child:removeTab(campaignEditor)
 end
