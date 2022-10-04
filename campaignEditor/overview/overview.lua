@@ -1,12 +1,14 @@
 local TABS = require("ui.tools.tabs")
 local SELECTOR = require("campaignEditor.overview.selector")
-local CAMPAIGN_EDITOR = require("campaignEditor.mapEditor")
+local CAMPAIGN_ROOT = require("campaignEditor.campaignRoot")
 
 local UI = Class("CampaignSelectorUI",require("ui.base.proxy"))
 
 UI.FOLDER = "campaigns/"
 
 function UI:initialize()
+	-- self.clipboard = nil
+	
 	local tabs = TABS:new()
 	
 	self.selector = SELECTOR:new(self)
@@ -14,7 +16,7 @@ function UI:initialize()
 	
 	--TabsUI needs buttons before getting resized (which always happens when added)
 	UI.super.initialize(self,tabs)
-	self.title = "Campaigns"
+	self.title = "Campaigns (WIP)"
 end
 
 
@@ -22,9 +24,7 @@ function UI:openEditor(subpath)
 	--open the editor
 	local success, editor = xpcall(
 		function()
-			local c = require("levelhead.campaign.campaign"):new() -- TODO move into to be created campaignRoot
-			c:load(self.FOLDER..subpath)
-			return CAMPAIGN_EDITOR:new(c,self)
+			return CAMPAIGN_ROOT:new(subpath, self)
 		end,
 		require("levelEditor.levelRoot").loadErrorHandler
 	)

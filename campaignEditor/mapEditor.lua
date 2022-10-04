@@ -14,9 +14,9 @@ local UI = Class("LevelEditorUI",require("ui.base.proxy"))
 
 local theme = Settings.theme.editor
 
-function UI:initialize(campaign,root)
-	self.campaign = campaign
+function UI:initialize(root)
 	self.root = root
+	self.campaign = root.campaign
 	--ui state
 	self.viewer = Map:new(self)
 	self.detailsUI = Tabs:new()
