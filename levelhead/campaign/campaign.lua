@@ -5,9 +5,17 @@ local LevelNode = require("levelhead.campaign.node.level")
 
 local C = Class("Campaign")
 
-function C:initialize()
-	self.nodes = EP:new()
-	self.nodesById = {}
+function C:initialize(path)
+	if path then
+		if path:sub(-1)~="/" then
+			path = path.."/"
+		end
+		self.path = path
+	end
+	
+	-- self.nodes
+	-- self.nodesById
+	self:clearNodes()
 end
 
 function C:getNode(id)
@@ -33,7 +41,20 @@ function C:newLevelNode(id)
 	return n
 end
 
-function C:loadNodes(rawData)
+function C:clearNodes()
+	self.nodes = EP:new()
+	self.nodesById = {}
+end
+
+function C:reloadNodes()
+	local nodes, err = love.filesystem.read(self.path.."data/nodes.json")
+	if not nodes then
+		error("Error reading nodes: "..err, 2)
+	end
+	local rawData = JSON.decode(nodes)
+	
+	self:clearNodes()
+	
 	-- load nodes
 	for id,data in pairs(rawData) do
 		local n = Node:newFromMapped(id, data)
@@ -54,15 +75,15 @@ function C:loadNodes(rawData)
 	end
 end
 
-function C:load(path)
-	if path:sub(-1)~="/" then
-		path = path.."/"
+function C:reload(path)
+	if path then
+		if path:sub(-1)~="/" then
+			path = path.."/"
+		end
+		self.path = path
 	end
-	local nodes, err = love.filesystem.read(path.."data/nodes.json")
-	if not nodes then
-		error("Error reading nodes: "..err,2)
-	end
-	self:loadNodes(JSON.decode(nodes))
+	
+	self:reloadNodes()
 end
 
 
