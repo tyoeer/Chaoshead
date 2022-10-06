@@ -2,8 +2,8 @@ local N = Class("CampaignPathNode",require("levelhead.campaign.node"))
 
 local MAPPINGS = {
 	-- TODO to
-	prevActual = "pre_actual",
-	nextActual = "post_actual"
+	prevLevel = "pre_actual",
+	nextLevel = "post_actual"
 }
 
 function N:initialize(id)
