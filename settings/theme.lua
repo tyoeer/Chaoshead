@@ -42,9 +42,10 @@ return {
 		campaign = {
 			background = {0.2, 0, 0.6},
 			origin = {0.5,0.5,0.5},
+			selection = {1,1,1},
 			
 			directConnections = {0.8,0,0.4},
-			smoothConnections = {1,1,1},
+			smoothConnections = {1,0.7,0.9},
 			
 			nodes = {
 				level = {0,1,0},

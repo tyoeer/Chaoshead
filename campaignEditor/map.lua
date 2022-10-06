@@ -63,6 +63,14 @@ function UI:getMouseWorldPos()
 end
 
 
+function UI:getNodeAt(x,y)
+	for node in self.campaign.nodes:iterate() do
+		local distSq = (node.x-x)^2 + (node.y-y)^2
+		if distSq < node:getRadius()^2 then
+			return node
+		end
+	end
+end
 -- function UI:selectArea()
 -- 	local fromX, fromY = math.floor(self.selectStartX/TILE_SIZE), math.floor(self.selectStartY/TILE_SIZE)
 -- 	local endX, endY = self:getMouseTile()
@@ -142,13 +150,7 @@ function UI:drawNodes()
 	for node in self.campaign.nodes:iterate() do
 		--the node itself
 		love.graphics.setColor(theme.nodes[node.type] or theme.nodes["$UnknownNodeType"])
-		if node.type=="level" then
-			love.graphics.circle("fill", node.x, node.y, 64 * node.scale)
-		elseif node.type=="path" then
-			love.graphics.circle("fill", node.x, node.y, 16)
-		else
-			love.graphics.circle("fill", node.x, node.y, 32)
-		end
+		love.graphics.circle("fill", node.x, node.y, node:getRadius())
 		
 		-- direct connections
 		love.graphics.setColor(theme.directConnections)
@@ -177,6 +179,13 @@ function UI:drawNodes()
 			love.graphics.setColor(theme.smoothConnections)
 			process(node)
 		end
+	end
+end
+
+function UI:drawSelection()
+	love.graphics.setColor(theme.selection)
+	for node in self.editor.selection:iterate() do
+		love.graphics.circle("line", node.x, node.y, node:getRadius()+10)
 	end
 end
 
@@ -262,110 +271,100 @@ function UI:draw()
 		-- 	)
 		-- end
 		
-		-- --selection
-		-- if self.editor.selection then
-		-- 	self.editor.selection:draw(startX,startY, endX,endY, self.zoomFactor)
-		-- end
+		--selection
+		if self.editor.selection then
+			self:drawSelection()
+		end
 	love.graphics.pop()
 end
 
 
--- function UI:inputActivated(name,group, isCursorBound)
--- 	if group=="editor" then
--- 		if self.holding then
--- 			if name=="placeHand" or name=="releaseHand" or name=="placeAndReleaseHand" then
--- 				self.placing = true
--- 			end
--- 		else
--- 			if name=="selectOnly" or name=="selectAdd" or name=="deselectSub" or name=="deselectArea" then
--- 				if Input.isActive("selectAreaModifier","editor") then
--- 					self.selectStartX = self:toWorldX(self:getMouseX())
--- 					self.selectStartY = self:toWorldY(self:getMouseY())
--- 					self.selecting = "area"
--- 				else
--- 					self.selecting = true
--- 				end
--- 			elseif name=="selectAreaModifier"  then
--- 				if Input.isActive("selectOnly","editor")
--- 					or Input.isActive("selectAdd","editor")
--- 					or Input.isActive("deselectSub","editor")
--- 					or Input.isActive("deselectArea","editor")
--- 				then
--- 					self.selectStartX = self:toWorldX(self:getMouseX())
--- 					self.selectStartY = self:toWorldY(self:getMouseY())
--- 					self.selecting = "area"
--- 				end
--- 			elseif name=="resize" then
--- 				local cx,cy = self:posNearCorner(self:toWorldX(self:getMouseX()),self:toWorldY(self:getMouseY()))
--- 				if cx then
--- 					self.resizing = true
--- 					self.resizeCornerX = cx
--- 					self.resizeCornerY = cy
--- 				end
--- 			end
--- 		end
--- 	end
--- end
+function UI:inputActivated(name,group, isCursorBound)
+	if group=="editor" then
+		if false and self.holding then -- TODO
+			-- if name=="placeHand" or name=="releaseHand" or name=="placeAndReleaseHand" then
+			-- 	self.placing = true
+			-- end
+		else
+			if name=="selectOnly" or name=="selectAdd" or name=="deselectSub" or name=="deselectArea" then
+				if Input.isActive("selectAreaModifier","editor") then
+					self.selectStartX, self.selectStartY = self:getMouseWorldPos()
+					self.selecting = "area"
+				else
+					self.selecting = true
+				end
+			elseif name=="selectAreaModifier"  then
+				if Input.isActive("selectOnly","editor")
+					or Input.isActive("selectAdd","editor")
+					or Input.isActive("deselectSub","editor")
+					or Input.isActive("deselectArea","editor")
+				then
+					self.selectStartX, self.selectStartY = self:getMouseWorldPos()
+					self.selecting = "area"
+				end
+			end
+		end
+	end
+end
 
--- function UI:inputDeactivated(name,group, isCursorBound)
--- 	if group=="editor" then
--- 		if self.holding then
--- 			if self.placing then
--- 				--only stop placing it's a related input
--- 				--otherwise unrelated inputs (on duplicate binds) prevent us from placing stuff
--- 				if name=="placeHand" then
--- 					self.editor:place(self.handX, self.handY, false)
--- 					self.placing = false
--- 				elseif name=="placeAndReleaseHand" then
--- 					self.editor:place(self.handX, self.handY, true)
--- 					self.placing = false
--- 				elseif name=="releaseHand" then
--- 					self.editor:releaseHold()
--- 					self.placing = false
--- 				end
--- 			end
--- 		else
--- 			if name=="selectOnly" then
--- 				if self.selecting then
--- 					if self.selecting=="area" then
--- 						self:selectArea()
--- 					else
--- 						self.editor:selectOnly(self:getMouseTile())
--- 					end
--- 					self.selecting = false
--- 				end
--- 			elseif name=="selectAdd" then
--- 				if self.selecting then
--- 					if self.selecting=="area" then
--- 						self:selectArea()
--- 					else
--- 						self.editor:selectAdd(self:getMouseTile())
--- 					end
--- 					self.selecting = false
--- 				end
--- 			elseif name=="deselectSub" then
--- 				if self.selecting then
--- 					if self.selecting=="area" then
--- 						self:deselectArea()
--- 					else
--- 						self.editor:deselectSub(self:getMouseTile())
--- 					end
--- 					self.selecting = false
--- 				end
--- 			elseif name=="deselectArea" then
--- 				if self.selecting=="area" then
--- 					self:deselectArea()
--- 					self.selecting = false
--- 				end
--- 				--do nothing otherwise because this input is doubly mapped to camera.drag
--- 			elseif name=="resize" then
--- 				if self.resizing then
--- 					self.resizing = false
--- 				end
--- 			end
--- 		end
--- 	end
--- end
+function UI:inputDeactivated(name,group, isCursorBound)
+	if group=="editor" then
+		if false and self.holding then -- TODO
+			if self.placing then
+				--only stop placing it's a related input
+				--otherwise unrelated inputs (on duplicate binds) prevent us from placing stuff
+				if name=="placeHand" then
+					self.editor:place(self.handX, self.handY, false)
+					self.placing = false
+				elseif name=="placeAndReleaseHand" then
+					self.editor:place(self.handX, self.handY, true)
+					self.placing = false
+				elseif name=="releaseHand" then
+					self.editor:releaseHold()
+					self.placing = false
+				end
+			end
+		else
+			if name=="selectOnly" then
+				if self.selecting then
+					if self.selecting=="area" then
+						self:selectArea()
+					else
+						local node = self:getNodeAt(self:getMouseWorldPos())
+						if node then
+							self.editor:selectOnly(node)
+						end
+					end
+					self.selecting = false
+				end
+			-- elseif name=="selectAdd" then
+			-- 	if self.selecting then
+			-- 		if self.selecting=="area" then
+			-- 			self:selectArea()
+			-- 		else
+			-- 			self.editor:selectAdd(self:getMouseTile())
+			-- 		end
+			-- 		self.selecting = false
+			-- 	end
+			-- elseif name=="deselectSub" then
+			-- 	if self.selecting then
+			-- 		if self.selecting=="area" then
+			-- 			self:deselectArea()
+			-- 		else
+			-- 			self.editor:deselectSub(self:getMouseTile())
+			-- 		end
+			-- 		self.selecting = false
+			-- 	end
+			-- elseif name=="deselectArea" then
+			-- 	if self.selecting=="area" then
+			-- 		self:deselectArea()
+			-- 		self.selecting = false
+			-- 	end
+			-- 	--do nothing otherwise because this input is doubly mapped to camera.drag
+			end
+		end
+	end
+end
 
 
 function UI:mouseMoved(x,y,dx,dy)

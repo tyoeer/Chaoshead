@@ -48,4 +48,8 @@ function N:newFromMapped(id, data)
 	end
 end
 
+function N:getRadius()
+	return 32 -- TODO magic number
+end
+
 return N

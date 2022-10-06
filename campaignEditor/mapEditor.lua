@@ -1,12 +1,12 @@
 -- --editor tools
--- local Selection = require("tools.selection.tracker")
+local EP = require("libs.tyoeerUtils.entityPool")
 -- local Clipboard = require("tools.clipboard")
 --misc UIs
 local HorDivide = require("ui.layout.horDivide")
 local Tabs = require("ui.tools.tabs")
 --specific UIs
 local Map = require("campaignEditor.map")
--- local SelectionDetails = require("levelEditor.details.selection")
+local SelectionDetails = require("campaignEditor.details.selection")
 local CampaignDetails = require("campaignEditor.details.campaign")
 
 local UI = Class("LevelEditorUI",require("ui.base.proxy"))
@@ -24,6 +24,7 @@ function UI:initialize(root)
 	
 	--editor state
 	-- self.selection = nil
+	-- self.selectionSize = 0
 	-- self.selectionDetails = nil
 	-- self.hand = nil
 	
@@ -56,12 +57,12 @@ end
 
 -- private editor stuff
 
---mask is optional
--- function UI:newSelection(mask)
--- 	self.selection = Selection:new(self.level,mask)
--- 	self.selectionDetails = SelectionDetails:new(self.selection)
--- 	self:addTab(self.selectionDetails)
--- end
+function UI:newSelection()
+	self.selection = EP:new()
+	self.selectionSize = 0
+	self.selectionDetails = SelectionDetails:new(self) -- editor also gets set in addTab(), but it requires acces to the editor/selection to properly initialize
+	self:addTab(self.selectionDetails)
+end
 
 -- function UI:refreshSelection()
 -- 	if self.selection then
@@ -74,15 +75,16 @@ end
 
 -- selection manipulation
 
--- function UI:selectOnly(tileX,tileY)
--- 	if self.selection then
--- 		self:deselectAll()
--- 	end
--- 	--deselectAll() destroys the selection
--- 	self:newSelection()
--- 	self.selection:add(tileX,tileY)
--- 	self.selectionDetails:reload()
--- end
+function UI:selectOnly(node)
+	if self.selection then
+		self:deselectAll()
+	end
+	--deselectAll() destroys the selection
+	self:newSelection()
+	self.selection:add(node)
+	self.selectionSize = self.selectionSize + 1
+	self.selectionDetails:reload()
+end
 
 -- function UI:selectAdd(tileX,tileY)
 -- 	if self.selection then
@@ -155,13 +157,14 @@ end
 -- 	end
 -- end
 
--- function UI:deselectAll()
--- 	if self.selection then
--- 		self.selection = nil
--- 		self:removeTab(self.selectionDetails)
--- 		self.selectionDetails = nil
--- 	end
--- end
+function UI:deselectAll()
+	if self.selection then
+		self.selection = nil
+		self.selectionSize = -1
+		self:removeTab(self.selectionDetails)
+		self.selectionDetails = nil
+	end
+end
 
 -- filter
 
@@ -372,10 +375,10 @@ end
 
 function UI:onInputActivated(name,group, isCursorBound)
 	if group=="editor" then
-		-- if name=="delete" then
-		-- 	self:deleteSelection()
-		-- elseif name=="deselectAll" then
-		-- 	self:deselectAll()
+		if name=="delete" then
+			-- self:deleteSelection()
+		elseif name=="deselectAll" then
+			self:deselectAll()
 		-- elseif name=="selectAll" then
 		-- 	self:selectAll()
 		-- elseif name=="copy" then
@@ -384,7 +387,7 @@ function UI:onInputActivated(name,group, isCursorBound)
 		-- 	self:paste()
 		-- elseif name=="cut" then
 		-- 	self:cut()
-		-- end
+		end
 	end
 end
 

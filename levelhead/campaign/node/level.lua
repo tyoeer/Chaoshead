@@ -8,7 +8,10 @@ local MAPPINGS = {
 function N:initialize(id)
 	N.super.initialize(self, id)
 	self:extendMappings(MAPPINGS)
-	
+end
+
+function N:getRadius()
+	return self.scale * 64 -- TODO magic number
 end
 
 return N
