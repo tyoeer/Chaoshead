@@ -33,19 +33,20 @@ function N:initialize(id)
 end
 
 function N:newFromMapped(id, data)
+	local n
 	if data.t==0 then
-		local n = require("levelhead.campaign.node.level"):new(id)
-		n:fromMapped(data)
-		return n
+		n = require("levelhead.campaign.node.level"):new(id)
+	elseif data.t==1 then
+		n = require("levelhead.campaign.node.iconPack"):new(id)
 	elseif data.t==2 then
-		local n = require("levelhead.campaign.node.path"):new(id)
-		n:fromMapped(data)
-		return n
+		n = require("levelhead.campaign.node.path"):new(id)
+	elseif data.t==3 then
+		n = require("levelhead.campaign.node.presentation"):new(id)
 	else
-		local n = self:new(id)
-		n:fromMapped(data)
-		return n
+		n = self:new(id)
 	end
+	n:fromMapped(data)
+	return n
 end
 
 function N:getRadius()
