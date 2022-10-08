@@ -1,17 +1,17 @@
-local N = Class("CampaignLevelNode",require("levelhead.campaign.node"))
+local L = Class("CampaignLevelNode",require("levelhead.campaign.node"))
 
 local MAPPINGS = {
 	-- TODO requirements
 	scale = "scale",
 }
 
-function N:initialize(id)
-	N.super.initialize(self, id)
+function L:initialize(id)
+	L.super.initialize(self, id)
 	self:extendMappings(MAPPINGS)
 end
 
-function N:getRadius()
+function L:getRadius()
 	return self.scale * 64 -- TODO magic number
 end
 
-return N
+return L

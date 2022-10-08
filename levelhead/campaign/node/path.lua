@@ -1,4 +1,4 @@
-local N = Class("CampaignPathNode",require("levelhead.campaign.node"))
+local P = Class("CampaignPathNode",require("levelhead.campaign.node"))
 
 local MAPPINGS = {
 	-- TODO to
@@ -6,13 +6,13 @@ local MAPPINGS = {
 	nextLevel = "post_actual"
 }
 
-function N:initialize(id)
-	N.super.initialize(self, id)
+function P:initialize(id)
+	P.super.initialize(self, id)
 	self:extendMappings(MAPPINGS)
 end
 
-function N:getRadius()
+function P:getRadius()
 	return 16 -- TODO magic number
 end
 
-return N
+return P

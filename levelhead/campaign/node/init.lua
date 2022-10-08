@@ -52,4 +52,5 @@ function N:getRadius()
 	return 32 -- TODO magic number
 end
 
+
 return N
