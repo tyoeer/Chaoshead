@@ -1,7 +1,7 @@
 local I = Class("CampaignIconPackNode",require("levelhead.campaign.node.visitable"))
 
 local MAPPINGS = {
-	-- TODO dat
+	unlocks = "dat" -- TODO reverse engineer all the subfields
 }
 
 function I:initialize(id)

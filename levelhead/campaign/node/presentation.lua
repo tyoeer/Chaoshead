@@ -1,7 +1,7 @@
 local P = Class("CampaignPresentationNode",require("levelhead.campaign.node.visitable"))
 
 local MAPPINGS = {
-	-- TODO dat
+	presentation = "dat",
 }
 
 function P:initialize(id)
