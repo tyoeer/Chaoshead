@@ -1,3 +1,5 @@
+local CampaignMisc = require("campaignEditor.misc")
+
 local UI = Class("CampaignDetailsUI",require("ui.tools.details"))
 
 function UI:initialize(campaign,editor)
@@ -34,7 +36,16 @@ function UI:onReload(list,campaign)
 		end
 	)
 	
-	-- list:addTextEntry(" ") -- seperator
+	list:addTextEntry(" ") -- seperator
+	
+	list:addButtonEntry(
+		"Pack campign",
+		function()
+			CampaignMisc.pack(self.editor.root.path)
+		end
+	)
+	
+	list:addTextEntry(" ") -- seperator
 	
 	-- list:addButtonEntry( -- TODO limits check
 	-- 	"Check level limits",

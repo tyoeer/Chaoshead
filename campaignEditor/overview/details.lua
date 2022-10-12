@@ -33,7 +33,7 @@ function UI:onReload(list)
 	list:addButtonEntry(
 		"Pack",
 		function()
-			CampaignMisc.pack(self.subpath)
+			CampaignMisc.pack(CampaignMisc.folder..self.subpath)
 		end
 	)
 

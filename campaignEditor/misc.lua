@@ -56,9 +56,9 @@ local function unpack(callback)
 end
 
 
-local function actualPack(subpath, callback)
+local function actualPack(fromPath, callback)
 	local success = xpcall(function()
-		Packing.pack(folder..subpath)
+		Packing.pack(fromPath)
 	end, errorHandler)
 	MainUI:displayMessage("Succesfully packed campaign!")
 	if callback then
@@ -66,14 +66,14 @@ local function actualPack(subpath, callback)
 	end
 end
 
-local function pack(subpath, callback)
+local function pack(fromPath, callback)
 	local info = love.filesystem.getInfo("campaign_hardfile")
 	if info then
 		local list = List:new(Settings.theme.modal.listStyle)
 		list:addTextEntry("There already exists a campaign_hardfile in the Chaoshead data directory, do you want to overwrite it?")
 		list:addButtonEntry("Yes/Overwrite", function()
 			MainUI:removeModal()
-			actualPack(subpath, callback)
+			actualPack(fromPath, callback)
 		end)
 		
 		local cancel = function()
@@ -83,7 +83,7 @@ local function pack(subpath, callback)
 		MainUI:setModal(list)
 		MainUI:setCancelAction(cancel)
 	else
-		actualPack(subpath, callback)
+		actualPack(fromPath, callback)
 	end
 end
 
