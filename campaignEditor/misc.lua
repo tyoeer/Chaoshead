@@ -3,6 +3,17 @@ local ParsedInput = require("ui.layout.parsedInput")
 local Packing = require("levelhead.campaign.packing")
 
 local folder = "campaigns/"
+local errorHandler = function(message)
+	message = tostring(message)
+	--part of snippet yoinked from default löve error handling
+	local fullTrace = debug.traceback("",2):gsub("\n[^\n]+$", "")
+	print(message)
+	print(fullTrace)
+	--cut of the part of the trace that goes into the code that calls UI:openEditor()
+	local index = fullTrace:find("%s+%[C%]: in function 'xpcall'")
+	local trace = fullTrace:sub(1,index-1)
+	MainUI:displayMessage("Failed to pack/unpack campaign!","Error message: "..message,trace)
+end
 
 return {
 	folder = folder,
@@ -26,8 +37,10 @@ return {
 					MainUI:displayMessage("The path you entered was invalid!")
 					return
 				end
-				Packing.unpack(folder..subpath)
-				callback(subpath)
+				local success = xpcall(function()
+					Packing.unpack(folder..subpath)
+				end, errorHandler)
+				callback(subpath, success)
 			end)
 			local cancel = function()
 				MainUI:removeModal()
@@ -39,5 +52,8 @@ return {
 			MainUI:displayMessage("No campaign_hardfile found in the Chaoshead data directory!\nYou have to manually move it there first."
 			.."\n(You can open the data direcotry in the Misc. tab.")
 		end
+	end,
+	pack = function()
+		
 	end
 }
