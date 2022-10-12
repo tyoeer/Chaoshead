@@ -4,8 +4,6 @@ local CAMPAIGN_ROOT = require("campaignEditor.campaignRoot")
 
 local UI = Class("CampaignSelectorUI",require("ui.base.proxy"))
 
-UI.FOLDER = "campaigns/"
-
 function UI:initialize()
 	-- self.clipboard = nil
 	

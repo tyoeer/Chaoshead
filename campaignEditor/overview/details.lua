@@ -1,3 +1,5 @@
+local CampaignMisc = require("campaignEditor.misc")
+
 --this class represents the details of a campaign selected in the campaign selector
 local UI = Class("SelectedCampaignDetailsUI",require("ui.tools.details"))
 
@@ -19,7 +21,7 @@ function UI:onReload(list)
 	list:addButtonEntry(
 		"Open in file explorer",
 		function()
-			local url = "file://"..love.filesystem.getSaveDirectory().."/"..self.overview.FOLDER..self.subpath
+			local url = "file://"..love.filesystem.getSaveDirectory().."/"..CampaignMisc.folder..self.subpath
 			if not love.system.openURL(url) then
 				error("Couldn't open "..url)
 			end

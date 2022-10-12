@@ -1,5 +1,6 @@
 local Tabs = require("ui.tools.tabs")
 local Campaign = require("levelhead.campaign.campaign")
+local CampaignMisc = require("campaignEditor.misc")
 -- local Script = require("script")
 
 local MapEditor = require("campaignEditor.mapEditor")
@@ -23,7 +24,7 @@ end
 function UI:initialize(subpath, overview)
 	self.overview = overview
 	self.subpath = subpath
-	self.path = overview.FOLDER..subpath
+	self.path = CampaignMisc.folder..subpath
 	self.campaign = Campaign:new(self.path)
 	self.campaign:reload()
 	
