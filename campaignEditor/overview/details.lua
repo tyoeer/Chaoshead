@@ -28,7 +28,14 @@ function UI:onReload(list)
 		end
 	)
 	
-	--TODO pack?
+	list:addTextEntry("") -- divider
+	
+	list:addButtonEntry(
+		"Pack",
+		function()
+			CampaignMisc.pack(self.subpath)
+		end
+	)
 
 end
 
