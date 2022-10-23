@@ -7,6 +7,8 @@ dataRetriever:
 		should return all the children of parent
 	getRootEntries(dataRetriever)
 		should return the entries at the root
+	persistant
+		name to remember under which entries have been opened
 		
 	entry format:
 		- title: title to display
@@ -15,20 +17,27 @@ dataRetriever:
 
 ]]--
 
+local treeStorage = Persistant:get("tree")
 local theme = Settings.theme.treeViewer
 
 function UI:initialize(dataRetriever,onClick)
 	UI.super.initialize(self, theme.listStyle)
 	
 	self.dataRetriever = dataRetriever
+	if dataRetriever.persistant then
+		if not treeStorage[dataRetriever.persistant] then
+			treeStorage[dataRetriever.persistant] = {}
+		end
+		self.opened = treeStorage[dataRetriever.persistant]
+	end
 	self.onClick = onClick
 	
-	self.dataCache = self:toCache(dataRetriever:getRootEntries())
+	self.dataCache = self:toCache(dataRetriever:getRootEntries(), self.opened)
 	
-	self:buildList(self.dataCache,0)
+	self:buildList(self.dataCache,0, self.opened)
 end
 
-function UI:toCache(input)
+function UI:toCache(input, opened)
 	local out = {}
 	for i,v in ipairs(input) do
 		out[i] = {
@@ -39,11 +48,15 @@ function UI:toCache(input)
 			open = false,
 			children = nil,
 		}
+		if opened and opened[v.title] then
+			out[i].open = true
+			out[i].children = self:toCache(self.dataRetriever:getChildren(v), opened and opened[v.title])
+		end
 	end
 	return out
 end
 
-function UI:buildList(data,indentLevel)
+function UI:buildList(data,indentLevel, opened)
 	for _,v in ipairs(data) do
 		local indent = string.rep(" ",indentLevel*self.style.indentCharacters)
 		if v.action then
@@ -60,6 +73,9 @@ function UI:buildList(data,indentLevel)
 					indent.."V "..v.title,
 					function()
 						v.open = false
+						if opened then
+							opened[v.title] = nil
+						end
 						self:rebuildList()
 					end
 				)
@@ -69,8 +85,11 @@ function UI:buildList(data,indentLevel)
 					indent.."> "..v.title,
 					function()
 						v.open = true
+						if opened then
+							opened[v.title] = {}
+						end
 						if not v.children then
-							v.children = self:toCache(self.dataRetriever:getChildren(v.data))
+							v.children = self:toCache(self.dataRetriever:getChildren(v.data), opened and opened[v.title])
 						end
 						self:rebuildList()
 					end
@@ -89,12 +108,15 @@ end
 
 function UI:rebuildList()
 	self:resetList()
-	self:buildList(self.dataCache,0)
+	self:buildList(self.dataCache,0, self.opened)
+	if self.opened then
+		treeStorage:save()
+	end
 	self:minimumHeightChanged()
 end
 
 function UI:reload()
-	self.dataCache = self:toCache(self.dataRetriever:getRootEntries())
+	self.dataCache = self:toCache(self.dataRetriever:getRootEntries(), self.opened)
 	self:rebuildList()
 end
 

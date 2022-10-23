@@ -26,6 +26,10 @@ dataHandler:
 local theme = Settings.theme.treeViewer
 
 function UI:initialize()
+	--make subclasses remember which fodlers are opened
+	if self.class.name~="TreeViewerUI" then
+		self.persistant = self.class.name
+	end
 	--ui state
 	self.list = LIST:new(self, function(data)
 		self:setDetailsUI(self:getDetailsUI(data))
