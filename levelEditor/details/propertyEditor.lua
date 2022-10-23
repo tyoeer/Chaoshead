@@ -48,7 +48,7 @@ function UI:reload()
 	local id = self.propertyList.propId
 	local mapType = P:getMappingType(id)
 	
-	self:addButtonEntry(self.filtering and "Filtering" or "Editing", function()
+	self:addButtonEntry(self.filtering and "Filtering to" or "Editing", function()
 		self.filtering = not self.filtering
 		if self.filtering then
 			self.input = ParsedInput:new(function(str)
