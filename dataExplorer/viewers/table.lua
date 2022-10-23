@@ -6,6 +6,7 @@ function UI:initialize(data,overview)
 	self.data = data
 	self.overview = overview
 	UI.super.initialize(self)
+	self.persistant = nil -- which data we display differs, no sense remembering specific entries
 	self.title = "Table Viewer"
 end
 
