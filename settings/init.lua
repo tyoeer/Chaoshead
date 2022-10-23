@@ -4,7 +4,7 @@ local SETTINGS_FOLDER = "settings/"
 local STORAGE_FOLDER = "storage/"
 
 local base = select(1, ...).."."
-local out = {
+local settings = {
 	folder = SETTINGS_FOLDER
 }
 
@@ -72,21 +72,21 @@ local function load(name, maxLevel, ...)
 	local filePath = SETTINGS_FOLDER..name..".json"
 	local fileInfo = love.filesystem.getInfo(filePath)
 	if fileInfo then
-		out[name] = loadData(filePath)
+		settings[name] = loadData(filePath)
 		
 		--check if a new setting has been added and save it
-		changed = addDefaults(out[name],defaults, maxLevel,1)
+		changed = addDefaults(settings[name],defaults, maxLevel,1)
 	else
-		out[name] = defaults
+		settings[name] = defaults
 		changed = true
 	end
 	
 	if changed then
-		saveData(filePath, out[name])
+		saveData(filePath, settings[name])
 	end
 	
 	for _,alias in ipairs({...}) do
-		out[alias] = out[name]
+		settings[alias] = settings[name]
 	end
 end
 
@@ -101,23 +101,43 @@ if not love.filesystem.getRealDirectory(STORAGE_FOLDER) ~= love.filesystem.getSa
 	love.filesystem.createDirectory(STORAGE_FOLDER)
 end
 
-local storagePath = STORAGE_FOLDER.."data.json"
 
---load the storage
-if love.filesystem.getInfo(storagePath) then
-	out.storage = loadData(storagePath)
-else
-	out.storage = {}
+
+local function getStoragePath(storage)
+	if type(storage)=="table" then
+		storage = storage.storageName
+	end
+	return STORAGE_FOLDER..storage..".json"
 end
 
 local saveStorage
-saveStorage = function()
+saveStorage = function(self)
 	--make sure we don't try to save this function
-	out.storage.save = nil
-	saveData(storagePath, out.storage)
-	out.storage.save = saveStorage
+	self.save = nil
+	saveData(getStoragePath(self), self)
+	self.save = saveStorage
 end
 
-out.storage.save = saveStorage
+local storage = {
+	settings = settings
+}
 
-return out
+function storage:get(name)
+	if not self[name] then
+		local path = getStoragePath(name)
+		
+		local store
+		if love.filesystem.getInfo(path) then
+			store = loadData(path)
+		else
+			store = {}
+		end
+		store.save = saveStorage
+		store.storageName = name 
+		
+		self[name] = store
+	end
+	return self[name]
+end
+
+return storage

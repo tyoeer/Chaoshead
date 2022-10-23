@@ -17,8 +17,9 @@ function love.load(args)
 	TILE_SIZE = 71
 	
 	--globals
-	Settings = require("settings")
-	Storage = Settings.storage
+	Persistant = require("settings")
+	Settings = Persistant.settings
+	Storage = Persistant:get("data")
 	Input = TU("input")
 	--make sure which version of CH we're using is stored on disk
 	require("utils.version")

@@ -34,7 +34,7 @@ function UI:openEditor(subpath)
 			when = os.time(),
 			subpath = subpath,
 		}
-		Storage.save()
+		Storage:save()
 	end
 end
 

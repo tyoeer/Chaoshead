@@ -42,7 +42,7 @@ end
 function UI:toggleFullscreen()
 	local fullscreen = not love.window.getFullscreen()
 	Storage.fullscreen = fullscreen
-	Storage.save()
+	Storage:save()
 	love.window.setFullscreen(fullscreen)
 	UiRoot:resize(love.graphics.getWidth(), love.graphics.getHeight())
 end

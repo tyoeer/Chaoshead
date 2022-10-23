@@ -34,7 +34,7 @@ function UI:openEditor(path)
 			name = editor.level.settings:getTitle(),
 			path = path,
 		}
-		Storage.save()
+		Storage:save()
 	end
 end
 

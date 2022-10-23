@@ -27,7 +27,7 @@ function DetUI:onReload(list)
 			"Unbind quick run hotkey",
 			function()
 				Storage.quickRunScriptPath = nil
-				Storage.save()
+				Storage:save()
 				self:reload()
 			end
 		)
@@ -36,7 +36,7 @@ function DetUI:onReload(list)
 			"Bind quick run hotkey to this script",
 			function()
 				Storage.quickRunScriptPath = path
-				Storage.save()
+				Storage:save()
 				self:reload()
 			end
 		)

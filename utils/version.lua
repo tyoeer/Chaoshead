@@ -4,7 +4,7 @@ V.current = love.filesystem.read("version.txt") or "DEV"
 
 V.previous = Storage.version
 Storage.version = V.current
-Storage.save()
+Storage:save()
 
 function V.parseVersion(str)
 	local out = {}
