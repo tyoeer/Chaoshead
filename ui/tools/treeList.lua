@@ -79,13 +79,13 @@ function UI:buildList(data,indentLevel, opened)
 						self:rebuildList()
 					end
 				)
-				self:buildList(v.children, indentLevel+1)
+				self:buildList(v.children, indentLevel+1, opened and opened[v.title])
 			else
 				self:addButtonEntry(
 					indent.."> "..v.title,
 					function()
 						v.open = true
-						if opened then
+						if opened and not opened[v.title] then
 							opened[v.title] = {}
 						end
 						if not v.children then
