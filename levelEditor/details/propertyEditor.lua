@@ -31,13 +31,22 @@ function UI:addFilter(op)
 	self:addButtonEntry(op, function()
 		local v = self.input:getParsed()
 		if v then
-			local propList = self.editor:filter(self.propertyList.propId,v, op)
+			local propList, additionalDeselection = self.editor:filter(self.propertyList.propId,v, op)
 			if not propList then
 				--filtered out every object with this modal
-				MainUI:removeModal()
-				return
+				MainUI:removeModal(self)
 			end
-			self:setPropertyList(propList) --also reloads
+			
+			if additionalDeselection then
+				MainUI:displayMessage(
+					"NOTE: Additional objects/path nodes were deselected because they were "
+					.. "on the same tile as a path node/object that was filtered out"
+				)
+			end
+			
+			if propList then
+				self:setPropertyList(propList) --also reloads
+			end
 		end
 	end)
 end

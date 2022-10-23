@@ -1,4 +1,5 @@
 local P = require("levelhead.data.properties")
+local Path = require("levelhead.level.path")
 --editor tools
 local Selection = require("tools.selection.tracker")
 local Clipboard = require("tools.clipboard")
@@ -174,6 +175,7 @@ end
 function UI:filter(prop, filterValue, operation)
 	if self.selection then
 		local pl = self.selection.contents.properties[prop]
+		local additionalDeselection = false
 		for obj in pl.pool:iterate() do
 			local actualValue = obj:getPropertyRaw(prop)
 			local allow = true
@@ -191,12 +193,25 @@ function UI:filter(prop, filterValue, operation)
 				allow = actualValue<=filterValue
 			end
 			if not allow then
-				--edit mask to prevent update at every obj that gets edited
-				self.selection.mask:remove(obj.x, obj.y)
+				if obj:isInstanceOf(Path) then
+					for node in obj:iterateNodes() do
+						--edit mask directly to prevent update at every obj that gets edited
+						self.selection.mask:remove(node.x, node.y)
+						if self.level.foreground[node.x][node.y] then
+							additionalDeselection = true
+						end
+					end
+				else -- object
+					--edit mask directly to prevent update at every obj that gets edited
+					self.selection.mask:remove(obj.x, obj.y)
+					if self.level.pathNodes[obj.x][obj.y] then
+						additionalDeselection = true
+					end
+				end
 			end
 		end
 		self:refreshSelection() --handles mask changes
-		return self.selection.contents.properties[prop] -- so the modal can update itself
+		return self.selection.contents.properties[prop], additionalDeselection -- so the modal can update itself
 	end
 end
 
