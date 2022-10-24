@@ -7,6 +7,8 @@ return {
 	},
 	editor = {
 		zoomSpeed = math.sqrt(2),
+		textLod = 4,
+		outlineLod = 14,
 		cameraMoveSpeed = 25*60,
 		showRawNumbers = false,
 		checkLimits = {"file","game"}, -- "editor"

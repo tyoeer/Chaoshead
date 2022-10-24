@@ -229,22 +229,26 @@ function UI:drawObjects(level, startX, startY, endX, endY)
 	end
 	
 	--draw text
-	for _,v in ipairs(bg) do
-		v:drawText()
-	end
-	for _,v in ipairs(fg) do
-		v:drawText()
+	if self.zoomFactor >= 1/Settings.misc.editor.textLod then
+		for _,v in ipairs(bg) do
+			v:drawText()
+		end
+		for _,v in ipairs(fg) do
+			v:drawText()
+		end
 	end
 	
 	--draw outlines
-	for _,v in ipairs(bg) do
-		v:drawOutline()
-	end
-	for _,v in ipairs(pn) do
-		v:drawOutline()
-	end
-	for _,v in ipairs(fg) do
-		v:drawOutline()
+	if self.zoomFactor >= 1/Settings.misc.editor.outlineLod then
+		for _,v in ipairs(bg) do
+			v:drawOutline()
+		end
+		for _,v in ipairs(pn) do
+			v:drawOutline()
+		end
+		for _,v in ipairs(fg) do
+			v:drawOutline()
+		end
 	end
 end
 
