@@ -108,7 +108,7 @@ function T:removeBatch(x,y)
 end
 
 function T:endBatchRemove()
-	self.contents:recalcualtePropertyBounds()
+	self.contents:endBatchRemove()
 end
 
 return T

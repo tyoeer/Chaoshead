@@ -73,17 +73,22 @@ function C:initialize()
 	self.unknownProperties = EP:new()
 end
 
-function C:recalcualtePropertyBounds()
-	for _,pl in pairs(self.properties) do
-		pl:findBounds()
+function C:endBatchRemove()
+	for prop,pl in pairs(self.properties) do
+		if pl:isEmpty() then
+			self.properties[prop] = nil
+		else
+			pl:findBounds()
+		end
 	end
 end
 
 function C:removeLayer(layer)
 	if layer=="foreground" then
 		for obj in self.foreground:iterate() do
-			self:removeObjectProperties(obj)
+			self:removeObjectPropertiesBatch(obj)
 		end
+		self:endBatchRemove()
 		self.nForeground = 0
 		self.foreground = nil
 	elseif layer=="background" then
@@ -91,8 +96,9 @@ function C:removeLayer(layer)
 		self.background = nil
 	elseif layer=="pathNodes" then
 		for node in self.pathNodes:iterate() do
-			self:removePathNodeProperties(node)
+			self:removePathNodePropertiesBatch(node)
 		end
+		self:endBatchRemove()
 		self.nPathNodes = 0
 		self.pathNodes = nil
 	else
@@ -189,9 +195,6 @@ end
 function C:removeThingPropertiesBatch(thing)
 	for prop in thing:iterateProperties() do
 		self.properties[prop]:removeBatch(thing)
-		if self.properties[prop]:isEmpty() then
-			self.properties[prop] = nil
-		end
 	end
 end
 
