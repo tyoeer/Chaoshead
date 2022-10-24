@@ -47,6 +47,10 @@ do
 			self:findBounds()
 		end
 	end
+	--- Skips property bounds recalculation
+	function PL:removeBatch(obj)
+		self.pool:remove(obj)
+	end
 end
 
 
@@ -67,6 +71,12 @@ function C:initialize()
 	
 	self.properties = {}
 	self.unknownProperties = EP:new()
+end
+
+function C:recalcualtePropertyBounds()
+	for _,pl in pairs(self.properties) do
+		pl:findBounds()
+	end
 end
 
 function C:removeLayer(layer)
@@ -102,6 +112,12 @@ function C:removeForeground(obj)
 	self:removeObjectProperties(obj)
 	self.nForeground = self.nForeground - 1
 end
+--- Skips property bounds recalculation
+function C:removeForegroundBatch(obj)
+	self.foreground:remove(obj)
+	self:removeObjectPropertiesBatch(obj)
+	self.nForeground = self.nForeground - 1
+end
 
 function C:addBackground(obj)
 	self.background:add(obj)
@@ -120,6 +136,12 @@ end
 function C:removePathNode(node)
 	self.pathNodes:remove(node)
 	self:removePathNodeProperties(node)
+	self.nPathNodes = self.nPathNodes - 1
+end
+--- Skips property bounds recalculation
+function C:removePathNodeBatch(node)
+	self.pathNodes:remove(node)
+	self:removePathNodePropertiesBatch(node)
 	self.nPathNodes = self.nPathNodes - 1
 end
 
@@ -163,10 +185,29 @@ function C:removeThingProperties(thing)
 		end
 	end
 end
+--- Skips property bounds recalculation
+function C:removeThingPropertiesBatch(thing)
+	for prop in thing:iterateProperties() do
+		self.properties[prop]:removeBatch(thing)
+		if self.properties[prop]:isEmpty() then
+			self.properties[prop] = nil
+		end
+	end
+end
 
 function C:removeObjectProperties(obj)
 	if obj:hasProperties() then
 		self:removeThingProperties(obj)
+	end
+	--keep track of the ones with missing data
+	if E:hasProperties(obj.id)=="$UnknownProperties" then
+		self.unknownProperties:remove(obj)
+	end
+end
+--- Skips property bounds recalculation
+function C:removeObjectPropertiesBatch(obj)
+	if obj:hasProperties() then
+		self:removeThingPropertiesBatch(obj)
 	end
 	--keep track of the ones with missing data
 	if E:hasProperties(obj.id)=="$UnknownProperties" then
@@ -178,6 +219,16 @@ function C:removePathNodeProperties(node)
 	local path = node.path
 	if self.pathNodeAmountMap[path]==1 then
 		self:removeThingProperties(path)
+		self.pathNodeAmountMap[path] = nil
+	else
+		self.pathNodeAmountMap[path] = self.pathNodeAmountMap[path] - 1
+	end
+end
+--- Skips property bounds recalculation
+function C:removePathNodePropertiesBatch(node)
+	local path = node.path
+	if self.pathNodeAmountMap[path]==1 then
+		self:removeThingPropertiesBatch(path)
 		self.pathNodeAmountMap[path] = nil
 	else
 		self.pathNodeAmountMap[path] = self.pathNodeAmountMap[path] - 1

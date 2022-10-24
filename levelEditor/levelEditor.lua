@@ -147,12 +147,13 @@ function UI:deselectSubArea(startX,startY,endX,endY)
 	end
 	for x = startX, endX, 1 do
 		for y = startY, endY, 1 do
-			self.selection:remove(x,y)
+			self.selection:removeBatch(x,y)
 		end
 	end
 	if self.selection.mask.nTiles==0 then
 		self:deselectAll()
 	else
+		self.selection:endBatchRemove()
 		self.selectionDetails:reload()
 	end
 end
