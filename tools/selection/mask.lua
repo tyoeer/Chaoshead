@@ -117,7 +117,7 @@ local tile = love.graphics.newCanvas(TILE_SIZE, TILE_SIZE)
 
 function S:draw(startX,startY, endX,endY, zoomFactor)
 	local draw
-	if zoomFactor < 6/TILE_SIZE then
+	if zoomFactor < 1/Settings.misc.editor.selectionShapeLod then
 		if self.layers.foreground then
 			love.graphics.setColor(colors.foregroundObject.selected)
 		elseif self.layers.pathNodes then
@@ -125,7 +125,8 @@ function S:draw(startX,startY, endX,endY, zoomFactor)
 		else
 			love.graphics.setColor(colors.backgroundObject.selected)
 		end
-		if zoomFactor < 3/TILE_SIZE then
+		
+		if zoomFactor < 1/Settings.misc.editor.selectionPointLod then
 			love.graphics.setPointSize(TILE_SIZE*zoomFactor)
 			draw = function(_, x, y)
 				local xx, yy = x*TILE_SIZE, y*TILE_SIZE
@@ -138,7 +139,7 @@ function S:draw(startX,startY, endX,endY, zoomFactor)
 				love.graphics.rectangle("line",xx+0.5,yy+0.5,TILE_SIZE-1,TILE_SIZE-1)
 			end
 		end
-	elseif zoomFactor <= 0.5 then
+	elseif zoomFactor <= 1/Settings.misc.editor.selectionSmoothLod then
 		love.graphics.push("all")
 			love.graphics.setScissor()
 			love.graphics.origin()
