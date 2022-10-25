@@ -64,7 +64,7 @@ function N:newFromMapped(id, data)
 end
 
 function N:getRadius()
-	return 32 -- TODO magic number
+	return Settings.theme.editor.campaign.nodes.radii[self.type] or Settings.theme.editor.campaign.nodes.radii["$UnknownNodeType"]
 end
 
 

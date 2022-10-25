@@ -149,7 +149,7 @@ function UI:drawNodes()
 	
 	for node in self.campaign.nodes:iterate() do
 		--the node itself
-		love.graphics.setColor(theme.nodes[node.type] or theme.nodes["$UnknownNodeType"])
+		love.graphics.setColor(theme.nodes.colors[node.type] or theme.nodes.colors["$UnknownNodeType"])
 		love.graphics.circle("fill", node.x, node.y, node:getRadius())
 		
 		-- direct connections

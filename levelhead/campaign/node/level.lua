@@ -25,7 +25,7 @@ function L:getZone()
 end
 
 function L:getRadius()
-	return self.scale * 64 -- TODO magic number
+	return L.super.getRadius(self) * self.scale
 end
 
 return L

@@ -9,8 +9,5 @@ function P:initialize(id)
 	self:extendMappings(MAPPINGS)
 end
 
-function P:getRadius()
-	return 32 -- TODO magic number
-end
 
 return P

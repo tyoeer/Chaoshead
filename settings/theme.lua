@@ -48,11 +48,21 @@ return {
 			smoothConnections = {1,0.7,0.9},
 			
 			nodes = {
-				level = {0,1,0},
-				["icon pack"] = {1,1,0},
-				path = {1,0,1},
-				presentation = {0,1,1},
-				["$UnknownNodeType"] = {0,0,0},
+				colors = {
+					level = {0,1,0},
+					["icon pack"] = {1,1,0},
+					path = {1,0,1},
+					presentation = {0,1,1},
+					["$UnknownNodeType"] = {0,0,0},
+				},
+				radii = {
+					level = 64,
+					["icon pack"] = 32,
+					path = 16,
+					presentation = 32,
+					["$UnknownNodeType"] = 32,
+					
+				},
 			},
 		},
 	},
