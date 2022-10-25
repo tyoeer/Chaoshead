@@ -50,13 +50,14 @@ function UI:onReload(list)
 	--add a divider
 	list:addTextEntry(" ",0)
 	
-	-- info & co
-	list:addButtonEntry("Delete (TODO)",function()
-		self.editor:deleteSelection()
-	end)
+	-- TODO deletion
+	-- -- info & co
+	-- list:addButtonEntry("Delete",function()
+	-- 	self.editor:deleteSelection()
+	-- end)
 	
-	--add a divider
-	list:addTextEntry(" ",0)
+	-- --add a divider
+	-- list:addTextEntry(" ",0)
 
 	--single node properties
 	if n==1 then
