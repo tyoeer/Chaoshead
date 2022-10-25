@@ -86,11 +86,12 @@ end
 
 local colors = Settings.theme.editor.level
 
-function S:drawTile(x,y)
+function S:drawTile(x,y,lineThickness)
+	lineThickness = lineThickness or 1
 	local xx, yy = x*TILE_SIZE, y*TILE_SIZE
 	if self.layers.background then
 		love.graphics.setColor(colors.backgroundObject.selected)
-		love.graphics.setLineWidth(1)
+		love.graphics.setLineWidth(1*lineThickness)
 		
 		love.graphics.translate(xx,yy)
 		love.graphics.polygon("line",OBJ.backgroundShape)
@@ -98,7 +99,7 @@ function S:drawTile(x,y)
 	end
 	if self.layers.pathNodes then
 		love.graphics.setColor(colors.pathNode.selected)
-		love.graphics.setLineWidth(math.sqrt(2)/2)
+		love.graphics.setLineWidth(math.sqrt(2)/2*lineThickness)
 		
 		love.graphics.translate(xx,yy)
 		love.graphics.polygon("line",PN.shape)
@@ -106,10 +107,13 @@ function S:drawTile(x,y)
 	end
 	if self.layers.foreground then
 		love.graphics.setColor(colors.foregroundObject.selected)
-		love.graphics.setLineWidth(1)
+		love.graphics.setLineWidth(1*lineThickness)
 		love.graphics.rectangle("line",xx+0.5,yy+0.5,TILE_SIZE-1,TILE_SIZE-1)
 	end
 end
+
+-- Gets redrawn everytime before use, can thus be shared between instances
+local tile = love.graphics.newCanvas(TILE_SIZE, TILE_SIZE)
 
 function S:draw(startX,startY, endX,endY, zoomFactor)
 	local draw
@@ -133,6 +137,19 @@ function S:draw(startX,startY, endX,endY, zoomFactor)
 				local xx, yy = x*TILE_SIZE, y*TILE_SIZE
 				love.graphics.rectangle("line",xx+0.5,yy+0.5,TILE_SIZE-1,TILE_SIZE-1)
 			end
+		end
+	elseif zoomFactor <= 0.5 then
+		love.graphics.push("all")
+			love.graphics.setScissor()
+			love.graphics.origin()
+			love.graphics.setCanvas(tile)
+				love.graphics.clear(0,0,0,0)
+				self:drawTile(0,0,1/zoomFactor)
+			love.graphics.setCanvas()
+		love.graphics.pop()
+		draw = function(_, x,y)
+			love.graphics.setBlendMode("alpha","premultiplied")
+			love.graphics.draw(tile, x*TILE_SIZE, y*TILE_SIZE)
 		end
 	else
 		draw = self.drawTile
