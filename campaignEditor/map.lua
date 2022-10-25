@@ -328,7 +328,7 @@ function UI:inputDeactivated(name,group, isCursorBound)
 			if name=="selectOnly" then
 				if self.selecting then
 					if self.selecting=="area" then
-						self:selectArea()
+						-- TODO self:selectArea()
 					else
 						local node = self:getNodeAt(self:getMouseWorldPos())
 						if node then
