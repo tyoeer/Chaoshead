@@ -62,36 +62,27 @@ function UI:getMouseWorldPos()
 	return self:getWorldPos(self:getMousePos())
 end
 
-
-function UI:getNodeAt(x,y)
-	for node in self.campaign.nodes:iterate() do
-		local distSq = (node.x-x)^2 + (node.y-y)^2
-		if distSq < node:getRadius()^2 then
-			return node
-		end
-	end
+function UI:selectArea()
+	local fromX, fromY = self.selectStartX, self.selectStartY
+	local endX, endY = self:getMouseWorldPos()
+	self.editor:selectAddArea(
+		math.min(fromX,endX), math.min(fromY,endY),
+		math.max(fromX,endX), math.max(fromY,endY)
+	)
+	self.selectStartX = nil
+	self.selectStartY = nil
 end
--- function UI:selectArea()
--- 	local fromX, fromY = math.floor(self.selectStartX/TILE_SIZE), math.floor(self.selectStartY/TILE_SIZE)
--- 	local endX, endY = self:getMouseTile()
--- 	self.editor:selectAddArea(
--- 		math.min(fromX,endX), math.min(fromY,endY),
--- 		math.max(fromX,endX), math.max(fromY,endY)
--- 	)
--- 	self.selectStartX = nil
--- 	self.selectStartY = nil
--- end
 
--- function UI:deselectArea()
--- 	local fromX, fromY = math.floor(self.selectStartX/TILE_SIZE), math.floor(self.selectStartY/TILE_SIZE)
--- 	local endX, endY = self:getMouseTile()
--- 	self.editor:deselectSubArea(
--- 		math.min(fromX,endX), math.min(fromY,endY),
--- 		math.max(fromX,endX), math.max(fromY,endY)
--- 	)
--- 	self.selectStartX = nil
--- 	self.selectStartY = nil
--- end
+function UI:deselectArea()
+	local fromX, fromY = self.selectStartX, self.selectStartY
+	local endX, endY = self:getMouseWorldPos()
+	self.editor:deselectSubArea(
+		math.min(fromX,endX), math.min(fromY,endY),
+		math.max(fromX,endX), math.max(fromY,endY)
+	)
+	self.selectStartX = nil
+	self.selectStartY = nil
+end
 
 -- function UI:initHand()
 -- 	self.holding = true
@@ -184,6 +175,7 @@ end
 
 function UI:drawSelection()
 	love.graphics.setColor(theme.selection)
+	love.graphics.setLineWidth(1)
 	for node in self.editor.selection:iterate() do
 		love.graphics.circle("line", node.x, node.y, node:getRadius()+10)
 	end
@@ -251,15 +243,15 @@ function UI:draw()
 		-- 	end
 		-- else
 		-- 	--area being selected
-		-- 	if self.selecting == "area" then
-		-- 		love.graphics.setLineWidth(2)
-		-- 		love.graphics.setColor(theme.level.selectingArea)
-		-- 		love.graphics.rectangle("line",
-		-- 			self.selectStartX +0.5, self.selectStartY+0.5,
-		-- 			self:toWorldX(self:getMouseX()) - self.selectStartX-1,
-		-- 			self:toWorldY(self:getMouseY()) - self.selectStartY-1
-		-- 		)
-		-- 	end
+			if self.selecting == "area" then
+				love.graphics.setLineWidth(2)
+				love.graphics.setColor(theme.selectingArea)
+				love.graphics.rectangle("line",
+					self.selectStartX +0.5, self.selectStartY+0.5,
+					self:toWorldX(self:getMouseX()) - self.selectStartX-1,
+					self:toWorldY(self:getMouseY()) - self.selectStartY-1
+				)
+			end
 			
 		-- 	--highlight
 		-- 	local x,y = self:getMouseTile()
@@ -328,39 +320,36 @@ function UI:inputDeactivated(name,group, isCursorBound)
 			if name=="selectOnly" then
 				if self.selecting then
 					if self.selecting=="area" then
-						-- TODO self:selectArea()
+						self:selectArea()
 					else
-						local node = self:getNodeAt(self:getMouseWorldPos())
-						if node then
-							self.editor:selectOnly(node)
-						end
+						self.editor:selectOnly(self:getMouseWorldPos())
 					end
 					self.selecting = false
 				end
-			-- elseif name=="selectAdd" then
-			-- 	if self.selecting then
-			-- 		if self.selecting=="area" then
-			-- 			self:selectArea()
-			-- 		else
-			-- 			self.editor:selectAdd(self:getMouseTile())
-			-- 		end
-			-- 		self.selecting = false
-			-- 	end
-			-- elseif name=="deselectSub" then
-			-- 	if self.selecting then
-			-- 		if self.selecting=="area" then
-			-- 			self:deselectArea()
-			-- 		else
-			-- 			self.editor:deselectSub(self:getMouseTile())
-			-- 		end
-			-- 		self.selecting = false
-			-- 	end
-			-- elseif name=="deselectArea" then
-			-- 	if self.selecting=="area" then
-			-- 		self:deselectArea()
-			-- 		self.selecting = false
-			-- 	end
-			-- 	--do nothing otherwise because this input is doubly mapped to camera.drag
+			elseif name=="selectAdd" then
+				if self.selecting then
+					if self.selecting=="area" then
+						self:selectArea()
+					else
+						self.editor:selectAdd(self:getMouseWorldPos())
+					end
+					self.selecting = false
+				end
+			elseif name=="deselectSub" then
+				if self.selecting then
+					if self.selecting=="area" then
+						self:deselectArea()
+					else
+						self.editor:deselectSub(self:getMouseWorldPos())
+					end
+					self.selecting = false
+				end
+			elseif name=="deselectArea" then
+				if self.selecting=="area" then
+					self:deselectArea()
+					self.selecting = false
+				end
+				--do nothing otherwise because this input is doubly mapped to camera.drag
 			end
 		end
 	end
@@ -377,15 +366,15 @@ function UI:mouseMoved(x,y,dx,dy)
 		self.cameraY = self.cameraY + dy/self.zoomFactor
 	end
 	
-	-- --stop selecting a single tile when you have moved the cursor
-	-- if (Input.isActive("selectOnly","editor")
-	-- 	or Input.isActive("selectAdd","editor")
-	-- 	or Input.isActive("deselectSub","editor")
-	-- 	or Input.isActive("deselectArea","editor"))
-	-- 	and self.selecting~="area"
-	-- then
-	-- 	self.selecting = false
-	-- end
+	--stop selecting a single tile when you have moved the cursor
+	if (Input.isActive("selectOnly","editor")
+		or Input.isActive("selectAdd","editor")
+		or Input.isActive("deselectSub","editor")
+		or Input.isActive("deselectArea","editor"))
+		and self.selecting~="area"
+	then
+		self.selecting = false
+	end
 	
 	-- --stop placing something
 	-- self.placing = false

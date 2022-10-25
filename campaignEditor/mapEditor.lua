@@ -75,87 +75,87 @@ end
 
 -- selection manipulation
 
-function UI:selectOnly(node)
+function UI:selectOnly(x,y)
 	if self.selection then
 		self:deselectAll()
 	end
-	--deselectAll() destroys the selection
-	self:newSelection()
-	self.selection:add(node)
-	self.selectionSize = self.selectionSize + 1
+	local node = self.campaign:getNodeAt(x,y)
+	if node then
+		--deselectAll() destroys the selection
+		self:newSelection()
+		self.selection:add(node)
+		self.selectionSize = 1
+		self.selectionDetails:reload()
+	end
+end
+
+function UI:selectAdd(x,y)
+	if self.selection then
+		local node = self.campaign:getNodeAt(x,y)
+		if node then
+			if self.selection:add(node) then
+				self.selectionSize = self.selectionSize + 1
+			end
+			self.selectionDetails:reload()
+		end
+	else
+		self:selectOnly(x,y)
+	end
+end
+
+function UI:selectAddArea(startX,startY,endX,endY)
+	if not self.selection then
+		self:newSelection()
+	end
+	for _, node in ipairs(self.campaign:getNodesIn(startX,startY,endX,endY)) do
+		if self.selection:add(node) then
+			self.selectionSize = self.selectionSize + 1
+		end
+	end
 	self.selectionDetails:reload()
 end
 
--- function UI:selectAdd(tileX,tileY)
--- 	if self.selection then
--- 		self.selection:add(tileX,tileY)
--- 		self.selectionDetails:reload()
--- 	else
--- 		self:selectOnly(tileX,tileY)
--- 	end
--- end
+function UI:selectAll()
+	self:newSelection()
+	for node in self.campaign.nodes:iterate() do
+		self.selection:add(node)
+		-- Don't need to check if selection already has it 'cause we reset it
+		self.selectionSize = self.selectionSize + 1
+	end
+	self.selectionDetails:reload()
+end
 
--- function UI:selectAddArea(startX,startY,endX,endY)
--- 	if not self.selection then
--- 		self:newSelection()
--- 	end
--- 	for x = startX, endX, 1 do
--- 		for y = startY, endY, 1 do
--- 			self.selection:add(x,y)
--- 		end
--- 	end
--- 	self.selectionDetails:reload()
--- end
+function UI:deselectSub(x,y)
+	if self.selection then
+		local node = self.campaign:getNodeAt(x,y)
+		if node then
+			if self.selection:remove(node) then
+				self.selectionSize = self.selectionSize - 1
+			end
+			if self.selectionSize==0 then
+				self:deselectAll()
+			else
+				self.selectionDetails:reload()
+			end
+		end
+	end
+end
 
--- function UI:selectAll()
--- 	if not self.selection then
--- 		self:newSelection()
--- 	end
--- 	--select everything in bounds
--- 	for x=self.level.left, self.level.right, 1 do
--- 		for y=self.level.top, self.level.bottom, 1 do
--- 			self.selection:add(x,y)
--- 		end
--- 	end
--- 	--select all the objects (they can be out-of-bounds)
--- 	for obj in self.level.objects:iterate() do
--- 		self.selection:add(obj.x,obj.y)
--- 	end
--- 	--select all the path nodes (they can be out-of-bounds)
--- 	for path in self.level.paths:iterate() do
--- 		for node in path:iterateNodes() do
--- 			self.selection:add(node.x,node.y)
--- 		end
--- 	end
--- 	self.selectionDetails:reload()
--- end
-
--- function UI:deselectSub(tileX,tileY)
--- 	if self.selection then
--- 		self.selection:remove(tileX,tileY)
--- 		if self.selection.mask.nTiles==0 then
--- 			self:deselectAll()
--- 		else
--- 			self.selectionDetails:reload()
--- 		end
--- 	end
--- end
-
--- function UI:deselectSubArea(startX,startY,endX,endY)
--- 	if not self.selection then
--- 		return nil
--- 	end
--- 	for x = startX, endX, 1 do
--- 		for y = startY, endY, 1 do
--- 			self.selection:remove(x,y)
--- 		end
--- 	end
--- 	if self.selection.mask.nTiles==0 then
--- 		self:deselectAll()
--- 	else
--- 		self.selectionDetails:reload()
--- 	end
--- end
+function UI:deselectSubArea(startX,startY,endX,endY)
+	if not self.selection then
+		return
+	end
+	for _, node in ipairs(self.campaign:getNodesIn(startX,startY,endX,endY)) do
+		if self.selection:remove(node) then
+			self.selectionSize = self.selectionSize - 1
+		end
+	end
+	if self.selectionSize==0 then
+		self:deselectAll()
+	else
+		self.selectionDetails:reload()
+	end
+end
 
 function UI:deselectAll()
 	if self.selection then
@@ -376,11 +376,11 @@ end
 function UI:onInputActivated(name,group, isCursorBound)
 	if group=="editor" then
 		if name=="delete" then
-			-- self:deleteSelection()
+			-- TODO self:deleteSelection()
 		elseif name=="deselectAll" then
 			self:deselectAll()
-		-- elseif name=="selectAll" then
-		-- 	self:selectAll()
+		elseif name=="selectAll" then
+			self:selectAll()
 		-- elseif name=="copy" then
 		-- 	self:copy()
 		-- elseif name=="paste" then
