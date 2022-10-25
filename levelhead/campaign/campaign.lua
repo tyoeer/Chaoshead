@@ -49,6 +49,8 @@ function C:clearNodes()
 	self.nodesById = {}
 end
 
+-- LOADING
+
 function C:loadData(name)
 	local path = self.path.."data/"..name..".json"
 	local data, err = love.filesystem.read(path)
@@ -77,8 +79,8 @@ function C:reloadNodes()
 			table.insert(prevNode.next, node)
 		end
 		if node.type=="path" then
-			node.prevActual = self:getNode(node.prevActual)
-			node.nextActual = self:getNode(node.nextActual)
+			node.prevLevel = self:getNode(node.prevLevel)
+			node.nextLevel = self:getNode(node.nextLevel)
 		end
 	end
 end
@@ -102,5 +104,42 @@ function C:reload(path)
 	self:reloadNodes()
 end
 
+-- SAVING
+
+function C:saveData(name, data)
+	local path = self.path.."data/"..name..".json"
+	local data, err = love.filesystem.write(path, JSON.encode(data))
+	if not data then
+		error(string.format("Error writing %s data at %s:\n%s", name,path, err), 3)
+	end
+end
+
+function C:saveNodes()
+	local data = {}
+	for node in self.nodes:iterate() do
+		data[node.id] = node:toMapped()
+	end
+	
+	self:saveData("nodes", data)
+end
+
+function C:saveVersions()
+	self:saveData("versions", {
+		campaign_version = self.campaignVersion,
+		content_version = self.contentVersion,
+	})
+end
+
+function C:save(path)
+	if path then
+		if path:sub(-1)~="/" then
+			path = path.."/"
+		end
+		self.path = path
+	end
+	
+	self:saveVersions()
+	self:saveNodes()
+end
 
 return C

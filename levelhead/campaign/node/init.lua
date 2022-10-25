@@ -5,7 +5,14 @@ local MAPPINGS = {
 	y = "y",
 	prev = {
 		"pre",
-		-- strings get replaced with references in campaign loading logic
+		-- from gets handled in campaign loading logic
+		to = function(prevs)
+			local out = {}
+			for _,node in ipairs(prevs) do
+				table.insert(out, node.id)
+			end
+			return out
+		end
 	},
 	type = {
 		"t",
@@ -17,7 +24,14 @@ local MAPPINGS = {
 				"presentation"
 			})[raw] or "$UnknownNodeType"
 		end,
-		--TODO to
+		to = function(val)
+			return ({
+				level = 0,
+				["icon pack"] = 1,
+				path = 2,
+				presentation = 3,
+			})[val] or -1
+		end
 	},
 }
 

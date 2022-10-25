@@ -10,7 +10,7 @@ local MAPPINGS = {
 	secretNextPaths = V.mapBool("scpost"),
 	
 	requiresBugs = V.mapBool("pre_gr18"),
-	requiresAll = V.mapBool("pre_all"), --TODO investigate how this interacts with requiring all Jems (when it's false)
+	requiresAllLevels = V.mapBool("pre_all"), --TODO investigate how this interacts with requiring just Jems or bugs (when it's false)
 	requiresJems = V.mapBool("pre_coin"),
 	requiresGr17 = V.mapBool("pre_chall"),
 }

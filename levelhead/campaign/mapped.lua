@@ -22,7 +22,7 @@ function JM:fromMapped(src)
 			self[field] = src[mapping]
 		elseif type(mapping)=="table" then
 			local val = src[mapping[1]]
-			if not val and not mapping.optional then
+			if val==nil and not mapping.optional then
 				error("Source does not have field "..tostring(mapping[1]).." to map to "..tostring(field), 2)
 			end
 			if mapping.from then
@@ -33,6 +33,30 @@ function JM:fromMapped(src)
 			error("Mapping info for field "..tostring(field).." is invalid type "..type(mapping), 2)
 		end
 	end
+end
+
+function JM:toMapped()
+	local dst = {}
+	for field, mapping in pairs(self.mappings) do
+		if type(mapping)=="string" then
+			if not self[field] then
+				error("Self does not have field "..tostring(field).." to map to "..tostring(mapping), 2)
+			end
+			dst[mapping] = self[field]
+		elseif type(mapping)=="table" then
+			local val = self[field]
+			if val==nil and not mapping.optional then
+				error("Self does not have field "..tostring(field).." to map to "..tostring(mapping[1]), 2)
+			end
+			if mapping.to then
+				val = mapping.to(val)
+			end
+			dst[mapping[1]] = val
+		else
+			error("Mapping info for field "..tostring(field).." is invalid type "..type(mapping), 2)
+		end
+	end
+	return dst
 end
 
 local boolTo = function(val)

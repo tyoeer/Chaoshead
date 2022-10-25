@@ -18,7 +18,7 @@ function UI:onReload(list,campaign)
 	list:resetList()
 	
 	list:addButtonEntry(
-		"Save Campaign (when that gets implemented)",
+		"Save Campaign",
 		function()
 			self.editor.root:save()
 		end

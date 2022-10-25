@@ -57,17 +57,12 @@ function UI:reload(campaign)
 end
 
 function UI:save()
-	-- TODO campaign saving
-	-- if self:checkLimits("Can't save level:\n") then
-	-- 	self.levelFile:serializeAll(self.level)
-	-- 	self.levelFile:writeAll()
-	-- 	self.hexInspector:reload(false)
-	-- 	MainUI:displayMessage("Succesfully saved level!")
-	-- end
+	self.campaign:save()
+	MainUI:displayMessage("Succesfully saved campaign!")
 end
 
 function UI:checkLimits(prefix)
-	-- TODO checking for (potential) problems
+	-- TODO checking for (potential) problems, also maybe add the check to saving again
 	-- prefix = prefix or "Level broke limit:\n"
 	
 	-- for _,v in ipairs(Settings.misc.editor.checkLimits) do
