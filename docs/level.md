@@ -23,6 +23,14 @@ world = require("levelhead.level.world"):new()
 ### Foreground & Background
 
 ```Lua
+world:addObject(object, x, y)
+```
+- object: the __Object__ to add to the world
+- x, y: the position where to place the object
+
+Tries to automatically determine the layer to add the object to.
+
+```Lua
 world:moveObject(obj,x,y)
 ```
 - obj: the __Object__ to move.
@@ -35,19 +43,6 @@ world:removeObject(object)
 ```
 - object: the __Object__ to remove from the world
 
-### Foreground
-
-```Lua
-world:addForegroundObject(object,x,y)
-```
-- object: the foreground __Object__ to add to the world
-- x, y: the position where to place the object
-
-```Lua
-world:addObject(...)
-```
-Currently an alias for `Level:addForegroundObject(...)`
-
 ```Lua
 object = world:place[element](x,y)
 ```
@@ -55,7 +50,13 @@ object = world:place[element](x,y)
 - x, y: the position where to place the object
 - obj: the __Object__ that has been placed
 
-Currently always places stuff on the foreground.
+### Foreground
+
+```Lua
+world:addForegroundObject(object,x,y)
+```
+- object: the foreground __Object__ to add to the world
+- x, y: the position where to place the object
 
 ```Lua
 world:moveForegroundObject(obj,x,y)

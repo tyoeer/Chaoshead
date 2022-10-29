@@ -1,7 +1,8 @@
 local Pool = require("libs.tyoeerUtils.entitypool")
 local DS = require("libs.tyoeerUtils.datastructures")
 local OBJ = require("levelhead.level.object")
-local P = require("levelhead.level.path")
+local Path = require("levelhead.level.path")
+local E = require("levelhead.data.elements")
 
 local World = Class()
 --[[
@@ -36,6 +37,21 @@ end
 
 --foreground & background
 
+function World:addObject(obj,x,y)
+	if obj.layer=="foreground" then
+		self:addForegroundObject(obj,x,y)
+	elseif obj.layer=="background" then
+		self:addBackgroundObject(obj,x,y)
+	else
+		local layer = E:getLayer(obj.id)
+		if layer=="Background" then
+			self:addBackgroundObject(obj,x,y)
+		else
+			self:addForegroundObject(obj,x,y)
+		end
+	end
+end
+
 function World:moveObject(obj,x,y)
 	if obj.layer=="foreground" then
 		self:moveForegroundObject(obj,x,y)
@@ -64,7 +80,6 @@ function World:addForegroundObject(obj,x,y)
 	self.objects:add(obj)
 	self.foreground[x][y] = obj
 end
-World.addObject = World.addForegroundObject
 
 function World:moveForegroundObject(obj,x,y)
 	self.foreground[obj.x][obj.y] = nil
@@ -123,7 +138,7 @@ end
 -- paths
 
 function World:newPath()
-	local p = P:new()
+	local p = Path:new()
 	self:addPath(p)
 	return p
 end
