@@ -1,5 +1,5 @@
 -- --editor tools
-local EP = require("libs.tyoeerUtils.entityPool")
+local EP = require("libs.tyoeerUtils.entitypool")
 -- local Clipboard = require("tools.clipboard")
 --misc UIs
 local HorDivide = require("ui.layout.horDivide")
