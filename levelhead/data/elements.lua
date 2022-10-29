@@ -23,6 +23,8 @@ function E:initialize()
 			self.headers.parent = v
 		elseif raw:match("^properties") then
 			self.headers.properties = v
+		elseif raw:match("^layer") then
+			self.headers.layer = v
 		end
 	end
 end
@@ -34,6 +36,10 @@ end
 
 function E:getHeight(selector)
 	return self:getRow(selector)[self.headers.height] or "$UnknownHeight"
+end
+
+function E:getLayer(selector)
+	return self:getRow(selector)[self.headers.layer] or "$UnknownLayer"
 end
 
 function E:getSize(selector)
