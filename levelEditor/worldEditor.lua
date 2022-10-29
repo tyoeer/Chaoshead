@@ -536,9 +536,9 @@ function UI:wheelMoved(sx,sy)
 	-- make sure the point under the cursor stays under the cursor
 	self.cameraX = self.cameraX + bx - ax
 	self.cameraY = self.cameraY + by - ay
-	--Prevent tiny little offsets from messing with lines when zoomed out
-	self.cameraX = math.roundPrecision(self.cameraX,self.zoomFactor)
-	self.cameraY = math.roundPrecision(self.cameraY,self.zoomFactor)
+	--Snap to pixel to prevent tiny little offsets from messing with lines when zoomed out
+	self.cameraX = math.roundPrecision(self.cameraX,1/self.zoomFactor)
+	self.cameraY = math.roundPrecision(self.cameraY,1/self.zoomFactor)
 end
 
 return UI
