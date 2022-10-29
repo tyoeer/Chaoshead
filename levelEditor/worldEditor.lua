@@ -214,17 +214,27 @@ function UI:drawObjects(level, startX, startY, endX, endY)
 	end
 	
 	--draw path connections
-	for _,node in ipairs(pn) do
-		if node.next then
-			node:drawConnection()
+	if Settings.misc.editor.drawOffscreenPathNodes then
+		for path in level.paths:iterate() do
+			for node in path:iterateNodes() do
+				if node.next then
+					node:drawConnection()
+				end
+			end
 		end
-		--only draw connection with previous if it's offscreen and won't get drawn otherwise
-		if
-			node.prev and
-			(node.prev.x < startX or node.prev.x > endX or
-			node.prev.y < startY or node.prev.y > endY)
-		then
-			node.prev:drawConnection()
+	else
+		for _,node in ipairs(pn) do
+			if node.next then
+				node:drawConnection()
+			end
+			--only draw connection with previous if it's offscreen and won't get drawn otherwise
+			if
+				node.prev and
+				(node.prev.x < startX or node.prev.x > endX or
+				node.prev.y < startY or node.prev.y > endY)
+			then
+				node.prev:drawConnection()
+			end
 		end
 	end
 	

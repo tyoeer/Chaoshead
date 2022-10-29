@@ -7,6 +7,7 @@ return {
 	},
 	editor = {
 		zoomSpeed = math.sqrt(2),
+		drawOffscreenPathNodes = true,
 		textLod = 4,
 		outlineLod = 14,
 		selectionSmoothLod = 2,
