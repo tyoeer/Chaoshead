@@ -55,6 +55,15 @@ function UI:onReload(list)
 			MainUI:displayMessage("Succesfully rehashed level")
 		end
 	)
+	
+	list:addTextEntry("")
+	
+	list:addButtonEntry(
+		"Show in file explorer",
+		function()
+			love.system.openURL("file://"..self.path:match("^(.*)/[^/\\]+$"))
+		end
+	)
 end
 
 return UI
