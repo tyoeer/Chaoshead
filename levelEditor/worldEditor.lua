@@ -86,7 +86,7 @@ end
 
 
 function UI:selectArea()
-	local fromX, fromY = math.floor(self.selectStartX/TILE_SIZE), math.floor(self.selectStartY/TILE_SIZE)
+	local fromX, fromY = self:getTileAt(self.selectStartX, self.selectStartY)
 	local endX, endY = self:getMouseTile()
 	self.editor:selectAddArea(
 		math.min(fromX,endX), math.min(fromY,endY),
@@ -97,7 +97,7 @@ function UI:selectArea()
 end
 
 function UI:deselectArea()
-	local fromX, fromY = math.floor(self.selectStartX/TILE_SIZE), math.floor(self.selectStartY/TILE_SIZE)
+	local fromX, fromY = self:getTileAt(self.selectStartX, self.selectStartY)
 	local endX, endY = self:getMouseTile()
 	self.editor:deselectSubArea(
 		math.min(fromX,endX), math.min(fromY,endY),
@@ -121,7 +121,7 @@ function UI:updateHandPosition(x,y)
 	local wy = self:toWorldY(y)
 	-- -0.5 because the clipboard world starts at (1,1)
 	-- only .5 because we want to move around the center, not the corner
-	-- (I think not sure if that part of explanation is completely, but testing shows that this works)
+	-- (I think, not sure if that part of explanation is completely sound, but testing shows that this works)
 	self.handX = math.floor(wx/TILE_SIZE - w/2 - 0.5)
 	self.handY = math.floor(wy/TILE_SIZE - h/2 - 0.5)
 end
@@ -288,8 +288,8 @@ function UI:draw()
 		--get position of objects at the screen edges
 		local startX, startY = self:toWorldX(0), self:toWorldY(0)
 		local endX, endY = self:toWorldX(self.width), self:toWorldY(self.height)
-		local startX, startY = math.floor(startX/TILE_SIZE), math.floor(startY/TILE_SIZE)
-		local endX, endY = math.floor(endX/TILE_SIZE), math.floor(endY/TILE_SIZE)
+		local startX, startY = self:getTileAt(startX, startY)
+		local endX, endY = self:getTileAt(endX, endY)
 		
 		--objects
 		self:drawObjects(self.level, startX,startY, endX,endY)
