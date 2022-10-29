@@ -67,4 +67,10 @@ function UI:getDetailsUI(data)
 	return LevelDetails:new(self.workshop, data.raw)
 end
 
+function UI:onFocus(focus)
+	if focus then
+		self.list:reload()
+	end
+end
+
 return UI
