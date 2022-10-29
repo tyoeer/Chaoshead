@@ -69,7 +69,7 @@ end
 
 function UI:onFocus(focus)
 	if focus then
-		self.list:reload()
+		self:reload()
 	end
 end
 

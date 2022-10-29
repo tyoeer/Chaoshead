@@ -44,7 +44,6 @@ end
 
 function UI:reload()
 	self.list:reload()
-	self.details = BASE:new()
 end
 
 function UI:setDetailsUI(ui)

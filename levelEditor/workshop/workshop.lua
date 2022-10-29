@@ -35,6 +35,7 @@ function UI:openEditor(path)
 			path = path,
 		}
 		Storage:save()
+		self.levelSelector:reload()
 	end
 end
 
