@@ -1,213 +1,213 @@
-Name	ID(decimal)	ID(hex)	Width	Height	Parent (If this element is for example a bigger version of another, the other ones ID(decimal) goes here. "No" if this element is it's own.)	Properties (Comma seperated list. None=Element does not have properties. Inherit=Same properties as Base Id)	Name Combobulator (2=In-game selectable, 1=shows up, but not selectable, 0=displays raw)	Notes
-Delete	0	#00			No		2	
-Environment	1	#01	1	1	No	None	1	
-Spiketron	2	#02	1	1	No	109	2	
-Vacrat	3	#03	1	1	No	None	2	
-Fallthrough Ledge	4	#04	1	1	No	None	2	
-Long Flyblock	5	#05	3	1	50	Inherit	2	
-Dense Fog	6	#06	1	1	No	None	2	
-Hardlight	7	#07	1	1	No	47,49,60	2	
-Flipwip	8	#08	1	1	No	None	2	
-Blopfush	9	#09	1	1	No	30,35,36,40,58	2	
-Flapjack	10	#0A	1	1	No	None	2	
-Jem	11	#0B	1	1	No	5,49,60	2	
-Kronkrete	12	#0C	1	1	No	None	2	
-Sproing	13	#0D	1	1	No	None	2	
-Ripcord	14	#0E	1	1	No	49,60	2	
-Goal	15	#0F	2	1	No	None	2	
-GR-18	16	#10	1	1	No	46	2	
-Slippy Goo	17	#11	1	1	No	None	2	
-Sky Wiggler	18	#12	2	1	No	49,60	2	
-Throw Block	19	#13	1	1	No	None	2	
-Tiptow	20	#14	1	1	No	49,60	2	
-Battle Gate	21	#15	1	3	No	7	2	
-Waylay	22	#16	1	1	No	49,60	2	
-Jem Gate	23	#17	1	3	No	6	2	
-Whizzblade	24	#18	1	1	No	30,35,36,40,41	2	
-Powered Gate	25	#19	1	3	No	1,60	2	
-Lock Switch	26	#1A	1	1	No	0,2	2	
-Jackdrop	27	#1B	1	1	No	49,60	2	
-2x2 Vacrat	28	#1C	2	2	3	Inherit		
-Keycard	29	#1D	1	1	No	47,49,60	2	
-Key Gate	30	#1E	1	3	No	2,47,90	2	
-Blaster	31	#1F	1	1	No	4,23,24,25,72,73,75,79	2	
-Zipper	32	#20	1	1	No	49,60	2	
-Vacsteak	33	#21	1	1	No	49,60	2	
-Lizumi	34	#22	1	1	No	None	2	
-Pressure Switch	35	#23	1	1	No	0,2,3,76,85	2	
-Hard Clay	36	#24	1	1	No	None	2	
-Clock Switch	37	#25	1	1	No	0,2,5,10,11,76	2	
-Rift	38	#26	1	1	No	28,29,47,49,60	2	
-Trigblaster	39	#27	1	1	No	4,23,24,72,73,75,79	2	
-Prize Block	40	#28	1	1	No	3,5,49,60	2	
-Brittle Rock	41	#29	1	1	No	None	2	
-Cannon	42	#2A	1	1	No	3,32,33,48,49,60,87	2	
-Package Cam	43	#2B	1	1	No	0,2,5,8,14,80,81,82,83,84	2	
-Lookannon	44	#2C	1	1	No	32,33,48,49,60,87,104	2	
-Crombler	45	#2D	1	1	No	31,32,49,60,77	2	
-2x2 Crombler	46	#2E	2	2	45	Inherit		
-Toe Slider	47	#2F	1	1	No	21,22,49,60	2	
-BUDD-E	48	#30	2	2	No	92	2	
-Burny Whirler	49	#31	1	1	No	40,41,42,43,45,49,60,72,73,74,75,87	2	
-Flyblock	50	#32	1	1	No	None	2	
-Arrow Hologram	51	#33	1	1	No	4,47,49,60	2	
-Flippy Longswitch	52	#34	1	1	No	0,2	2	
-2x2 Spiktron	53	#35	2	2	2	Inherit		
-3x3 Spiketron	54	#36	3	3	2	Inherit		
-Turbo Jem	55	#37	2	2	11	Inherit	2	
-Mega Jem	56	#38	2	3	11	Inherit	2	
-3x3 Spike Block	57	#39	3	3	102	Inherit		
-Spike Chainer	58	#3A	1	1	No	40,41,42,44,45,49,60,72,73,74,75,109	2	
-TBot	59	#3B	1	1	No	49,60	2	
-Environment Column	60	#3C	1	1	1	Inherit	1	 Gets overwritten with any foreground object you place on it, but still gets saved (in the foreground). Can still be multiselected. Pasting it that way places 16 environment downwards.
-Jem Switch	61	#3D	1	1	No	0,2,5,6	2	
-Battle Switch	62	#3E	1	1	No	0,2,5,7	2	
-4x1 Slippy Goo	63	#3F	4	1	17	Inherit		
-8x2 Slippy Goo	64	#40	8	2	17	Inherit		
-2x2 Slippy Goo	65	#41	2	2	17	Inherit		
-Rebound	66	#42	1	1	No	49,60	2	
-3x3 Slippy Goo	67	#43	3	3	17	Inherit		
-3x3 Vacrat	68	#44	3	3	3	Inherit		
-2x2 Lizumi	69	#45	2	2	34	Inherit		
-3x3 Lizumi	70	#46	3	3	34	Inherit		
-Swoopadoop	71	#47	1	1	No	30,35,36,40,58	2	
-Canoodle	72	#48	1	1	No	105,110	2	
-2x2 Flipwip	73	#49	2	2	8	Inherit		
-3x3 Flipwip	74	#4A	3	3	8	Inherit		
-2x2 Swoopadoop	75	#4B	2	2	71	Inherit		
-3x3 Swoopadoop	76	#4C	3	3	71	Inherit		
-2x2 Flapjack	77	#4D	2	2	10	Inherit		
-3x3 Flapjack	78	#4E	3	3	10	Inherit		
-2x2 Whizzblade	79	#4F	2	2	24	Inherit		
-3x3 Whizzblade	80	#50	3	3	24	Inherit		
-Popjaw	81	#51	1	1	No	None	2	
-2x2 Canoodle	82	#52	2	2	72	Inherit		
-3x3 Canoodle	83	#53	3	3	72	Inherit		
-2x2 Blopfush	84	#54	2	2	9	Inherit		
-3x3 Blopfush	85	#55	3	3	9	Inherit		
-Eye Switch	86	#56	1	1	No	0,2,5,8,14,15,80,81,82,83,84	2	
-Environment Backdrop	87	#57	1	1	No	None	1	
-Environment Enclosure	88	#58	1	1	No	None	1	
-Lectroshield	89	#59	1	1	No	49,60	2	
-Armor Plate	90	#5A	1	1	No	49,60	2	
-DBot	91	#5B	1	1	No	49,60	2	
-Sign	92	#5C	1	2	No	49,59,60,86	2	
-Doomerang	93	#5D	1	1	No	31,32,33,34	1	
-Purge Gate	94	#5E	1	1	No	49,60,70	2	
-Spike Trap	95	#5F	1	1	No	8,49,60,109	2	
-Dropblock	96	#60	1	1	No	None	1	
-Antigrav Block	97	#61	1	1	No	None	1	
-Tempswitch	98	#62	1	1	No	0,2,3,5,12,13,49,60,76	2	
-Flapsack	99	#63	1	1	No	49,60	2	
-Beamer	100	#64	1	1	No	2,17,49,60,107,108	2	
-Robo Factory	101	#65	1	1	No	2,18,19,20,49,60,90	2	
-Spike Block	102	#66	1	1	No	49,60,109	2	
-Long Dropblock	103	#67	3	1	96	None		
-2x1 Purge Gate	104	#68	2	1	94	Inherit		
-3x1 Purge Gate	105	#69	3	1	94	Inherit		
-1x2 Purge Gate	106	#6A	1	2	94	Inherit		
-1x3 Purge Gate	107	#6B	1	3	94	Inherit		
-2x2 Cannon	108	#6C	2	2	42	Inherit		
-3x3 Cannon	109	#6D	3	3	42	Inherit		
-3x3 Hardlight	110	#6E	3	3	7	Inherit		
-2x2 Spike Block	111	#6F	2	2	102	Inherit		
-2x2 Popjaw	112	#70	2	2	81	Inherit		
-3x3 Popjaw	113	#71	3	3	81	Inherit		
-3x3 Crombler	114	#72	3	3	45	Inherit		
-Baddie Eyeswitch	115	#73	1	1	No	0,2,5,8,14,16,80,81,82,83,84	2	
-Bomb	116	#74	1	1	No	None	2	
-Package	117	#75	1	1	No	None	2	
-Booster	118	#76	2	2	No	49,60	1	Used in Scooter Mode
-Brake	119	#77	2	2	No	49,60	1	Used in Scooter Mode
-Battery	120	#78	1	1	No	49,60	2	
-Charge Switch	121	#79	1	1	No	0,2,9	2	
-Refueler	122	#7A	2	1	No	27	1	Used in Airmail mode
-Golf Package	123	#7B	1	1	No	None	2	The round one used by golf mode. Actually called "Package" in the name combobulator (a different name is used here to have unique names for everything for better API).
-Ball Stopper	124	#7C	1	1	No	49,60	1	Used in Golf Mode
-Bumper	125	#7D	1	1	No	47,49,60	2	
-Canoodle Core	126	#7E	1	1	No	49,60	2	
-Wingarang	127	#7F	1	1	No	49,60	2	
-Slurb Juice	128	#80	1	1	No	49,60	2	
-Spinny Platform	129	#81	1	1	No	40,45,49,56,57,58,60	2	
-Flingo	130	#82	1	1	No	49,60	2	
-2x2 Rift	131	#83	2	2	38	Inherit		
-3x3 Rift	132	#84	3	3	38	Inherit		
-Regret Gate	133	#85	1	1	No	3,49,60	2	
-3x1 Toe Slider	134	#86	3	1	47	Inherit		
-2x2 Hardlight	135	#87	2	2	7	Inherit		
-2x2 Robo Factory	136	#88	2	2	101	Inherit		
-3x3 Robo Factory	137	#89	3	3	101	Inherit		
-Sweep Laser	138	#8A	1	1	No	31,49,50,52,60,67	1	
-Boombox	139	#8B	1	1	No	3,5,49,51,54,55,60,64,68,93,94,95,96,97,98	2	
-Recycler	140	#8C	1	1	No	49,60	1	
-Blopsack	141	#8D	1	1	No	49,60	2	
-Lizumi Thorn	142	#8E	1	1	No	49,60	2	
-Flipegg	143	#8F	1	1	No	49,60	2	
-Pop Medallion	144	#90	1	1	No	49,60	2	
-2x2 Lookannon	145	#91	2	2	44	Inherit		
-3x3 Lookannon	146	#92	3	3	44	Inherit		
-2x2 Bumper	147	#93	2	2	125	Inherit		
-3x3 Bumper	148	#94	3	3	125	Inherit		
-Bug Head	149	#95	1	1	No	49,60	1	
-Stranded GR17	150	#96	3	2	No	None	1	
-Bug Body Right	151	#97	1	1	149	Inherit	1	
-Bug Body Left	152	#98	1	1	149	Inherit	1	
-Bug Abdomen	153	#99	1	1	149	Inherit	1	
-Camera Anchor	154	#9A	1	1	No	49,60,78	2	
-Instructions	155	#9B	1	1	No	49,60,62	1	
-Jukebox	156	#9C	1	1	No	1,60,63	2	
-Relay	157	#9D	1	1	No	0,1,60	2	
-Waitswitch	158	#9E	1	1	No	0,2,3,5,13,49,60,65,76	2	
-2x2 Arrow Hologram	159	#9F	2	2	51	Inherit		
-3x3 Arrow Hologram	160	#A0	3	3	51	Inherit		
-ZOOM-R	161	#A1	1	1	No	1,60,69	2	
-Rickety Wood	162	#A2	1	1	No	None	2	
-Rickety Backdrop	163	#A3	1	1	No	None	1	
-Spookstone	164	#A4	1	1	No	None	2	
-Spookstone Backdrop	165	#A5	1	1	No	None	1	
-Kronkrete Backdrop	166	#A6	1	1	No	None	1	
-Slippy Goo Backdrop	167	#A7	1	1	No	None	1	
-Window	168	#A8	1	1	No	None	1	
-2x2 Jackdrop	169	#A9	2	2	27	Inherit	0	
-3x3 Jackdrop	170	#AA	3	3	27	Inherit		
-Kronkrete Enclosure	171	#AB	1	1	No	None		
-Rickety Enclosure	172	#AC	1	1	No	None		
-Spookstone Enclosure	173	#AD	1	1	No	None		
-Secret Eye	174	#AE	1	1	No	1,60	2	
-Fallthrough Wood	175	#AF	1	1	No	None	2	
-Fallthrough Spookstone	176	#B0	1	1	No	None	2	
-Fallthrough Kronkrete	177	#B1	1	1	No	None	2	
-Powered Gate (hor.)	178	#B2	3	1	25	Inherit		
-Battle Gate (hor.)	179	#B3	3	1	21	Inherit		
-Key Gate (hor.)	180	#B4	3	1	30	Inherit		
-Jem Gate (hor.)	181	#B5	3	1	23	Inherit		
-Scrubb	182	#B6	1	1	No	105	2	
-Ocula	183	#B7	1	1	182	Inherit	2	
-Squished Ocula	184	#B8	1	1	No	None	2	
-Squished Scrubb	185	#B9	1	1	No	None	2	
-Key Chest	186	#BA	2	2	No	2,47,86,90	2	
-Key Switch	187	#BB	1	1	No	0,2,47	2	
-Lead Block	188	#BC	1	1	No	49,60	2	
-2x2 Lead Block	189	#BD	2	2	188	Inherit		
-3x3 Lead Block	190	#BE	3	3	188	Inherit		
-2x2 Scrubb	191	#BF	2	2	182	Inherit		
-3x3 Scrubb	192	#C0	3	3	182	Inherit		
-2x2 Ocula	193	#C1	2	2	183	Inherit		
-3x3 Ocula	194	#C2	3	3	183	Inherit		
-Fireball	195	#C3	1	1	No	30,35,36,40,41,49,60,87	2	
-2x2 Fireball	196	#C4	2	2	195	Inherit		
-3x3 Fireball	197	#C5	3	3	195	Inherit		
-Jinglebox	198	#C6	1	1	No	1,60,88,89,91	2	
-Weatherbox	199	#C7	1	1	No	1,60	2	
-Swipe Teacher	200	#C8	1	1	No	1,60,99,100	1	
-Movement Teacher	201	#C9	1	1	No	1,60,101	1	
-Input Switch	202	#CA	1	1	No	0,2,5,49,60,85,102,103	2	
-Shade	203	#CB	1	1	No	49,60	2	
-Puncher	204	#CC	1	1	No	4,47,49,60	2	
-Jabber	205	#CD	1	1	No	30,35,36,40,49,58,60	2	
-Mad Jabber	206	#CE	1	1	205	Inherit	2	
-Jibber	207	#CF	2	2	205	Inherit	2	
-Peanut	208	#D0	1	1	No	105,106	2	
-Thorny Peanut	209	#D1	1	1	208	Inherit	2	
-Explosive Peanut	210	#D2	1	1	208	Inherit	2	
-Stackable Armor	211	#D3	1	1	No	49,60	2	
+Name	ID(decimal)	ID(hex)	Width	Height	Parent (If this element is for example a bigger version of another, the other ones ID(decimal) goes here. "No" if this element is it's own.)	Properties (Comma seperated list. None=Element does not have properties. Inherit=Same properties as Base Id)	Layer	Name Combobulator (2=In-game selectable, 1=shows up, but not selectable, 0=displays raw)	Notes
+Delete	0	#00			No			2	
+Environment	1	#01	1	1	No	None	Foreground	1	
+Spiketron	2	#02	1	1	No	109	Foreground	2	
+Vacrat	3	#03	1	1	No	None	Foreground	2	
+Fallthrough Ledge	4	#04	1	1	No	None	Foreground	2	
+Long Flyblock	5	#05	3	1	50	Inherit	Foreground	2	
+Dense Fog	6	#06	1	1	No	None	Foreground	2	
+Hardlight	7	#07	1	1	No	47,49,60	Foreground	2	
+Flipwip	8	#08	1	1	No	None	Foreground	2	
+Blopfush	9	#09	1	1	No	30,35,36,40,58	Foreground	2	
+Flapjack	10	#0A	1	1	No	None	Foreground	2	
+Jem	11	#0B	1	1	No	5,49,60	Foreground	2	
+Kronkrete	12	#0C	1	1	No	None	Foreground	2	
+Sproing	13	#0D	1	1	No	None	Foreground	2	
+Ripcord	14	#0E	1	1	No	49,60	Foreground	2	
+Goal	15	#0F	2	1	No	None	Foreground	2	
+GR-18	16	#10	1	1	No	46	Foreground	2	
+Slippy Goo	17	#11	1	1	No	None	Foreground	2	
+Sky Wiggler	18	#12	2	1	No	49,60	Foreground	2	
+Throw Block	19	#13	1	1	No	None	Foreground	2	
+Tiptow	20	#14	1	1	No	49,60	Foreground	2	
+Battle Gate	21	#15	1	3	No	7	Foreground	2	
+Waylay	22	#16	1	1	No	49,60	Foreground	2	
+Jem Gate	23	#17	1	3	No	6	Foreground	2	
+Whizzblade	24	#18	1	1	No	30,35,36,40,41	Foreground	2	
+Powered Gate	25	#19	1	3	No	1,60	Foreground	2	
+Lock Switch	26	#1A	1	1	No	0,2	Foreground	2	
+Jackdrop	27	#1B	1	1	No	49,60	Foreground	2	
+2x2 Vacrat	28	#1C	2	2	3	Inherit	Foreground		
+Keycard	29	#1D	1	1	No	47,49,60	Foreground	2	
+Key Gate	30	#1E	1	3	No	2,47,90	Foreground	2	
+Blaster	31	#1F	1	1	No	4,23,24,25,72,73,75,79	Foreground	2	
+Zipper	32	#20	1	1	No	49,60	Foreground	2	
+Vacsteak	33	#21	1	1	No	49,60	Foreground	2	
+Lizumi	34	#22	1	1	No	None	Foreground	2	
+Pressure Switch	35	#23	1	1	No	0,2,3,76,85	Foreground	2	
+Hard Clay	36	#24	1	1	No	None	Foreground	2	
+Clock Switch	37	#25	1	1	No	0,2,5,10,11,76	Foreground	2	
+Rift	38	#26	1	1	No	28,29,47,49,60	Foreground	2	
+Trigblaster	39	#27	1	1	No	4,23,24,72,73,75,79	Foreground	2	
+Prize Block	40	#28	1	1	No	3,5,49,60	Foreground	2	
+Brittle Rock	41	#29	1	1	No	None	Foreground	2	
+Cannon	42	#2A	1	1	No	3,32,33,48,49,60,87	Foreground	2	
+Package Cam	43	#2B	1	1	No	0,2,5,8,14,80,81,82,83,84	Foreground	2	
+Lookannon	44	#2C	1	1	No	32,33,48,49,60,87,104	Foreground	2	
+Crombler	45	#2D	1	1	No	31,32,49,60,77	Foreground	2	
+2x2 Crombler	46	#2E	2	2	45	Inherit	Foreground		
+Toe Slider	47	#2F	1	1	No	21,22,49,60	Foreground	2	
+BUDD-E	48	#30	2	2	No	92	Foreground	2	
+Burny Whirler	49	#31	1	1	No	40,41,42,43,45,49,60,72,73,74,75,87	Foreground	2	
+Flyblock	50	#32	1	1	No	None	Foreground	2	
+Arrow Hologram	51	#33	1	1	No	4,47,49,60	Foreground	2	
+Flippy Longswitch	52	#34	1	1	No	0,2	Foreground	2	
+2x2 Spiktron	53	#35	2	2	2	Inherit	Foreground		
+3x3 Spiketron	54	#36	3	3	2	Inherit	Foreground		
+Turbo Jem	55	#37	2	2	11	Inherit	Foreground	2	
+Mega Jem	56	#38	2	3	11	Inherit	Foreground	2	
+3x3 Spike Block	57	#39	3	3	102	Inherit	Foreground		
+Spike Chainer	58	#3A	1	1	No	40,41,42,44,45,49,60,72,73,74,75,109	Foreground	2	
+TBot	59	#3B	1	1	No	49,60	Foreground	2	
+Environment Column	60	#3C	1	1	1	Inherit		1	Gets overwritten with any foreground object you place on it, but still gets saved (in the foreground). Can still be multiselected. Pasting it that way places 16 environment downwards.
+Jem Switch	61	#3D	1	1	No	0,2,5,6	Foreground	2	
+Battle Switch	62	#3E	1	1	No	0,2,5,7	Foreground	2	
+4x1 Slippy Goo	63	#3F	4	1	17	Inherit	Foreground		
+8x2 Slippy Goo	64	#40	8	2	17	Inherit	Foreground		
+2x2 Slippy Goo	65	#41	2	2	17	Inherit	Foreground		
+Rebound	66	#42	1	1	No	49,60	Foreground	2	
+3x3 Slippy Goo	67	#43	3	3	17	Inherit	Foreground		
+3x3 Vacrat	68	#44	3	3	3	Inherit	Foreground		
+2x2 Lizumi	69	#45	2	2	34	Inherit	Foreground		
+3x3 Lizumi	70	#46	3	3	34	Inherit	Foreground		
+Swoopadoop	71	#47	1	1	No	30,35,36,40,58	Foreground	2	
+Canoodle	72	#48	1	1	No	105,110	Foreground	2	
+2x2 Flipwip	73	#49	2	2	8	Inherit	Foreground		
+3x3 Flipwip	74	#4A	3	3	8	Inherit	Foreground		
+2x2 Swoopadoop	75	#4B	2	2	71	Inherit	Foreground		
+3x3 Swoopadoop	76	#4C	3	3	71	Inherit	Foreground		
+2x2 Flapjack	77	#4D	2	2	10	Inherit	Foreground		
+3x3 Flapjack	78	#4E	3	3	10	Inherit	Foreground		
+2x2 Whizzblade	79	#4F	2	2	24	Inherit	Foreground		
+3x3 Whizzblade	80	#50	3	3	24	Inherit	Foreground		
+Popjaw	81	#51	1	1	No	None	Foreground	2	
+2x2 Canoodle	82	#52	2	2	72	Inherit	Foreground		
+3x3 Canoodle	83	#53	3	3	72	Inherit	Foreground		
+2x2 Blopfush	84	#54	2	2	9	Inherit	Foreground		
+3x3 Blopfush	85	#55	3	3	9	Inherit	Foreground		
+Eye Switch	86	#56	1	1	No	0,2,5,8,14,15,80,81,82,83,84	Foreground	2	
+Environment Backdrop	87	#57	1	1	No	None	Background	1	
+Environment Enclosure	88	#58	1	1	No	None	Background	1	
+Lectroshield	89	#59	1	1	No	49,60	Foreground	2	
+Armor Plate	90	#5A	1	1	No	49,60	Foreground	2	
+DBot	91	#5B	1	1	No	49,60	Foreground	2	
+Sign	92	#5C	1	2	No	49,59,60,86	Foreground	2	
+Doomerang	93	#5D	1	1	No	31,32,33,34	Foreground	1	
+Purge Gate	94	#5E	1	1	No	49,60,70	Foreground	2	
+Spike Trap	95	#5F	1	1	No	8,49,60,109	Foreground	2	
+Dropblock	96	#60	1	1	No	None	Foreground	1	
+Antigrav Block	97	#61	1	1	No	None	Foreground	1	
+Tempswitch	98	#62	1	1	No	0,2,3,5,12,13,49,60,76	Foreground	2	
+Flapsack	99	#63	1	1	No	49,60	Foreground	2	
+Beamer	100	#64	1	1	No	2,17,49,60,107,108	Foreground	2	
+Robo Factory	101	#65	1	1	No	2,18,19,20,49,60,90	Foreground	2	
+Spike Block	102	#66	1	1	No	49,60,109	Foreground	2	
+Long Dropblock	103	#67	3	1	96	None	Foreground		
+2x1 Purge Gate	104	#68	2	1	94	Inherit	Foreground		
+3x1 Purge Gate	105	#69	3	1	94	Inherit	Foreground		
+1x2 Purge Gate	106	#6A	1	2	94	Inherit	Foreground		
+1x3 Purge Gate	107	#6B	1	3	94	Inherit	Foreground		
+2x2 Cannon	108	#6C	2	2	42	Inherit	Foreground		
+3x3 Cannon	109	#6D	3	3	42	Inherit	Foreground		
+3x3 Hardlight	110	#6E	3	3	7	Inherit	Foreground		
+2x2 Spike Block	111	#6F	2	2	102	Inherit	Foreground		
+2x2 Popjaw	112	#70	2	2	81	Inherit	Foreground		
+3x3 Popjaw	113	#71	3	3	81	Inherit	Foreground		
+3x3 Crombler	114	#72	3	3	45	Inherit	Foreground		
+Baddie Eyeswitch	115	#73	1	1	No	0,2,5,8,14,16,80,81,82,83,84	Foreground	2	
+Bomb	116	#74	1	1	No	None	Foreground	2	
+Package	117	#75	1	1	No	None	Foreground	2	
+Booster	118	#76	2	2	No	49,60	Foreground	1	Used in Scooter Mode
+Brake	119	#77	2	2	No	49,60	Foreground	1	Used in Scooter Mode
+Battery	120	#78	1	1	No	49,60	Foreground	2	
+Charge Switch	121	#79	1	1	No	0,2,9	Foreground	2	
+Refueler	122	#7A	2	1	No	27	Foreground	1	Used in Airmail mode
+Golf Package	123	#7B	1	1	No	None	Foreground	2	The round one used by golf mode. Actually called "Package" in the name combobulator (a different name is used here to have unique names for everything for better API).
+Ball Stopper	124	#7C	1	1	No	49,60	Foreground	1	Used in Golf Mode
+Bumper	125	#7D	1	1	No	47,49,60	Foreground	2	
+Canoodle Core	126	#7E	1	1	No	49,60	Foreground	2	
+Wingarang	127	#7F	1	1	No	49,60	Foreground	2	
+Slurb Juice	128	#80	1	1	No	49,60	Foreground	2	
+Spinny Platform	129	#81	1	1	No	40,45,49,56,57,58,60	Foreground	2	
+Flingo	130	#82	1	1	No	49,60	Foreground	2	
+2x2 Rift	131	#83	2	2	38	Inherit	Foreground		
+3x3 Rift	132	#84	3	3	38	Inherit	Foreground		
+Regret Gate	133	#85	1	1	No	3,49,60	Foreground	2	
+3x1 Toe Slider	134	#86	3	1	47	Inherit	Foreground		
+2x2 Hardlight	135	#87	2	2	7	Inherit	Foreground		
+2x2 Robo Factory	136	#88	2	2	101	Inherit	Foreground		
+3x3 Robo Factory	137	#89	3	3	101	Inherit	Foreground		
+Sweep Laser	138	#8A	1	1	No	31,49,50,52,60,67	Foreground	1	
+Boombox	139	#8B	1	1	No	3,5,49,51,54,55,60,64,68,93,94,95,96,97,98	Foreground	2	
+Recycler	140	#8C	1	1	No	49,60	Foreground	1	
+Blopsack	141	#8D	1	1	No	49,60	Foreground	2	
+Lizumi Thorn	142	#8E	1	1	No	49,60	Foreground	2	
+Flipegg	143	#8F	1	1	No	49,60	Foreground	2	
+Pop Medallion	144	#90	1	1	No	49,60	Foreground	2	
+2x2 Lookannon	145	#91	2	2	44	Inherit	Foreground		
+3x3 Lookannon	146	#92	3	3	44	Inherit	Foreground		
+2x2 Bumper	147	#93	2	2	125	Inherit	Foreground		
+3x3 Bumper	148	#94	3	3	125	Inherit	Foreground		
+Bug Head	149	#95	1	1	No	49,60	Foreground	1	
+Stranded GR17	150	#96	2	2	No	None	Foreground	1	
+Bug Body Right	151	#97	1	1	149	Inherit	Foreground	1	
+Bug Body Left	152	#98	1	1	149	Inherit	Foreground	1	
+Bug Abdomen	153	#99	1	1	149	Inherit	Foreground	1	
+Camera Anchor	154	#9A	1	1	No	49,60,78	Foreground	2	
+Instructions	155	#9B	1	1	No	49,60,62	Foreground	1	
+Jukebox	156	#9C	1	1	No	1,60,63	Foreground	2	
+Relay	157	#9D	1	1	No	0,1,60	Foreground	2	
+Waitswitch	158	#9E	1	1	No	0,2,3,5,13,49,60,65,76	Foreground	2	
+2x2 Arrow Hologram	159	#9F	2	2	51	Inherit	Foreground		
+3x3 Arrow Hologram	160	#A0	3	3	51	Inherit	Foreground		
+ZOOM-R	161	#A1	1	1	No	1,60,69	Foreground	2	
+Rickety Wood	162	#A2	1	1	No	None	Foreground	2	
+Rickety Backdrop	163	#A3	1	1	No	None	Background	1	
+Spookstone	164	#A4	1	1	No	None	Foreground	2	
+Spookstone Backdrop	165	#A5	1	1	No	None	Background	1	
+Kronkrete Backdrop	166	#A6	1	1	No	None	Background	1	
+Slippy Goo Backdrop	167	#A7	1	1	No	None	Background	1	
+Window	168	#A8	1	1	No	None	Background	1	
+2x2 Jackdrop	169	#A9	2	2	27	Inherit	Foreground	0	
+3x3 Jackdrop	170	#AA	3	3	27	Inherit	Foreground		
+Kronkrete Enclosure	171	#AB	1	1	No	None	Background		
+Rickety Enclosure	172	#AC	1	1	No	None	Background		
+Spookstone Enclosure	173	#AD	1	1	No	None	Background		
+Secret Eye	174	#AE	1	1	No	1,60	Foreground	2	
+Fallthrough Wood	175	#AF	1	1	No	None	Foreground	2	
+Fallthrough Spookstone	176	#B0	1	1	No	None	Foreground	2	
+Fallthrough Kronkrete	177	#B1	1	1	No	None	Foreground	2	
+Powered Gate (hor.)	178	#B2	3	1	25	Inherit	Foreground		
+Battle Gate (hor.)	179	#B3	3	1	21	Inherit	Foreground		
+Key Gate (hor.)	180	#B4	3	1	30	Inherit	Foreground		
+Jem Gate (hor.)	181	#B5	3	1	23	Inherit	Foreground		
+Scrubb	182	#B6	1	1	No	105	Foreground	2	
+Ocula	183	#B7	1	1	182	Inherit	Foreground	2	
+Squished Ocula	184	#B8	1	1	No	None	Foreground	2	
+Squished Scrubb	185	#B9	1	1	No	None	Foreground	2	
+Key Chest	186	#BA	2	2	No	2,47,86,90	Foreground	2	
+Key Switch	187	#BB	1	1	No	0,2,47	Foreground	2	
+Lead Block	188	#BC	1	1	No	49,60	Foreground	2	
+2x2 Lead Block	189	#BD	2	2	188	Inherit	Foreground		
+3x3 Lead Block	190	#BE	3	3	188	Inherit	Foreground		
+2x2 Scrubb	191	#BF	2	2	182	Inherit	Foreground		
+3x3 Scrubb	192	#C0	3	3	182	Inherit	Foreground		
+2x2 Ocula	193	#C1	2	2	183	Inherit	Foreground		
+3x3 Ocula	194	#C2	3	3	183	Inherit	Foreground		
+Fireball	195	#C3	1	1	No	30,35,36,40,41,49,60,87	Foreground	2	
+2x2 Fireball	196	#C4	2	2	195	Inherit	Foreground		
+3x3 Fireball	197	#C5	3	3	195	Inherit	Foreground		
+Jinglebox	198	#C6	1	1	No	1,60,88,89,91	Foreground	2	
+Weatherbox	199	#C7	1	1	No	1,60	Foreground	2	
+Swipe Teacher	200	#C8	1	1	No	1,60,99,100	Foreground	1	
+Movement Teacher	201	#C9	1	1	No	1,60,101	Foreground	1	
+Input Switch	202	#CA	1	1	No	0,2,5,49,60,85,102,103	Foreground	2	
+Shade	203	#CB	1	1	No	49,60	Foreground	2	
+Puncher	204	#CC	1	1	No	4,47,49,60	Foreground	2	
+Jabber	205	#CD	1	1	No	30,35,36,40,49,58,60	Foreground	2	
+Mad Jabber	206	#CE	1	1	205	Inherit	Foreground	2	
+Jibber	207	#CF	2	2	205	Inherit	Foreground	2	
+Peanut	208	#D0	1	1	No	105,106	Foreground	2	
+Thorny Peanut	209	#D1	1	1	208	Inherit	Foreground	2	
+Explosive Peanut	210	#D2	1	1	208	Inherit	Foreground	2	
+Stackable Armor	211	#D3	1	1	No	49,60	Foreground	2	
