@@ -17,6 +17,8 @@ The stuff on which the rest of CH is built.
 - `levelhead/`: All the code for integrating with Levelhead stuff
   - `data/`: Wrappers around the data files.
   - `lhs/`: All the code directly dealing with a `.lhs` file.
+    - `read` & `write` convert between the file and a direct representation in Lua
+    - `parse` & `serialize` convert between that direct representation and usable representations of actual levels
   - `level/`: Everything dealing with the Lua representation of a LH level.
     - `limits.lua`: A list of functions for checking various limits imposed by several different things.
 - `ui/`: The main UI system, and UI parts that aren't their own module. Has its own design.md describing (some of) the design of the UI system.
@@ -36,6 +38,7 @@ The stuff on which the rest of CH is built.
 
 - `data/`: Contains `.tsv` data files based on [the spreadsheet](https://docs.google.com/spreadsheets/d/1bzASSn2FgjqUldPzX8DS66Lv-r2lk3V12jZjl51uaTk/)
 - `docs/`: Documentation for user scripts.
+- `exeMods`: Contains the description of and patch to disable level caching
 - `resources/`: Contains non code misc. stuff (font & image used in README)
 - `licenses/`: All the licenses of third-party stuff used by Chaoshead. Has a naming scheme for the licenses.
 - `.github/`: Contains the release Github Action.
