@@ -99,3 +99,9 @@ bitplane:forEach(func)
 	- value: the value of the current field
 	
 Iterates the function over all the fields, first upwards along the x-axis, and after every row up the y-axis.
+
+```Lua
+bitplane.width
+bitplane.height
+```
+The read-only width and height of the bitplane.
