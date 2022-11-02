@@ -1,5 +1,6 @@
 local OBJ = require("levelhead.level.object")
 local Bitplane = require("tools.bitplane")
+local P = require("levelhead.data.properties")
 
 local A = Class()
 
@@ -40,13 +41,13 @@ function A:initialize(level,settings)
 	end
 	if self.settings.channelMask then
 		self.channelMask = {}
-		for i=0,999,1 do
+		for i=0,P:getMax("Sending Channel"),1 do
 			self.channelMask[i] = true
 		end
 	end
 	if self.settings.riftIdMask then
 		self.riftIdMask = {}
-		for i=0,999,1 do
+		for i=0,P:getMax("Rift ID"),1 do
 			self.riftIdMask[i] = true
 		end
 	end
