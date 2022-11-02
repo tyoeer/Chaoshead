@@ -1,5 +1,6 @@
 local PUI = require("levelEditor.details.property")
 local PEDIT = require("levelEditor.details.propertyEditor")
+local P = require("levelhead.data.properties")
 
 local UI = Class("SelectionDetailsUI",require("ui.tools.details"))
 
@@ -33,6 +34,17 @@ function UI:formatElement(obj)
 	else
 		return string.format("element: %s", obj:getName())
 	end
+end
+
+function UI:sortProperties()
+	local list = {}
+	for _,pl in ipairs(self.selection.contents.properties) do
+		table.insert(list, pl)
+	end
+	table.sort(list,function(a,b)
+		return P:getName(a.propId) < P:getName(b.propId)
+	end)
+	return list
 end
 
 function UI:onReload(list)
@@ -194,7 +206,7 @@ function UI:onReload(list)
 		end
 	end
 	--properties
-	for _,pl in pairs(c.properties) do
+	for _,pl in ipairs(self:sortProperties()) do
 		list:addButtonEntry(PUI:new(pl,list.style),function()
 			MainUI:displayMessage(PEDIT:new(pl, self.editor))
 		end)
