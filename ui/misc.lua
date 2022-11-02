@@ -22,29 +22,6 @@ function UI:onReload(list)
 	list:addButtonEntry("Exit Chaoshead",function()
 		love.event.quit()
 	end)
-	
-	-- SHOW STUFF
-	
-	list:addButtonEntry("Open Chaoshead data folder",function()
-		local url = "file://"..love.filesystem.getSaveDirectory()
-		love.system.openURL(url)
-	end)
-	
-	list:addButtonEntry("Open Levelhead data folder",function()
-		local url = "file://"..require("levelhead.misc").getDataPath()
-		love.system.openURL(url)
-	end)
-	list:addButtonEntry("Open Levelhead installation folder",function()
-		local path = require("levelhead.misc").getInstallationPath()
-		if not path then
-			MainUI:displayMessage("Could not find Levelhead installation directory\n"
-				.."If you are using the non-Steam version, please get in touch so support can be added.")
-			return
-		end
-		local url = "file://"..path
-		love.system.openURL(url)
-	end)
-	
 	list:addButtonEntry("Show keybinds",function()
 		local function parseName(name)
 			return name:gsub("[A-Z]",function(s)
@@ -113,6 +90,30 @@ function UI:onReload(list)
 		MainUI:displayMessage(l)
 	end)
 	
+	-- DIVIDER
+	list:addTextEntry("")
+	
+	-- OPEN FOLDERS
+	
+	list:addButtonEntry("Open Chaoshead data folder",function()
+		local url = "file://"..love.filesystem.getSaveDirectory()
+		love.system.openURL(url)
+	end)
+	
+	list:addButtonEntry("Open Levelhead data folder",function()
+		local url = "file://"..require("levelhead.misc").getDataPath()
+		love.system.openURL(url)
+	end)
+	list:addButtonEntry("Open Levelhead installation folder",function()
+		local path = require("levelhead.misc").getInstallationPath()
+		if not path then
+			MainUI:displayMessage("Could not find Levelhead installation directory\n"
+				.."If you are using the non-Steam version, please get in touch so support can be added.")
+			return
+		end
+		local url = "file://"..path
+		love.system.openURL(url)
+	end)
 	
 	-- DIVIDER
 	list:addTextEntry("")
@@ -232,24 +233,6 @@ function UI:onReload(list)
 	list:addTextEntry("")
 	
 	-- CAMPAIGN
-	
-	list:addButtonEntry("Unpack campaign_hardfile",function()
-		local i =love.filesystem.getInfo("campaign_hardfile")
-		if i then
-			require("levelhead.campaign.packing").unpack("campaign_test")
-		else
-			print("No campaign_hardfile found!")
-		end
-	end)
-	
-	list:addButtonEntry("Pack campaign_hardfile",function()
-		local i =love.filesystem.getInfo("campaign_test")
-		if i then
-			require("levelhead.campaign.packing").pack("campaign_test")
-		else
-			print("No campaign_hardfile found!")
-		end
-	end)
 	
 	list:addButtonEntry("Decompress campaign (move the hardfile to the chaoshead data folder first)",function()
 		local i =love.filesystem.getInfo("campaign_hardfile")
