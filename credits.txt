@@ -2,6 +2,7 @@ Direct contributors:
 
 tyoeer
 aradarbel10
+Adrthegamedev
 
 Libraries used:
 middleclass by Enrique García Cota, licensed under MIT (see licenses/lib-middleclass-mit.txt)
