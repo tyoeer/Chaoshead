@@ -42,3 +42,4 @@ The stuff on which the rest of CH is built.
 - `resources/`: Contains non code misc. stuff (font & image used in README)
 - `licenses/`: All the licenses of third-party stuff used by Chaoshead. Has a naming scheme for the licenses.
 - `.github/`: Contains the release Github Action.
+- `https.dll`: HTTPS library, has to be top-level because DLL libraries are weird

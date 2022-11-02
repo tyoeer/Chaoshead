@@ -29,14 +29,6 @@ function UI:initialize()
 	
 	--TabsUI needs buttons before getting resized (which always happens when added)
 	UI.super.initialize(self,self.mainTabs)
-	
-	self:verifyDataFound()
-end
-
-function UI:verifyDataFound()
-	if not NFS.getInfo(LH_MISC.getDataPath(),"directory") then
-		self:displayMessage("Could not find Levelhead data at "..LH_MISC.getDataPath())
-	end
 end
 
 function UI:toggleFullscreen()

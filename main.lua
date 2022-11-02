@@ -42,9 +42,6 @@ function love.load(args)
 	UiRoot:hookIntoLove()
 	UiRoot:resize(love.graphics.getWidth(), love.graphics.getHeight())
 	
-	--show reset settings dialog
-	require("ui.updateSettings")
-	
 	--bind ui and input
 	Input.parseActions(Settings.bindings)
 	Input.inputActivated = function(...)
@@ -53,6 +50,9 @@ function love.load(args)
 	Input.inputDeactivated = function(...)
 		UiRoot:inputDeactivated(...)
 	end
+	
+	--checks to run at startup
+	require("ui.startupChecks")
 end
 
 function love.keypressed(key, scancode, isrepeat)

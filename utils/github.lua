@@ -115,19 +115,24 @@ function G.apiCall(url)
 end
 
 function G.api(repo, apiPath, queryParams)
+	G.error = nil
 	local code, body, headers = G.apiCall(G.getURL(repo, apiPath, queryParams))
 	if code==200 then
 		local data = Json.decode(body)
 		return data
 	else
-		error({
+		G.error = {
 			code = code,
 			body = body,
 			headers = headers
-		}, 2)
+		}
+		error("NetworkError: check getError() for more info since Lua only lets us pass string errors :(", 2)
 	end
 end
 
+function G.getError()
+	return G.error
+end
 --https://docs.github.com/en/rest/releases/releases#list-releases
 ---@return Release? release The release, nil if there wasn't one (no releases)
 function G.latestRelease(repo)

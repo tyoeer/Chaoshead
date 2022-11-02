@@ -1,0 +1,137 @@
+local List = require("ui.layout.list")
+local Version = require("utils.version")
+local LhMisc = require("levelhead.misc")
+local NFS = require("libs.nativefs")
+local Github = require("utils.github")
+local Button = require("ui.widgets.button")
+
+---@return boolean|nil noPopupShown true if no pop-up was shown
+local checkForUpdate = function()
+	local success, release = xpcall(Github.latestRelease, function(message)
+		if message:find("NetworkError") and message:find("getError()") then
+			local err = Github.getError()
+			MainUI:displayMessage(
+				"Error fetching update news:",
+				"Server returned status code "..tostring(err.code),
+				tostring(err.body)
+			)
+		else
+			--part of snippet yoinked from default löve error handling
+			local fullTrace = debug.traceback("",2):gsub("\n[^\n]+$", "")
+			--cut of the part of the trace that goes into the code that calls UI:openEditor()
+			local index = fullTrace:find("%s+%[C%]: in function 'xpcall'")
+			local trace = fullTrace:sub(1,index-1)
+			MainUI:displayMessage(
+				"Error fetching update news:",
+				message,
+				trace
+			)
+		end
+	end)
+	if not success then
+		return
+	end
+
+	if not release then
+		MainUI:displayMessage("Found no release on GitHub when checking for updates, which is weird, and suggests something is broken.")
+	else
+		if Version.current=="DEV" then
+			return
+		end
+		local ver = release.tag_name:gsub("^v","")
+
+		local comp = Version.compareStrings(Version.current, ver)
+		if comp==-1 or comp==0 then
+			--release version is higher: update available
+			MainUI:displayMessage(
+				"A new chaoshead update is available!",
+				"Current version: "..Version.current,
+				"Available: "..ver,
+				Button:new("Open in browser", function()
+					love.system.openURL(release.html_url)
+				end, Settings.theme.modal.listStyle.buttonStyle)
+			)
+		elseif comp==1 then
+			--release version is lower: WHAT
+			MainUI:displayMessage(
+				"Current version is "..Version.current..", while the latest release is "..ver..", which is lower.",
+				"This is very weird, and not supposed to happen. Please get in touch so I can figure out what went wrong."
+			)
+		else
+			return true
+		end
+	end
+end
+
+local checks = {
+	-- Check to reset settings
+	function()
+		local update = false
+		
+		local UPDATE_SETTINGS_AFTER = "2.9.0"
+		
+		if Version.previous and Version.previous~=Version.current then
+			if Version.previous=="DEV" then
+				-- we don't know what happened during development, make sure we have settings we can work with
+				update = true
+			elseif Version.current=="DEV" then
+				--we went from release to development, assume the user knows what they're doing
+				update = false
+			else
+				update = Version.isLessThan(Version.previous, UPDATE_SETTINGS_AFTER)
+			end
+			-- 2.3.1 and older: version not tracked yet, but we have something else to check if this is a new installation
+		elseif not Version.previous and Storage.lastLevelOpened then
+			update = true
+		end
+		
+		if update then
+			local l = List:new(Settings.theme.modal.listStyle)
+			l:addTextEntry("The default settings have changed significantly in this update, reset your settings to the default? (Will restart)")
+			l:addButtonEntry("Reset all settings + restart",function()
+				for _,file in ipairs(love.filesystem.getDirectoryItems(Settings.folder)) do
+					local path = Settings.folder..file
+					local real = love.filesystem.getRealDirectory(path)
+					if real:match(love.filesystem.getSaveDirectory()) then
+						if not love.filesystem.remove(path) then
+							error("Could not reset(/delete) settings file at "..path)
+						end
+					end
+				end
+				love.event.quit("restart")
+			end)
+			MainUI:displayMessage(l)
+		end
+	end,
+	
+	-- No Levelhead data found
+	function()
+		if not NFS.getInfo(LhMisc.getDataPath(),"directory") then
+			MainUI:displayMessage("Could not find Levelhead data at "..LhMisc.getDataPath())
+		end
+	end,
+	
+	-- New update
+	function()
+		if Storage.lastUpdateCheck then
+			local diff = os.difftime(os.time(), Storage.lastUpdateCheck)
+			-- diff is seconds since last update
+			if diff < Settings.misc.checkForUpdatesEveryXHours*60*60 then
+				return -- Too early to check, don't spam GitHub
+			end
+		end
+		Storage.lastUpdateCheck = os.time()
+		Storage:save()
+		
+		checkForUpdate()
+	end,
+}
+
+
+for _,check in ipairs(checks) do
+	check()
+end
+
+return {
+	checkForUpdate = checkForUpdate
+}

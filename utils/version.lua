@@ -28,6 +28,7 @@ function V.compare(a,b)
 	return 0
 end
 
+---@return -1|0|1 sign -1 if a < b, 0 if a==b, 1 if a > b
 function V.compareStrings(a,b)
 	return V.compare(V.parseVersion(a),V.parseVersion(b))
 end

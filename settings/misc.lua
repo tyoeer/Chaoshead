@@ -1,4 +1,5 @@
 return {
+	checkForUpdatesEveryXHours = 24,
 	selectionDetails = {
 		maxUnknownProperties = 10,
 	},
