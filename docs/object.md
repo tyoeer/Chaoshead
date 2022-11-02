@@ -111,6 +111,13 @@ name = object:getName()
 The name of the level element this object is.
 
 ```Lua
+isIt = object:isElement(element)
+```
+- element: name/id of the element
+
+Returns whether or not this object is of the specified level element
+
+```Lua
 object.world
 ```
 The __World__ this object belongs to. Nil if it's not bound to a level. DO NOT edit this directly.

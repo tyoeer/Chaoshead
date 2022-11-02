@@ -32,6 +32,10 @@ function OBJ:clone()
 	return obj
 end
 
+function OBJ:isElement(elemSel)
+	return self.id==E:getID(elemSel)
+end
+
 -- CONTAINED OBJECTS
 
 
