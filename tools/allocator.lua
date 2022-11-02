@@ -230,9 +230,15 @@ function A:allocateChannel()
 	if self.channelMask then
 		while not self.channelMask[self.channelCounter] do
 			self.channelCounter = self.channelCounter + 1
+			if self.channelCounter>P:getMax("Sending Channel") then
+				error("Can't allocate more channels: used all available",2)
+			end
 		end
 	else
 		self.channelCounter = self.channelCounter + 1
+		if self.channelCounter>P:getMax("Sending Channel") then
+			error("Can't allocate more channels: used all available",2)
+		end
 	end
 	return self.channelCounter
 end
@@ -251,9 +257,15 @@ function A:allocateRiftId()
 	if self.riftIdMask then
 		while not self.riftIdMask[self.riftIdCounter] do
 			self.riftIdCounter = self.riftIdCounter + 1
+			if self.riftIdCounter>P:getMax("Rift ID") then
+				error("Can't allocate more rift IDs: used all available",2)
+			end
 		end
 	else
 		self.riftIdCounter = self.riftIdCounter + 1
+		if self.riftIdCounter>P:getMax("Rift ID") then
+			error("Can't allocate more rift IDs: used all available",2)
+		end
 	end
 	return self.riftIdCounter
 end
