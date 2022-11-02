@@ -1,10 +1,26 @@
+local NFS = require("libs.nativefs")
+
 local m = {}
 
 function m.getDataPath()
 	return love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/"
 end
+
 function m.getUserDataPath()
 	return m.getDataPath().."UserData/"
+end
+
+local installationPaths = {
+	"C:/Program Files (x86)/Steam/steamapps/common/Levelhead/"
+}
+function m.getInstallationPath()
+	for _,dir in ipairs(installationPaths) do
+		local info = NFS.getInfo(dir.."Levelhead.exe")
+		if info then
+			return dir
+		end
+	end
+	return nil
 end
 
 local function hasSpaceBetween(first,second)
