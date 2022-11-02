@@ -7,21 +7,13 @@ local LHS = {}
 
 function LHS:write(data)
 	if type(data)=="number" then
-		data = math.numberToBytesLE(data)
+		data = love.data.pack("string", "<I1", data)
 	end
 	self.saveHandle:write(data)
 end
 
 function LHS:write2(data)
-	data = math.numberToBytesLE(data)
-	if data:len()==1 then
-		self.saveHandle:write(data)
-		self.saveHandle:write(string.char(0x00))
-	elseif data:len()>2 then
-		error("Write size error: "..love.data.encode("string","hex",data))
-	else
-		self.saveHandle:write(data)
-	end
+	self.saveHandle:write(love.data.pack("string", "<I2", data))
 end
 
 local function deHex(d)

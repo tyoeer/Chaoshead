@@ -32,11 +32,11 @@ function LHS:getBytes(offset,length)
 end
 
 function LHS:getNumber1(offset)
-	return math.bytesToNumberLE(self:getBytes(offset,1))
+	return love.data.unpack("<I1", self:getBytes(offset,1))
 end
 
 function LHS:getNumber2(offset)
-	return math.bytesToNumberLE(self:getBytes(offset,2))
+	return love.data.unpack("<I2",self:getBytes(offset,2))
 end
 
 function LHS:verifyTag(section,offset)
