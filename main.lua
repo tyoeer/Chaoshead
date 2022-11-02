@@ -21,7 +21,7 @@ function love.load(args)
 	Settings = Persistant.settings
 	Storage = Persistant:get("data")
 	Input = TU("input")
-	--make sure which version of CH we're using is stored on disk
+	--make sure which version of CH we're using is saved on disk
 	require("utils.version")
 	
 	--love2d state
