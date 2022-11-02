@@ -25,7 +25,7 @@ function love.load(args)
 	require("utils.version")
 	
 	--love2d state
-	love.graphics.setFont(love.graphics.newFont("resources/iosevka-aile-regular.ttf",16))
+	love.graphics.setFont(love.graphics.newFont("resources/iosevka-aile-regular.ttf", Settings.theme.main.fontSize))
 	love.graphics.setLineWidth(1)
 	love.graphics.setPointSize(1)
 	love.graphics.setLineStyle("rough")

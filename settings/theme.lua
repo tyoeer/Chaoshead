@@ -5,6 +5,7 @@ local BUTTON_HOVER = {0.4, 0.4, 0.4}
 return {
 	main = {
 		background = MAIN_BG,
+		fontSize = 16,
 	},
 	editor = {
 		detailsWorldDivisionStyle = {
