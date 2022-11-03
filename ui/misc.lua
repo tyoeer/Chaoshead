@@ -203,6 +203,12 @@ function UI:onReload(list)
 			return
 		end
 		
+		Storage.patched = {
+			at = os.time(),
+			succesful = false
+		}
+		Storage:save()
+		
 		for hexOffset, hexFrom, hexTo in patch:gmatch("\n(%S+):(%S+)%->(%S+)") do
 			-- Verify line parsed correctly
 			if not hexOffset or not hexFrom or not hexTo then
@@ -232,7 +238,10 @@ function UI:onReload(list)
 			MainUI:displayMessage("Error closing file:\n"..tostring(err))
 			return
 		end
-		MainUI:displayMessage("Looks like patching was succesful\nPlease report any problems/crashes, this is experimental")
+		
+		Storage.patched.succesful = true
+		Storage:save()
+		MainUI:displayMessage("Looks like patching was succesful.\nPlease report any Levelhead problems/crashes, this is experimental.")
 	end)
 	
 	-- DIVIDER
