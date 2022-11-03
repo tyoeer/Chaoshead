@@ -6,7 +6,18 @@ local Github = require("utils.github")
 local Button = require("ui.widgets.button")
 
 ---@return boolean|nil noPopupShown true if no pop-up was shown
-local checkForUpdate = function()
+local checkForUpdate = function(force)
+	if Storage.lastUpdateCheck and not force then
+		local diff = os.difftime(os.time(), Storage.lastUpdateCheck)
+		-- diff is seconds since last update
+		if diff < Settings.misc.checkForUpdatesEveryXHours*60*60 then
+			return -- Too early to check, don't spam GitHub
+		end
+	end
+	
+	Storage.lastUpdateCheck = os.time()
+	Storage:save()
+	
 	local success, release = xpcall(Github.latestRelease, function(message)
 		if message:find("NetworkError") and message:find("getError()") then
 			local err = Github.getError()
@@ -35,7 +46,7 @@ local checkForUpdate = function()
 	if not release then
 		MainUI:displayMessage("Found no release on GitHub when checking for updates, which is weird, and suggests something is broken.")
 	else
-		if Version.current=="DEV" then
+		if Version.current=="DEV" and not force then
 			return
 		end
 		local ver = release.tag_name:gsub("^v","")
@@ -112,19 +123,7 @@ local checks = {
 	end,
 	
 	-- New update
-	function()
-		if Storage.lastUpdateCheck then
-			local diff = os.difftime(os.time(), Storage.lastUpdateCheck)
-			-- diff is seconds since last update
-			if diff < Settings.misc.checkForUpdatesEveryXHours*60*60 then
-				return -- Too early to check, don't spam GitHub
-			end
-		end
-		Storage.lastUpdateCheck = os.time()
-		Storage:save()
-		
-		checkForUpdate()
-	end,
+	checkForUpdate,
 }
 
 
