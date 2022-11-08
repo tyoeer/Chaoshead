@@ -1,6 +1,7 @@
 local V = {}
 
 V.current = love.filesystem.read("version.txt") or "DEV"
+V.current = V.current:trim()
 
 V.previous = Storage.version
 Storage.version = V.current
