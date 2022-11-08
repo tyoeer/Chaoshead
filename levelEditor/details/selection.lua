@@ -38,7 +38,7 @@ end
 
 function UI:sortProperties()
 	local list = {}
-	for _,pl in ipairs(self.selection.contents.properties) do
+	for _,pl in pairs(self.selection.contents.properties) do
 		table.insert(list, pl)
 	end
 	table.sort(list,function(a,b)
