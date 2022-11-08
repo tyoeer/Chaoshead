@@ -25,8 +25,10 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
-      # let the program now its version
-      - run: echo ${{ github.event.inputs.version-number }} > version.txt
+      - name: Let the program now it's version
+        run: echo ${{ github.event.inputs.version-number }} > version.txt
+      - name: Remove development HTTPS library
+        run: rm https.dll
       - name: "Build binaries"
         id: "love-build"
         uses: nhartland/love-build@v1-beta4
@@ -41,12 +43,20 @@ jobs:
           result_dir: "binaries"
       # 32 bits
       - run: mkdir "extract"
-      - uses: DuckSoft/extract-7z-action@v1.0
+      - name: Unzip binary release for modification
+        uses: DuckSoft/extract-7z-action@v1.0
         with:
           pathSource: ${{ steps.love-build.outputs.win32-filename }}
           pathTarget: "extract"
-      - run: mv "extract/Chaoshead_win32/" "release/" 
-      #- run: ls "release"
+      - run: mv "extract/Chaoshead_win32/" "release/"
+      - name: Add release HTTPS library
+        uses: dawidd6/action-download-artifact@v2.24.0
+        with:
+          repo: love2d/lua-https
+          workflow: build.yml
+          workflow_conclusion: success
+          name: https-windows-Win32
+          path: release
       # licenses and credits
       - run: cp "credits.txt" "release/credits.txt"
       - run: mv "release/license.txt" "release/license-love2d.txt"
@@ -61,8 +71,8 @@ jobs:
         with:
           files: release/
           dest: chaoshead-win32.zip
-      # Collect commits since last release to make making the changelog easier
-      - run: git log $(git describe --tags --abbrev=0)..HEAD --format=format:"> %s%+b" > commits.txt
+      - name: Collect commits since last release to make making the changelog easier
+        run: git log $(git describe --tags --abbrev=0)..HEAD --format=format:"> %s%+b" > commits.txt
       - name: Create release
         id: create-release
         uses: softprops/action-gh-release@v0.1.14
