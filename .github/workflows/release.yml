@@ -55,7 +55,7 @@ jobs:
           repo: love2d/lua-https
           workflow: build.yml
           workflow_conclusion: success
-          name: https-windows-Win32
+          name: https-windows-Win32.zip
           path: release
       # licenses and credits
       - run: cp "credits.txt" "release/credits.txt"
