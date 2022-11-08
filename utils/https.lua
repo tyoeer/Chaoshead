@@ -1,11 +1,9 @@
 local success, httpsOrError = xpcall(
-	function() require("https") end,
+	function() return require("https") end,
 	function(err)
 		return err
 	end)
 if success then
-	---@type { request: fun(url: string, options: table): number, string, string }
-	---@cast httpsOrError -nil
 	return httpsOrError
 else
 	return {
@@ -19,4 +17,3 @@ else
 		error = httpsOrError,
 	}
 end
-return {request=function() end}
