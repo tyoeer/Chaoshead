@@ -241,7 +241,13 @@ return {
 		up = {
 			type = "and",
 			triggers = {
-				"key: w",
+				{
+					type = "or",
+					triggers = {
+						"key: w",
+						"key: up",
+					}
+				},
 				{
 					type = "nor",
 					triggers = {
@@ -254,7 +260,13 @@ return {
 		down = {
 			type = "and",
 			triggers = {
-				"key: s",
+				{
+					type = "or",
+					triggers = {
+						"key: s",
+						"key: down",
+					}
+				},
 				{
 					type = "nor",
 					triggers = {
@@ -267,7 +279,13 @@ return {
 		left = {
 			type = "and",
 			triggers = {
-				"key: a",
+				{
+					type = "or",
+					triggers = {
+						"key: a",
+						"key: left",
+					}
+				},
 				{
 					type = "nor",
 					triggers = {
@@ -280,7 +298,13 @@ return {
 		right = {
 			type = "and",
 			triggers = {
-				"key: d",
+				{
+					type = "or",
+					triggers = {
+						"key: d",
+						"key: right",
+					}
+				},
 				{
 					type = "nor",
 					triggers = {
