@@ -1,6 +1,6 @@
 local Version = require("utils.version")
 local Json = require("libs.json")
-local Https = require("https")
+local Https = require("utils.https")
 
 local G = {}
 
@@ -106,7 +106,7 @@ function G.getURL(repo,apiPath,queryParams)
 end
 
 
----@return any
+---@return number, string, string
 function G.apiCall(url)
 	return Https.request(url, {
 		method = "GET",
