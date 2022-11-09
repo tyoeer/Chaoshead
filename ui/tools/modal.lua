@@ -11,6 +11,8 @@ function UI:initialize(child)
 	--self.modal
 	--self.cancelAction
 	--self.oldCursor
+	--self.oldMouseX
+	--self.oldMouseY
 	self.stack = {}
 	--the stuff behind the modal
 	self.main = BLOCK:new(child, theme.blockStyle)
@@ -39,10 +41,14 @@ function UI:setModal(ui, cancelAction, box)
 			modal = self.modal,
 			cancelAction = self.cancelAction,
 			cursor = love.mouse.getCursor(),
+			mouseX = self:getMouseX(),
+			mouseY = self:getMouseY(),
 		})
 		self:removeModalRaw()
 	else
 		self.oldCursor = love.mouse.getCursor()
+		self.oldMouseX = self:getMouseX()
+		self.oldMouseY = self:getMouseY()
 		love.mouse.setCursor()
 	end
 	
@@ -74,6 +80,12 @@ function UI:removeModal()
 	else
 		love.mouse.setCursor(self.oldCursor)
 	end
+	self:mouseMoved(
+		self:getMouseX(),
+		self:getMouseY(),
+		self:getMouseX()-self.oldMouseX,
+		self:getMouseY()-self.oldMouseY
+	)
 end
 
 -- actions
