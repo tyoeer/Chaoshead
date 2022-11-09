@@ -124,7 +124,7 @@ function UI:onReload(list)
 			MainUI:displayMessage("Your Chaoshead is up to date.")
 		end
 	end)
-	list:addButtonEntry("Patch Levelhead executable to get rid of level caching (also disables chaching for some other files) (experimental)",function()
+	list:addButtonEntry("Patch Levelhead executable to get rid of level caching (also disables caching for some other files) (experimental)",function()
 		-- The patch file gives addresses, which appear at a weird place in the file
 		-- This offset has been found by comparing the address and file offset as given by x32dbg
 		local addressOffset = -3072
