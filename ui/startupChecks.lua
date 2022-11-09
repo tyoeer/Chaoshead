@@ -47,12 +47,12 @@ local checkForUpdate = function(force)
 		MainUI:displayMessage("Found no release on GitHub when checking for updates, which is weird, and suggests something is broken.")
 	else
 		if Version.current=="DEV" and not force then
-			return
+			return true
 		end
 		local ver = release.tag_name:gsub("^v","")
 
 		local comp = Version.compareStrings(Version.current, ver)
-		if comp==-1 or comp==0 then
+		if comp==-1 then
 			--release version is higher: update available
 			MainUI:displayMessage(
 				"A new chaoshead update is available!",
