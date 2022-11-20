@@ -99,10 +99,10 @@ end
 function UI:displayMessage(...)
 	local ui = LIST:new(theme.listStyle)
 	for _,item in ipairs({...}) do
-		if type(item)=="string" then
-			ui:addTextEntry(item)
-		else
+		if type(item)=="table" then
 			ui:addUIEntry(item)
+		else
+			ui:addTextEntry(tostring(item))
 		end
 	end
 	local dismiss = function() self:removeModal() end
