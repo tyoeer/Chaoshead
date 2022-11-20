@@ -29,3 +29,11 @@ Recreating the patch (in other versions of Levelhead):
 	- `am_no_cache` is what that `je` jumped to
 	- You can leave the `ds:` out of `ds:[eax]`
 	- The numbers are hexadecimal, you probably have to prepend `0x` when assembling
+
+Chaoshead stuff:
+1. Chaoshead uses the `.1337` file x64dbg exports for patches directly
+2. To get new verification regions:
+	1. Temporarily remove the `regions` part of the patch info (`PATCHES` variable in `patcher.lua`)
+	2. Try to patch an unpatched executable
+	3. Chaoshead should mention it has generated the regions
+	4. They should be saved in teh CH data folder
