@@ -29,6 +29,9 @@ The stuff on which the rest of CH is built.
 ## Misc code
 
 - `script/`: The scripting system. Probably shouldn't be its own folder in its current state.
+- `exePatch/`: Stuff related to patching the executable.
+  - `noCache.md`: Description of how te recreate the patch to disable level caching
+  - `noCache.1337`: Actual file saying which bytes to change. File format is from x64dbg.
 - `tools/`: Code that should be accessible from user scripts.
 - `scripts/`: Built-in scripts. Limited to `/.built-in/` to keep them apart from user scripts.
 - `libs/`: Contains external libraries
@@ -38,7 +41,6 @@ The stuff on which the rest of CH is built.
 
 - `data/`: Contains `.tsv` data files based on [the spreadsheet](https://docs.google.com/spreadsheets/d/1bzASSn2FgjqUldPzX8DS66Lv-r2lk3V12jZjl51uaTk/)
 - `docs/`: Documentation for user scripts.
-- `exeMods`: Contains the description of and patch to disable level caching
 - `resources/`: Contains non code misc. stuff (font & image used in README)
 - `licenses/`: All the licenses of third-party stuff used by Chaoshead. Has a naming scheme for the licenses.
 - `.github/`: Contains the release Github Action.
