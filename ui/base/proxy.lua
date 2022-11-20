@@ -29,4 +29,8 @@ function UI:resized(w,h)
 	self.child:resize(w,h)
 end
 
+function UI:getMinimumHeight(width)
+	return self.child:getMinimumHeight(width)
+end
+
 return UI
