@@ -100,7 +100,11 @@ function UI:displayMessage(...)
 	local ui = LIST:new(theme.listStyle)
 	for _,item in ipairs({...}) do
 		if type(item)=="table" then
-			ui:addUIEntry(item)
+			if item.class then
+				ui:addUIEntry(item)
+			elseif type(item[1])=="string" and type(item[2])=="function" then
+				ui:addButtonEntry(item[1], item[2])
+			end
 		else
 			ui:addTextEntry(tostring(item))
 		end
