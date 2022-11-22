@@ -11,23 +11,68 @@ function UI:initialize(workshop)
 	self.title = "Level Selection"
 end
 
+function UI:findLastEditedLevel()
+	local lastPath
+	local lastTime = 0
+	local lastTitle = "$NoLevelFound"
+	
+	for _,code in ipairs(UserData.getUserCodes()) do
+		local userData = UserData.getUserData(code)
+		if userData then
+			for _,level in ipairs(userData:getWorkshopLevels()) do
+				local info = NFS.getInfo(level.path)
+				if info.modtime > lastTime then
+					lastPath = level.path
+					lastTime = info.modtime
+					lastTitle = level.name
+				end
+			end
+		else
+			for _,item in ipairs(NFS.getDirectoryItems(LhMisc.getUserDataPath()..code)) do
+				if item:match("%.(.+)$") == "lhs" then
+					local path = LhMisc.getUserDataPath()..code.."/"..item
+					local info = NFS.getInfo(path)
+					if info.modtime > lastTime then
+						lastPath = path
+						lastTime = info.modtime
+						lastTitle = item
+					end
+				end
+			end
+		end
+	end
+	
+	return lastPath, lastTime, lastTitle
+end
+
 function UI:getRootEntries()
 	local out = {}
-	if Storage.lastLevelOpened then
+	
+	local path, when, title = self:findLastEditedLevel()
+	if Storage.lastLevelOpened and when < Storage.lastLevelOpened.when then
 		local info = NFS.getInfo(Storage.lastLevelOpened.path)
 		if info then
-			table.insert(out,{
-				title = Storage.lastLevelOpened.name,
-				action = function()
-					self.workshop:openEditor(Storage.lastLevelOpened.path)
-				end
-			})
+			print("Yo", title, Storage.lastLevelOpened.title)
+			path = Storage.lastLevelOpened.path
+			when = Storage.lastLevelOpened.when
+			title = Storage.lastLevelOpened.name
 		else
 			-- file got deleted
 			Storage.lastLevelOpened = nil
 			Storage:save()
 		end
 	end
+	
+	if path then
+		print(path, title)
+		table.insert(out,{
+			title = title,
+			action = function()
+				self.workshop:openEditor(path)
+			end
+		})
+	end
+	
 	for _,code in ipairs(UserData.getUserCodes()) do
 		table.insert(out,{
 			title = code,
