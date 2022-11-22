@@ -12,6 +12,14 @@ function UI:initialize(workshop,data)
 end
 
 function UI:onReload(list)
+	list:resetList()
+	
+	local info = NFS.getInfo(self.path)
+	if not info then
+		list:addTextEntry("Level "..self.name.." got deleted")
+		return
+	end
+	
 	list:addTextEntry("Name: ".. self.name)
 	list:addTextEntry("Id:   ".. self.id)
 	list:addTextEntry("path: ".. self.path)
@@ -64,6 +72,12 @@ function UI:onReload(list)
 			love.system.openURL("file://"..self.path:match("^(.*)/[^/\\]+$"))
 		end
 	)
+end
+
+function UI:onFocus(focus)
+	if focus then
+		self:reload()
+	end
 end
 
 return UI
