@@ -75,7 +75,7 @@ jobs:
         run: git log $(git describe --tags --abbrev=0)..HEAD --format=format:"> %s%+b" > commits.txt
       - name: Create release
         id: create-release
-        uses: softprops/action-gh-release@v0.1.14
+        uses: softprops/action-gh-release@v0.1.15
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
