@@ -149,7 +149,16 @@ function UI:onFocus(focus)
 		)
 		if success then
 			if self.latestHash ~= self.levelFile:getHash() then
-				self:reload()
+				-- Prevent repeated asks after a single change that gets dismissed
+				self.latestHash = self.levelFile:getHash()
+				
+				MainUI:displayMessage(
+					"Level was edited by external program (probably Levelhead)",
+					{"Reload", function()
+						MainUI:removeModal()
+						self:reload()
+					end}
+				)
 			end
 		end
 	end
