@@ -48,7 +48,7 @@ function P:initialize()
 		.."This means that problems will be detected beforehand, and if something does manage to slip the radar, "
 		.."it can only do something similar to what the patch is trying to do."
 	)
-	list:addTextEntry("This is experimental, soplease report any bugs/crashes.")
+	list:addTextEntry("This is experimental, so please report any bugs/crashes.")
 	list:addTextEntry("") -- seperator
 	list:addTextEntry("Available patch(es) will start to patch immediately upon clicking them:")
 	for _,patchInfo in ipairs(PATCHES) do
