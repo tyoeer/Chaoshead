@@ -10,7 +10,7 @@ Storage:save()
 function V.parseVersion(str)
 	local out = {}
 	local i=1
-	for part in str:gmatch("([^%.])") do
+	for part in str:gmatch("([^%.]+)") do
 		out[i] = tonumber(part)
 		i = i + 1
 	end
