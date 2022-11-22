@@ -52,7 +52,6 @@ function UI:getRootEntries()
 	if Storage.lastLevelOpened and when < Storage.lastLevelOpened.when then
 		local info = NFS.getInfo(Storage.lastLevelOpened.path)
 		if info then
-			print("Yo", title, Storage.lastLevelOpened.title)
 			path = Storage.lastLevelOpened.path
 			when = Storage.lastLevelOpened.when
 			title = Storage.lastLevelOpened.name
@@ -64,7 +63,6 @@ function UI:getRootEntries()
 	end
 	
 	if path then
-		print(path, title)
 		table.insert(out,{
 			title = title,
 			action = function()
