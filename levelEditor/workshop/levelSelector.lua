@@ -14,12 +14,19 @@ end
 function UI:getRootEntries()
 	local out = {}
 	if Storage.lastLevelOpened then
-		table.insert(out,{
-			title = Storage.lastLevelOpened.name,
-			action = function()
-				self.workshop:openEditor(Storage.lastLevelOpened.path)
-			end
-		})
+		local info = NFS.getInfo(Storage.lastLevelOpened.path)
+		if info then
+			table.insert(out,{
+				title = Storage.lastLevelOpened.name,
+				action = function()
+					self.workshop:openEditor(Storage.lastLevelOpened.path)
+				end
+			})
+		else
+			-- file got deleted
+			Storage.lastLevelOpened = nil
+			Storage:save()
+		end
 	end
 	for _,code in ipairs(UserData.getUserCodes()) do
 		table.insert(out,{
