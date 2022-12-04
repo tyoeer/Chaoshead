@@ -17,17 +17,17 @@ See the scripting documentation in the README for more information.
 ```Lua
 contents.foreground
 ```
-An __EntityPool__ containing all the foreground __Object__s in the selection.
+An __EntityPool__ containing all the foreground **Object**s in the selection.
 
 ```Lua
 contents.background
 ```
-An __EntityPool__ containing all the background __Object__s in the selection.
+An __EntityPool__ containing all the background **Object**s in the selection.
 
 ```Lua
 contents.pathNodes
 ```
-An __EntityPool__ containing all the background __PathNode__s in the selection.
+An __EntityPool__ containing all the background **PathNode**s in the selection.
 
 ## Amounts
 
