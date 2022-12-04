@@ -27,7 +27,11 @@ function C:initialize(path)
 end
 
 function C:getNode(id)
-	return self.nodesById[id]
+	local out =  self.nodesById[id]
+	if not out then
+		error("No node with id: "..tostring(id), 2)
+	end
+	return out
 end
 
 --- Returns a single node at
