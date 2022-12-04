@@ -124,7 +124,7 @@ function UI:onReload(list)
 			MainUI:displayMessage("Your Chaoshead is up to date.")
 		end
 	end)
-	list:addButtonEntry("Patch Levelhead executable to get rid of level caching (also disables caching for some other files) (experimental)",function()
+	list:addButtonEntry("Open executable patching menu (experimental)",function()
 		local Patch = require("exePatch.patcher"):display()
 	end)
 	
