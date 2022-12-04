@@ -5,6 +5,11 @@ local LevelNode = require("levelhead.campaign.node.level")
 
 local C = Class("Campaign")
 
+C.SUBPATHS = {
+	data = "data/",
+	levels = "levels/",
+}
+
 function C:initialize(path)
 	if path then
 		if path:sub(-1)~="/" then
@@ -97,7 +102,7 @@ end
 -- LOADING
 
 function C:loadData(name)
-	local path = self.path.."data/"..name..".json"
+	local path = self.path..self.SUBPATHS.data..name..".json"
 	local data, err = love.filesystem.read(path)
 	if not data then
 		error(string.format("Error reading %s data at %s:\n%s", name,path, err), 3)
