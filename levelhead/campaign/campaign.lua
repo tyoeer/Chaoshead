@@ -2,6 +2,7 @@ local EP = require("libs.tyoeerUtils.entitypool")
 local JSON = require("libs.json")
 local Node = require("levelhead.campaign.node")
 local LevelNode = require("levelhead.campaign.node.level")
+local Level = require("levelhead.campaign.level")
 
 local C = Class("Campaign")
 
@@ -21,10 +22,36 @@ function C:initialize(path)
 	-- self.nodes
 	-- self.nodesById
 	self:clearNodes()
+	-- self.levels
+	-- self.levelsById
+	self:clearLevels()
 	
 	self.campaignVersion = 0
 	self.contentVersion = "0"
 end
+
+-- LEVELS
+
+function C:addLevelRaw(level)
+	self.levels:add(level)
+	self.levelsById[level.id] = level
+	level.campaign = self
+end
+
+function C:getLevel(id)
+	local out =  self.levelsById[id]
+	if not out then
+		error("No level with id: "..tostring(id), 2)
+	end
+	return out
+end
+
+function C:clearLevels()
+	self.levels = EP:new()
+	self.levelsById = {}
+end
+
+-- NODES
 
 function C:getNode(id)
 	local out =  self.nodesById[id]
@@ -105,6 +132,14 @@ end
 
 -- LOADING
 
+function C:reloadLevels()
+	local lPath = self.path..self.SUBPATHS.levels
+	for _, item in ipairs(love.filesystem.getDirectoryItems(lPath)) do
+		local id = item:match("(.+).lhs")
+		self:addLevelRaw(Level:new(id))
+	end
+end
+
 function C:loadData(name)
 	local path = self.path..self.SUBPATHS.data..name..".json"
 	local data, err = love.filesystem.read(path)
@@ -135,6 +170,8 @@ function C:reloadNodes()
 		if node.type=="path" then
 			node.prevLevel = self:getNode(node.prevLevel)
 			node.nextLevel = self:getNode(node.nextLevel)
+		elseif node.type=="level" then
+			node.level = self:getLevel(node.level)
 		end
 	end
 end
@@ -154,6 +191,7 @@ function C:reload(path)
 		self.path = path
 	end
 	
+	self:reloadLevels()
 	self:reloadVersions()
 	self:reloadNodes()
 end

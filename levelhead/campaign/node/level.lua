@@ -3,7 +3,13 @@ local ZoneData = require("levelhead.data.zones")
 local L = Class("CampaignLevelNode",require("levelhead.campaign.node.visitable"))
 
 local MAPPINGS = {
-	level = "dat",
+	level = {
+		"dat",
+		-- from gets handled in campaign loading logic
+		to = function(level)
+			return level.id
+		end
+	},
 	
 	onTimeDelivery = "b_time",
 	
