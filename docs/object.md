@@ -118,6 +118,11 @@ isIt = object:isElement(element)
 Returns whether or not this object is of the specified level element
 
 ```Lua
+object.x, object.y
+```
+The position of the object. Nil if it hasn't been placed yet. DO NOT edit this directly. (use **World**`:moveObject()` instead)
+
+```Lua
 object.world
 ```
 The __World__ this object belongs to. Nil if it's not bound to a level. DO NOT edit this directly.
