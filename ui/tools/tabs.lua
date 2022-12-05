@@ -76,6 +76,9 @@ function UI:setActiveTab(ui)
 	self:addChild(ui)
 	self:updateActiveTab()
 	ui:visible(true)
+	if self.parent then
+		ui:mouseMoved(self:getMouseX(), self:getMouseY(), 0, 0)
+	end
 end
 
 function UI:getActiveTab()

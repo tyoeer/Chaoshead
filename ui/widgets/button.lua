@@ -98,6 +98,14 @@ function UI:preDraw()
 	end
 end
 
+function UI:onMouseMoved(x,y, dx,dy)
+	if x >= 0 and y >= 0 and x < self.width and y < self.height then
+		love.mouse.setCursor(love.mouse.getSystemCursor("hand"))
+	else
+		love.mouse.setCursor()
+	end
+end
+
 function UI:onInputActivated(name,group,isCursorBound)
 	if self.triggerOnActivate and name=="click" and group=="main" then
 		self.onClick()
