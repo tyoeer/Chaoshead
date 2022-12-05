@@ -12,15 +12,6 @@ end
 function UI:getRootEntries()
 	local out = {}
 	
-	table.insert(out,{
-		title = "Unpack campaign_hardfile",
-		action = function()
-			CampaignMisc.unpack(function()
-				self.list:reload()
-			end)
-		end,
-	})
-	
 	if Storage.lastCampaignOpened then
 		table.insert(out,{
 			title = Storage.lastCampaignOpened.subpath,
@@ -41,6 +32,16 @@ function UI:getRootEntries()
 			subpath = dirname
 		})
 	end
+	
+	table.insert(out,{
+		title = "Unpack campaign_hardfile",
+		action = function()
+			CampaignMisc.unpack(function()
+				self.list:reload()
+			end)
+		end,
+	})
+	
 	return out
 end
 
