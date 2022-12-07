@@ -1,3 +1,6 @@
+local JSON = require("libs.json")
+local LhData = require("levelhead.dataFile")
+local LhMisc = require("levelhead.misc")
 local CampaignMisc = require("campaignEditor.misc")
 
 local UI = Class("CampaignDetailsUI",require("ui.tools.details"))
@@ -55,6 +58,19 @@ function UI:onReload(list,campaign)
 	-- 		end
 	-- 	end
 	-- )
+	
+	list:addButtonEntry(
+		"Replace map with map from in-game editor",
+		function()
+			local data = LhData:new(LhMisc:getDataPath().."CampaignMaster/LHCampaignMaster")
+			
+			for category, data in pairs(data.raw) do
+				love.filesystem.write(self.campaign.path..self.campaign.SUBPATHS.data..category..".json", JSON.encode(data))
+			end
+			
+			self.editor.root:reload()
+		end
+	)
 
 	-- versions
 	list:addTextEntry("Campaign version: "..campaign.campaignVersion)
