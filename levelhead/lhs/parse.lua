@@ -14,30 +14,27 @@ It should be noted that the raw stuff uses zero as lowest value when refering to
 
 function LHS:parseHeaders()
 	local raw = self.rawHeaders
-	local w = Level:new()
-	w.left, w.top = 1, 1
-	w.right, w.bottom = raw.width, raw.height
 	
-	local set = w.settings
-	set.zone = raw.zone
-	set.prefix = raw.prefix
-	set.campaignMarker = raw.campaignMarker
+	local settings = Settings:new()
+	settings.zone = raw.zone
+	settings.prefix = raw.prefix
+	settings.campaignMarker = raw.campaignMarker
 	
 	--title
 	for k,v in pairs(raw.title) do
-		set.title[k] = v
+		settings.title[k] = v
 	end
 	
 	--settings list
 	for _,v in ipairs(raw.settingsList.entries) do
 		if self.settingsListBooleans[v.id] then
-			set[self.settingsList[v.id]] = v.value>=1
+			settings[self.settingsList[v.id]] = v.value>=1
 		else
-			set[self.settingsList[v.id]] = v.value
+			settings[self.settingsList[v.id]] = v.value
 		end
 	end
 	
-	return w
+	return settings, raw.width, raw.height
 end
 
 
@@ -196,19 +193,23 @@ function LHS:parseBackgroundColumns(w)
 end
 
 function LHS:parseAll()
-	local w = self:parseHeaders()
-	self:parseSingleForeground(w)
-	self:parseForegroundRows(w)
-	self:parseForegroundColumns(w)
-	self:parseObjectProperties(w)
-	self:parseRepeatedPropertySets(w)
-	self:parseContainedObjects(w)
-	local idMap = self:parsePaths(w)
+	local settings, width, height = self:parseHeaders()
+	local level = Level:new()
+	level.left, level.top = 1, 1
+	level.right, level.bottom = width, height
+	level.settings = settings
+	self:parseSingleForeground(level)
+	self:parseForegroundRows(level)
+	self:parseForegroundColumns(level)
+	self:parseObjectProperties(level)
+	self:parseRepeatedPropertySets(level)
+	self:parseContainedObjects(level)
+	local idMap = self:parsePaths(level)
 	self:parsePathProperties(idMap)
-	self:parseSingleBackground(w)
-	self:parseBackgroundRows(w)
-	self:parseBackgroundColumns(w)
-	return w
+	self:parseSingleBackground(level)
+	self:parseBackgroundRows(level)
+	self:parseBackgroundColumns(level)
+	return level
 end
 
 return LHS
