@@ -24,4 +24,10 @@ function L:getLHS()
 	return LHS:new(love.filesystem.getSaveDirectory().."/"..self:getPath())
 end
 
+function L:getHeaders()
+	local lhs = self:getLHS()
+	lhs:readHeaders()
+	return lhs:parseHeaders()
+end
+
 return L
