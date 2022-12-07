@@ -37,7 +37,7 @@ function love.load(args)
 	end
 	
 	--build ui
-	MainUI = require("ui.chaoshead"):new()
+	MainUI = require("chaoshead.chaoshead"):new()
 	UiRoot = require("ui.base.root"):new(MainUI)
 	UiRoot:hookIntoLove()
 	UiRoot:resize(love.graphics.getWidth(), love.graphics.getHeight())
@@ -52,7 +52,7 @@ function love.load(args)
 	end
 	
 	--checks to run at startup
-	require("ui.startupChecks")
+	require("chaoshead.startupChecks")
 end
 
 function love.keypressed(key, scancode, isrepeat)

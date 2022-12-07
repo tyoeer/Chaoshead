@@ -14,6 +14,7 @@ Independent pieces with their own goal. Have their own top level tab.
 
 The stuff on which the rest of CH is built.
 
+- `chaoshead/`: All the top-level/module-independent UI stuff.
 - `levelhead/`: All the code for integrating with Levelhead stuff
   - `data/`: Wrappers around the data files.
   - `lhs/`: All the code directly dealing with a `.lhs` file.
@@ -21,7 +22,7 @@ The stuff on which the rest of CH is built.
     - `parse` & `serialize` convert between that direct representation and usable representations of actual levels
   - `level/`: Everything dealing with the Lua representation of a LH level.
     - `limits.lua`: A list of functions for checking various limits imposed by several different things.
-- `ui/`: The main UI system, and UI parts that aren't their own module. Has its own design.md describing (some of) the design of the UI system.
+- `ui/`: The main UI system. Has its own design.md describing (some of) the design of the UI system.
 - `settings/`: The settings & storage systems aka systems for data that persists between restarts.
   - `init.lua`: The actual code.
   - The other files: default settings.
