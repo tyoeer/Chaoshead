@@ -26,6 +26,14 @@ function L:initialize(id)
 	self:extendMappings(MAPPINGS)
 end
 
+function L:setLevel(level)
+	if self.level and type(self.level)=="table" then
+		self.level:removeNodeRaw(self)
+	end
+	self.level = level
+	level:addNodeRaw(self)
+end
+
 function L:getZone()
 	return ZoneData:getName(self.zoneId)
 end
