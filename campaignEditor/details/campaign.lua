@@ -47,6 +47,12 @@ function UI:onReload(list,campaign)
 			CampaignMisc.pack(self.editor.root.path)
 		end
 	)
+	list:addButtonEntry(
+		"Pack campign and mod levelhead to use it",
+		function()
+			CampaignMisc.packAndMove(self.editor.root.path)
+		end
+	)
 	
 	list:addTextEntry(" ") -- seperator
 	

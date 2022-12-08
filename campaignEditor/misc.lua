@@ -1,6 +1,7 @@
 local List = require("ui.layout.list")
 local ParsedInput = require("ui.layout.parsedInput")
 local Packing = require("levelhead.campaign.packing")
+local LhMisc = require("levelhead.misc")
 
 local folder = "campaigns/"
 local errorHandler = function(message)
@@ -56,24 +57,27 @@ local function unpack(callback)
 end
 
 
-local function actualPack(fromPath, callback)
+local function actualPack(fromPath, toName, callback)
 	local success = xpcall(function()
-		Packing.pack(fromPath)
+		Packing.pack(fromPath, toName)
 	end, errorHandler)
-	MainUI:displayMessage("Succesfully packed campaign!")
+	if success then
+		MainUI:displayMessage("Succesfully packed campaign!")
+	end
 	if callback then
 		callback(success)
 	end
 end
 
-local function pack(fromPath, callback)
-	local info = love.filesystem.getInfo("campaign_hardfile")
+local function pack(fromPath, callback, toName)
+	toName = toName or "campaign_hardfile"
+	local info = love.filesystem.getInfo(toName)
 	if info then
 		local list = List:new(Settings.theme.modal.listStyle)
-		list:addTextEntry("There already exists a campaign_hardfile in the Chaoshead data directory, do you want to overwrite it?")
+		list:addTextEntry("There already exists a "..toName.." in the Chaoshead data directory, do you want to overwrite it?")
 		list:addButtonEntry("Yes/Overwrite", function()
 			MainUI:removeModal()
-			actualPack(fromPath, callback)
+			actualPack(fromPath, toName, callback)
 		end)
 		
 		local cancel = function()
@@ -83,12 +87,41 @@ local function pack(fromPath, callback)
 		MainUI:setModal(list)
 		MainUI:setCancelAction(cancel)
 	else
-		actualPack(fromPath, callback)
+		actualPack(fromPath, toName, callback)
 	end
+end
+
+local TMP_NAME = "campaign_hardfile_tmp"
+
+local function packAndMove(fromPath, callback)
+	pack(fromPath, function(suc)
+		if not suc then
+			if callback then
+				callback(suc)
+			end
+		else
+			local lhCampaignPath = LhMisc:getInstallationPath().."campaign_hardfile"
+			local success, err = os.remove(lhCampaignPath)
+			if err then
+				MainUI:displayMessage("Failed removing old campaign (tempfile still exists):", err)
+			end
+			local success, err = os.rename(
+				love.filesystem.getSaveDirectory().."/"..TMP_NAME,
+				lhCampaignPath
+			)
+			if err then
+				MainUI:displayMessage("Failed moving tempfile to LH directory (tempfile still exists):", err)
+			end
+			if callback then
+				callback(success)
+			end
+		end
+	end, TMP_NAME)
 end
 
 return {
 	folder = folder,
 	unpack = unpack,
 	pack = pack,
+	packAndMove = packAndMove,
 }

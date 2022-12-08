@@ -134,10 +134,11 @@ local function unpack(to)
 	end
 end
 
-local function pack(from, compressionLevel)
+local function pack(from, toName, compressionLevel)
 	
 	-- PREP
 	
+	if toName==nil then toName="campaign_hardfile" end
 	if from:sub(-1,1)~="/" then
 		from = from .. "/"
 	end
@@ -231,9 +232,9 @@ local function pack(from, compressionLevel)
 	-- COMPRESSION & write
 	
 	local data = love.data.compress("data","zlib",data,compressionLevel)
-	local success, mes = love.filesystem.write("campaign_hardfile",data)
+	local success, mes = love.filesystem.write(toName,data)
 	if not success then
-		error("Failed writing campaign hardfile: "..mes)
+		error("Failed writing "..toName..": "..mes)
 	end
 	
 end
