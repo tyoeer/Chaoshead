@@ -12,10 +12,8 @@ If you have any questions, feel free to ask.
 
 Chaoshead Update Awareness Day is annually on february 27, in order to spread awareness about Chaoshead updates.
 
-What's allowed and not: https://www.bscotch.net/feedbag/levelhead/entries/62db1e2954be7407b6953856
-![](resources/allowedStuff.png)
-[Overview of all the limits so far (and how to break them)](http://levelmod.epizy.com/wiki/doku.php?id=blocked_stuff)
-I do recommend testing every broken limit though, to make sure you don't accidentally upload a level that can crash the game. I don't expect it, but this is kind of unexplored territory.
+Chaoshead tries to impose as little limits as possible.
+[For more information about those limits and which your allowed to break, go here.](http://levelmod.epizy.com/wiki/doku.php?id=blocked_stuff)
 
 ### Main Editor Features
 
@@ -37,14 +35,11 @@ I do recommend testing every broken limit though, to make sure you don't acciden
 
 ### Currently not supported
 
-- Multiple path nodes in the same tile
-  - While they do work in Levelhead, the visual bugs show that that isn't intended.
 - Setting properties on objects that don't have them
   - I think that making property handling handle both known properties as in the data and unknown ones set at runtime simultaneously is more effort than it's worth
 	- Workaround for objects/elements: remove data about which properties the element has, it will fall back on the ones specifically set
-- Saving properties set to NaN
-  - Levelhead doesn't even load them
-	- I felt like documenting this somewhere, and this was the best place I could think of
+- Multiple path nodes in the same tile (would make the API more complicated than I think it's worth)
+- Saving properties set to NaN (Levelhead doesn't even load them)
 
 ### Built-in scripts
 
