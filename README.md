@@ -3,7 +3,7 @@
 A WIP level editor/scripting interface/reverse engineering tool for [Levelhead](https://lvlhd.co) levels/stages,
 made using [LÖVE](http://www.love2d.org).
 
-Chaoshead still has the occasional bug, consider making a backup of a level before editing it with Chaoshead. \
+Chaoshead is pretty stable these days, though you might still want to consider making a backup of a level before editing it with Chaoshead. \
 There's a button that shows all the keybinds in the misc. tab. \
 Binary release that can be run without manually installing LÖVE can be found
 [somewhere in that bar on the right](https://github.com/tyoeer/Chaoshead/releases).
