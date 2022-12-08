@@ -74,7 +74,7 @@ end
 function UI:save()
 	if self:checkLimits("Can't save level:\n") then
 		self.levelFile:serializeAll(self.level)
-		self.levelFile:writeAll()
+		self.latestHash = self.levelFile:writeAll()
 		self.hexInspector:reload(false)
 		MainUI:displayMessage("Succesfully saved level!")
 	end

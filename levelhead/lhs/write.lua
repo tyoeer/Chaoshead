@@ -139,10 +139,14 @@ function LHS:writeHash()
 	--self.saveHandle:seek(0)
 	local contents = self.saveHandle:read()
 	self.saveHandle:close()
+	
+	local hash = self.hash(contents)
+	
 	self.saveHandle:open("a")
 	-- the cursor should be at the end again
-	self:write(self.hash(contents))
+	self:write(hash)
 	self:write(0)
+	return hash
 end
 
 
@@ -177,10 +181,11 @@ function LHS:writeAll()
 	self:writeSingle("singleBackground")
 	self:writeStructure("backgroundRows")
 	self:writeStructure("backgroundColumns")
-	self:writeHash()
+	local hash = self:writeHash()
 	
 	self.saveHandle:close()
 	self.saveHandle = nil
+	return hash
 end
 
 return LHS
