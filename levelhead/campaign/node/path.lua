@@ -3,14 +3,28 @@ local P = Class("CampaignPathNode",require("levelhead.campaign.node"))
 local MAPPINGS = {
 	prevLevel = {
 		"pre_actual",
-		-- from gets handled in campaign loading logic
+		from = function(str)
+			if str=="" then
+				return nil
+			else
+				-- associating with the proper node gets handled in campaign loading logic
+				return str
+			end
+		end,
 		to = function(node)
 			return node.id
 		end
 	},
 	nextLevel = {
 		"post_actual",
-		-- from gets handled in campaign loading logic
+		from = function(str)
+			if str=="" then
+				return nil
+			else
+				-- associating with the proper node gets handled in campaign loading logic
+				return str
+			end
+		end,
 		to = function(node)
 			return node.id
 		end

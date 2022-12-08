@@ -168,8 +168,12 @@ function C:reloadNodes()
 			table.insert(prevNode.next, node)
 		end
 		if node.type=="path" then
-			node.prevLevel = self:getNode(node.prevLevel)
-			node.nextLevel = self:getNode(node.nextLevel)
+			if node.prevLevel then
+				node.prevLevel = self:getNode(node.prevLevel)
+			end
+			if node.nextLevel then
+				node.nextLevel = self:getNode(node.nextLevel)
+			end
 		elseif node.type=="level" then
 			node:setLevel(self:getLevel(node.level))
 		end
