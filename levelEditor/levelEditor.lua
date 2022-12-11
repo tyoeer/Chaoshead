@@ -170,7 +170,11 @@ end
 
 function UI:removeSelectionLayer(layer)
 	self.selection:removeLayer(layer)
-	self.selectionDetails:reload()
+	if not (self.selection:hasLayer("foreground") or self.selection:hasLayer("background") or self.selection:hasLayer("pathNodes")) then
+		self:deselectAll()
+	else
+		self.selectionDetails:reload()
+	end
 end
 
 function UI:filter(prop, filterValue, operation)
