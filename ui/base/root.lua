@@ -4,6 +4,10 @@ function UI:initialize(child)
 	UI.super.initialize(self,child)
 end
 
+function UI:inTree()
+	return true
+end
+
 function UI:getMouseX()
 	return love.mouse.getX()
 end

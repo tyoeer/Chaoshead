@@ -16,6 +16,14 @@ function UI:initialize()
 	--self.style = nil
 end
 
+function UI:inTree()
+	if self.parent then
+		return self.parent:inTree()
+	else
+		return false
+	end
+end
+
 function UI:getMouseX()
 	return self.parent:getMouseX() - self.x
 end
