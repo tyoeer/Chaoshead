@@ -107,13 +107,14 @@ function UI:onMouseMoved(x,y, dx,dy)
 end
 
 function UI:onVisible(visible)
-	--pcall because it might have a root yet
-	local suc, x,y = pcall(self.getMousePos, self)
-	if suc and x >= 0 and y >= 0 and x < self.width and y < self.height then
-		if visible then
-			love.mouse.setCursor(love.mouse.getSystemCursor("hand"))
-		else
-			love.mouse.setCursor()
+	if self:inTree() then
+		local x,y = self:getMousePos()
+		if x >= 0 and y >= 0 and x < self.width and y < self.height then
+			if visible then
+				love.mouse.setCursor(love.mouse.getSystemCursor("hand"))
+			else
+				love.mouse.setCursor()
+			end
 		end
 	end
 end
