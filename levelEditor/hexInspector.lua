@@ -87,8 +87,8 @@ function UI:onReload(list,levelFile)
 		self:sectionRows("foregroundRows","Foreground Rows")
 		self:sectionRows("foregroundColumns","Foreground Columns")
 		if Settings.misc.hexInspector.verbosePropertiesDisplay then
-			self:propertyRows("objectProperties","Object Properties",true)
-			self:propertyRows("pathProperties","Path Properties",false)
+			self:propertyRows("objectProperties","Object Properties",false)
+			self:propertyRows("pathProperties","Path Properties",true)
 		else
 			self:sectionRows("objectProperties","Object Properties")
 			self:sectionRows("pathProperties","Path Properties")
