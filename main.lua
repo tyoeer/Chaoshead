@@ -11,6 +11,26 @@ function love.load(args)
 	require("utils.utils")
 	
 	local TU = require("libs.tyoeerUtils")(require("libs.middleclass"))
+	
+	-- Boilerplate for types
+	
+	---@class Class
+	---@field name string
+	---@field super Class
+	
+	--has to be done as a table because generics can't be done on an abstract
+	---@class Object : Class
+	---@field class Class
+	local c = {}
+	---@generic T
+	---@param self T
+	---@return T
+	function c:new(...) return self end
+	
+	--Using class as a type doesn't work
+	---@overload fun(): unknown
+	---@overlaod fun(parent: Class): unknown
+	---@overload fun(name: string, parent?: Class): unknown
 	Class = TU("oop")
 	
 	--constants
