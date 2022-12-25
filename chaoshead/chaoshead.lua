@@ -7,6 +7,8 @@ local LH_MISC = require("levelhead.misc")
 local NFS = require("libs.nativefs")
 local Version = require("utils.version")
 
+---@class ChaosheadUI : ModalManagerUI
+---@field super ModalManagerUI
 local UI = Class("ChaosheadUI",require("ui.tools.modal"))
 
 function UI:initialize()
