@@ -2,6 +2,8 @@ local LIST = require("ui.layout.list")
 local BOX = require("ui.layout.box")
 local BLOCK = require("ui.layout.block")
 
+---@class ModalManagerUI : ContainerUI
+---@field super ContainerUI
 local UI = Class("ModalManagerUI",require("ui.base.container"))
 
 local theme = Settings.theme.modal
@@ -96,6 +98,7 @@ end
 
 -- Preset modals
 
+---@param ... string|BaseNodeUI
 function UI:displayMessage(...)
 	local ui = LIST:new(theme.listStyle)
 	for _,item in ipairs({...}) do
