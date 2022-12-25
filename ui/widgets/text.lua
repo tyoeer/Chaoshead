@@ -1,3 +1,11 @@
+---@class TextStyle
+---@field horAlign "left"|"center"|"right"
+---@field verAlign "bottom"|"center"|"top"
+---@field color number[]
+
+---@class TextUI : BaseNodeUI
+---@field super BaseNodeUI
+---@field new fun(self: Object, text: string, indention?: number, style: TextStyle): TextUI
 local UI = Class("TextUI",require("ui.base.node"))
 
 --halign valid values: left center right
@@ -11,6 +19,7 @@ function UI:initialize(text,indention,style)
 	self.offsetY = 0
 end
 
+---@param style TextStyle
 function UI:setStyle(style)
 	if not style then
 		error("No style specified!",2)
@@ -54,7 +63,7 @@ function UI:updateOffset()
 end
 
 function UI:getMinimumHeight(width)
-	local w, text = self.font:getWrap(self.text, width-self.indention)
+	local _w, text = self.font:getWrap(self.text, width-self.indention)
 	local h = #text * self.font:getLineHeight() * self.font:getHeight()
 	return h
 end
@@ -65,7 +74,7 @@ function UI:draw()
 	love.graphics.printf(self.text, self.indention, self.offsetY, self.width-self.indention, self.style.horAlign)
 end
 
-function UI:resized(width,height)
+function UI:resized(_width,_height)
 	self:updateOffset()
 end
 

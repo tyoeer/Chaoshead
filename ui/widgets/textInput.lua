@@ -1,6 +1,16 @@
 local Button = require("ui.widgets.button")
 local Text = require("ui.widgets.text")
 
+---@class TextInputStyle
+---@field textColor number[]
+---@field backgroundColor number[]
+---@field borderColor number[]
+---@field caretColor number[]
+---@field padding number
+
+---@class TextInputUI : ProxyUI
+---@field super ProxyUI
+---@field new fun(self: Object, onChange: fun(), style: TextInputStyle): TextInputUI
 local UI = Class("TextInputUI",require("ui.base.proxy"))
 
 function UI:initialize(onChange, style)
@@ -19,6 +29,7 @@ function UI:initialize(onChange, style)
 	UI.super.initialize(self, b)
 end
 
+---@param style TextInputStyle
 function UI:setStyleRaw(style)
 	if not style then
 		error("No style specified!",2)
@@ -134,7 +145,7 @@ function UI:onTextInput(input)
 	end
 end
 
-function UI:onInputActivated(name,group,isCursorBound)
+function UI:onInputActivated(name,group,_isCursorBound)
 	if group=="textInput" then
 		if name=="left" then
 			self.right = self.left:sub(-1) .. self.right
@@ -159,7 +170,7 @@ function UI:onInputActivated(name,group,isCursorBound)
 	end
 end
 
-function UI:onMouseMoved(x,y,dx,dy)
+function UI:onMouseMoved(x,y,_dx,_dy)
 	if x > 0 and x < self.width and y > 0 and y < self.height then
 		love.mouse.setCursor(love.mouse.getSystemCursor("ibeam"))
 	else

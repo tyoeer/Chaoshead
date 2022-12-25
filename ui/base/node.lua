@@ -1,8 +1,11 @@
+---@class BaseNodeUI : Object
+---@field getMinimumHeight nil|fun(self: BaseNodeUI, width?: number): number
 local UI = Class("BaseNodeUI")
 
 function UI:initialize()
 	-- it's parent
-	--self.parent
+	---@type ContainerUI
+	self.parent = nil
 	--following values are stubbed so UI nodes don't have to be worried about whether they're moved/resized yet
 	-- position relative to it's parent:
 	self.x = 0

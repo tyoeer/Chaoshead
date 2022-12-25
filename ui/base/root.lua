@@ -1,3 +1,6 @@
+---@class RootUI : ProxyUI
+---@field super ProxyUI
+---@field new fun(self: Object, child: BaseNodeUI): RootUI
 local UI = Class("RootUI",require("ui.base.proxy"))
 
 function UI:initialize(child)
@@ -15,7 +18,7 @@ function UI:getMouseY()
 	return love.mouse.getY()
 end
 
-function UI:childMinimumHeightChanged(child)
+function UI:childMinimumHeightChanged(_child)
 	--we don't care
 end
 
