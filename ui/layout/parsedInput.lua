@@ -2,23 +2,47 @@ local TextInput = require("ui.widgets.textInput")
 local Text = require("ui.widgets.text")
 local List = require("ui.layout.list")
 
+---@alias ParseFunction fun(text: string): unknown?, string?
+
+---@class ParsedInputStyle
+---@field listStyle ListStyle
+---@field inputStyle TextInputStyle
+---@field errorStyle TextStyle
+
 ---@class ParsedInputUI : ProxyUI
 ---@field super ProxyUI
+---@field new fun(self: self, parser: ParseFunction, style: ParsedInputStyle): self
 local UI = Class("ParsedInputUI",require("ui.base.proxy"))
 
 function UI:initialize(parser, style)
-	self.style = style
-	UI.super.initialize(self, List:new(style.listStyle))
+	self:setStyle(style)
+	UI.super.initialize(self, List:new(self.style.listStyle))
 	if not parser then
 		error("No parser specified!",2)
 	elseif type(parser) ~= "function" then
 		error("Parser not a function, it's a "..type(parser),2)
 	end
 	self.parser = parser
-	self.input = TextInput:new(function() self:contentsChanged() end, style.inputStyle)
+	self.input = TextInput:new(function() self:contentsChanged() end, self.style.inputStyle)
 	--self.errorMessage
 	--self.parsed
 	self.child:addUIEntry(self.input)
+end
+
+function UI:setStyle(style)
+	if not style then
+		error("No style specified!",2)
+	end
+	if not style.listStyle then
+		error("List style not specified!",2)
+	end
+	if not style.inputStyle then
+		error("Input style not specified!",2)
+	end
+	if not style.errorStyle then
+		error("Error style not specified!",2)
+	end
+	self.style = style
 end
 
 function UI:hideError()
