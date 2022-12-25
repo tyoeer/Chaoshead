@@ -10,7 +10,7 @@ local Text = require("ui.widgets.text")
 
 ---@class TextInputUI : ProxyUI
 ---@field super ProxyUI
----@field new fun(self: Object, onChange: fun(), style: TextInputStyle): TextInputUI
+---@field new fun(self: self, onChange: fun(), style: TextInputStyle): self
 local UI = Class("TextInputUI",require("ui.base.proxy"))
 
 function UI:initialize(onChange, style)

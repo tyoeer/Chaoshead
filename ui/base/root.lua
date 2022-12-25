@@ -1,6 +1,6 @@
 ---@class RootUI : ProxyUI
 ---@field super ProxyUI
----@field new fun(self: Object, child: BaseNodeUI): RootUI
+---@field new fun(self: self, child: BaseNodeUI): self
 local UI = Class("RootUI",require("ui.base.proxy"))
 
 function UI:initialize(child)
