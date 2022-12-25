@@ -2,6 +2,8 @@ local TextInput = require("ui.widgets.textInput")
 local Text = require("ui.widgets.text")
 local List = require("ui.layout.list")
 
+---@class ParsedInputUI : ProxyUI
+---@field super ProxyUI
 local UI = Class("ParsedInputUI",require("ui.base.proxy"))
 
 function UI:initialize(parser, style)

@@ -1,3 +1,5 @@
+---@class HorDivideUI : ContainerUI
+---@field super ContainerUI
 local UI = Class("HorDivideUI",require("ui.base.container"))
 
 --[[

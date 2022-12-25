@@ -1,3 +1,6 @@
+---@class PaddingUI : ProxyUI
+---@field super ProxyUI
+---@field new fun(self: self, child: BaseNodeUI, padding: number): self
 local UI = Class("PaddingUI",require("ui.base.proxy"))
 
 function UI:initialize(child,padding)
