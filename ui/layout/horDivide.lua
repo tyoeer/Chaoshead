@@ -2,11 +2,6 @@
 ---@field super ContainerUI
 local UI = Class("HorDivideUI",require("ui.base.container"))
 
---[[
-When there's an apparent off by one error, test it first.
-Current off by ones have been deduced by pixel-perfect mouse pointer placement testing.
-]]--
-
 function UI:initialize(left,right,style)
 	UI.super.initialize(self)
 	self.style = style
