@@ -18,13 +18,16 @@ Chaoshead tries to impose as little limits as possible.
 ### Main Editor Features
 
 - Resize at all four corners
-- Edit properties of multiple objects at once (supporting addition, subtraction, multiplication, and division)
 - Selection:
 	- No limits
 	- Supports paths
 	- You can select air
-	- You can limit your selection to only layers you want
+	- You can limit your selection to only the layers you want
 	- Filter the selection based on properties
+- Edit properties:
+	- Supports + - / * (and =)
+	- Edits all objects in the selection, not just individual ones
+	- Supports everything the selection supports: paths, layer selection
 - Copy/cut/paste:
 	- Supports everything the selection supports: paths, layer selection, air, etc.
 	- Works between levels
