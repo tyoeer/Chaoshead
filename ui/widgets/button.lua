@@ -12,7 +12,7 @@ local TEXT = require("ui.widgets.text")
 
 ---@class ButtonUI : ContainerUI
 ---@field super ContainerUI
----@field new fun(self: Object, contents: string|BaseNodeUI, onCLick: fun(), style: table, triggerOnActivate?: boolean): ButtonUI
+---@field new fun(self: self, contents: string|BaseNodeUI, onCLick: fun(), style: table, triggerOnActivate?: boolean): self
 local UI = Class("ButtonUI",require("ui.base.container"))
 
 function UI:initialize(contents,onClick,style,triggerOnActivate)

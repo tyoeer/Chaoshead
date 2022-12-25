@@ -5,7 +5,7 @@
 
 ---@class TextUI : BaseNodeUI
 ---@field super BaseNodeUI
----@field new fun(self: Object, text: string, indention?: number, style: TextStyle): TextUI
+---@field new fun(self: self, text: string, indention?: number, style: TextStyle): self
 local UI = Class("TextUI",require("ui.base.node"))
 
 --halign valid values: left center right
