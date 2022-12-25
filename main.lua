@@ -27,10 +27,10 @@ function love.load(args)
 	---@return T
 	function c:new(...) return self end
 	
-	--Using class as a type doesn't work
-	---@overload fun(): unknown
-	---@overlaod fun(parent: Class): unknown
-	---@overload fun(name: string, parent?: Class): unknown
+	--Globals unfortunately don't have types, so this doesn't actually work
+	---@overload fun(): Class
+	---@overlaod fun(parent: Class): Class
+	---@overload fun(name: string, parent?: Class): Class
 	Class = TU("oop")
 	
 	--constants
