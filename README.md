@@ -5,7 +5,7 @@ made using [LÖVE](http://www.love2d.org).
 
 Chaoshead is pretty stable these days, though you might still want to consider making a backup of a level before editing it with Chaoshead. \
 There's a button that shows all the keybinds in the misc. tab. \
-Binary release that can be run without manually installing LÖVE can be found
+Binary releases that can be run without manually installing LÖVE can be found
 [somewhere in that bar on the right](https://github.com/tyoeer/Chaoshead/releases).
 
 If you have any questions, feel free to ask.
@@ -65,6 +65,7 @@ More information about the scripts can be found in comments at the top of their 
 Chaoshead executes from the scripts folder, which can be opened from the Misc. tab.
 When it says running scripts without sandbox is dangerous, it mostly means that you shouldn't randomly trust script from others,
 making a script yourself will most likely be alright.
+
 Scripts get provided access to the following globals:
 - `level`: The **Level** opened in the editor. You usually want to modify this one (using the provided methods).
   If you overwrite it with a new value though, Chaoshead will use that one.
@@ -84,7 +85,7 @@ WIP file specification:<br>
 https://docs.google.com/document/d/1_Nt0u3DpgLA2KHgwVdcCnMYaY6nGjZcjbRyx1hHp9rA/<br>
 Levelhead data (level elements, properties, etc.):<br>
 https://docs.google.com/spreadsheets/d/1bzASSn2FgjqUldPzX8DS66Lv-r2lk3V12jZjl51uaTk/<br>
-The Trello/todo-list for this project:<br>
+The old Trello/todo-list for this project, should probably be deleted since GitHub issues are used now:<br>
 https://trello.com/b/eqxuD1A4/chaoshead<br>
 Collection of update cinematics (when I remember to update it):<br>
 http://levelmod.epizy.com/wiki/doku.php?id=cinematics#chaoshead<br>
@@ -93,21 +94,26 @@ https://docs.google.com/spreadsheets/d/1wongis8qvVj3-cHEa4HhmzpL1XkP1TXjWYjV5Rob
 
 ## Contributing is easy
 
-There's always data that needs collecting, which just involves editing some stuff in Levelhead,
-and looking at it in Chaoshead to get the internal IDs and stuff.
+There's always data that needs collecting, usually about how something behaves in Levelhead.
+If you need to look at the raw representation in the file, you can enable the `misc.editor.showRawNumbers` setting so they will be displayed in Chaoshead.
 There's also still parts that need to be reverse engineered in which case the Hex Inspector is your friend.
-Though if you want to help program this thing, that's also possible.
+You can look at [the issues with the reverse engineering label](https://github.com/tyoeer/Chaoshead/labels/reverse%20engineering)
+for the more interesting/useful things. Data collection stuff also has that label.
 
-In any case, try looking at the Trello (linked above) for the things that still need to be done.
+Though if you want to help program this thing, that's also possible.
 
 A basic overview of the code architecture/what goes where can be found in [design.md](design.md)
 
 ### Data collecting tips
 
-\#1D is the hex for the top-right position in a 30 by 30 level.
+\#1D is the hexadecimal value for the top-right position in a 30 by 30 level.
 
-When CH crashes because of an invalid property save-format, it outputs the hex of the sub-entry.
+When CH crashes because of an invalid property save-format, it prints the bytes (in hexadecimal) of the sub-entry to the console.
 Just looks how many bytes there are before the first position to see which save-format it is.
+
+### Type annotations
+
+Works towards adding type annotations as used by [sumneko's language server (and VSCode extension)](https://github.com/sumneko/lua-language-server) is tracked in [issue 85](https://github.com/tyoeer/Chaoshead/issues/85).
 
 ### Debugging
 
