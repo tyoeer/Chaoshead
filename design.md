@@ -2,6 +2,8 @@
 
 Independent pieces with their own goal. Have their own top level tab.
 
+Most(/all?) of these files are extensions of UI classes
+
 - `levelEditor/`: Module for editing levels and running scripts on them. Tab is called "Workshop".
   - `workshop/`: All the code that doesn't deal with an individual level.
   - `details/`: All the stuff that appears in the left pane of the level editor.
