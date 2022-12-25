@@ -1,5 +1,7 @@
 local BlockRoot = require("ui.layout.blockRoot")
 
+---@class BlockUI : ProxyUI
+---@field super ProxyUI
 local UI = Class("BlockUI",require("ui.base.proxy"))
 
 -- thsi UI can optionally block access to the underlying child

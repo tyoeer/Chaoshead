@@ -1,6 +1,16 @@
 local TextEntry = require("ui.widgets.text")
 local ButtonEntry = require("ui.widgets.button")
 
+---@class ListStyle
+---@field entryMargin number
+---@field textIndentSize number
+---@field textStyle TextStyle?
+---@field buttonStyle ButtonStyle?
+---@field defaultButtonPadding number?
+
+---@class ListUI : ContainerUI
+---@field super ContainerUI
+---@field new fun(self: Object, style: ListStyle): ListUI
 local UI = Class("ListUI",require("ui.base.container"))
 
 function UI:initialize(style)
@@ -21,11 +31,18 @@ function UI:initialize(style)
 	self.style = style
 end
 
+---@param text string
+---@param indent? number
+---@param style? TextStyle
 function UI:addTextEntry(text, indent, style)
 	style = style or self.style.textStyle
 	self:addUIEntry(TextEntry:new(text, (indent or 0)*self.style.textIndentSize, style))
 end
 
+---@param contents BaseNodeUI|string
+---@param onClick fun()
+---@param style? ButtonStyle
+---@param triggerOnActivate? boolean
 function UI:addButtonEntry(contents, onClick, style, triggerOnActivate)
 	style = style or self.style.buttonStyle
 	local button = ButtonEntry:new(contents,onClick,style,triggerOnActivate)
@@ -34,6 +51,7 @@ function UI:addButtonEntry(contents, onClick, style, triggerOnActivate)
 	return button
 end
 
+---@param child BaseNodeUI
 function UI:addUIEntry(child)
 	local width = self.width
 	local height = child:getMinimumHeight(width)
@@ -63,12 +81,12 @@ end
 
 -- events
 
-function UI:childMinimumHeightChanged(child)
+function UI:childMinimumHeightChanged(_child)
 	self:resized(self.width, self.height)
 	self:minimumHeightChanged()
 end
 
-function UI:resized(w,h)
+function UI:resized(w,_h)
 	local y = 0
 	for _,child in ipairs(self.children) do
 		child:move(0,y)

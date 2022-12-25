@@ -1,3 +1,5 @@
+---@class BlockRootUI : RootUI
+---@field super RootUI
 local UI = Class("BlockRootUI",require("ui.base.root"))
 
 -- a replacement for base.root that doesn't give it's children access to stuff

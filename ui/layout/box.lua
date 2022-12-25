@@ -1,6 +1,8 @@
 local Padding = require("ui.layout.padding")
 local Scrollbar = require("ui.tools.optionalScrollbar")
 
+---@class BoxUI : ProxyUI
+---@field super ProxyUI
 local UI = Class("BoxUI",require("ui.base.proxy"))
 
 function UI:initialize(contents,style)
