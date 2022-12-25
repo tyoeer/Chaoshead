@@ -1,3 +1,5 @@
+---@class ContainerUI : BaseNodeUI
+---@field super BaseNodeUI
 local UI = Class("ContainerUI",require("ui.base.node"))
 
 function UI:initialize()

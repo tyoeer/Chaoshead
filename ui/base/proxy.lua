@@ -1,3 +1,6 @@
+---@class ProxyUI : ContainerUI
+---@field super ContainerUI
+---@field new fun(self: Object, child: BaseNodeUI): ProxyUI
 local UI = Class("ProxyUI",require("ui.base.container"))
 
 -- child can be temporary nil, but should not be when actually handling events

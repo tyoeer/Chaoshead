@@ -1,5 +1,18 @@
 local TEXT = require("ui.widgets.text")
 
+---@class ButtonSubstyle
+---@field backgroundColor number[]
+---@field borderColor? number[]
+---@field textStyle? TextStyle
+---@class ButtonStyle
+---@field padding number
+---@field border boolean
+---@field normal ButtonSubstyle
+---@field hover ButtonSubstyle
+
+---@class ButtonUI : ContainerUI
+---@field super ContainerUI
+---@field new fun(self: Object, contents: string|BaseNodeUI, onCLick: fun(), style: table, triggerOnActivate?: boolean): ButtonUI
 local UI = Class("ButtonUI",require("ui.base.container"))
 
 function UI:initialize(contents,onClick,style,triggerOnActivate)
@@ -24,6 +37,7 @@ function UI:initialize(contents,onClick,style,triggerOnActivate)
 	self.contents:move(style.padding,style.padding)
 end
 
+---@param style ButtonStyle
 function UI:setStyle(style)
 	if not style then
 		error("No style specified!",2)
@@ -98,7 +112,7 @@ function UI:preDraw()
 	end
 end
 
-function UI:onMouseMoved(x,y, dx,dy)
+function UI:onMouseMoved(x,y, _dx,_dy)
 	if x >= 0 and y >= 0 and x < self.width and y < self.height then
 		love.mouse.setCursor(love.mouse.getSystemCursor("hand"))
 	else
@@ -119,13 +133,13 @@ function UI:onVisible(visible)
 	end
 end
 
-function UI:onInputActivated(name,group,isCursorBound)
+function UI:onInputActivated(name,group,_isCursorBound)
 	if self.triggerOnActivate and name=="click" and group=="main" then
 		self.onClick()
 	end
 end
 
-function UI:onInputDeactivated(name,group,isCursorBound)
+function UI:onInputDeactivated(name,group,_isCursorBound)
 	if not self.triggerOnActivate and name=="click" and group=="main" then
 		self.onClick()
 	end
