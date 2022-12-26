@@ -21,9 +21,10 @@ function UI:initialize(onChange, style)
 	
 	self.textDisplay = Text:new(" ", 0, self:getTextStyle())
 	
-	--self.left = "" -- text to the left of the cursor
-	--self.right = "" -- text to the right of the cursor
-	self:setText("")
+	-- can't use :setText() because that one also call the onChange callback, which we don't want to call while initialising
+	self.left = "" -- text to the left of the cursor
+	self.right = "" -- text to the right of the cursor
+	self:updateDisplayText()
 	
 	local b = Button:new(self.textDisplay, function() self:grabFocus() end, self:getButtonStyle())
 	UI.super.initialize(self, b)
@@ -104,7 +105,7 @@ end
 function UI:setText(text)
 	self.left = text
 	self.right = ""
-	self:updateDisplayText()
+	self:changed()
 end
 
 function UI:getText()
