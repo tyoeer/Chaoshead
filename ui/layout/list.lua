@@ -10,17 +10,17 @@ local ButtonEntry = require("ui.widgets.button")
 
 ---@class ListUI : ContainerUI
 ---@field super ContainerUI
----@field new fun(self: Object, style: ListStyle): ListUI
+---@field new fun(self: self, style: ListStyle): self
 local UI = Class("ListUI",require("ui.base.container"))
 
 function UI:initialize(style)
 	UI.super.initialize(self)
 	
 	if not style.entryMargin then
-		error("Entry margin not specified!",2)
+		error("Entry margin not specified!",3)
 	end
 	if not style.textIndentSize then
-		error("Text indent size not specified!",2)
+		error("Text indent size not specified!",3)
 	end
 	--style.textStyle is optional
 	--style.buttonStyle is optional
@@ -63,11 +63,13 @@ function UI:addUIEntry(child)
 	end
 	child:move(0,y)
 	self:addChild(child)
+	self:minimumHeightChanged()
 end
 
 function UI:resetList()
 	--the garbage collector should take care of the old list
 	self.children = {}
+	self:minimumHeightChanged()
 end
 
 function UI:getMinimumHeight(width)
