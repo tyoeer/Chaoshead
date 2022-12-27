@@ -7,6 +7,7 @@ local theme = Settings.theme.details
 
 function UI:initialize(propertyList, editor)
 	self.input = ParsedInput:new(tonumber, theme.inputStyle)
+	self.input:setRaw(1)
 	self.editor = editor
 	self.filtering = false
 	self.lines = 0
@@ -75,6 +76,7 @@ function UI:reload()
 			end, theme.inputStyle)
 		else
 			self.input = ParsedInput:new(tonumber, theme.inputStyle)
+			self.input:setRaw(1)
 		end
 		self:reload()
 	end)
