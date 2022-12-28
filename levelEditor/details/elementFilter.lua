@@ -42,6 +42,7 @@ function UI:initialize(editor, selection)
 	
 	self.editor = editor
 	self.filteredList = FilteredList:new(self:buildElementList(selection), theme.listStyle, theme.inputStyle.inputStyle)
+	self.filteredList:grabFocus()
 	
 	self:reload()
 end

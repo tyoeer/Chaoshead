@@ -21,6 +21,10 @@ function UI:initialize(items, listStyle, textInputStyle)
 	self:setItemList(items) -- also adds itemList as a child down the line
 end
 
+function UI:grabFocus()
+	self.input:grabFocus()
+end
+
 function UI:setItemList(items)
 	self.items = items
 	self:genList(self.input:getText())

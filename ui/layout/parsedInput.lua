@@ -63,6 +63,11 @@ function UI:showError(mes)
 	self.errorMessage:setText(mes)
 end
 
+
+function UI:grabFocus()
+	self.input:grabFocus()
+end
+
 function UI:setRaw(str)
 	self.input:setText(str)
 	self:contentsChanged()
