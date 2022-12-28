@@ -1,4 +1,5 @@
 local P = require("levelhead.data.properties")
+local E = require("levelhead.data.elements")
 local Path = require("levelhead.level.path")
 --editor tools
 local Selection = require("tools.selection.tracker")
@@ -218,6 +219,48 @@ function UI:filter(prop, filterValue, operation)
 		self:refreshSelection() --handles mask changes
 		return self.selection.contents.properties[prop], additionalDeselection -- so the modal can update itself
 	end
+end
+
+function UI:filterElement(element, include)
+	if not self.selection then return end
+	
+	local id = -2 -- air
+	local layer = element:match("Air %(([^()]+)%)")
+	if not layer then
+		if element=="Path node" then
+			id = -3 -- path node
+			layer = "path nodes"
+		else
+			id = E:getID(element)
+			layer = E:getLayer(id):lower()
+		end
+	end
+	if layer=="path nodes" then
+		-- flip include when testing for air, so we can just test for the existance of a path node
+		if id==-2 then
+			include = not include
+		end
+		for tile in self.selection.mask.tiles:iterate() do
+			local node = self.level.pathNodes:get(tile.x, tile.y)
+			local hasNode = node and true or false
+			if hasNode ~= include then
+				--edit mask directly to prevent update at every obj that gets edited
+				self.selection.mask:remove(tile.x, tile.y)
+			end
+		end
+	else
+		for tile in self.selection.mask.tiles:iterate() do
+			local obj = self.level[layer]:get(tile.x, tile.y)
+			local oId = -2 -- air
+			if obj then oId = obj.id end
+			if (oId==id) ~= include then
+				--edit mask directly to prevent update at every obj that gets edited
+				self.selection.mask:remove(tile.x, tile.y)
+			end
+		end
+	end
+	
+	self:refreshSelection() --handles mask changes
 end
 
 -- do stuff with the selection

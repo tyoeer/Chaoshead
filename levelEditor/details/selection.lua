@@ -1,6 +1,7 @@
 local PUI = require("levelEditor.details.property")
 local PEDIT = require("levelEditor.details.propertyEditor")
 local P = require("levelhead.data.properties")
+local ElementFilter = require("levelEditor.details.elementFilter")
 
 local UI = Class("SelectionDetailsUI",require("ui.tools.details"))
 
@@ -83,7 +84,13 @@ function UI:onReload(list)
 		end
 	end
 	--add a divider
-	list:addTextEntry(" ",0)
+	list:addTextEntry("")
+	list:addButtonEntry("Filter by element (+ special)",function()
+		MainUI:displayMessage(ElementFilter:new(self.editor,s))
+	end)
+	
+	--add a divider
+	list:addTextEntry(" ")
 	
 	-- info & co
 	list:addButtonEntry("Delete",function()
@@ -187,7 +194,7 @@ function UI:onReload(list)
 		end
 	end
 	--add a divider
-	list:addTextEntry(" ",0)
+	list:addTextEntry(" ")
 	--objects with unknown properties
 	do
 		local u = c.unknownProperties
