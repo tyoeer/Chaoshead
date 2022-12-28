@@ -20,14 +20,19 @@ function UI:addChild(child)
 	child.parent = self
 end
 
+--- Fails if toRemove is not a child of this container
+---@param toRemove BaseNodeUI 
+---@return boolean success if the removal was succesful
 function UI:removeChild(toRemove)
 	for i,child in ipairs(self.children) do
 		if child==toRemove then
 			table.remove(self.children,i)
 			child.parent = nil
-			break
+			return true
 		end
 	end
+	
+	return false
 end
 
 function UI:findChildAt(x,y)
