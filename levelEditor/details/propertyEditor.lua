@@ -32,7 +32,7 @@ function UI:addFilter(op)
 	self:addButtonEntry(op, function()
 		local v = self.input:getParsed()
 		if v then
-			local propList, additionalDeselection = self.editor:filter(self.propertyList.propId,v, op)
+			local propList, additionalDeselection = self.editor:filterProperty(self.propertyList.propId,v, op)
 			if not propList then
 				--filtered out every object with this modal
 				MainUI:removeModal(self)

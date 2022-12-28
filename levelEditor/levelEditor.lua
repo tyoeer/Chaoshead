@@ -178,7 +178,7 @@ function UI:removeSelectionLayer(layer)
 	end
 end
 
-function UI:filter(prop, filterValue, operation)
+function UI:filterProperty(prop, filterValue, operation)
 	if self.selection then
 		local pl = self.selection.contents.properties[prop]
 		local additionalDeselection = false
