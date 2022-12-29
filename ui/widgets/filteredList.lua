@@ -58,7 +58,7 @@ function UI:getItem()
 	
 	for _, item in ipairs(self.items) do
 		if item.filter:find(filter, 1, true) then
-			if item==filter then
+			if item.filter==filter then
 				return item.context
 			end
 			table.insert(filtered, item)
