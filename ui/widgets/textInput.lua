@@ -101,7 +101,7 @@ function UI:grabFocus()
 	self.timer = 0
 end
 
-
+---@param text string
 function UI:setText(text)
 	self.left = text
 	self.right = ""

@@ -2,15 +2,19 @@ local Button = require("ui.widgets.button")
 local List = require("ui.layout.list")
 local TextInput = require("ui.widgets.textInput")
 
----@alias Item string
--- ---@field label string
+---@class FLItem
+---@field label string
+---@field context unknown User-specifed thingy so they can recognise this item without string macthing
+---@field filter string string that gets checked against the filter
+
+---@alias FLItems (string|FLItem)[]
 
 ---@class FilteredListUI : ListUI
 ---@field super ListUI
----@field new fun(self: self, items: Item[], listStyle: ListStyle, textInputStyle: TextInputStyle): self
+---@field new fun(self: self, items: FLItems, listStyle: ListStyle, textInputStyle: TextInputStyle): self
 local UI = Class("FilteredListUI", List)
 
----@param items Item[]
+---@param items FLItem[]
 function UI:initialize(items, listStyle, textInputStyle)
 	UI.super.initialize(self, listStyle)
 	
@@ -25,39 +29,56 @@ function UI:grabFocus()
 	self.input:grabFocus()
 end
 
+---@param items FLItems
 function UI:setItemList(items)
-	self.items = items
-	self:genList(self.input:getText())
+	---@type FLItem[]
+	self.items = {}
+	for _,entry in ipairs(items) do
+		if type(entry)=="string" then
+			table.insert(self.items, {
+				label = entry,
+				context = entry,
+				filter = entry:lower(),
+			})
+		else
+			table.insert(self.items, entry)
+		end
+	end
+	self:genList(self:getFilter())
+end
+
+function UI:getFilter()
+	return self.input:getText():lower()
 end
 
 function UI:getItem()
-	local filter = self.input:getText()
+	local filter = self:getFilter()
 	
 	local filtered = {}
 	
 	for _, item in ipairs(self.items) do
-		if item:find(filter, 1, true) then
+		if item.filter:find(filter, 1, true) then
 			if item==filter then
-				return item
+				return item.context
 			end
 			table.insert(filtered, item)
 		end
 	end
 	
 	if #filtered==1 then
-		return filtered[1]
+		return filtered[1].context
 	else
 		return nil
 	end
 end
 
 function UI:textChanged()
-	self:genList(self.input:getText())
+	self:genList(self:getFilter())
 end
 
----@param item Item
+---@param item FLItem
 function UI:itemClicked(item)
-	self.input:setText(item)
+	self.input:setText(item.label)
 end
 
 function UI:genList(filter)
@@ -66,8 +87,8 @@ function UI:genList(filter)
 	
 	self.itemList:resetList()
 	for _, item in ipairs(self.items) do
-		if item:find(filter, 1, true) then
-			self.itemList:addButtonEntry(item, function()
+		if item.filter:find(filter, 1, true) then
+			self.itemList:addButtonEntry(item.label, function()
 				self:itemClicked(item)
 			end)
 		end
