@@ -1,5 +1,5 @@
 local LHS = require("levelhead.lhs")
-local EP = require("libs.tyoeerUtils.entityPool")
+local EP = require("libs.tyoeerUtils.entitypool")
 
 local L = Class("CampaignLevel")
 
