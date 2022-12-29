@@ -24,6 +24,7 @@ Chaoshead tries to impose as little limits as possible.
 	- You can select air
 	- You can limit your selection to only the layers you want
 	- Filter the selection based on properties
+	- Filter the selection based on which element an object is (also works with air and paths)
 - Edit properties:
 	- Supports + - / * (and =)
 	- Edits all objects in the selection, not just individual ones
