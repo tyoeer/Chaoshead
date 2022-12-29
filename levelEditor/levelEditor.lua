@@ -221,6 +221,12 @@ function UI:filterProperty(prop, filterValue, operation)
 	end
 end
 
+---Accept special negative values: <br>
+--- -10: path node <br>
+--- -3: foreground air <br>
+--- -4: background air <br>
+--- -5: path node air
+---@param id number element id/special to filter
 function UI:filterElement(id, include)
 	if not self.selection then return end
 	
