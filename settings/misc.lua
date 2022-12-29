@@ -19,7 +19,7 @@ return {
 		checkLimits = {"file","game"}, -- "editor"
 	},
 	scrollbar = {
-		buttonScrollSpeed = 100,
+		buttonScrollFactor = 0.9,
 		mouseWheelScrollSpeed = 100,
 	},
 	dataExplorer = {
