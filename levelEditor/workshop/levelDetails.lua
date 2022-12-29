@@ -64,7 +64,7 @@ function UI:onReload(list)
 		end
 	)
 	
-	list:addTextEntry("")
+	list:addSeparator(false)
 	
 	list:addButtonEntry(
 		"Show in file explorer",

@@ -39,7 +39,7 @@ function UI:onReload(list,campaign)
 		end
 	)
 	
-	list:addTextEntry(" ") -- seperator
+	list:addSeparator(true)
 	
 	list:addButtonEntry(
 		"Pack campign",
@@ -54,7 +54,7 @@ function UI:onReload(list,campaign)
 		end
 	)
 	
-	list:addTextEntry(" ") -- seperator
+	list:addSeparator(true)
 	
 	-- list:addButtonEntry( -- TODO limits check
 	-- 	"Check level limits",

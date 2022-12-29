@@ -28,7 +28,7 @@ function UI:onReload(list)
 		end
 	)
 	
-	list:addTextEntry("") -- divider
+	list:addSeparator(false)
 	
 	list:addButtonEntry(
 		"Pack",

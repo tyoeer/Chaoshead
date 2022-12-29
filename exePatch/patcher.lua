@@ -49,7 +49,7 @@ function P:initialize()
 		.."it can only do something similar to what the patch is trying to do."
 	)
 	list:addTextEntry("This is experimental, so please report any bugs/crashes.")
-	list:addTextEntry("") -- seperator
+	list:addSeparator(false)
 	list:addTextEntry("Available patch(es) will start to patch immediately upon clicking them:")
 	for _,patchInfo in ipairs(PATCHES) do
 		list:addButtonEntry(patchInfo.title, function()
@@ -65,7 +65,7 @@ function P:initialize()
 			MainUI:displayMessage(err)
 		end)
 	end
-	list:addTextEntry(" ")
+	list:addSeparator(true)
 	
 	P.super.initialize(self, list)
 end

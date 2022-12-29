@@ -31,6 +31,15 @@ function UI:initialize(style)
 	self.style = style
 end
 
+---@param big boolean whether this divider should be big instead of small
+function UI:addSeparator(big)
+	if big then
+		self:addTextEntry(" ")
+	else
+		self:addTextEntry("")
+	end
+end
+
 ---@param text string
 ---@param indent? number
 ---@param style? TextStyle

@@ -91,7 +91,7 @@ function UI:onReload(list)
 	end)
 	
 	-- DIVIDER
-	list:addTextEntry("")
+	list:addSeparator(false)
 	
 	-- OPEN FOLDERS
 	
@@ -116,7 +116,7 @@ function UI:onReload(list)
 	end)
 	
 	-- DIVIDER
-	list:addTextEntry("")
+	list:addSeparator(false)
 	
 	list:addButtonEntry("Check for updates", function()
 		local c = require("ui.startupChecks").checkForUpdate(true)
@@ -129,7 +129,7 @@ function UI:onReload(list)
 	end)
 	
 	-- DIVIDER
-	list:addTextEntry("")
+	list:addSeparator(false)
 	
 	-- CAMPAIGN
 	

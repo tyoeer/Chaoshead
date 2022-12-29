@@ -84,13 +84,13 @@ function UI:onReload(list)
 		end
 	end
 	--add a divider
-	list:addTextEntry("")
+	list:addSeparator(false)
 	list:addButtonEntry("Filter by element (+ special)",function()
 		MainUI:displayMessage(ElementFilter:new(self.editor,s))
 	end)
 	
 	--add a divider
-	list:addTextEntry(" ")
+	list:addSeparator(true)
 	
 	-- info & co
 	list:addButtonEntry("Delete",function()
@@ -194,7 +194,7 @@ function UI:onReload(list)
 		end
 	end
 	--add a divider
-	list:addTextEntry(" ")
+	list:addSeparator(true)
 	--objects with unknown properties
 	do
 		local u = c.unknownProperties

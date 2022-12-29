@@ -48,7 +48,7 @@ function UI:onReload(list,level)
 		end
 	)
 	
-	list:addTextEntry(" ") -- seperator
+	list:addSeparator(true)
 	
 	list:addButtonEntry(
 		"Check level limits",

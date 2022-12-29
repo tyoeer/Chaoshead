@@ -101,11 +101,11 @@ function UI:reload()
 		self:addTextEntry(both)
 	end
 	
-	self:addTextEntry(" ") -- spacing
+	self:addSeparator(true)
 	if self.filtering then
 		self:addUIEntry(self.input)
 		
-		self:addTextEntry("") -- spacing
+		self:addSeparator(false)
 		
 		self:addFilter("==")
 		self:addFilter("!=")
@@ -116,7 +116,7 @@ function UI:reload()
 			self:addFilter("<=")
 		end
 		
-		self:addTextEntry("") -- spacing
+		self:addSeparator(false)
 		
 		if mapType~="None" then
 			for i = P:getMin(id), P:getMax(id) do
@@ -136,7 +136,7 @@ function UI:reload()
 			self:addPropertyChanger(id, "/")
 			
 			if mapType=="Hybrid" then
-				self:addTextEntry(" ") -- spacing between numerical values and special ones
+				self:addSeparator(true) -- between numerical values and special ones
 			end
 		end
 		if mapType~="None" then
@@ -150,7 +150,7 @@ function UI:reload()
 		end
 	end
 	
-	self:addTextEntry(" ") -- spacing between property values and dismiss button
+	self:addSeparator(true) -- between property values and dismiss button
 	
 	self:minimumHeightChanged()
 end
