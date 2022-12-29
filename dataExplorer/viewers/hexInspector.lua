@@ -1,7 +1,8 @@
-local BaseUI = require("ui.tools.details")
+local Lhs = require("levelhead.lhs")
 
---LevelBytesUI
-local UI = Class("HexInspectorUI",BaseUI)
+local UI = Class("LhsHexInspectorUI", require("ui.tools.details"))
+
+local ROOT_PATH = require("levelhead.misc").getDataPath()
 
 local function bytesToHex(bytes)
 	local out = love.data.encode("string","hex",bytes)
@@ -11,12 +12,13 @@ local function bytesToHex(bytes)
 	return out:sub(1,-2)
 end
 
-function UI:initialize(levelFile)
-	self.levelFile = levelFile
+function UI:initialize(path,overview)
+	self.levelFile = Lhs:new(ROOT_PATH..path)
+	self.overview = overview
 	self.indent = 0
 	
 	UI.super.initialize(self,true)
-	self.title = "Hex Inspector"
+	self.title = path .. "Hex Inspector"
 end
 
 -- Row shortcuts
@@ -59,15 +61,17 @@ function UI:propertyRows(section, label, isPath)
 	end
 end
 
-function UI:onReload(list,levelFile)
+function UI:onReload(list)
+	self.levelFile:reload()
+	self.levelFile:readAll()
+	
 	list:resetList()
+	
+	list:addButtonEntry("Close hex inspector", function()
+		self.overview:closeViewer(self)
+	end)
+	
 	self.indent = 1
-	if levelFile then
-		self.levelFile = levelFile
-	elseif levelFile==false then
-		self:textRow("The cached binary file data has diverged significantly from the actual level.\nReload from disk to re-enable inspection.",-1)
-		return
-	end
 	
 	self:textRow("Headers:",-1)
 		local h = self.levelFile.rawHeaders

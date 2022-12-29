@@ -55,6 +55,10 @@ function UI:getDetailsUI(node)
 		list:addButtonEntry("Open in JSON viewer",function()
 			self.overview:openJSONViewer(node.path)
 		end)
+	elseif extension=="lhs" then
+		list:addButtonEntry("Open in LHS hex inspector",function()
+			self.overview:openLHSHexInspector(node.path)
+		end)
 	end
 	
 	return details

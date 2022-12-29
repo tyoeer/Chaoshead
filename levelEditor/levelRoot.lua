@@ -2,7 +2,6 @@ local LHS = require("levelhead.lhs")
 local LIMITS = require("levelhead.level.limits")
 local TABS = require("ui.tools.tabs")
 local Script = require("script")
-local HexInspector = require("levelEditor.hexInspector")
 local LevelEditor = require("levelEditor.levelEditor")
 local ScriptInterface = require("levelEditor.scriptInterface")
 
@@ -30,9 +29,7 @@ function UI:initialize(levelPath, workshop)
 	self.level = self.levelFile:parseAll()
 	
 	local tabs = TABS:new()
-	
-	self.hexInspector = HexInspector:new(self.levelFile)
-	tabs:addTab(self.hexInspector)
+
 	
 	self.levelEditor = LevelEditor:new(self.level, self)
 	tabs:addTab(self.levelEditor)
@@ -48,7 +45,6 @@ end
 function UI:reload(level)
 	if level then
 		self.level = level
-		self.hexInspector:reload(false)
 	else
 		local success, level = xpcall(
 			function()
@@ -62,7 +58,6 @@ function UI:reload(level)
 		if success then
 			self.latestHash = self.levelFile:getHash()
 			self.level = level
-			self.hexInspector:reload(self.levelFile)
 		else
 			return
 		end
@@ -75,7 +70,6 @@ function UI:save()
 	if self:checkLimits("Can't save level:\n") then
 		self.levelFile:serializeAll(self.level)
 		self.latestHash = self.levelFile:writeAll()
-		self.hexInspector:reload(false)
 		MainUI:displayMessage("Succesfully saved level!")
 	end
 end
