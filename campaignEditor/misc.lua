@@ -1,5 +1,5 @@
 local List = require("ui.layout.list")
-local ParsedInput = require("ui.layout.parsedInput")
+local ParsedInput = require("ui.widgets.parsedInput")
 local Packing = require("levelhead.campaign.packing")
 local LhMisc = require("levelhead.misc")
 

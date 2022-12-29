@@ -1,5 +1,5 @@
 local P = require("levelhead.data.properties")
-local ParsedInput = require("ui.layout.parsedInput")
+local ParsedInput = require("ui.widgets.parsedInput")
 
 local UI = Class("PropertyEditorUI",require("levelEditor.details.property"))
 
