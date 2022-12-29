@@ -17,42 +17,63 @@ end
 
 function UI:buildElementList(s)
 	local c = s.contents
+	---@type FLItem
 	local out = {}
 	
 	if s.mask:getLayerEnabled("pathNodes") and c.nPathNodes>=1 then
-		table.insert(out, "Path node")
+		table.insert(out, {
+			label = "Path node",
+			filter = "path node",
+			context = -10
+		})
 	end
 	if s.mask:getLayerEnabled("foreground") and s.mask.nTiles>c.nForeground then
-		table.insert(out, "Air (foreground)")
+		table.insert(out, {
+			label = "Air (foreground)",
+			filter = "air (foreground)",
+			context = -3
+		})
 	end
 	if s.mask:getLayerEnabled("background") and s.mask.nTiles>c.nBackground then
-		table.insert(out, "Air (background)")
+		table.insert(out, {
+			label = "Air (background)",
+			filter = "air (background)",
+			context = -4
+		})
 	end
 	if s.mask:getLayerEnabled("pathNodes") and s.mask.nTiles>c.nPathNodes then
-		table.insert(out, "Air (path nodes)")
+		table.insert(out, {
+			label = "Air (path nodes)",
+			filter = "air (path nodes)",
+			context = -5
+		})
 	end
 	
 	--TODO raw numbers
 	local elems = {}
 	if s.mask:getLayerEnabled("foreground") then
 		for obj in c.foreground:iterate() do
-			elems[obj:getName()] = true
+			elems[obj:getName()] = obj.id
 		end
 	end
 	if s.mask:getLayerEnabled("background") then
 		for obj in c.background:iterate() do
-			elems[obj:getName()] = true
+			elems[obj:getName()] = obj.id
 		end
 	end
-	for k,_ in pairs(elems) do
-		table.insert(out, k)
+	for elem,id in pairs(elems) do
+		table.insert(out, {
+			label = elem,
+			filter = elem:lower(),
+			context = id,
+		})
 	end
 	
 	table.sort(out, function (a,b)
-		local aSize, aName = a:match("(%d+x%d+) (.+)")
-		if not aName then aName = a end
-		local bSize, bName = b:match("(%d+x%d+) (.+)")
-		if not bName then bName = b end
+		local aSize, aName = a.label:match("(%d+x%d+) (.+)")
+		if not aName then aName = a.label end
+		local bSize, bName = b.label:match("(%d+x%d+) (.+)")
+		if not bName then bName = b.label end
 		if aName==bName then
 			if not aSize then
 				return true

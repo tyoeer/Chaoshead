@@ -221,19 +221,26 @@ function UI:filterProperty(prop, filterValue, operation)
 	end
 end
 
-function UI:filterElement(element, include)
+function UI:filterElement(id, include)
 	if not self.selection then return end
 	
-	local id = -2 -- air
-	local layer = element:match("Air %(([^()]+)%)")
-	if not layer then
-		if element=="Path node" then
-			id = -3 -- path node
+	local layer
+	if id<0 then
+		if id==-10 then
 			layer = "path nodes"
-		else
-			id = E:getID(element)
-			layer = E:getLayer(id):lower()
+			-- id doesn't matter
+		elseif id==-3 then
+			id = -2 -- air
+			layer = "foreground"
+		elseif id==-4 then
+			id = -2 -- air
+			layer = "background"
+		elseif id==-5 then
+			id = -2 -- air
+			layer = "path nodes"
 		end
+	else
+		layer = E:getLayer(id):lower()
 	end
 	if layer=="path nodes" then
 		-- flip include when testing for air, so we can just test for the existance of a path node
