@@ -1,38 +1,6 @@
 local E = require("levelhead.data.elements")
 local FilteredList = require("ui.widgets.filteredList")
 
-local items
---TODO get items from selection
---TODO raw numbers
-local function getAllElements()
-	if not items then
-		items = {
-			"Path",
-		}
-		for i=0, E:getHighestID() do
-			table.insert(items, E:getName(i))
-		end
-		table.sort(items, function (a,b)
-			local aSize, aName = a:match("(%d+x%d+) (.+)")
-			if not aName then aName = a end
-			local bSize, bName = b:match("(%d+x%d+) (.+)")
-			if not bName then bName = b end
-			if aName==bName then
-				if not aSize then
-					return true
-				elseif not bSize then
-					return false
-				else
-					return aSize < bSize
-				end
-			else
-				return aName < bName
-			end
-		end)
-	end
-	return items
-end
-
 local UI = Class("ElementFilterUI", require("ui.layout.list"))
 
 local theme = Settings.theme.details
@@ -64,6 +32,7 @@ function UI:buildElementList(s)
 		table.insert(out, "Air (path nodes)")
 	end
 	
+	--TODO raw numbers
 	local elems = {}
 	if s.mask:getLayerEnabled("foreground") then
 		for obj in c.foreground:iterate() do
