@@ -49,7 +49,6 @@ function UI:buildElementList(s)
 		})
 	end
 	
-	--TODO raw numbers
 	local elems = {}
 	if s.mask:getLayerEnabled("foreground") then
 		for obj in c.foreground:iterate() do
@@ -62,9 +61,13 @@ function UI:buildElementList(s)
 		end
 	end
 	for elem,id in pairs(elems) do
+		local label = elem
+		if Settings.misc.editor.showRawNumbers then
+			label = label .. string.format("  (%i)", id)
+		end
 		table.insert(out, {
-			label = elem,
-			filter = elem:lower(),
+			label = label,
+			filter = label:lower(),
 			context = id,
 		})
 	end
