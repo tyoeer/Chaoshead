@@ -106,7 +106,7 @@ function UI:reload()
 	self:addUIEntry(self.filteredList)
 	
 	--divider between items and dismiss button
-	self:addSeparator(false)
+	self:addSeparator(true)
 end
 
 return UI
