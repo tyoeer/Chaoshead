@@ -118,8 +118,10 @@ return {
 	},
 	treeViewer = {
 		listStyle = {
-			textIndentSize = 0,--unused, weird values that can help detect errors unfortunately can't be saved
+			textIndentSize = 0,--unused, weird values that can help detect errors but unfortunately can't be saved
 			entryMargin = 0,
+			smallSeparatorSize = 8,
+			bigSeparatorSize = 16,
 			
 			indentCharacters = 2,
 			
@@ -176,6 +178,8 @@ return {
 		listStyle = {
 			textIndentSize = 15,
 			entryMargin = 6,
+			smallSeparatorSize = 5,
+			bigSeparatorSize = 16,
 			
 			buttonStyle = {
 				padding = 6,
@@ -204,6 +208,9 @@ return {
 			listStyle = {
 				textIndentSize = 15,
 				entryMargin = 6,
+				smallSeparatorSize = 5,
+				bigSeparatorSize = 16,
+
 			},
 			inputStyle = {
 				textColor = {1,1,1},
@@ -230,6 +237,9 @@ return {
 		listStyle = {
 			textIndentSize = 12,
 			entryMargin = 8,
+			smallSeparatorSize = 5,
+			bigSeparatorSize = 16,
+
 			textStyle = {
 				horAlign = "left",
 				verAlign = "center",

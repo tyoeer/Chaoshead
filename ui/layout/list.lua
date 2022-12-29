@@ -1,9 +1,12 @@
 local TextEntry = require("ui.widgets.text")
 local ButtonEntry = require("ui.widgets.button")
+local SeparatorEntry = require("ui.widgets.separator")
 
 ---@class ListStyle
 ---@field entryMargin number
 ---@field textIndentSize number
+---@field smallSeparatorSize number
+---@field bigSeparatorSize number
 ---@field textStyle TextStyle?
 ---@field buttonStyle ButtonStyle?
 ---@field defaultButtonPadding number?
@@ -34,9 +37,9 @@ end
 ---@param big boolean whether this divider should be big instead of small
 function UI:addSeparator(big)
 	if big then
-		self:addTextEntry(" ")
+		self:addUIEntry(SeparatorEntry:new(self.style.bigSeparatorSize))
 	else
-		self:addTextEntry("")
+		self:addUIEntry(SeparatorEntry:new(self.style.smallSeparatorSize))
 	end
 end
 
