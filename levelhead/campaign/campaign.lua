@@ -149,8 +149,10 @@ function C:loadData(name)
 	return JSON.decode(data)
 end
 
-function C:reloadNodes()
-	local rawData = self:loadData("nodes")
+function C:reloadNodes(rawData)
+	if not rawData then
+		rawData = self:loadData("nodes")
+	end
 	
 	self:clearNodes()
 	
