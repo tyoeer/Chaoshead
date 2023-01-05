@@ -69,6 +69,14 @@ function UI:onReload(list,campaign)
 		"Replace map with map from in-game editor",
 		function()
 			local data = LhData:new(LhMisc:getDataPath().."CampaignMaster/LHCampaignMaster")
+			campaign:reloadNodes(data.raw.nodes)
+			self.editor.root:reload(campaign)
+		end
+	)
+	list:addButtonEntry(
+		"Overwrite data with data from in-game editor (overwrites files directly)",
+		function()
+			local data = LhData:new(LhMisc:getDataPath().."CampaignMaster/LHCampaignMaster")
 			
 			for category, data in pairs(data.raw) do
 				love.filesystem.write(self.campaign.path..self.campaign.SUBPATHS.data..category..".json", JSON.encode(data))
