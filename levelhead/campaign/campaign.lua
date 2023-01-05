@@ -133,6 +133,8 @@ end
 -- LOADING
 
 function C:reloadLevels()
+	self:clearLevels()
+	
 	local lPath = self.path..self.SUBPATHS.levels
 	for _, item in ipairs(love.filesystem.getDirectoryItems(lPath)) do
 		local id = item:match("(.+).lhs")
