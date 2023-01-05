@@ -177,7 +177,9 @@ function C:reloadNodes(rawData)
 				node.nextLevel = self:getNode(node.nextLevel)
 			end
 		elseif node.type=="level" then
-			node:setLevel(self:getLevel(node.level))
+			if node.level then
+				node:setLevel(self:getLevel(node.level))
+			end
 		end
 	end
 end
