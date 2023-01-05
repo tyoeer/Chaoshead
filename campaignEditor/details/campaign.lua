@@ -68,9 +68,7 @@ function UI:onReload(list,campaign)
 	list:addButtonEntry(
 		"Replace map with map from in-game editor",
 		function()
-			local data = LhData:new(LhMisc:getDataPath().."CampaignMaster/LHCampaignMaster")
-			campaign:reloadNodes(data.raw.nodes)
-			self.editor.root:reload(campaign)
+			self.editor:importGameMap()
 		end
 	)
 	list:addButtonEntry(

@@ -1,6 +1,7 @@
 -- --editor tools
 local EP = require("libs.tyoeerUtils.entitypool")
--- local Clipboard = require("tools.clipboard")
+local LhData = require("levelhead.dataFile")
+local LhMisc = require("levelhead.misc")
 --misc UIs
 local HorDivide = require("ui.layout.horDivide")
 local Tabs = require("ui.tools.tabs")
@@ -179,6 +180,13 @@ function UI:setLevel(level)
 	end
 end
 
+-- other stuff
+
+function UI:importGameMap()
+	local data = LhData:new(LhMisc:getDataPath().."CampaignMaster/LHCampaignMaster")
+	self.campaign:reloadNodes(data.raw.nodes)
+	self.root:reload(self.campaign)
+end
 
 -- filter
 
