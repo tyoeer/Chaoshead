@@ -1,4 +1,8 @@
 local CampaignMisc = require("campaignEditor.misc")
+local JSON = require("libs.json")
+local LhData = require("levelhead.dataFile")
+local LhMisc = require("levelhead.misc")
+local Campaign = require("levelhead.campaign.campaign")
 
 --this class represents the details of a campaign selected in the campaign selector
 local UI = Class("SelectedCampaignDetailsUI",require("ui.tools.details"))
@@ -27,6 +31,25 @@ function UI:onReload(list)
 			end
 		end
 	)
+	
+	list:addSeparator(false)
+	
+	list:addButtonEntry("Overwrite data with data from the in-game editor", function()
+		local data = LhData:new(LhMisc:getDataPath().."CampaignMaster/LHCampaignMaster")
+		
+		local dataPath = CampaignMisc.folder .. self.subpath .. "/" .. Campaign.SUBPATHS.data
+		
+		for category, data in pairs(data.raw) do
+			print(dataPath..category..".json")
+			local success, err = love.filesystem.write(dataPath..category..".json", JSON.encode(data))
+			if not success then
+				MainUI:displayMessage("Failed overwriting a data file (other may have been edited though):", err)
+				return
+			end
+		end
+		
+		MainUI:displayMessage("Successfully overwrote campaign data")
+	end)
 	
 	list:addSeparator(false)
 	
