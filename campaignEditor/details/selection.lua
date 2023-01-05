@@ -48,7 +48,7 @@ function UI:onReload(list)
 
 	end
 	--add a divider
-	list:addTextEntry(" ",0)
+	list:addSeparator(true)
 	
 	-- TODO deletion
 	-- -- info & co
@@ -56,9 +56,6 @@ function UI:onReload(list)
 	-- 	self.editor:deleteSelection()
 	-- end)
 	
-	-- --add a divider
-	-- list:addTextEntry(" ",0)
-
 	--single node properties
 	if n==1 then
 		local node = s:getTop()
