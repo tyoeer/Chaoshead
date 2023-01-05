@@ -128,6 +128,44 @@ function UI:onReload(list)
 		local Patch = require("exePatch.patcher"):display()
 	end)
 	
+	list:addButtonEntry("Campaign editor UMT script", function()
+		local data = string.gsub([[
+			EnsureDataLoaded();
+			ScriptMessage("Starting...");
+
+			var room = Data.Rooms.ByName("rm_campaign");
+			UndertaleRoom.Layer layer;
+			foreach (var ilayer in room.Layers) {
+				if (ilayer.LayerType == UndertaleRoom.LayerType.Instances) {
+					layer = ilayer;
+				}
+			}
+			var obj = Data.GameObjects.ByName("button_campaign_edit");
+			var instance = new UndertaleRoom.GameObject() {
+				InstanceID = Data.GeneralInfo.LastObj++,
+				ObjectDefinition = obj,
+				X = 0, Y = 100
+			};
+			layer.InstancesData.Instances.Add(instance);
+			room.GameObjects.Add(instance);
+
+			ChangeSelection(instance);
+
+			ScriptMessage("Done?");
+			]],"\t\t\t",""
+		)
+		local success, mes = love.filesystem.write("campaignEditButton.csx", data)
+		if success then
+			MainUI:displayMessage(
+				"campaignEditButton.csx was placed in the CH data directory.",
+				"This script can be used with UndertaleModTool to add a button to go to the editor in the campaign in Levelhead",
+				{"Open UndertaleModTool page in browser", function() love.system.openURL("https://github.com/krzys-h/UndertaleModTool/") end}
+			)
+		else
+			MainUI:displayMessage("Failed saving script:",mes)
+		end
+	end)
+	
 	-- DIVIDER
 	list:addSeparator(false)
 	
