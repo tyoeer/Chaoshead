@@ -1,4 +1,4 @@
-
+local SetLevelUI = require("campaignEditor.details.setLevel")
 
 UI = Class("CampaignSelectionDetailsUI",require("ui.tools.details"))
 
@@ -55,10 +55,17 @@ function UI:onReload(list)
 	-- list:addButtonEntry("Delete",function()
 	-- 	self.editor:deleteSelection()
 	-- end)
-	
+
 	--single node properties
 	if n==1 then
 		local node = s:getTop()
+		
+		if node.type=="level" then
+			list:addButtonEntry("Set level", function()
+				MainUI:displayMessage(SetLevelUI:new(self.editor))
+			end)
+		end
+		
 		self:property(node,"id")
 		self:property(node,"next")
 		for field,_ in pairs(node.mappings) do

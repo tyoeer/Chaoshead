@@ -166,6 +166,20 @@ function UI:deselectAll()
 	end
 end
 
+-- do things with the selection
+
+function UI:setLevel(level)
+	if self.selection then
+		for node in self.selection:iterate() do
+			if node.type=="level" then
+				node:setLevel(level)
+			end
+		end
+		self.selectionDetails:reload()
+	end
+end
+
+
 -- filter
 
 -- function UI:removeSelectionLayer(layer)
