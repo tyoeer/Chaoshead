@@ -3,6 +3,7 @@ local P = Class("CampaignPathNode",require("levelhead.campaign.node"))
 local MAPPINGS = {
 	prevLevel = {
 		"pre_actual",
+		optional = true,
 		from = function(str)
 			if str=="" then
 				return nil
@@ -12,11 +13,16 @@ local MAPPINGS = {
 			end
 		end,
 		to = function(node)
-			return node.id
+			if node then
+				return node.id
+			else
+				return ""
+			end
 		end
 	},
 	nextLevel = {
 		"post_actual",
+		optional = true,
 		from = function(str)
 			if str=="" then
 				return nil
@@ -26,7 +32,11 @@ local MAPPINGS = {
 			end
 		end,
 		to = function(node)
-			return node.id
+			if node then
+				return node.id
+			else
+				return ""
+			end
 		end
 	},
 }
