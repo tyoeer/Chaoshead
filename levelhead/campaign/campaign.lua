@@ -180,7 +180,7 @@ function C:reloadNodes(rawData)
 			end
 		elseif node.type=="level" then
 			if node.level then
-				node:setLevel(self:getLevel(node.level))
+				node:setLevelRaw(self:getLevel(node.level))
 			end
 		end
 	end
