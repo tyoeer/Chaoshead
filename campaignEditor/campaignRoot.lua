@@ -4,6 +4,7 @@ local CampaignMisc = require("campaignEditor.misc")
 -- local Script = require("script")
 
 local MapEditor = require("campaignEditor.mapEditor")
+local LevelsOverview = require("campaignEditor.levelSelector")
 -- local ScriptInterface = require("levelEditor.scriptInterface") TODO script interface
 
 --levelRoot was the best name I could come up with, OK?
@@ -34,6 +35,8 @@ function UI:initialize(subpath, overview)
 	tabs:addTab(self.mapEditor)
 	tabs:setActiveTab(self.mapEditor)
 	
+	self.levelsOverview = LevelsOverview:new(self)
+	tabs:addTab(self.levelsOverview)
 	-- self.scriptInterface = ScriptInterface:new(self)
 	-- tabs:addTab(self.scriptInterface)
 	
