@@ -1,6 +1,9 @@
 local LHS = require("levelhead.lhs")
 local EP = require("libs.tyoeerUtils.entitypool")
 
+---@class Campaignlevel
+---@field campaign Campaign?
+---@field new fun(self, id: string): self
 local L = Class("CampaignLevel")
 
 function L:initialize(id)
