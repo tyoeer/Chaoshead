@@ -26,7 +26,7 @@ dataHandler:
 local theme = Settings.theme.treeViewer
 
 function UI:initialize()
-	--make subclasses remember which fodlers are opened
+	--make subclasses remember which folders are opened
 	if self.class.name~="TreeViewerUI" then
 		self.persistant = self.class.name
 	end
@@ -34,12 +34,17 @@ function UI:initialize()
 	self.list = LIST:new(self, function(data)
 		self:setDetailsUI(self:getDetailsUI(data))
 	end)
+	--can't use :resetDetails() because we don't have a child yet
 	self.details = BASE:new()
 	
 	UI.super.initialize(self,HOR_DIVIDE:new(
 		SCROLL:new(self.list), self.details,
 		theme.listDetailsDivisionStyle
 	))
+end
+
+function UI:resetDetails()
+	self:setDetailsUI(BASE:new())
 end
 
 function UI:reload()
