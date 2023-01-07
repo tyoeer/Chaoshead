@@ -29,4 +29,18 @@ function UI:getDetailsUI(data)
 	return Details:new(self.root, data.level)
 end
 
+function UI:reload()
+	-- self.details starts out as a placeholder BaseUI, if it has a level it is the proper details UI
+	if self.details.level then
+		-- Can't use campaign:getLevel(), it errors if it doesn't find the level
+		local level = self.root.campaign.levelsById[self.details.level.id]
+		if level then
+			self.details:reload(level)
+		else
+			self:resetDetails()
+		end
+	end
+	UI.super.reload(self)
+end
+
 return UI

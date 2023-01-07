@@ -6,8 +6,13 @@ function UI:initialize(root, level)
 	UI.super.initialize(self)
 end
 
-function UI:onReload(list)
+function UI:onReload(list, level)
+	if level then
+		self.level = level
+	end
 	local l = self.level
+	
+	list:resetList()
 	
 	list:addTextEntry("Id: ".. l.id)
 	

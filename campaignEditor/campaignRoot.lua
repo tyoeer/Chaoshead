@@ -56,7 +56,9 @@ function UI:reload(campaign)
 		)
 		if not success then return end
 	end
+	
 	self.mapEditor:reload(self.campaign)
+	self.levelsOverview:reload()
 end
 
 function UI:save()
