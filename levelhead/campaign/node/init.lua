@@ -46,6 +46,14 @@ function N:initialize(id)
 	N.super.initialize(self, MAPPINGS)
 end
 
+function N:setId(id)
+	if self.campaign then
+		self.campaign.nodesById[self.id] = nil
+		self.campaign.nodesById[id] = self
+	end
+	self.id = id
+end
+
 function N:newFromMapped(id, data)
 	local n
 	if data.t==0 then

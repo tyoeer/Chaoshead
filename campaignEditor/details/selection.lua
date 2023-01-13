@@ -60,6 +60,20 @@ function UI:onReload(list)
 	if n==1 then
 		local node = s:getTop()
 		
+		list:addButtonEntry("Set id", function()
+			MainUI:getString(
+				"Enter the new node id",
+				function(id)
+					if self.editor.campaign.nodesById[id] then
+						MainUI:displayMessage("There already is a node with id "..id)
+						return
+					end
+					node:setId(id)
+				end,
+				node.id
+			)
+		end)
+		
 		if node.type=="level" then
 			list:addButtonEntry("Set level", function()
 				MainUI:displayMessage(SetLevelUI:new(self.editor))
