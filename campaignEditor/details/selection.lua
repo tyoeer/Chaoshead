@@ -56,15 +56,14 @@ function UI:onReload(list)
 	-- 	self.editor:deleteSelection()
 	-- end)
 	
-	list:addButtonEntry("Set level", function()
-		MainUI:displayMessage(SetLevelUI:new(self.editor))
-	end)
-	
 	--single node properties
 	if n==1 then
 		local node = s:getTop()
 		
 		if node.type=="level" then
+			list:addButtonEntry("Set level", function()
+				MainUI:displayMessage(SetLevelUI:new(self.editor))
+			end)
 			if type(node.level)=="string" then
 				list:addTextEntry("WARNING: This node's level wasn't found in this campaigns level list")
 			elseif type(node.level)=="table" then
