@@ -82,6 +82,12 @@ function UI:checkLimits(prefix)
 	-- end
 end
 
+
+function UI:gotoLevel(level)
+	self.levelsOverview:selectLevel(level)
+	self.child:setActiveTab(self.levelsOverview)
+end
+
 -- function UI:runScript(path,disableSandbox)
 -- 	if disableSandbox then
 -- 		local sel
