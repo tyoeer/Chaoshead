@@ -1,3 +1,5 @@
+local Input = require("ui.widgets.textInput")
+
 local UI = Class("CampaignLevelDetailsUI",require("ui.tools.details"))
 
 function UI:initialize(root, level)
@@ -14,7 +16,24 @@ function UI:onReload(list, level)
 	
 	list:resetList()
 	
-	list:addTextEntry("Id: ".. l.id)
+	list:addButtonEntry("Id: ".. l.id, function()
+		local input = Input:new(function() end, Settings.theme.details.inputStyle.inputStyle)
+		input:setText(l.id)
+		MainUI:displayMessage(
+			"WARNING: this changes the level file directly, but doesn't directly save the change in the node data\nEnter a new id:",
+			input,
+			{"Confirm", function()
+				MainUI:removeModal()
+				local id = input:getText()
+				local success, err = l:changeId(id)
+				if not success then
+					MainUI:displayMessage("Failed changing the level id:", err)
+				end
+				
+				self.root:levelChanged(l)
+			end}
+		)
+	end)
 	
 	if l.nodes:getTop() then
 		list:addTextEntry("Nodes: ")

@@ -396,6 +396,10 @@ end
 
 -- EVENTS (most are handled by the proxy super)
 
+function UI:levelChanged(level)
+	self.selectionDetails:reload()
+end
+
 function UI:onInputActivated(name,group, isCursorBound)
 	if group=="editor" then
 		if name=="delete" then

@@ -29,6 +29,12 @@ function UI:getDetailsUI(data)
 	return Details:new(self.root, data.level)
 end
 
+
+function UI:selectLevel(level)
+	self:setDetailsUI(Details:new(self.root, level))
+end
+
+
 function UI:levelChanged(level)
 	if not level or level==self.details.level then
 		self.details:reload()

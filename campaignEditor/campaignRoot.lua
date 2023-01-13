@@ -111,8 +111,18 @@ end
 -- end
 
 ---@param level unknown? the level that has changed
-function UI:levelChanged(level)
-	self.levelsOverview:levelChanged(level)
+---@param detailsOnly boolean? if only stuff displayed in the level details menu has changed
+function UI:levelChanged(level, detailsOnly)
+	if detailsOnly==nil then
+		detailsOnly = false
+	end
+	if detailsOnly then
+		self.levelsOverview:levelChanged(level)
+	else
+		--the tree list displays the id
+		self.levelsOverview:reload()
+		self.mapEditor:levelChanged(level)
+	end
 end
 
 -- function UI:setClipboard(cp)

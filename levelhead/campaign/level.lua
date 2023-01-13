@@ -33,4 +33,23 @@ function L:getHeaders()
 	return lhs:parseHeaders()
 end
 
+--- Changes the id of this level
+--- Works directly with files
+---@return boolean success, string? errorMessage
+function L:changeId(name)
+	local oldPath = self:getPath()
+	local oldId = self.id
+	self.id = name
+	local newPath = self:getPath()
+	local _success, err = os.rename(love.filesystem.getSaveDirectory().."/"..oldPath, love.filesystem.getSaveDirectory().."/"..newPath)
+	if err then
+		self.id = oldId
+		return false, err
+	else
+		self.campaign.levelsById[oldId] = nil
+		self.campaign.levelsById[self.id] = self
+		return true
+	end
+end
+
 return L
