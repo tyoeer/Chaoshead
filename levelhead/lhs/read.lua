@@ -98,13 +98,15 @@ function LHS:readHeaders()
 	h.height = self:getNumber1(h.titleEndOffset+3)
 	--an unknown
 	h.dividerConstant = self:getBytes(h.titleEndOffset+4,4)
+	
+	self.contentStartOffset = self.rawHeaders.titleEndOffset+8
 end
 
 function LHS:readSingle(section,prev)
 	local c = {}
 	self.rawContentEntries[section] = c
 	--use prev as the name for the previous layer if it's a string, and as the direct start offset otherwise
-	c.startOffset = type(prev)=="string" and (self.rawContentEntries[prev].endOffset + 1) or prev
+	c.startOffset = prev and (self.rawContentEntries[prev].endOffset + 1) or self.contentStartOffset
 	self:verifyTag(section,c.startOffset)
 	c.nEntries = self:getNumber2(c.startOffset+1)
 	c.entries = {}
@@ -287,10 +289,9 @@ function LHS:readRepeatedPropertySets()
 end
 
 function LHS:readAll()
-	self:readHeaders()
-	self.contentStartOffset = self.rawHeaders.titleEndOffset+8
 	self.rawContentEntries = {}
-	self:readSingle("singleForeground", self.contentStartOffset)
+	self:readHeaders()
+	self:readSingle("singleForeground")
 	self:readStructure("foregroundRows","singleForeground")
 	self:readStructure("foregroundColumns","foregroundRows")
 	self:readProperties(false)

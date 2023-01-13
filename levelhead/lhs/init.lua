@@ -50,6 +50,7 @@ LHS.tags = {
 
 function LHS:initialize(path)
 	self:loadFile(path)
+	self.rawContentEntries = {}
 end
 
 --load the other files
