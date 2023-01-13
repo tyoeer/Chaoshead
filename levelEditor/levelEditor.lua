@@ -32,7 +32,7 @@ function UI:initialize(level,root)
 	
 	UI.super.initialize(self, HorDivide:new(
 		self.detailsUI, self.viewer,
-		theme.detailsWorldDivisionStyle
+		theme.level.detailsWorldDivisionStyle
 	))
 	self.title = "Level Editor"
 end

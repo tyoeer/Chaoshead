@@ -8,12 +8,13 @@ return {
 		fontSize = 16,
 	},
 	editor = {
-		detailsWorldDivisionStyle = {
-			divisionRatio = 0.25,
-			dividerColor = {1,1,1},
-			dividerWidth = 1,
-		},
 		level = {
+			detailsWorldDivisionStyle = {
+				divisionRatio = 0.25,
+				dividerColor = {1,1,1},
+				dividerWidth = 1,
+			},
+			
 			worldBackground = {0,0.5,1},
 			outsideWorld = {0.1, 0.1, 0.1},
 			resizeCircles = {0.5,0.5,0.5, 0.5},
@@ -41,6 +42,12 @@ return {
 			},
 		},
 		campaign = {
+			detailsWorldDivisionStyle = {
+				divisionRatio = 0.3,
+				dividerColor = {1,1,1},
+				dividerWidth = 1,
+			},
+			
 			background = {0.2, 0, 0.6},
 			origin = {0.5,0.5,0.5},
 			selection = {1,1,1},

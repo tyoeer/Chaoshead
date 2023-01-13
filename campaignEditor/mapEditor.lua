@@ -31,7 +31,7 @@ function UI:initialize(root)
 	
 	UI.super.initialize(self, HorDivide:new(
 		self.detailsUI, self.viewer,
-		theme.detailsWorldDivisionStyle
+		theme.campaign.detailsWorldDivisionStyle
 	))
 	self.title = "Map Editor"
 end
