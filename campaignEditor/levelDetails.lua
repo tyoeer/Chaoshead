@@ -25,6 +25,11 @@ function UI:onReload(list, level)
 			{"Confirm", function()
 				MainUI:removeModal()
 				local id = input:getText()
+				if self.root.campaign.levelsById[id] then
+					MainUI:displayMessage("There already is a level with id "..id)
+					return
+				end
+				
 				local success, err = l:changeId(id)
 				if not success then
 					MainUI:displayMessage("Failed changing the level id:", err)
