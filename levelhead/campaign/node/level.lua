@@ -16,8 +16,10 @@ local MAPPINGS = {
 			end
 		end,
 		to = function(level)
-			if level then
+			if type(level)=="table" then
 				return level.id
+			elseif type(level)=="string" then
+				return level
 			else
 				return ""
 			end

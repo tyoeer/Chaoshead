@@ -182,7 +182,10 @@ function C:reloadNodes(rawData)
 			end
 		elseif node.type=="level" then
 			if node.level then
-				node:setLevelRaw(self:getLevel(node.level))
+				local level = self.levelsById[node.level]
+				if level then
+					node:setLevelRaw(level)
+				end
 			end
 		end
 	end
