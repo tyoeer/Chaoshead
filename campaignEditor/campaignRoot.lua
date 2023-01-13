@@ -110,14 +110,18 @@ end
 -- 	end
 -- end
 
-
-function UI:setClipboard(cp)
-	self.overview.clipboard = cp
+---@param level unknown? the level that has changed
+function UI:levelChanged(level)
+	self.levelsOverview:levelChanged(level)
 end
 
-function UI:getClipboard()
-	return self.overview.clipboard
-end
+-- function UI:setClipboard(cp)
+-- 	self.overview.clipboard = cp
+-- end
+
+-- function UI:getClipboard()
+-- 	return self.overview.clipboard
+-- end
 
 function UI:close()
 	self.overview:closeEditor(self)

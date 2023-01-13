@@ -177,6 +177,7 @@ function UI:setLevel(level)
 			end
 		end
 		self.selectionDetails:reload()
+		self.root:levelChanged(level) --it's associated nodes changed
 	end
 end
 

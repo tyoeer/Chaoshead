@@ -29,6 +29,12 @@ function UI:getDetailsUI(data)
 	return Details:new(self.root, data.level)
 end
 
+function UI:levelChanged(level)
+	if not level or level==self.details.level then
+		self.details:reload()
+	end
+end
+
 function UI:reload()
 	-- self.details starts out as a placeholder BaseUI, if it has a level it is the proper details UI
 	if self.details.level then
