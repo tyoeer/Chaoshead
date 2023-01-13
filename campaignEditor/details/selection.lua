@@ -32,7 +32,7 @@ function UI:property(node, field)
 	else
 		val = tostring(val)
 	end
-	self:getList():addTextEntry(field..": "..val)
+	self:getList():addTextEntry(field..": "..val, 1)
 end
 
 function UI:onReload(list)
@@ -60,7 +60,7 @@ function UI:onReload(list)
 	if n==1 then
 		local node = s:getTop()
 		
-		list:addButtonEntry("Set id", function()
+		list:addButtonEntry("Id: "..node.id, function()
 			MainUI:getString(
 				"Enter the new node id",
 				function(id)
@@ -74,8 +74,32 @@ function UI:onReload(list)
 			)
 		end)
 		
+		if #node.next==0 then
+			list:addTextEntry("Next: none")
+		else
+			list:addTextEntry("Next:")
+			for _, neighbour in ipairs(node.next) do
+				list:addButtonEntry(neighbour.id, function()
+					self.editor:selectNode(neighbour)
+				end)
+			end
+		end
+		
+		if #node.prev==0 then
+			list:addTextEntry("Prev: none")
+		else
+			list:addTextEntry("Prev:")
+			for _, neighbour in ipairs(node.prev) do
+				list:addButtonEntry(neighbour.id, function()
+					self.editor:selectNode(neighbour)
+				end)
+			end
+		end
+		
+		list:addSeparator(false)
+		
 		if node.type=="level" then
-			list:addButtonEntry("Set level", function()
+			list:addButtonEntry("Level: "..node.level.id, function()
 				MainUI:displayMessage(SetLevelUI:new(self.editor))
 			end)
 			if type(node.level)=="string" then
@@ -89,6 +113,7 @@ function UI:onReload(list)
 		
 		list:addSeparator(true)
 		
+		list:addTextEntry("Raw fields:")
 		self:property(node,"id")
 		self:property(node,"next")
 		for field,_ in pairs(node.mappings) do
