@@ -77,6 +77,9 @@ end
 -- selection manipulation
 
 function UI:selectNode(node)
+	if self.selection then
+		self:deselectAll()
+	end
 	self:newSelection()
 	self.selection:add(node)
 	self.selectionSize = 1
