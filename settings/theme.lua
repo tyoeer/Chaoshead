@@ -234,6 +234,13 @@ return {
 			borderColor = {1,1,1},
 			minMargin = 20,
 		},
+		inputStyle = {
+			textColor = {1,1,1},
+			caretColor = {1,1,1},
+			borderColor = {1,1,1},
+			backgroundColor = {0.1, 0.1, 0.1},
+			padding = 6,
+		},
 		listStyle = {
 			textIndentSize = 12,
 			entryMargin = 8,

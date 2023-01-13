@@ -1,6 +1,7 @@
 local LIST = require("ui.layout.list")
 local BOX = require("ui.layout.box")
 local BLOCK = require("ui.layout.block")
+local INPUT = require("ui.widgets.textInput")
 
 ---@class ModalManagerUI : ContainerUI
 ---@field super ContainerUI
@@ -98,7 +99,7 @@ end
 
 -- Preset modals
 
----@param ... string|BaseNodeUI
+---@param ... string|BaseNodeUI|{ [1]: string, [2]: function}
 function UI:displayMessage(...)
 	local ui = LIST:new(theme.listStyle)
 	for _,item in ipairs({...}) do
@@ -115,6 +116,26 @@ function UI:displayMessage(...)
 	local dismiss = function() self:removeModal() end
 	ui:addButtonEntry("Dismiss", dismiss)
 	self:setModal(ui, dismiss)
+end
+
+--- Pops up a modal to ask for a string
+---@param text string the text to start the modal with
+---@param callback fun(userInput: string) gets called with the inputted string when the user confirms
+---@param inputDefault string? If provided, the input box gets preset to this string
+function UI:getString(text, callback, inputDefault)
+	local input = INPUT:new(function() end, Settings.theme.modal.inputStyle)
+	if inputDefault then
+		input:setText(inputDefault)
+	end
+	self:displayMessage(
+		text,
+		input,
+		{"Confirm", function()
+			self:removeModal()
+			callback(input:getText())
+		end}
+	)
+	input:grabFocus()
 end
 
 -- events
