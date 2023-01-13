@@ -109,6 +109,23 @@ function UI:onReload(list)
 					self.editor.root:gotoLevel(node.level)
 				end)
 			end
+			
+			list:addSeparator(false)
+			
+			list:addButtonEntry("On-Time Delivery: "..(node.onTimeDelivery or "none"), function()
+				MainUI:getString(
+					"Please enter a time in seconds (decimals allowed)",
+					function(str)
+						local time = tonumber(str)
+						if not time then
+							MainUI:displayMessage(str.." is not a valid number")
+							return
+						end
+						self.editor:setOnTimeDelivery(time)
+					end,
+					node.onTimeDelivery
+				)
+			end)
 		end
 		
 		list:addSeparator(true)

@@ -187,6 +187,17 @@ function UI:setLevel(level)
 	end
 end
 
+function UI:setOnTimeDelivery(time)
+	if self.selection then
+		for node in self.selection:iterate() do
+			if node.type=="level" then
+				node.onTimeDelivery = time
+			end
+		end
+		self.selectionDetails:reload()
+	end
+end
+
 -- other stuff
 
 function UI:importGameMap()
