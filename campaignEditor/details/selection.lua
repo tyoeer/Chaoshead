@@ -55,7 +55,7 @@ function UI:onReload(list)
 	-- list:addButtonEntry("Delete",function()
 	-- 	self.editor:deleteSelection()
 	-- end)
-
+	
 	list:addButtonEntry("Set level", function()
 		MainUI:displayMessage(SetLevelUI:new(self.editor))
 	end)
@@ -73,6 +73,8 @@ function UI:onReload(list)
 				end)
 			end
 		end
+		
+		list:addSeparator(true)
 		
 		self:property(node,"id")
 		self:property(node,"next")
