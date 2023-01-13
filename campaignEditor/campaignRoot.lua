@@ -88,6 +88,11 @@ function UI:gotoLevel(level)
 	self.child:setActiveTab(self.levelsOverview)
 end
 
+function UI:gotoNode(node)
+	self.mapEditor:selectNode(node)
+	self.child:setActiveTab(self.mapEditor)
+end
+
 -- function UI:runScript(path,disableSandbox)
 -- 	if disableSandbox then
 -- 		local sel

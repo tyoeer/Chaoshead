@@ -76,17 +76,20 @@ end
 
 -- selection manipulation
 
+function UI:selectNode(node)
+	self:newSelection()
+	self.selection:add(node)
+	self.selectionSize = 1
+	self.selectionDetails:reload()
+end
+
 function UI:selectOnly(x,y)
 	if self.selection then
 		self:deselectAll()
 	end
 	local node = self.campaign:getNodeAt(x,y)
 	if node then
-		--deselectAll() destroys the selection
-		self:newSelection()
-		self.selection:add(node)
-		self.selectionSize = 1
-		self.selectionDetails:reload()
+		self:selectNode(node)
 	end
 end
 
