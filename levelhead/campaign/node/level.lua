@@ -1,7 +1,17 @@
 local ZoneData = require("levelhead.data.zones")
+local ElemData = require("levelhead.data.elements")
 local Level = require("levelhead.level.level")
 
 local L = Class("CampaignLevelNode",require("levelhead.campaign.node.visitable"))
+
+--- Maps from an element id to the property to set
+local COLLECTABLE_ID_MAP = {
+	[ElemData:getID("Stranded GR17")] = "hasGr17",
+	[ElemData:getID("Bug Head")] = "hasBugs",
+	[ElemData:getID("Bug Body Right")] = "hasBugs",
+	[ElemData:getID("Bug Body Left")] = "hasBugs",
+	[ElemData:getID("Bug Abdomen")] = "hasBugs",
+}
 
 local MAPPINGS = {
 	level = {
@@ -82,8 +92,17 @@ function L:setLevelMetadata()
 	local f = 86 + 2/3
 	self.scale = (max+f)/(255+f)
 	
-	-- has GR17
-	-- has bugs
+	--has GR-17 and/or bugs
+	self.hasBugs = false
+	self.hasGr17 = false
+	--Directly read raw content entries to save time parsing
+	lhs:readSingle("singleForeground")
+	for _, entry in ipairs(lhs.rawContentEntries.singleForeground.entries) do
+		local prop = COLLECTABLE_ID_MAP[entry.id]
+		if prop then
+			self[prop] = true
+		end
+	end
 	
 end
 
