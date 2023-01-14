@@ -11,7 +11,7 @@ local COLLECTABLE_ID_MAP = {
 	[ElemData:getID("Bug Abdomen")] = "bugs",
 }
 
----@class CampaignLevelMetadata
+---@class CampaignLevelMetadata Information about the actual level file
 ---@field title string
 ---@field width number
 ---@field height number
@@ -19,6 +19,7 @@ local COLLECTABLE_ID_MAP = {
 ---@field zone number Id of the zone this level uses
 ---@field bugs boolean If this levels has collectable bugs
 ---@field gr17 boolean If this levels has a collectable GR-17
+---@field campaignMarker boolean If the CampaigMarker has been set on this level
 
 ---@class Campaignlevel : Mapped
 ---@field super Mapped
@@ -107,6 +108,8 @@ function L:loadMetadata()
 		
 		bugs = false,
 		gr17 = false,
+		
+		campaignMarker = settings.campaignMarker==1
 	}
 	
 	--Directly read raw content entries to save time parsing
