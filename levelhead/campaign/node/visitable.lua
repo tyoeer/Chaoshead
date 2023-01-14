@@ -15,6 +15,14 @@ local MAPPINGS = {
 	requiresGr17 = V.mapBool("pre_chall"),
 }
 
+function V:getLabel()
+	if self.title~="" then
+		return self.title
+	else
+		return V.super.getLabel(self)
+	end
+end
+
 function V:initialize(id)
 	V.super.initialize(self, id)
 	self:extendMappings(MAPPINGS)

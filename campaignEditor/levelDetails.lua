@@ -47,7 +47,7 @@ function UI:onReload(list, level)
 	if l.nodes:getTop() then
 		list:addTextEntry("Nodes: ")
 		for node in l.nodes:iterate() do
-			list:addButtonEntry(node.id, function()
+			list:addButtonEntry(node:getLabel(), function()
 				self.root:gotoNode(node)
 			end)
 		end

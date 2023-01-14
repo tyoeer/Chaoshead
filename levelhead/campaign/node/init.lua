@@ -54,6 +54,10 @@ function N:setId(id)
 	self.id = id
 end
 
+function N:getLabel()
+	return self.id
+end
+
 function N:newFromMapped(id, data)
 	local n
 	if data.t==0 then
