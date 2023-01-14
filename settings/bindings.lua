@@ -324,5 +324,21 @@ return {
 		removeLeft = "key: backspace",
 		removeRight = "key: delete",
 		defocusDetection = "mouse: left",
+		gotoFirst = "key: home",
+		gotoLast = "key: end",
+		selectModifier = {
+			type = "or",
+			triggers = {
+				"lshift",
+				"rshift",
+			},
+		},
+		wordModifier = {
+			type = "or",
+			triggers = {
+				"lctrl",
+				"rctrl",
+			},
+		}
 	},
 }

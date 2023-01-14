@@ -222,6 +222,8 @@ return {
 			inputStyle = {
 				textColor = {1,1,1},
 				caretColor = {1,1,1},
+				selectionColor = {0.6,0.6,1},
+				selectedTextColor = {0,0,0.2},
 				borderColor = {1,1,1},
 				backgroundColor = {0.1, 0.1, 0.1},
 				padding = 6,
@@ -244,6 +246,8 @@ return {
 		inputStyle = {
 			textColor = {1,1,1},
 			caretColor = {1,1,1},
+			selectionColor = {0.6,0.6,1},
+			selectedTextColor = {0,0,0.2},
 			borderColor = {1,1,1},
 			backgroundColor = {0.1, 0.1, 0.1},
 			padding = 6,
