@@ -52,6 +52,19 @@ function UI:onReload(list, level)
 	else
 		list:addTextEntry("Nodes: none")
 	end
+	
+	list:addButtonEntry("Reload metadata", function()
+		l:loadMetadata()
+		self.root:levelChanged(l)
+	end)
+	if l.metadata then
+		list:addTextEntry("Raw metadata: ")
+		for key, value in pairs(l.metadata) do
+			list:addTextEntry(key..": "..tostring(value), 1)
+		end
+	else
+		list:addTextEntry("Metadata not yet loaded")
+	end
 end
 
 return UI

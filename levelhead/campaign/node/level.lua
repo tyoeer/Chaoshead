@@ -1,17 +1,7 @@
 local ZoneData = require("levelhead.data.zones")
-local ElemData = require("levelhead.data.elements")
 local Level = require("levelhead.level.level")
 
 local L = Class("CampaignLevelNode",require("levelhead.campaign.node.visitable"))
-
---- Maps from an element id to the property to set
-local COLLECTABLE_ID_MAP = {
-	[ElemData:getID("Stranded GR17")] = "hasGr17",
-	[ElemData:getID("Bug Head")] = "hasBugs",
-	[ElemData:getID("Bug Body Right")] = "hasBugs",
-	[ElemData:getID("Bug Body Left")] = "hasBugs",
-	[ElemData:getID("Bug Abdomen")] = "hasBugs",
-}
 
 local MAPPINGS = {
 	level = {
@@ -79,31 +69,19 @@ function L:setLevelMetadata()
 	if not self.level then
 		return
 	end
-	local lhs = self.level:getLHS()
+	local meta = self.level:getMetadata()
 	
-	lhs:readHeaders()
-	local settings, width, height = lhs:parseHeaders()
-	
-	self.title = settings:getTitle()
-	self.weather = settings.weather
-	self.zoneId = settings.zone
+	self.title = meta.title
+	self.weather = meta.weather
+	self.zoneId = meta.zone
 	-- scale
-	local max = math.max(width, height)
+	local max = math.max(meta.width, meta.height)
 	local f = 86 + 2/3
 	self.scale = (max+f)/(255+f)
 	
 	--has GR-17 and/or bugs
-	self.hasBugs = false
-	self.hasGr17 = false
-	--Directly read raw content entries to save time parsing
-	lhs:readSingle("singleForeground")
-	for _, entry in ipairs(lhs.rawContentEntries.singleForeground.entries) do
-		local prop = COLLECTABLE_ID_MAP[entry.id]
-		if prop then
-			self[prop] = true
-		end
-	end
-	
+	self.hasBugs = meta.bugs
+	self.hasGr17 = meta.gr17
 end
 
 function L:getZone()
