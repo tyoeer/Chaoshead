@@ -79,7 +79,7 @@ local checks = {
 	function()
 		local update = false
 		
-		local UPDATE_SETTINGS_AFTER = "2.9.0"
+		local UPDATE_SETTINGS_AFTER = "2.13.1"
 		
 		if Version.previous and Version.previous~=Version.current then
 			if Version.previous=="DEV" then
