@@ -16,21 +16,29 @@ function UI:onReload(list, level)
 	
 	list:addButtonEntry("Id: ".. l.id, function()
 		MainUI:getString(
-			"WARNING: this changes the level file directly, but doesn't directly save the change in the node data\nEnter a new id:",
+			"Enter a new level id:",
 			function(id)
 				if self.root.campaign.levelsById[id] then
 					MainUI:displayMessage("There already is a level with id "..id)
 					return
 				end
-				
-				local success, err = l:changeId(id)
-				if not success then
-					MainUI:displayMessage("Failed changing the level id:", err)
-				end
-				
+				l:setId(id)
 				self.root:levelChanged(l)
 			end,
 			l.id
+		)
+	end)
+	
+	list:addButtonEntry("File: ".. l.file, function()
+		MainUI:getString(
+			"WARNING: this renames the level file directly, but doesn't directly save the change in the level data\nEnter a new file name:",
+			function(fileName)
+				local success, err = l:renameFile(fileName)
+				if not success then
+					MainUI:displayMessage("Failed renaming the level file:", err)
+				end
+			end,
+			l.file
 		)
 	end)
 	

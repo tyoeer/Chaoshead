@@ -109,16 +109,28 @@ local function unpack(to)
 		error("Failed creating levels directory at "..to)
 	end
 	local nLevels = 0
+	local levelData = {}
 	while get("B",true)==0x1C do
 		get("B") -- move internal offset
 		local marker = get("z")
 		local level = get("<s4")
-		local path = to.."levels/"..marker..".lhs"
+		local file = marker..".lhs"
+		local path = to.."levels/"..file
 		local success, mes = love.filesystem.write(path, level)
 		if not success then
 			error("Failed writing at"..path..": "..mes)
 		end
+		table.insert(levelData, {
+			id = marker,
+			file = file
+		})
 		nLevels = nLevels + 1
+	end
+	
+	local path = to.."levels.json"
+	local success, mes = love.filesystem.write(path, JSON.encode(levelData))
+	if not success then
+		error("Failed writing at"..path..": "..mes)
 	end
 	
 	if nLevels ~= expectedLevelCount then
@@ -206,17 +218,21 @@ local function pack(from, toName, compressionLevel)
 	
 	-- LEVELS
 	
-	local levels = love.filesystem.getDirectoryItems(from.."levels/")
+	local json, err = love.filesystem.read(from.."levels.json")
+	if not json then
+		error("Failed reading data at levels.json: "..err)
+	end
+	local levelsData = JSON.decode(json)
 	local nLevels = 0
-	for _,file in ipairs(levels) do
-		local marker = file:match("(.+)%.lhs")
-		local level, err = love.filesystem.read(from.."levels/"..file)
+	for _,levelData in ipairs(levelsData) do
+		-- local marker = file:match("(.+)%.lhs")
+		local level, err = love.filesystem.read(from.."levels/"..levelData.file)
 		if not level then
-			error("Failed reading data at "..file..": "..err)
+			error("Failed reading data at levels/"..levelData.file..": "..err)
 		end
 		nLevels = nLevels + 1
 		put("B",0x1C)
-		put("z",marker)
+		put("z",levelData.id)
 		put("<s4",level)
 	end
 	

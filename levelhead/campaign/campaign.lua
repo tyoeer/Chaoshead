@@ -4,7 +4,7 @@ local Node = require("levelhead.campaign.node")
 local LevelNode = require("levelhead.campaign.node.level")
 local Level = require("levelhead.campaign.level")
 
----@class Campaign
+---@class Campaign : Object
 ---@field new fun(self, path: string): self
 local C = Class("Campaign")
 
@@ -137,20 +137,26 @@ end
 function C:reloadLevels()
 	self:clearLevels()
 	
-	local lPath = self.path..self.SUBPATHS.levels
-	for _, item in ipairs(love.filesystem.getDirectoryItems(lPath)) do
-		local id = item:match("(.+).lhs")
-		self:addLevelRaw(Level:new(id))
+	local levels = self:loadJsonData("levels")
+	for _, rawLevel in ipairs(levels) do
+		local level = Level:new("$placeholderLevelId")
+		level:fromMapped(rawLevel)
+		self:addLevelRaw(level)
 	end
 end
 
-function C:loadData(name)
-	local path = self.path..self.SUBPATHS.data..name..".json"
+function C:loadJsonData(name)
+	local path = self.path..name..".json"
 	local data, err = love.filesystem.read(path)
 	if not data then
-		error(string.format("Error reading %s data at %s:\n%s", name,path, err), 3)
+		error(string.format("Error reading %s data at %s:\n%s", name,path, err))
 	end
 	return JSON.decode(data)
+end
+
+function C:loadData(name)
+	local path = self.SUBPATHS.data..name
+	return self:loadJsonData(path)
 end
 
 function C:reloadNodes(rawData)
@@ -213,12 +219,17 @@ end
 
 -- SAVING
 
-function C:saveData(name, data)
-	local path = self.path.."data/"..name..".json"
+function C:saveJsonData(name, data)
+	local path = self.path..name..".json"
 	local data, err = love.filesystem.write(path, JSON.encode(data))
 	if not data then
-		error(string.format("Error writing %s data at %s:\n%s", name,path, err), 3)
+		error(string.format("Error writing %s data at %s:\n%s", name,path, err))
 	end
+end
+
+function C:saveData(name, data)
+	local path = "data/"..name
+	self:saveJsonData(path, data)
 end
 
 function C:saveNodes()
@@ -237,6 +248,16 @@ function C:saveVersions()
 	})
 end
 
+function C:saveLevels()
+	local levels = {}
+	
+	for level in self.levels:iterate() do
+		table.insert(levels, level:toMapped())
+	end
+	
+	self:saveJsonData("levels", levels)
+end
+
 function C:save(path)
 	if path then
 		if path:sub(-1)~="/" then
@@ -247,6 +268,7 @@ function C:save(path)
 	
 	self:saveVersions()
 	self:saveNodes()
+	self:saveLevels()
 end
 
 return C

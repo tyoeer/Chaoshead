@@ -1,13 +1,21 @@
 local LHS = require("levelhead.lhs")
 local EP = require("libs.tyoeerUtils.entitypool")
 
----@class Campaignlevel
+---@class Campaignlevel : Mapped
+---@field super Mapped
 ---@field campaign Campaign?
 ---@field new fun(self, id: string): self
-local L = Class("CampaignLevel")
+local L = Class("CampaignLevel", require("levelhead.campaign.mapped"))
 
-function L:initialize(id)
+local MAPPINGS = {
+	id = "id",
+	file = "file",
+}
+
+function L:initialize(id, path)
+	L.super.initialize(self, MAPPINGS)
 	self.id = id
+	self.file = id..".lhs"
 	self.nodes = EP:new()
 	-- self.campaign
 end
@@ -20,7 +28,7 @@ function L:removeNodeRaw(node)
 end
 
 function L:getPath()
-	return self.campaign.path..self.campaign.SUBPATHS.levels..self.id..".lhs"
+	return self.campaign.path..self.campaign.SUBPATHS.levels..self.file
 end
 
 function L:getLHS()
@@ -33,21 +41,24 @@ function L:getHeaders()
 	return lhs:parseHeaders()
 end
 
---- Changes the id of this level
---- Works directly with files
+function L:setId(id)
+	self.campaign.levelsById[self.id] = nil
+	self.campaign.levelsById[id] = self
+	self.id = id
+end
+
+--- The file will be renamed directly on disk, though the change in data still has to be saved
 ---@return boolean success, string? errorMessage
-function L:changeId(name)
+function L:renameFile(name)
 	local oldPath = self:getPath()
-	local oldId = self.id
-	self.id = name
+	local oldFile = self.file
+	self.file = name
 	local newPath = self:getPath()
 	local _success, err = os.rename(love.filesystem.getSaveDirectory().."/"..oldPath, love.filesystem.getSaveDirectory().."/"..newPath)
 	if err then
-		self.id = oldId
+		self.id = oldFile
 		return false, err
 	else
-		self.campaign.levelsById[oldId] = nil
-		self.campaign.levelsById[self.id] = self
 		return true
 	end
 end
