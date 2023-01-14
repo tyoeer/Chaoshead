@@ -59,11 +59,6 @@ function L:getLHS()
 	return LHS:new(love.filesystem.getSaveDirectory().."/"..self:getPath())
 end
 
-function L:getHeaders()
-	local lhs = self:getLHS()
-	lhs:readHeaders()
-	return lhs:parseHeaders()
-end
 
 function L:setId(id)
 	self.campaign.levelsById[self.id] = nil
