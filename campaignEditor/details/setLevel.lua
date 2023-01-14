@@ -19,7 +19,7 @@ function UI:buildLevelList()
 	
 	for level in self.editor.campaign.levels:iterate() do
 		table.insert(out, {
-			label = level.id,
+			label = level:getLabel(),
 			filter = level.id:lower(),
 			context = level,
 		})

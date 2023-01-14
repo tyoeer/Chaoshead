@@ -14,7 +14,7 @@ function UI:getRootEntries()
 	for level in self.root.campaign.levels:iterate() do
 		table.insert(out,{
 			level = level,
-			title = level.id
+			title = level:getLabel()
 		})
 	end
 	

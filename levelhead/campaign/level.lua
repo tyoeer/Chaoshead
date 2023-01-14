@@ -59,6 +59,14 @@ function L:getLHS()
 	return LHS:new(love.filesystem.getSaveDirectory().."/"..self:getPath())
 end
 
+function L:getLabel()
+	if self.metadata then
+		return self.id .." | ".. self.metadata.title
+	else
+		return self.id
+	end
+end
+
 
 function L:setId(id)
 	self.campaign.levelsById[self.id] = nil

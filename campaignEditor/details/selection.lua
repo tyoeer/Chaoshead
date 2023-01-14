@@ -99,7 +99,7 @@ function UI:onReload(list)
 		list:addSeparator(false)
 		
 		if node.type=="level" then
-			list:addButtonEntry("Level: "..node.level.id, function()
+			list:addButtonEntry("Level: "..node.level:getLabel(), function()
 				MainUI:displayMessage(SetLevelUI:new(self.editor))
 			end)
 			if type(node.level)=="string" then
