@@ -161,7 +161,7 @@ function UI:roundToChar(dx, checkFrom)
 	end
 	
 	local text = self:getText()
-	local bestPos = 1
+	local bestPos = 0
 	local bestErr = math.abs(dx)
 	local lastErr = dx
 	
