@@ -62,7 +62,7 @@ jobs:
       - run: mv "release/license.txt" "release/license-love2d.txt"
       - run: cp "LICENSE.txt" "release/license-Chaoshead.txt"
       - run: mv "licenses/" "release/licenses/"
-      - uses: actions/upload-artifact@v3.1.1
+      - uses: actions/upload-artifact@v3.1.2
         with:
           name: win32-build
           path: release
