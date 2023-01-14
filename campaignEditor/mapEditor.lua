@@ -413,8 +413,10 @@ end
 
 -- EVENTS (most are handled by the proxy super)
 
-function UI:levelChanged(level)
-	self.selectionDetails:reload()
+function UI:levelChanged(_level)
+	if self.selectionDetails then
+		self.selectionDetails:reload()
+	end
 end
 
 function UI:onInputActivated(name,group, isCursorBound)
