@@ -1,6 +1,7 @@
 local Tabs = require("ui.tools.tabs")
 local FileExplorer = require("dataExplorer.fileExplorer")
 
+local TableViewer = require("dataExplorer.viewers.table")
 local TextViewer = require("dataExplorer.viewers.text")
 local DataFileViewer = require("dataExplorer.viewers.dataFile")
 local JSONViewer = require("dataExplorer.viewers.json")
@@ -44,6 +45,13 @@ end
 function UI:openDataFileViewer(path)
 	local ui = DataFileViewer:new(path,self)
 	ui.title = path
+	self.child:addTab(ui)
+	self.child:setActiveTab(ui)
+end
+
+function UI:openDataViewer(data, label)
+	local ui = TableViewer:new(data,self)
+	ui.title = label
 	self.child:addTab(ui)
 	self.child:setActiveTab(ui)
 end
