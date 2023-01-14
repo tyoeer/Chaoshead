@@ -89,23 +89,6 @@ function L:loadMetadata()
 	lhs:readHeaders()
 	local settings, width, height = lhs:parseHeaders()
 	
-	self.title = settings:getTitle()
-	self.weather = settings.weather
-	self.zoneId = settings.zone
-	-- scale
-	local max = math.max(width, height)
-	local f = 86 + 2/3
-	self.scale = (max+f)/(255+f)
-	
-	--Directly read raw content entries to save time parsing
-	lhs:readSingle("singleForeground")
-	for _, entry in ipairs(lhs.rawContentEntries.singleForeground.entries) do
-		local prop = COLLECTABLE_ID_MAP[entry.id]
-		if prop then
-			self.metadata[prop] = true
-		end
-	end
-	
 	self.metadata = {
 		title = settings:getTitle(),
 		weather = settings.weather,
@@ -117,6 +100,16 @@ function L:loadMetadata()
 		bugs = false,
 		gr17 = false,
 	}
+	
+	--Directly read raw content entries to save time parsing
+	lhs:readSingle("singleForeground")
+	for _, entry in ipairs(lhs.rawContentEntries.singleForeground.entries) do
+		local prop = COLLECTABLE_ID_MAP[entry.id]
+		if prop then
+			self.metadata[prop] = true
+		end
+	end
+	
 end
 
 function L:getMetadata()
