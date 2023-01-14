@@ -34,7 +34,7 @@ function UI:onReload(list)
 		"Rehash",
 		function()
 			local function err(mes)
-				MainUI:displayMessage(
+				MainUI:popup(
 					"Error while rehashing, file might be corrupted",
 					mes
 				)
@@ -60,7 +60,7 @@ function UI:onReload(list)
 			local suc, mes = f:close()
 			if not suc then return err(mes) end
 
-			MainUI:displayMessage("Succesfully rehashed level")
+			MainUI:popup("Succesfully rehashed level")
 		end
 	)
 	

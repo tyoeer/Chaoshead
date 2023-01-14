@@ -49,7 +49,7 @@ function UI:getRootEntries()
 				end
 			end
 			self:reload()
-			MainUI:displayMessage(string.format("Imported %i levels",nAdded))
+			MainUI:popup(string.format("Imported %i levels",nAdded))
 		end
 	})
 	table.insert(out, 2, {

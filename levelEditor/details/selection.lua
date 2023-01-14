@@ -86,7 +86,7 @@ function UI:onReload(list)
 	--add a divider
 	list:addSeparator(false)
 	list:addButtonEntry("Filter by element (+ special)",function()
-		MainUI:displayMessage(ElementFilter:new(self.editor,s))
+		MainUI:popup(ElementFilter:new(self.editor,s))
 	end)
 	
 	--add a divider
@@ -215,7 +215,7 @@ function UI:onReload(list)
 	--properties
 	for _,pl in ipairs(self:sortProperties()) do
 		list:addButtonEntry(PUI:new(pl,list.style),function()
-			MainUI:displayMessage(PEDIT:new(pl, self.editor))
+			MainUI:popup(PEDIT:new(pl, self.editor))
 		end)
 	end
 end

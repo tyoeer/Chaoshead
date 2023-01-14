@@ -41,7 +41,7 @@ function UI:reload()
 			self.editor:setLevel(level)
 			MainUI:removeModal()
 		else
-			MainUI:displayMessage("Select a level first")
+			MainUI:popup("Select a level first")
 		end
 	end)
 	

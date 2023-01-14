@@ -17,7 +17,7 @@ function UI.loadErrorHandler(message)
 	--cut of the part of the trace that goes into the code that calls UI:openEditor()
 	local index = fullTrace:find("%s+%[C%]: in function 'xpcall'")
 	local trace = fullTrace:sub(1,index-1)
-	MainUI:displayMessage("Failed to load level!","Error message: "..message,trace)
+	MainUI:popup("Failed to load level!","Error message: "..message,trace)
 end
 
 function UI:initialize(levelPath, workshop)
@@ -70,7 +70,7 @@ function UI:save()
 	if self:checkLimits("Can't save level:\n") then
 		self.levelFile:serializeAll(self.level)
 		self.latestHash = self.levelFile:writeAll()
-		MainUI:displayMessage("Succesfully saved level!")
+		MainUI:popup("Succesfully saved level!")
 	end
 end
 
@@ -82,7 +82,7 @@ function UI:checkLimits(prefix)
 		for _,limit in ipairs(list) do
 			local failed = {limit.check(self.level)}
 			if failed[1] then
-				MainUI:displayMessage(prefix..string.format(limit.message,unpack(failed)))
+				MainUI:popup(prefix..string.format(limit.message,unpack(failed)))
 				return false
 			end
 		end
@@ -108,10 +108,10 @@ function UI:runScript(path,disableSandbox)
 			end
 			--move to the levelEditor to show the scripts effects
 			self.child:setActiveTab(self.levelEditor)
-			MainUI:displayMessage("Succesfully ran "..path)
+			MainUI:popup("Succesfully ran "..path)
 		else
 			local message = selectionOrMessage
-			MainUI:displayMessage(message, errTrace)
+			MainUI:popup(message, errTrace)
 		end
 	else
 		error("Tried to run script in sandboxed mode, which is currently not yet implemented.")
@@ -146,7 +146,7 @@ function UI:onFocus(focus)
 				-- Prevent repeated asks after a single change that gets dismissed
 				self.latestHash = self.levelFile:getHash()
 				
-				MainUI:displayMessage(
+				MainUI:popup(
 					"Level was edited by external program (probably Levelhead)",
 					{"Reload", function()
 						MainUI:removeModal()
@@ -166,7 +166,7 @@ function UI:onInputActivated(name,group, isCursorBound)
 			self:save()
 		elseif name=="checkLimits" then
 			if self:checkLimits() then
-				MainUI:displayMessage("Level doesn't break any limits!")
+				MainUI:popup("Level doesn't break any limits!")
 			end
 		elseif name=="gotoLevelEditor" then
 			self.child:setActiveTab(self.levelEditor)
@@ -176,7 +176,7 @@ function UI:onInputActivated(name,group, isCursorBound)
 			if Storage.quickRunScriptPath then
 				self:runScript(Storage.quickRunScriptPath, true)
 			else
-				MainUI:displayMessage("No script bound to the quick run hotkey!")
+				MainUI:popup("No script bound to the quick run hotkey!")
 			end
 		end
 	end

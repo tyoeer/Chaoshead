@@ -43,12 +43,12 @@ function UI:onReload(list)
 			print(dataPath..category..".json")
 			local success, err = love.filesystem.write(dataPath..category..".json", JSON.encode(data))
 			if not success then
-				MainUI:displayMessage("Failed overwriting a data file (other may have been edited though):", err)
+				MainUI:popup("Failed overwriting a data file (other may have been edited though):", err)
 				return
 			end
 		end
 		
-		MainUI:displayMessage("Successfully overwrote campaign data")
+		MainUI:popup("Successfully overwrote campaign data")
 	end)
 	
 	list:addSeparator(false)

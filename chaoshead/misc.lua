@@ -87,7 +87,7 @@ function UI:onReload(list)
 				l:addTextEntry(parseName(name)..": "..parseBind(val), 1)
 			end
 		end
-		MainUI:displayMessage(l)
+		MainUI:popup(l)
 	end)
 	
 	-- DIVIDER
@@ -107,7 +107,7 @@ function UI:onReload(list)
 	list:addButtonEntry("Open Levelhead installation folder",function()
 		local path = require("levelhead.misc").getInstallationPath()
 		if not path then
-			MainUI:displayMessage("Could not find Levelhead installation directory\n"
+			MainUI:popup("Could not find Levelhead installation directory\n"
 				.."If you are using the non-Steam version, please get in touch so support can be added.")
 			return
 		end
@@ -121,7 +121,7 @@ function UI:onReload(list)
 	list:addButtonEntry("Check for updates", function()
 		local c = require("ui.startupChecks").checkForUpdate(true)
 		if c then
-			MainUI:displayMessage("Your Chaoshead is up to date.")
+			MainUI:popup("Your Chaoshead is up to date.")
 		end
 	end)
 	list:addButtonEntry("Open executable patching menu (experimental)",function()
@@ -156,13 +156,13 @@ function UI:onReload(list)
 		)
 		local success, mes = love.filesystem.write("campaignEditButton.csx", data)
 		if success then
-			MainUI:displayMessage(
+			MainUI:popup(
 				"campaignEditButton.csx was placed in the CH data directory.",
 				"This script can be used with UndertaleModTool to add a button to go to the editor in the campaign in Levelhead",
 				{"Open UndertaleModTool page in browser", function() love.system.openURL("https://github.com/krzys-h/UndertaleModTool/") end}
 			)
 		else
-			MainUI:displayMessage("Failed saving script:",mes)
+			MainUI:popup("Failed saving script:",mes)
 		end
 	end)
 	

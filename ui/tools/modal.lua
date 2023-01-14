@@ -100,7 +100,7 @@ end
 -- Preset modals
 
 ---@param ... string|BaseNodeUI|{ [1]: string, [2]: function}
-function UI:displayMessage(...)
+function UI:popup(...)
 	local ui = LIST:new(theme.listStyle)
 	for _,item in ipairs({...}) do
 		if type(item)=="table" then
@@ -124,7 +124,7 @@ end
 ---@param inputDefault string? If provided, the input box gets preset to this string
 function UI:getString(text, callback, inputDefault)
 	local input = INPUT:new(function() end, Settings.theme.modal.inputStyle)
-	self:displayMessage(
+	self:popup(
 		text,
 		input,
 		{"Confirm", function()

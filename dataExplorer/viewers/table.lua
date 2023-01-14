@@ -85,7 +85,7 @@ function UI:getDetailsUI(data)
 				if success then
 					self.overview:openDataViewer(dataOrErr, self.title.."@"..data.path)
 				else
-					MainUI:displayMessage("Failed parsing as JSON:", dataOrErr)
+					MainUI:popup("Failed parsing as JSON:", dataOrErr)
 				end
 			end)
 		end

@@ -19,7 +19,7 @@ function UI:addPropertyChanger(id, op)
 		local v = self.input:getParsed()
 		if v then
 			if op=="/" and v==0 then
-				MainUI:displayMessage("Can't divide by zero!")
+				MainUI:popup("Can't divide by zero!")
 			else
 				self.editor:changeProperty(id, v, op)
 				self:reload()
@@ -39,7 +39,7 @@ function UI:addFilter(op)
 			end
 			
 			if additionalDeselection then
-				MainUI:displayMessage(
+				MainUI:popup(
 					"NOTE: Additional objects/path nodes were deselected because they were "
 					.. "on the same tile as a path node/object that was filtered out"
 				)

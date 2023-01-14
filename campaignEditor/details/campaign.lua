@@ -1,4 +1,5 @@
 local CampaignMisc = require("campaignEditor.misc")
+local JSON = require("libs.json")
 
 local UI = Class("CampaignDetailsUI",require("ui.tools.details"))
 
@@ -57,7 +58,7 @@ function UI:onReload(list,campaign)
 	-- 	"Check level limits",
 	-- 	function()
 	-- 		if self.editor.root:checkLimits() then
-	-- 			MainUI:displayMessage("Level doesn't break any limits!")
+	-- 			MainUI:popup("Level doesn't break any limits!")
 	-- 		end
 	-- 	end
 	-- )

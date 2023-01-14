@@ -56,13 +56,13 @@ function P:initialize()
 			local edited, err = self:patch(patchInfo)
 			if edited and not err then
 				-- Success
-				MainUI:displayMessage(string.format("Successfully applied patch %q", patchInfo.title), "This is experimental, please report any bugs/crashes.")
+				MainUI:popup(string.format("Successfully applied patch %q", patchInfo.title), "This is experimental, please report any bugs/crashes.")
 				return
 			end
 			if edited then
 				err = "EXECUTABLE HAS BEEN EDITED, BUT PATCH FAILED MID-WAY. EXECUTABLE BEHAVIOUR IS UNDEFINED.\n"..err
 			end
-			MainUI:displayMessage(err)
+			MainUI:popup(err)
 		end)
 	end
 	list:addSeparator(true)
@@ -71,7 +71,7 @@ function P:initialize()
 end
 
 function P:display()
-	MainUI:displayMessage(self)
+	MainUI:popup(self)
 end
 
 

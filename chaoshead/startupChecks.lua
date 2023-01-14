@@ -21,7 +21,7 @@ local checkForUpdate = function(force)
 	local success, release = xpcall(Github.latestRelease, function(message)
 		if message:find("NetworkError") and message:find("getError()") then
 			local err = Github.getError()
-			MainUI:displayMessage(
+			MainUI:popup(
 				"Error fetching update news:",
 				"Server returned status code "..tostring(err.code),
 				tostring(err.body)
@@ -32,7 +32,7 @@ local checkForUpdate = function(force)
 			--cut of the part of the trace that goes into the code that calls UI:openEditor()
 			local index = fullTrace:find("%s+%[C%]: in function 'xpcall'")
 			local trace = fullTrace:sub(1,index-1)
-			MainUI:displayMessage(
+			MainUI:popup(
 				"Error fetching update news:",
 				message,
 				trace
@@ -44,7 +44,7 @@ local checkForUpdate = function(force)
 	end
 
 	if not release then
-		MainUI:displayMessage("Found no release on GitHub when checking for updates, which is weird, and suggests something is broken.")
+		MainUI:popup("Found no release on GitHub when checking for updates, which is weird, and suggests something is broken.")
 	else
 		if Version.current=="DEV" and not force then
 			return true
@@ -54,7 +54,7 @@ local checkForUpdate = function(force)
 		local comp = Version.compareStrings(Version.current, ver)
 		if comp==-1 then
 			--release version is higher: update available
-			MainUI:displayMessage(
+			MainUI:popup(
 				"A new chaoshead update is available!",
 				"Current version: "..Version.current,
 				"Available: "..ver,
@@ -64,7 +64,7 @@ local checkForUpdate = function(force)
 			)
 		elseif comp==1 then
 			--release version is lower: WHAT
-			MainUI:displayMessage(
+			MainUI:popup(
 				"Current version is "..Version.current..", while the latest release is "..ver..", which is lower.",
 				"This is very weird, and not supposed to happen. Please get in touch so I can figure out what went wrong."
 			)
@@ -111,14 +111,14 @@ local checks = {
 				end
 				love.event.quit("restart")
 			end)
-			MainUI:displayMessage(l)
+			MainUI:popup(l)
 		end
 	end,
 	
 	-- No Levelhead data found
 	function()
 		if not NFS.getInfo(LhMisc.getDataPath(),"directory") then
-			MainUI:displayMessage("Could not find Levelhead data at "..LhMisc.getDataPath())
+			MainUI:popup("Could not find Levelhead data at "..LhMisc.getDataPath())
 		end
 	end,
 	

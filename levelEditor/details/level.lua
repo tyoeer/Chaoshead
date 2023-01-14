@@ -54,7 +54,7 @@ function UI:onReload(list,level)
 		"Check level limits",
 		function()
 			if self.editor.root:checkLimits() then
-				MainUI:displayMessage("Level doesn't break any limits!")
+				MainUI:popup("Level doesn't break any limits!")
 			end
 		end
 	)

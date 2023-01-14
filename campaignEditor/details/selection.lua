@@ -66,7 +66,7 @@ function UI:onReload(list)
 				"Enter the new node id",
 				function(id)
 					if self.editor.campaign.nodesById[id] then
-						MainUI:displayMessage("There already is a node with id "..id)
+						MainUI:popup("There already is a node with id "..id)
 						return
 					end
 					node:setId(id)
@@ -102,7 +102,7 @@ function UI:onReload(list)
 		if node.type=="level" then
 			list:addTextEntry("Level:")
 			list:addButtonEntry(node.level:getLabel(), function()
-				MainUI:displayMessage(SetLevelUI:new(self.editor))
+				MainUI:popup(SetLevelUI:new(self.editor))
 			end)
 			if type(node.level)=="string" then
 				list:addTextEntry("WARNING: This node's level wasn't found in this campaigns level list")
@@ -120,7 +120,7 @@ function UI:onReload(list)
 					function(str)
 						local time = tonumber(str)
 						if not time then
-							MainUI:displayMessage(str.." is not a valid number")
+							MainUI:popup(str.." is not a valid number")
 							return
 						end
 						self.editor:setOnTimeDelivery(time)

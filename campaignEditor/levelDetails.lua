@@ -20,7 +20,7 @@ function UI:onReload(list, level)
 			"Enter a new level id:",
 			function(id)
 				if self.root.campaign.levelsById[id] then
-					MainUI:displayMessage("There already is a level with id "..id)
+					MainUI:popup("There already is a level with id "..id)
 					return
 				end
 				l:setId(id)
@@ -37,7 +37,7 @@ function UI:onReload(list, level)
 			function(fileName)
 				local success, err = l:renameFile(fileName)
 				if not success then
-					MainUI:displayMessage("Failed renaming the level file:", err)
+					MainUI:popup("Failed renaming the level file:", err)
 				end
 			end,
 			l.file

@@ -13,7 +13,7 @@ local errorHandler = function(message)
 	--cut of the part of the trace that goes into the code that calls UI:openEditor()
 	local index = fullTrace:find("%s+%[C%]: in function 'xpcall'")
 	local trace = fullTrace:sub(1,index-1)
-	MainUI:displayMessage("Failed to pack/unpack campaign!","Error message: "..message,trace)
+	MainUI:popup("Failed to pack/unpack campaign!","Error message: "..message,trace)
 end
 
 local function unpack(callback)
@@ -33,13 +33,13 @@ local function unpack(callback)
 			MainUI:removeModal() --manual dismiss of the current modal
 			local subpath = input:getParsed()
 			if not subpath or subpath=="" then
-				MainUI:displayMessage("The path you entered was invalid!")
+				MainUI:popup("The path you entered was invalid!")
 				return
 			end
 			local success = xpcall(function()
 				Packing.unpack(folder..subpath)
 			end, errorHandler)
-			MainUI:displayMessage("Successfully unpacked campaign!")
+			MainUI:popup("Successfully unpacked campaign!")
 			if callback then
 				callback(subpath, success)
 			end
@@ -51,7 +51,7 @@ local function unpack(callback)
 		MainUI:setModal(list)
 		MainUI:setCancelAction(cancel)
 	else
-		MainUI:displayMessage("No campaign_hardfile found in the Chaoshead data directory!\nYou have to manually move it there first."
+		MainUI:popup("No campaign_hardfile found in the Chaoshead data directory!\nYou have to manually move it there first."
 		.."\n(You can open the data direcotry in the Misc. tab.")
 	end
 end
@@ -62,7 +62,7 @@ local function actualPack(fromPath, toName, callback)
 		Packing.pack(fromPath, toName)
 	end, errorHandler)
 	if success then
-		MainUI:displayMessage("Succesfully packed campaign!")
+		MainUI:popup("Succesfully packed campaign!")
 	end
 	if callback then
 		callback(success)
@@ -103,14 +103,14 @@ local function packAndMove(fromPath, callback)
 			local lhCampaignPath = LhMisc:getInstallationPath().."campaign_hardfile"
 			local success, err = os.remove(lhCampaignPath)
 			if err then
-				MainUI:displayMessage("Failed removing old campaign (tempfile still exists):", err)
+				MainUI:popup("Failed removing old campaign (tempfile still exists):", err)
 			end
 			local success, err = os.rename(
 				love.filesystem.getSaveDirectory().."/"..TMP_NAME,
 				lhCampaignPath
 			)
 			if err then
-				MainUI:displayMessage("Failed moving tempfile to LH directory (tempfile still exists):", err)
+				MainUI:popup("Failed moving tempfile to LH directory (tempfile still exists):", err)
 			end
 			if callback then
 				callback(success)

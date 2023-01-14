@@ -357,23 +357,23 @@ function UI:connectNodes()
 	local a = self.selection.contents.pathNodes:getTop()
 	local b = self.selection.contents.pathNodes:getBottom()
 	if a.next and a.prev then
-		MainUI:displayMessage(string.format("The path node at (%i,%i) is already connected!",a.x,a.y))
+		MainUI:popup(string.format("The path node at (%i,%i) is already connected!",a.x,a.y))
 		return
 	end
 	if b.next and b.prev then
-		MainUI:displayMessage(string.format("The path node at (%i,%i) is already connected!",b.x,b.y))
+		MainUI:popup(string.format("The path node at (%i,%i) is already connected!",b.x,b.y))
 		return
 	end
 	if a.prev==nil and b.next==nil then
 		a,b = b,a
 	elseif (a.prev and b.prev) or (a.next and b.next) then
-		MainUI:displayMessage("Can't connect: the paths point towards each other!")
+		MainUI:popup("Can't connect: the paths point towards each other!")
 		return
 	end
 	--a is a last node, b is a first
 	for prop in a.path:iterateProperties() do
 		if a.path:getPropertyRaw(prop)~=b.path:getPropertyRaw(prop) then
-			MainUI:displayMessage(string.format("Can't connect: property %s differs!",P:getName(prop)))
+			MainUI:popup(string.format("Can't connect: property %s differs!",P:getName(prop)))
 			return
 		end
 	end
@@ -441,7 +441,7 @@ function UI:paste()
 	if cp then
 		self:hold(cp)
 	else
-		MainUI:displayMessage("Nothing on clipboard to paste!")
+		MainUI:popup("Nothing on clipboard to paste!")
 	end
 end
 

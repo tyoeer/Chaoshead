@@ -19,7 +19,7 @@ function UI.loadErrorHandler(message)
 	--cut of the part of the trace that goes into the code that calls UI:openEditor()
 	local index = fullTrace:find("%s+%[C%]: in function 'xpcall'")
 	local trace = fullTrace:sub(1,index-1)
-	MainUI:displayMessage("Failed to load campaign!","Error message: "..message,trace)
+	MainUI:popup("Failed to load campaign!","Error message: "..message,trace)
 end
 
 function UI:initialize(subpath, overview)
@@ -63,7 +63,7 @@ end
 
 function UI:save()
 	self.campaign:save()
-	MainUI:displayMessage("Succesfully saved campaign!")
+	MainUI:popup("Succesfully saved campaign!")
 end
 
 function UI:checkLimits(prefix)
@@ -75,7 +75,7 @@ function UI:checkLimits(prefix)
 	-- 	for _,limit in ipairs(list) do
 	-- 		local failed = {limit.check(self.level)}
 	-- 		if failed[1] then
-	-- 			MainUI:displayMessage(prefix..string.format(limit.message,unpack(failed)))
+	-- 			MainUI:popup(prefix..string.format(limit.message,unpack(failed)))
 	-- 			return false
 	-- 		end
 	-- 	end
@@ -111,10 +111,10 @@ end
 -- 			end
 -- 			--move to the levelEditor to show the scripts effects
 -- 			self.child:setActiveTab(self.levelEditor)
--- 			MainUI:displayMessage("Succesfully ran "..path)
+-- 			MainUI:popup("Succesfully ran "..path)
 -- 		else
 -- 			local message = selectionOrMessage
--- 			MainUI:displayMessage(message, errTrace)
+-- 			MainUI:popup(message, errTrace)
 -- 		end
 -- 	else
 -- 		error("Tried to run script in sandboxed mode, which is currently not yet implemented.")
@@ -158,7 +158,7 @@ function UI:onInputActivated(name,group, isCursorBound)
 			self:save()
 		-- elseif name=="checkLimits" then
 		-- 	if self:checkLimits() then
-		-- 		MainUI:displayMessage("Level doesn't break any limits!")
+		-- 		MainUI:popup("Level doesn't break any limits!")
 		-- 	end
 		-- elseif name=="gotoLevelEditor" then
 		-- 	self.child:setActiveTab(self.levelEditor)
@@ -168,7 +168,7 @@ function UI:onInputActivated(name,group, isCursorBound)
 		-- 	if Storage.quickRunScriptPath then
 		-- 		self:runScript(Storage.quickRunScriptPath, true)
 		-- 	else
-		-- 		MainUI:displayMessage("No script bound to the quick run hotkey!")
+		-- 		MainUI:popup("No script bound to the quick run hotkey!")
 		-- 	end
 		end
 	end

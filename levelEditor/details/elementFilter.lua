@@ -107,7 +107,7 @@ function UI:reload()
 				MainUI:removeModal()
 			end
 		else
-			MainUI:displayMessage("Can't filter: no element selected")
+			MainUI:popup("Can't filter: no element selected")
 		end
 	end)
 	self:addButtonEntry("Filter element out of selection", function()
@@ -121,7 +121,7 @@ function UI:reload()
 				MainUI:removeModal()
 			end
 		else
-			MainUI:displayMessage("Can't filter: no element selected")
+			MainUI:popup("Can't filter: no element selected")
 		end
 	end)
 	
