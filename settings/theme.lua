@@ -65,10 +65,10 @@ return {
 					["$UnknownNodeType"] = {0,0,0},
 				},
 				radii = {
-					level = 64,
-					["icon pack"] = 32,
-					path = 16,
-					presentation = 32,
+					level = 94,
+					["icon pack"] = 60,
+					path = 20,
+					presentation = 52,
 					["$UnknownNodeType"] = 32,
 					
 				},
