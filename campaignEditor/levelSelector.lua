@@ -22,6 +22,16 @@ function UI:getRootEntries()
 		return a.title < b.title
 	end)
 	
+	table.insert(out, 1, {
+		title = "Reload all metadata",
+		action = function()
+			for level in self.root.campaign.levels:iterate() do
+				level:loadMetadata()
+			end
+			self.root:levelChanged()
+		end
+	})
+	
 	return out
 end
 
