@@ -138,6 +138,15 @@ function UI:getText()
 end
 
 
+function UI:focusWithDefault(default)
+	self:grabFocus()
+	self.cursorRightOfSelection = true
+	self.selection = default
+	self.left = ""
+	self.right = ""
+	self:updateDisplayText()
+end
+
 function UI:getCurrentCaretPos()
 	if self.selection and self.cursorRightOfSelection then
 		return #self.left + #self.selection
@@ -369,7 +378,7 @@ function UI:onInputActivated(name,group,_isCursorBound)
 			else
 				if Input.isActive("wordModifier", "textInput") then
 					while self:getLeftOfCursor():match("%W$") do
-				self.left = self.left:sub(1,-2)
+						self.left = self.left:sub(1,-2)
 					end
 					while self:getLeftOfCursor():match("%w$") do
 						self.left = self.left:sub(1,-2)
@@ -385,7 +394,7 @@ function UI:onInputActivated(name,group,_isCursorBound)
 			else
 				if Input.isActive("wordModifier", "textInput") then
 					while self:getRightOfCursor():match("^%W") do
-				self.right = self.right:sub(2)
+						self.right = self.right:sub(2)
 					end
 					while self:getRightOfCursor():match("^%w") do
 						self.right = self.right:sub(2)
@@ -413,6 +422,8 @@ function UI:onInputActivated(name,group,_isCursorBound)
 		if not name:match("Modifier") then
 			self.timer = 0
 		end
+		
+		-- self:updateDisplayText() -- selection changes can break the displayed text
 	end
 end
 

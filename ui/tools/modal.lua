@@ -124,9 +124,6 @@ end
 ---@param inputDefault string? If provided, the input box gets preset to this string
 function UI:getString(text, callback, inputDefault)
 	local input = INPUT:new(function() end, Settings.theme.modal.inputStyle)
-	if inputDefault then
-		input:setText(inputDefault)
-	end
 	self:displayMessage(
 		text,
 		input,
@@ -135,7 +132,11 @@ function UI:getString(text, callback, inputDefault)
 			callback(input:getText())
 		end}
 	)
-	input:grabFocus()
+	if inputDefault then
+		input:focusWithDefault(inputDefault)
+	else
+		input:grabFocus()
+	end
 end
 
 -- events

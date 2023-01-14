@@ -68,6 +68,10 @@ function UI:grabFocus()
 	self.input:grabFocus()
 end
 
+function UI:focusWithDefault(default)
+	self.input:focusWithDefault(default)
+end
+
 function UI:setRaw(str)
 	self.input:setText(str)
 	self:contentsChanged()

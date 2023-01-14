@@ -7,8 +7,7 @@ local theme = Settings.theme.details
 
 function UI:initialize(propertyList, editor)
 	self.input = ParsedInput:new(tonumber, theme.inputStyle)
-	self.input:setRaw("1")
-	self.input:grabFocus()
+	self.input:focusWithDefault("1")
 	self.editor = editor
 	self.filtering = false
 	self.lines = 0
