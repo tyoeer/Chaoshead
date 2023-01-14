@@ -60,7 +60,8 @@ function UI:onReload(list)
 	if n==1 then
 		local node = s:getTop()
 		
-		list:addButtonEntry("Id: "..node.id, function()
+		list:addTextEntry("Id:")
+		list:addButtonEntry(node.id, function()
 			MainUI:getString(
 				"Enter the new node id",
 				function(id)
@@ -99,7 +100,8 @@ function UI:onReload(list)
 		list:addSeparator(false)
 		
 		if node.type=="level" then
-			list:addButtonEntry("Level: "..node.level:getLabel(), function()
+			list:addTextEntry("Level:")
+			list:addButtonEntry(node.level:getLabel(), function()
 				MainUI:displayMessage(SetLevelUI:new(self.editor))
 			end)
 			if type(node.level)=="string" then

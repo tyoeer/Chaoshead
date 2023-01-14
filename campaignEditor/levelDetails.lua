@@ -14,7 +14,8 @@ function UI:onReload(list, level)
 	
 	list:resetList()
 	
-	list:addButtonEntry("Id: ".. l.id, function()
+	list:addTextEntry("Id:")
+	list:addButtonEntry(l.id, function()
 		MainUI:getString(
 			"Enter a new level id:",
 			function(id)
@@ -29,7 +30,8 @@ function UI:onReload(list, level)
 		)
 	end)
 	
-	list:addButtonEntry("File: ".. l.file, function()
+	list:addTextEntry("File:")
+	list:addButtonEntry(l.file, function()
 		MainUI:getString(
 			"WARNING: this renames the level file directly, but doesn't directly save the change in the level data\nEnter a new file name:",
 			function(fileName)
