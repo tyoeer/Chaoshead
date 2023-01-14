@@ -61,7 +61,7 @@ end
 
 function L:getLabel()
 	if self.metadata then
-		return self.id .." | ".. self.metadata.title
+		return self.metadata.title
 	else
 		return self.id
 	end
