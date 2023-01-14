@@ -137,7 +137,9 @@ function LHS:parsePaths(w)
 		local entry = raw.entries[i]
 		local p = w:newPath()
 		for j=1,entry.amount,1 do
-			p:append(w:fileToWorldX(entry.subentries[j].x), w:fileToWorldY(entry.subentries[j].y))
+			local x, y = w:fileToWorldX(entry.subentries[j].x), w:fileToWorldY(entry.subentries[j].y)
+			w.pathNodes[x][y] = nil -- If there's already a pth node, it would get deleted. This way we half-support overlapping path nodes.
+			p:append(x, y)
 		end
 		idMap[entry.id] = p
 	end
