@@ -1,4 +1,5 @@
 local Details = require("campaignEditor.levelDetails")
+local Level = require("levelhead.campaign.level")
 
 local UI = Class("CampaignLevelSelectorUI", require("ui.tools.treeViewer"))
 
@@ -23,6 +24,35 @@ function UI:getRootEntries()
 	end)
 	
 	table.insert(out, 1, {
+		title = "Import untracked level files",
+		action = function()
+			local c = self.root.campaign
+			
+			local has = {}
+			for level in c.levels:iterate() do
+				has[level.file] = true
+			end
+			
+			local nAdded = 0
+			local items = love.filesystem.getDirectoryItems(c.path .. c.SUBPATHS.levels)
+			for _, file in ipairs(items) do
+				if not has[file] then
+					local id = file:match("(.+).lhs$")
+					if id then
+						local level = Level:new(id)
+						c:addLevelRaw(level)
+						level:loadMetadata()
+						
+						nAdded = nAdded + 1
+						has[file] = true
+					end
+				end
+			end
+			self:reload()
+			MainUI:displayMessage(string.format("Imported %i levels",nAdded))
+		end
+	})
+	table.insert(out, 2, {
 		title = "Reload all metadata",
 		action = function()
 			for level in self.root.campaign.levels:iterate() do
