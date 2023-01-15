@@ -119,7 +119,7 @@ function UI:onReload(list)
 	list:addSeparator(false)
 	
 	list:addButtonEntry("Check for updates", function()
-		local c = require("ui.startupChecks").checkForUpdate(true)
+		local c = require("chaoshead.startupChecks").checkForUpdate(true)
 		if c then
 			MainUI:popup("Your Chaoshead is up to date.")
 		end
