@@ -1,6 +1,6 @@
 # Chaoshead
 
-A WIP level editor/scripting interface/reverse engineering tool for [Levelhead](https://lvlhd.co) levels/stages,
+A WIP level editor, scripting interface, campaign editor, and reverse engineering tool for [Levelhead](https://lvlhd.co),
 made using [LÖVE](http://www.love2d.org).
 
 Chaoshead is pretty stable these days, though you might still want to consider making a backup of a level before editing it with Chaoshead. \
@@ -15,7 +15,7 @@ Chaoshead Update Awareness Day is annually on february 27, in order to spread aw
 Chaoshead tries to impose as little limits as possible.
 [For more information about those limits and which your allowed to break, go here.](http://levelmod.epizy.com/wiki/doku.php?id=blocked_stuff)
 
-### Main Editor Features
+### Main Level Editor Features
 
 - Resize at all four corners
 - Selection:
