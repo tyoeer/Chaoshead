@@ -157,6 +157,7 @@ function UI:onReload(list)
 		local success, mes = love.filesystem.write("campaignEditButton.csx", data)
 		if success then
 			MainUI:popup(
+				"WARNING: the default ids used to save progress given to new stuff are random, and might cause interference in the future.\nBe careful when not using a guest account.",
 				"campaignEditButton.csx was placed in the CH data directory.",
 				"This script can be used with UndertaleModTool to add a button to go to the editor in the campaign in Levelhead",
 				{"Open UndertaleModTool page in browser", function() love.system.openURL("https://github.com/krzys-h/UndertaleModTool/") end}
