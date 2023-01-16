@@ -45,5 +45,12 @@ function UI:closeEditor(campaignEditor)
 	self.child:removeTab(campaignEditor)
 end
 
+function UI:onVisible(visible)
+	if visible and not Storage.campaignWarningAt then
+		MainUI:popup("WARNING: the default ids used to save campaign progress given to new stuff are random, and might cause interference in the future.\nBe careful when not using a guest account.")
+		Storage.campaignWarningAt = os.time()
+		Storage:save()
+	end
+end
 
 return UI
