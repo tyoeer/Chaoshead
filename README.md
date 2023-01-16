@@ -42,7 +42,9 @@ Chaoshead tries to impose as little limits as possible.
 - Setting properties on objects that don't have them
   - I think that making property handling handle both known properties as in the data and unknown ones set at runtime simultaneously is more effort than it's worth
 	- Workaround for objects/elements: remove data about which properties the element has, it will fall back on the ones specifically set
-- Multiple path nodes in the same tile (would make the API more complicated than I think it's worth)
+- Multiple path nodes in the same tile
+	- Partially supported: loads and saves, but editor actions don't fully consider them
+	- Both the API and the UX are easier when there's only a single path node per tile
 - Saving properties set to NaN (Levelhead doesn't even load them)
 
 ### Built-in scripts
