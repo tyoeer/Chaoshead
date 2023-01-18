@@ -117,7 +117,7 @@ function UI:getDetailsUI(data)
 			list:addTextEntry("Map:")
 			for _,entry in ipairs(sorted) do
 				local key = self:format(entry.key)
-				if not key:match("^%a%w+$") then
+				if not key:match("^%a%w*$") then
 					key = "["..key.."]"
 				end
 				list:addTextEntry(key..": "..self:format(entry.value), 1)
