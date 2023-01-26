@@ -101,7 +101,11 @@ function UI:onReload(list)
 		
 		if node.type=="level" then
 			list:addTextEntry("Level:")
-			list:addButtonEntry(node.level and node.level:getLabel() or "$None", function()
+			local label = "$None"
+			if node.level then
+				label = type(node.level)=="string" and node.level or node.level:getLabel()
+			end
+			list:addButtonEntry(label, function()
 				MainUI:popup(SetLevelUI:new(self.editor))
 			end)
 			if type(node.level)=="string" then
