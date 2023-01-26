@@ -5,13 +5,34 @@ local UI = Class("PropertyEditorUI",require("levelEditor.details.property"))
 
 local theme = Settings.theme.details
 
-function UI:initialize(propertyList, editor)
-	self.input = ParsedInput:new(tonumber, theme.inputStyle)
-	self.input:focusWithDefault("1")
+function UI:initialize(propertyList, editor, filter)
 	self.editor = editor
-	self.filtering = false
+	
+	self.filtering = filter or false
+	if self.filtering then
+		self.input = ParsedInput:new(function(str)
+			if self.propertyList:isRangeProperty() then
+				-- allow numbers
+				local n = tonumber(str)
+				if n then
+					return n
+				end
+			end
+			if P:isValidMapping(self.propertyList.propId, str) then
+				return P:mappingToValue(self.propertyList.propId, str)
+			end
+			return false, "Entered value is neither a number nor a valid property value"
+		end, theme.inputStyle)
+	else
+		self.input = ParsedInput:new(tonumber, theme.inputStyle)
+		self.input:focusWithDefault(1)
+	end
+	
 	self.lines = 0
+	
 	UI.super.initialize(self,propertyList,theme.listStyle)
+	
+	self.title = self.filtering and "Filter to" or "Edit"
 end
 
 function UI:addPropertyChanger(id, op)
@@ -58,29 +79,7 @@ function UI:reload()
 	local id = self.propertyList.propId
 	local mapType = P:getMappingType(id)
 	
-	self:addButtonEntry(self.filtering and "Filtering to" or "Editing", function()
-		self.filtering = not self.filtering
-		if self.filtering then
-			self.input = ParsedInput:new(function(str)
-				if self.propertyList:isRangeProperty() then
-					-- allow numbers
-					local n = tonumber(str)
-					if n then
-						return n
-					end
-				end
-				if P:isValidMapping(id, str) then
-					return P:mappingToValue(id, str)
-				end
-				return false, "Entered value is neither a number nor a valid property value"
-			end, theme.inputStyle)
-		else
-			self.input = ParsedInput:new(tonumber, theme.inputStyle)
-			self.input:focusWithDefault(1)
-		end
-		self.input:grabFocus()
-		self:reload()
-	end)
+	self:addSeparator(false)
 	
 	self:addTextEntry(self:getName()..":")
 	if self.propertyList:isRangeProperty() then
@@ -101,6 +100,7 @@ function UI:reload()
 	end
 	
 	self:addSeparator(true)
+	
 	if self.filtering then
 		self:addUIEntry(self.input)
 		
@@ -149,7 +149,11 @@ function UI:reload()
 		end
 	end
 	
-	self:addSeparator(true) -- between property values and dismiss button
+	self:addSeparator(true)
+	
+	self:addButtonEntry("Dismiss", function()
+		MainUI:removeModal()
+	end)
 	
 	self:minimumHeightChanged()
 end

@@ -1,5 +1,5 @@
 local PUI = require("levelEditor.details.property")
-local PEDIT = require("levelEditor.details.propertyEditor")
+local PEDIT = require("levelEditor.details.propertyPopup")
 local P = require("levelhead.data.properties")
 local ElementFilter = require("levelEditor.details.elementFilter")
 
@@ -215,7 +215,7 @@ function UI:onReload(list)
 	--properties
 	for _,pl in ipairs(self:sortProperties()) do
 		list:addButtonEntry(PUI:new(pl,list.style),function()
-			MainUI:popup(PEDIT:new(pl, self.editor))
+			PEDIT:new(pl, self.editor):popup()
 		end)
 	end
 end
