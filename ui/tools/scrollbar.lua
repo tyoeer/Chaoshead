@@ -7,6 +7,8 @@ local theme = Settings.theme.scrollbar
 function UI:initialize(contents)
 	UI.super.initialize(self)
 	
+	self.lastMouseY = nil
+	
 	self.scrollAreaHeight = math.huge
 	self.contentOffset = 0
 	self.scrollButtonOffset = 0
@@ -29,6 +31,7 @@ function UI:initialize(contents)
 	
 	self.scrollButton = Button:new("=", function()
 		self.dragging = true
+		self.lastMouseY = self:getMouseY()
 	end, theme.buttonStyle, true)
 	self:addChild(self.scrollButton)
 	
@@ -107,20 +110,24 @@ function UI:resized(w,h)
 	self:childMinimumHeightChanged(self.contents)
 end
 
-function UI:onInputDeactivated(name,group,isCursorBound)
-	if group=="main" and name=="click" then
-		self.dragging = false
-	end
-end
-
-function UI:onMouseMoved(x,y,dx,dy)
+function UI:onUpdate(_dt)
 	if self.dragging then
-		-- it could have been released when hovering outside this node
 		if Input.isActive("click","main") then
-			self:scroll(self.scrollButtonOffset + dy)
+			local my = self:getMouseY()
+			if my~=self.lastMouseY then
+				local dy = my - self.lastMouseY
+				self:scroll(self.scrollButtonOffset + dy)
+				self.lastMouseY = my
+			end
 		else
 			self.dragging = false
 		end
+	end
+end
+
+function UI:onInputDeactivated(name,group,isCursorBound)
+	if group=="main" and name=="click" then
+		self.dragging = false
 	end
 end
 
