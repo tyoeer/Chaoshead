@@ -100,20 +100,16 @@ function UI:onReload(list)
 		list:addSeparator(false)
 		
 		if node.type=="level" then
-			if node.level then
-				list:addTextEntry("Level:")
-				list:addButtonEntry(node.level:getLabel(), function()
-					MainUI:popup(SetLevelUI:new(self.editor))
+			list:addTextEntry("Level:")
+			list:addButtonEntry(node.level and node.level:getLabel() or "$None", function()
+				MainUI:popup(SetLevelUI:new(self.editor))
+			end)
+			if type(node.level)=="string" then
+				list:addTextEntry("WARNING: This node's level wasn't found in this campaigns level list")
+			elseif type(node.level)=="table" then
+				list:addButtonEntry("Goto level details", function()
+					self.editor.root:gotoLevel(node.level)
 				end)
-				if type(node.level)=="string" then
-					list:addTextEntry("WARNING: This node's level wasn't found in this campaigns level list")
-				elseif type(node.level)=="table" then
-					list:addButtonEntry("Goto level details", function()
-						self.editor.root:gotoLevel(node.level)
-					end)
-				end
-			else
-				list:addTextEntry("Level: none")
 			end
 			
 			list:addSeparator(false)
