@@ -1,7 +1,12 @@
 local Tabs = require("ui.tools.tabs")
+local List = require("ui.layout.list")
 local Campaign = require("levelhead.campaign.campaign")
 local CampaignMisc = require("campaignEditor.misc")
+local Checks = require("levelhead.campaign.checks")
 -- local Script = require("script")
+
+local Node = require("levelhead.campaign.node")
+local Level = require("levelhead.campaign.level")
 
 local MapEditor = require("campaignEditor.mapEditor")
 local LevelsOverview = require("campaignEditor.levelSelector")
@@ -66,20 +71,54 @@ function UI:save()
 	MainUI:popup("Succesfully saved campaign!")
 end
 
-function UI:checkLimits(prefix)
-	-- TODO checking for (potential) problems, also maybe add the check to saving again
-	-- prefix = prefix or "Level broke limit:\n"
+function UI:runChecks(prefix)
+	prefix = prefix or "Campaign failed some checks:\n"
 	
-	-- for _,v in ipairs(Settings.misc.editor.checkLimits) do
-	-- 	local list = LIMITS[v]
-	-- 	for _,limit in ipairs(list) do
-	-- 		local failed = {limit.check(self.level)}
-	-- 		if failed[1] then
-	-- 			MainUI:popup(prefix..string.format(limit.message,unpack(failed)))
-	-- 			return false
-	-- 		end
-	-- 	end
-	-- end
+	local failed = {}
+	for _,check in ipairs(Checks) do
+		local problems = check.check(self.campaign)
+		if problems and #problems>0 then
+			table.insert(failed, {
+				label = check.label,
+				problems = problems,
+			})
+		end
+	end
+	
+	if #failed>0 then
+		local l = List:new(Settings.theme.details.listStyle)
+		l:addTextEntry(prefix)
+		l:addSeparator(true)
+		
+		for _,failure in ipairs(failed) do
+			l:addTextEntry(failure.label)
+			
+			for _,problem in ipairs(failure.problems) do
+				if type(problem)=="table" then
+					if problem:isInstanceOf(Node) then
+						l:addButtonEntry(problem:getLabel(), function()
+							self:gotoNode(problem)
+							MainUI:removeModal()
+						end)
+					elseif problem:isInstanceOf(Level) then
+						l:addButtonEntry(problem:getLabel(), function()
+							self:gotoLevel(problem)
+							MainUI:removeModal()
+						end)
+					end
+				else
+					l:addTextEntry(tostring(problem))
+				end
+			end
+			
+			l:addSeparator(true)
+		end
+		
+		MainUI:popup(l)
+		return false
+	else
+		return true
+	end
 end
 
 
@@ -156,10 +195,10 @@ function UI:onInputActivated(name,group, isCursorBound)
 			self:reload()
 		elseif name=="save" then
 			self:save()
-		-- elseif name=="checkLimits" then
-		-- 	if self:checkLimits() then
-		-- 		MainUI:popup("Level doesn't break any limits!")
-		-- 	end
+		elseif name=="checkLimits" then
+			if self:runChecks() then
+				MainUI:popup("Campaign passes all checks")
+			end
 		-- elseif name=="gotoLevelEditor" then
 		-- 	self.child:setActiveTab(self.levelEditor)
 		-- elseif name=="gotoScripts" then

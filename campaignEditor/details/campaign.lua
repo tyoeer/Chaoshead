@@ -81,19 +81,21 @@ function UI:onReload(list,campaign)
 	
 	list:addSeparator(true)
 	
-	-- list:addButtonEntry( -- TODO limits check
-	-- 	"Check level limits",
-	-- 	function()
-	-- 		if self.editor.root:checkLimits() then
-	-- 			MainUI:popup("Level doesn't break any limits!")
-	-- 		end
-	-- 	end
-	-- )
-	
 	list:addButtonEntry(
 		"Replace map with map from in-game editor",
 		function()
 			self.editor:importGameMap()
+		end
+	)
+	
+	list:addSeparator(true)
+	
+	list:addButtonEntry(
+		"Run campaign checks",
+		function()
+			if self.editor.root:runChecks() then
+				MainUI:popup("Campaign passes all checks")
+			end
 		end
 	)
 
