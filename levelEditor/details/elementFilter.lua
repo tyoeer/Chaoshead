@@ -23,28 +23,24 @@ function UI:buildElementList(s)
 	if s.mask:getLayerEnabled("pathNodes") and c.nPathNodes>=1 then
 		table.insert(out, {
 			label = "Path node",
-			filter = "path node",
 			context = -10
 		})
 	end
 	if s.mask:getLayerEnabled("foreground") and s.mask.nTiles>c.nForeground then
 		table.insert(out, {
 			label = "Air (foreground)",
-			filter = "air (foreground)",
 			context = -3
 		})
 	end
 	if s.mask:getLayerEnabled("background") and s.mask.nTiles>c.nBackground then
 		table.insert(out, {
 			label = "Air (background)",
-			filter = "air (background)",
 			context = -4
 		})
 	end
 	if s.mask:getLayerEnabled("pathNodes") and s.mask.nTiles>c.nPathNodes then
 		table.insert(out, {
 			label = "Air (path nodes)",
-			filter = "air (path nodes)",
 			context = -5
 		})
 	end
@@ -67,7 +63,6 @@ function UI:buildElementList(s)
 		end
 		table.insert(out, {
 			label = label,
-			filter = label:lower(),
 			context = id,
 		})
 	end

@@ -5,7 +5,7 @@ local TextInput = require("ui.widgets.textInput")
 ---@class FLItem
 ---@field label string
 ---@field context unknown User-specifed thingy so they can recognise this item without string macthing
----@field filter string string that gets checked against the filter
+---@field filter string? string that gets checked against the filter
 
 ---@alias FLItems (string|FLItem)[]
 
@@ -35,14 +35,15 @@ function UI:setItemList(items)
 	self.items = {}
 	for _,entry in ipairs(items) do
 		if type(entry)=="string" then
-			table.insert(self.items, {
+			entry = {
 				label = entry,
 				context = entry,
-				filter = entry:lower(),
-			})
-		else
-			table.insert(self.items, entry)
+			}
 		end
+		if not entry.filter then
+			entry.filter = entry.label:lower()
+		end
+		table.insert(self.items, entry)
 	end
 	self:genList(self:getFilter())
 end
