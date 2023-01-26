@@ -44,7 +44,7 @@ function LHS:parseSingleForeground(w)
 		local entry = raw.entries[i]
 		for j=1,entry.amount,1 do
 			local obj = Object:new(entry.id)
-			w:addObject(obj, w:fileToWorldX(entry.subentries[j].x), w:fileToWorldY(entry.subentries[j].y))
+			w:addForegroundObject(obj, w:fileToWorldX(entry.subentries[j].x), w:fileToWorldY(entry.subentries[j].y))
 		end
 	end
 end
@@ -56,7 +56,7 @@ function LHS:parseForegroundRows(w)
 		local width = E:getWidth(entry.id)
 		for x=0,entry.length,1 do
 			local obj = Object:new(entry.id)
-			w:addObject(obj, w:fileToWorldX(entry.x + width*x), w:fileToWorldY(entry.y))
+			w:addForegroundObject(obj, w:fileToWorldX(entry.x + width*x), w:fileToWorldY(entry.y))
 		end
 	end
 end
@@ -68,7 +68,7 @@ function LHS:parseForegroundColumns(w)
 		local height = E:getHeight(entry.id)
 		for y=0,entry.length,1 do
 			local obj = Object:new(entry.id)
-			w:addObject(obj, w:fileToWorldX(entry.x), w:fileToWorldY(entry.y + height*y))
+			w:addForegroundObject(obj, w:fileToWorldX(entry.x), w:fileToWorldY(entry.y + height*y))
 		end
 	end
 end
