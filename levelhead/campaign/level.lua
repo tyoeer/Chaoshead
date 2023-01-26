@@ -25,6 +25,9 @@ local COLLECTABLE_ID_MAP = {
 ---@field super Mapped
 ---@field campaign Campaign?
 ---@field metadata CampaignLevelMetadata?
+---@field file string
+---@field id string
+---@field nodes unknown
 ---@field new fun(self, id: string): self
 local L = Class("CampaignLevel", require("levelhead.campaign.mapped"))
 
