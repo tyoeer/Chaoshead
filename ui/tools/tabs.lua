@@ -77,6 +77,7 @@ function UI:setActiveTab(ui)
 	self:updateActiveTab()
 	ui:visible(true)
 	if self:inTree() then
+		self:minimumHeightChanged()
 		ui:mouseMoved(self:getMouseX(), self:getMouseY(), 0, 0)
 	end
 end
@@ -111,6 +112,11 @@ function UI:removeTab(ui)
 	table.remove(self.tabButtons,uiIndex)
 	self:updateButtons()
 	self.contentButtonMap[ui] = nil
+end
+
+
+function UI:getMinimumHeight(width)
+	return theme.buttonHeight + self.activeTab:getMinimumHeight(width)
 end
 
 
