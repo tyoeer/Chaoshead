@@ -76,7 +76,7 @@ function UI:reload()
 			end, theme.inputStyle)
 		else
 			self.input = ParsedInput:new(tonumber, theme.inputStyle)
-			self.input:setRaw("1")
+			self.input:focusWithDefault(1)
 		end
 		self.input:grabFocus()
 		self:reload()
