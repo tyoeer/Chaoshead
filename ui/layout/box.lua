@@ -1,8 +1,16 @@
 local Padding = require("ui.layout.padding")
 local Scrollbar = require("ui.tools.optionalScrollbar")
 
+---@class BoxStyle
+---@field padding number
+---@field backgroundColor table
+---@field borderColor table
+---@field minMargin number how much vertical margin to take at least
+
+--- Provides padding and a border to the contents, and keeps a minimum vertical margin outside the border. Will use a scrollbar if neccesary.
 ---@class BoxUI : ProxyUI
 ---@field super ProxyUI
+---@field new fun(self, contents: BaseNodeUI, style: BoxStyle)
 local UI = Class("BoxUI",require("ui.base.proxy"))
 
 function UI:initialize(contents,style)
