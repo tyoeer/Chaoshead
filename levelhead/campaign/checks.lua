@@ -28,5 +28,19 @@ return {
 			return out
 		end,
 	},
+	{
+		label = "The following levels have their CampaignMarker not set:",
+		---@param c Campaign
+		check = function(c)
+			local out = {}
+			for level in c.levels:iterate() do
+				---@cast level Campaignlevel
+				if level:getMetadata().campaignMarker~=true then
+					table.insert(out,level)
+				end
+			end
+			return out
+		end,
+	},
 }
 	
