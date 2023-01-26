@@ -51,6 +51,33 @@ function UI:onReload(list,campaign)
 			CampaignMisc.packAndMove(self.editor.root.path)
 		end
 	)
+	list:addButtonEntry(
+		"Open in level-kit",
+		function()
+			MainUI:getString("Enter [name] % [code]", function(str)
+				local name, code = str:match("(.+) %% (.+)$")
+				local out = {
+					creatorName = name,
+					creatorCode = code,
+					campaignName = self.editor.campaign.path:match("([^/\\]+)/?$"),
+					version = self.editor.campaign.campaignVersion,
+					mapNodes = {},
+				}
+				for node in self.editor.campaign.nodes:iterate() do
+					local outNode = node:toMapped()
+					outNode.levelID = node.id
+					-- outNode.dat = nil -- not used
+					table.insert(out.mapNodes, outNode)
+				end
+				
+				local url = "https://level-kit.netlify.app/customcampaigns/?userCampaign="..JSON.encode(out)
+				love.system.setClipboardText(url)
+				local success = love.system.openURL(url:gsub("\"","\\\"")) -- Least amount of URL encoding that still works
+				
+				MainUI:popup("Copied to clipboard + ".. (success and "oepend" or "failed to open") .." in browser")
+			end)
+		end
+	)
 	
 	list:addSeparator(true)
 	
