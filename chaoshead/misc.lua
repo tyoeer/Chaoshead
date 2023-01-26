@@ -90,7 +90,6 @@ function UI:onReload(list)
 		MainUI:popup(l)
 	end)
 	
-	-- DIVIDER
 	list:addSeparator(false)
 	
 	-- OPEN FOLDERS
@@ -115,7 +114,6 @@ function UI:onReload(list)
 		love.system.openURL(url)
 	end)
 	
-	-- DIVIDER
 	list:addSeparator(false)
 	
 	list:addButtonEntry("Check for updates", function()
@@ -167,7 +165,6 @@ function UI:onReload(list)
 		end
 	end)
 	
-	-- DIVIDER
 	list:addSeparator(false)
 	
 	-- CAMPAIGN
