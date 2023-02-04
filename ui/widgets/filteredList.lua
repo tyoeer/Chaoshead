@@ -20,9 +20,10 @@ function UI:initialize(items, listStyle, textInputStyle)
 	
 	self.input = TextInput:new(function() self:textChanged() end, textInputStyle)
 	self.itemList = List:new(listStyle)
+	self:setItemList(items)
 	
 	self:addUIEntry(self.input)
-	self:setItemList(items) -- also adds itemList as a child down the line
+	self:addUIEntry(self.itemList)
 end
 
 function UI:grabFocus()
@@ -83,9 +84,6 @@ function UI:itemClicked(item)
 end
 
 function UI:genList(filter)
-	--remove it so it doesn't propagate a lot of minimumHeightChanged events
-	self:removeChild(self.itemList)
-	
 	self.itemList:resetList()
 	for _, item in ipairs(self.items) do
 		if item.filter:find(filter, 1, true) then
@@ -99,7 +97,7 @@ function UI:genList(filter)
 		self.itemList:addTextEntry(string.format("List filter %q matches no item",filter))
 	end
 	
-	self:addUIEntry(self.itemList)
+	self.itemList:minimumHeightChanged()
 end
 
 return UI

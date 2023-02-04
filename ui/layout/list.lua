@@ -63,6 +63,7 @@ function UI:addButtonEntry(contents, onClick, style, triggerOnActivate)
 	return button
 end
 
+--- Doesn't send a minimumHeightChanged signal
 ---@param child BaseNodeUI
 function UI:addUIEntry(child)
 	local width = self.width
@@ -75,7 +76,6 @@ function UI:addUIEntry(child)
 	end
 	child:move(0,y)
 	self:addChild(child)
-	self:minimumHeightChanged()
 end
 
 function UI:resetList()
