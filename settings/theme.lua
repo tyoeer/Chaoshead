@@ -14,6 +14,14 @@ return {
 				dividerColor = {1,1,1},
 				dividerWidth = 1,
 			},
+			rulerStyle = {
+				uncenteredTextPadding = 3,
+				centeredTextPadding = 2,
+				verticalPadding = 2,
+				bgColor = {0,0,0, 0.8},
+				textColor = {1,1,1},
+				cellDividerColor = {0.5,0.5,0.5},
+			},
 			
 			worldBackground = {0,0.5,1},
 			outsideWorld = {0.1, 0.1, 0.1},

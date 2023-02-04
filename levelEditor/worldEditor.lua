@@ -262,6 +262,147 @@ function UI:drawObjects(level, startX, startY, endX, endY)
 	end
 end
 
+--By how much to multiply the ruler cell size each step to keep staying at nice numbers
+local rulerFactors = {
+	2,   --2
+	5/2, --2 -> 5
+	2,   --5 -> 10
+}
+function UI:drawHorizontalRuler(startX, endX)
+	local font = love.graphics.getFont()
+	local minWidth = math.max(
+		font:getWidth(tostring(startX)),
+		font:getWidth(tostring(endX))
+	) + math.max(
+		Settings.theme.editor.level.rulerStyle.uncenteredTextPadding,
+		2 * Settings.theme.editor.level.rulerStyle.centeredTextPadding
+	)
+	
+	local tilesPerCell = 1
+	local deltaDrawX = TILE_SIZE*self.zoomFactor*tilesPerCell
+	local factorCounter = 1
+	while deltaDrawX < minWidth do
+		tilesPerCell = tilesPerCell * rulerFactors[factorCounter]
+		deltaDrawX = TILE_SIZE*self.zoomFactor*tilesPerCell
+		
+		factorCounter = factorCounter + 1
+		if factorCounter > #rulerFactors then
+			factorCounter = 1
+		end
+	end
+	
+	-- round(/floor) to cell boundary to have nice numbers
+	startX = math.floor(startX/tilesPerCell)*tilesPerCell
+	endX = math.floor(endX/tilesPerCell)*tilesPerCell
+	local rulerHeight = Settings.theme.main.fontSize + Settings.theme.editor.level.rulerStyle.verticalPadding
+	local rulerY = self.height - rulerHeight
+	
+	love.graphics.setColor(Settings.theme.editor.level.rulerStyle.bgColor)
+	love.graphics.rectangle(
+		"fill",
+		0, rulerY,
+		self.width, rulerHeight
+	)
+	
+	love.graphics.setLineWidth(1)
+	local worldX = startX*TILE_SIZE
+	local drawX = (worldX + self.cameraX) * self.zoomFactor + self.width/2
+	for x=startX, endX, tilesPerCell do
+		love.graphics.setColor(Settings.theme.editor.level.rulerStyle.textColor)
+		
+		local text = tostring(x)
+		local textWidth = font:getWidth(text)
+		local textCellSize = TILE_SIZE*self.zoomFactor - 2 * Settings.theme.editor.level.rulerStyle.centeredTextPadding
+		--Draw centered in the first tile of the cell if possible, align to the left otherwise
+		if textWidth <= textCellSize then
+			love.graphics.printf(
+				text,
+				drawX + Settings.theme.editor.level.rulerStyle.centeredTextPadding, rulerY,
+				textCellSize, "center"
+			)
+		else
+			love.graphics.printf(
+				text,
+				drawX + Settings.theme.editor.level.rulerStyle.uncenteredTextPadding, rulerY,
+				deltaDrawX, "left"
+			)
+		end
+		
+		love.graphics.setColor(Settings.theme.editor.level.rulerStyle.cellDividerColor)
+		love.graphics.line(drawX,rulerY, drawX,self.height)
+		
+		drawX = drawX + deltaDrawX
+	end
+end
+
+function UI:drawVerticalRuler(startY, endY)
+	local font = love.graphics.getFont()
+	local rulerWidth = math.max(
+		font:getWidth(tostring(startY)),
+		font:getWidth(tostring(endY))
+	) + 2 * Settings.theme.editor.level.rulerStyle.centeredTextPadding
+	local rulerX = self.width - rulerWidth
+	
+	local textHeight = Settings.theme.main.fontSize + Settings.theme.editor.level.rulerStyle.verticalPadding
+	local tilesPerCell = 1
+	local deltaDrawY = TILE_SIZE*self.zoomFactor*tilesPerCell
+	local factorCounter = 1
+	while deltaDrawY < textHeight do
+		tilesPerCell = tilesPerCell * rulerFactors[factorCounter]
+		deltaDrawY = TILE_SIZE*self.zoomFactor*tilesPerCell
+		
+		factorCounter = factorCounter + 1
+		if factorCounter > #rulerFactors then
+			factorCounter = 1
+		end
+	end
+	
+	-- round(/floor) to cell boundary to have nice numbers
+	startY = math.floor(startY/tilesPerCell)*tilesPerCell
+	endY = math.floor(endY/tilesPerCell)*tilesPerCell
+	
+	love.graphics.setColor(Settings.theme.editor.level.rulerStyle.bgColor)
+	love.graphics.rectangle(
+		"fill",
+		rulerX, 0,
+		rulerWidth, self.height
+	)
+	
+	love.graphics.setLineWidth(1)
+	local worldY = startY*TILE_SIZE
+	local drawY = (worldY + self.cameraY) * self.zoomFactor + self.height/2
+	for y=startY, endY, tilesPerCell do
+		love.graphics.setColor(Settings.theme.editor.level.rulerStyle.textColor)
+		
+		local text = tostring(y)
+		local textCellSize = TILE_SIZE*self.zoomFactor - 2 * Settings.theme.editor.level.rulerStyle.verticalPadding
+		--Draw centered in the first tile of the cell if possible, align to the top otherwise
+		if textHeight <= textCellSize then
+			love.graphics.printf(
+				text,
+				rulerX + Settings.theme.editor.level.rulerStyle.centeredTextPadding, drawY + (textCellSize-textHeight)/2,
+				rulerWidth - 2 * Settings.theme.editor.level.rulerStyle.centeredTextPadding, "center"
+			)
+		else
+			love.graphics.printf(
+				text,
+				rulerX + Settings.theme.editor.level.rulerStyle.centeredTextPadding, drawY,
+				rulerWidth - 2 * Settings.theme.editor.level.rulerStyle.centeredTextPadding, "center"
+			)
+		end
+		
+		love.graphics.setColor(Settings.theme.editor.level.rulerStyle.cellDividerColor)
+		love.graphics.line(rulerX, drawY, self.width, drawY)
+		
+		drawY = drawY + deltaDrawY
+	end
+end
+
+function UI:drawRulers(startX, startY, endX, endY)
+	self:drawVerticalRuler(startY, endY)
+	self:drawHorizontalRuler(startX, endX)
+end
+
 function UI:draw()
 	love.graphics.clear(theme.level.outsideWorld)
 	--not exactly one to compensate for float weirdness
@@ -364,7 +505,10 @@ function UI:draw()
 		if self.editor.selection then
 			self.editor.selection:draw(startX,startY, endX,endY, self.zoomFactor)
 		end
+		
 	love.graphics.pop()
+	
+	self:drawRulers(startX, startY, endX, endY)
 end
 
 
