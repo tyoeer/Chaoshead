@@ -148,8 +148,9 @@ function S:draw(startX,startY, endX,endY, zoomFactor)
 				self:drawTile(0,0,1/zoomFactor)
 			love.graphics.setCanvas()
 		love.graphics.pop()
+		
+		love.graphics.setBlendMode("alpha","premultiplied")
 		draw = function(_, x,y)
-			love.graphics.setBlendMode("alpha","premultiplied")
 			love.graphics.draw(tile, x*TILE_SIZE, y*TILE_SIZE)
 		end
 	else
@@ -170,6 +171,8 @@ function S:draw(startX,startY, endX,endY, zoomFactor)
 			end
 		end
 	end
+	
+	love.graphics.setBlendMode("alpha","alphamultiply")
 end
 
 
