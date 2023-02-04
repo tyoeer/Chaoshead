@@ -97,21 +97,21 @@ local checks = {
 		end
 		
 		if update then
-			local l = List:new(Settings.theme.modal.listStyle)
-			l:addTextEntry("The default settings have changed significantly in this update, reset your settings to the default? (Will restart)")
-			l:addButtonEntry("Reset all settings + restart",function()
-				for _,file in ipairs(love.filesystem.getDirectoryItems(Settings.folder)) do
-					local path = Settings.folder..file
-					local real = love.filesystem.getRealDirectory(path)
-					if real:match(love.filesystem.getSaveDirectory()) then
-						if not love.filesystem.remove(path) then
-							error("Could not reset(/delete) settings file at "..path)
+			MainUI:popup(
+				"The default settings have changed significantly in this update, reset your settings to the default? (Will restart)",
+				{"Reset all settings + restart", function()
+					for _,file in ipairs(love.filesystem.getDirectoryItems(Settings.folder)) do
+						local path = Settings.folder..file
+						local real = love.filesystem.getRealDirectory(path)
+						if real:match(love.filesystem.getSaveDirectory()) then
+							if not love.filesystem.remove(path) then
+								error("Could not reset(/delete) settings file at "..path)
+							end
 						end
 					end
-				end
-				love.event.quit("restart")
-			end)
-			MainUI:popup(l)
+					love.event.quit("restart")
+				end}
+			)
 		end
 	end,
 	
