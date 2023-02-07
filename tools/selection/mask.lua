@@ -150,6 +150,7 @@ function S:draw(startX,startY, endX,endY, zoomFactor)
 		love.graphics.pop()
 		
 		love.graphics.setBlendMode("alpha","premultiplied")
+		love.graphics.setColor(1,1,1) --so the color of the tile can't change
 		draw = function(_, x,y)
 			love.graphics.draw(tile, x*TILE_SIZE, y*TILE_SIZE)
 		end
