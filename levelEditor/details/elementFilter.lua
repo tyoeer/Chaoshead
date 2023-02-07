@@ -126,6 +126,8 @@ function UI:reload()
 	
 	--divider between items and dismiss button
 	self:addSeparator(true)
+	
+	self:minimumHeightChanged()
 end
 
 return UI
