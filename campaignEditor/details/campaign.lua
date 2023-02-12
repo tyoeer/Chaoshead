@@ -74,7 +74,7 @@ function UI:onReload(list,campaign)
 				love.system.setClipboardText(url)
 				local success = love.system.openURL(url:gsub("\"","\\\"")) -- Least amount of URL encoding that still works
 				
-				MainUI:popup("Copied to clipboard + ".. (success and "oepend" or "failed to open") .." in browser")
+				MainUI:popup("Copied to clipboard + ".. (success and "opened" or "failed to open") .." in browser")
 			end)
 		end
 	)
