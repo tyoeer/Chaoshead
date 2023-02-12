@@ -20,6 +20,7 @@ local function unpack(callback)
 	local info = love.filesystem.getInfo("campaign_hardfile")
 	if info then
 		local list = List:new(Settings.theme.modal.listStyle)
+		list:addTextEntry("Unpacks the campaign_hardfile in the Chaoshead data directory into a new folder")
 		list:addTextEntry("Enter the name/subpath to unpack the campaign to:")
 		local input = ParsedInput:new(function(str)
 			if str:match("[<>:\"/\\|%?%*]") then
