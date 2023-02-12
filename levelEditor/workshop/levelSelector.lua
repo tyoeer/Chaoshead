@@ -21,7 +21,7 @@ function UI:findLastEditedLevel()
 		if userData then
 			for _,level in ipairs(userData:getWorkshopLevels()) do
 				local info = NFS.getInfo(level.path)
-				if info.modtime > lastTime then
+				if info and info.modtime > lastTime then
 					lastPath = level.path
 					lastTime = info.modtime
 					lastTitle = level.name
@@ -32,7 +32,7 @@ function UI:findLastEditedLevel()
 				if item:match("%.(.+)$") == "lhs" then
 					local path = LhMisc.getUserDataPath()..code.."/"..item
 					local info = NFS.getInfo(path)
-					if info.modtime > lastTime then
+					if info and info.modtime > lastTime then
 						lastPath = path
 						lastTime = info.modtime
 						lastTitle = item
