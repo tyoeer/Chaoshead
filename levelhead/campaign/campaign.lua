@@ -142,6 +142,10 @@ function C:reloadLevels()
 		local level = Level:new("$placeholderLevelId")
 		level:fromMapped(rawLevel)
 		self:addLevelRaw(level)
+		-- after adding because it needs to know its campaign to find its file
+		if not level.metadata then
+			level:loadMetadata()
+		end
 	end
 end
 

@@ -126,10 +126,8 @@ function L:loadMetadata()
 	
 end
 
+---@return CampaignLevelMetadata?
 function L:getMetadata()
-	if not self.metadata then
-		self:loadMetadata()
-	end
 	return self.metadata
 end
 
