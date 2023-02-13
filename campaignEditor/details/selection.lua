@@ -80,7 +80,7 @@ function UI:onReload(list)
 		else
 			list:addTextEntry("Next:")
 			for _, neighbour in ipairs(node.next) do
-				list:addButtonEntry(neighbour:getLabel(), function()
+				list:addButtonEntry("Goto "..neighbour:getLabel(), function()
 					self.editor:selectNode(neighbour)
 				end)
 			end
@@ -91,7 +91,7 @@ function UI:onReload(list)
 		else
 			list:addTextEntry("Prev:")
 			for _, neighbour in ipairs(node.prev) do
-				list:addButtonEntry(neighbour:getLabel(), function()
+				list:addButtonEntry("Goto "..neighbour:getLabel(), function()
 					self.editor:selectNode(neighbour)
 				end)
 			end
