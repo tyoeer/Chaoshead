@@ -144,7 +144,7 @@ function UI:focusWithDefault(default)
 	self.selection = default
 	self.left = ""
 	self.right = ""
-	self:updateDisplayText()
+	self:changed()
 end
 
 function UI:getCurrentCaretPos()
