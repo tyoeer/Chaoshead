@@ -50,7 +50,7 @@ jobs:
           pathTarget: "extract"
       - run: mv "extract/Chaoshead_win32/" "release/"
       - name: Add release HTTPS library
-        uses: dawidd6/action-download-artifact@v2.24.3
+        uses: dawidd6/action-download-artifact@v2.25.0
         with:
           repo: love2d/lua-https
           workflow: build.yml
