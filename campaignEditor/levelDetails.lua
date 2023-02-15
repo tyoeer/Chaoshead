@@ -66,8 +66,14 @@ function UI:onReload(list, level)
 		list:addTextEntry("Metadata not yet loaded")
 	end
 	list:addButtonEntry("Reload metadata", function()
-		l:loadMetadata()
-		self.root:levelChanged(l)
+		local suc = xpcall(
+			l.loadMetadata,
+			self.root.loadErrorHandler,
+			l
+		)
+		if suc then
+			self.root:levelChanged(l)
+		end
 	end)
 end
 

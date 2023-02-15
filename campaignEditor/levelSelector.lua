@@ -55,10 +55,17 @@ function UI:getRootEntries()
 	table.insert(out, 2, {
 		title = "Reload all metadata",
 		action = function()
-			for level in self.root.campaign.levels:iterate() do
-				level:loadMetadata()
+			local suc = xpcall(
+				function()
+					for level in self.root.campaign.levels:iterate() do
+						level:loadMetadata()
+					end
+				end,
+				self.root.loadErrorHandler
+			)
+			if suc then
+				self.root:levelChanged()
 			end
-			self.root:levelChanged()
 		end
 	})
 	

@@ -101,7 +101,7 @@ function L:loadMetadata()
 	lhs:readHeaders()
 	local settings, width, height = lhs:parseHeaders()
 	
-	self.metadata = {
+	local metadata = {
 		title = settings:getTitle(),
 		weather = settings.weather,
 		zone = settings.zone,
@@ -120,10 +120,12 @@ function L:loadMetadata()
 	for _, entry in ipairs(lhs.rawContentEntries.singleForeground.entries) do
 		local prop = COLLECTABLE_ID_MAP[entry.id]
 		if prop then
-			self.metadata[prop] = true
+			metadata[prop] = true
 		end
 	end
 	
+	--Only set at the end in case of errors reading the file
+	self.metadata = metadata
 end
 
 ---@return CampaignLevelMetadata?
