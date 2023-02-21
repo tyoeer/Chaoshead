@@ -14,6 +14,16 @@ local installationPaths = {
 	"C:/Program Files (x86)/Steam/steamapps/common/Levelhead/"
 }
 function m.getInstallationPath()
+	local customDir = Settings.misc.levelheadInstallationPath
+	if customDir and customDir~="" then
+		if customDir:sub(-1)~="/" then
+			customDir = customDir .. "/"
+		end
+		local info = NFS.getInfo(customDir.."Levelhead.exe")
+		if info then
+			return customDir
+		end
+	end
 	for _,dir in ipairs(installationPaths) do
 		local info = NFS.getInfo(dir.."Levelhead.exe")
 		if info then
