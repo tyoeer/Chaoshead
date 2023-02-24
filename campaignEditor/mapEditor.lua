@@ -175,6 +175,15 @@ end
 
 -- do things with the selection
 
+function UI:setId(id)
+	if self.selection then
+		for node in self.selection:iterate() do
+			node:setId(id)
+		end
+		self.selectionDetails:reload()
+	end
+end
+
 function UI:setLevel(level)
 	if self.selection then
 		for node in self.selection:iterate() do

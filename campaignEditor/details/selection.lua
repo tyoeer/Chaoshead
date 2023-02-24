@@ -69,7 +69,7 @@ function UI:onReload(list)
 						MainUI:popup("There already is a node with id "..id)
 						return
 					end
-					node:setId(id)
+					self.editor:setId(id)
 				end,
 				node.id
 			)
