@@ -54,6 +54,11 @@ function N:setId(id)
 	self.id = id
 end
 
+---@return string? creatorCode, string? campaignName, string? type, string? subId
+function N:idMatchStandard()
+	return string.match(self.id, "chcx%-(%w%w%w%w%w%w)-([a-zA-Z0-9_]+)-([a-zA-Z0-9_]+)-([a-zA-Z0-9_-]+)")
+end
+
 function N:getLabel()
 	return self.id
 end

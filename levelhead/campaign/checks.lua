@@ -42,5 +42,34 @@ return {
 			return out
 		end,
 	},
+	{
+		label = "The follwing levels don't follow the id standard:",
+		---@param c Campaign
+		check = function(c)
+			local out = {}
+			for level in c.levels:iterate() do
+				---@cast level Campaignlevel
+				local creatorCode, _campaignName, _type, _subid = level:idMatchStandard()
+				if not creatorCode then
+					table.insert(out, level)
+				end
+			end
+			return out
+		end,
+	},
+	{
+		label = "The follwing nodes don't follow the id standard:",
+		---@param c Campaign
+		check = function(c)
+			local out = {}
+			for node in c.nodes:iterate() do
+				local creatorCode, _campaignName, _type, _subid = node:idMatchStandard()
+				if not creatorCode then
+					table.insert(out, node)
+				end
+			end
+			return out
+		end,
+	},
 }
 	

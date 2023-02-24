@@ -78,6 +78,11 @@ function L:setId(id)
 	self.id = id
 end
 
+---@return string? creatorCode, string? campaignName, string? type, string? subId
+function L:idMatchStandard()
+	return string.match(self.id, "chcx%-(%w%w%w%w%w%w)-([a-zA-Z0-9_]+)-(level)-([a-zA-Z0-9_-]+)")
+end
+
 --- The file will be renamed directly on disk, though the change in data still has to be saved
 ---@return boolean success, string? errorMessage
 function L:renameFile(name)
