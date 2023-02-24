@@ -80,7 +80,7 @@ end
 
 ---@return string? creatorCode, string? campaignName, string? type, string? subId
 function L:idMatchStandard()
-	return string.match(self.id, "chcx%-(%w+)%-([a-zA-Z0-9_]+)%-(level)%-([a-zA-Z0-9_-]+)")
+	return string.match(self.id, "^chcx%-(%w+)%-([a-zA-Z0-9_]+)%-(level)%-([a-zA-Z0-9_-]+)$")
 end
 
 --- The file will be renamed directly on disk, though the change in data still has to be saved
