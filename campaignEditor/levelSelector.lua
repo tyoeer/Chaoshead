@@ -66,7 +66,7 @@ function UI:getRootEntries()
 					table.insert(creators[creatorCode], level)
 				end
 			end
-			local mainCode = "AAAAAAA"
+			local mainCode = "AAAAAA"
 			local mostN = 0
 			for code, levels in pairs(creators) do
 				if #levels > mostN then
@@ -93,7 +93,7 @@ function UI:getRootEntries()
 			self.root:levelChanged()
 			MainUI:popup(
 				"Set the IDs of "..nChanged.." levels." ..
-				(mainCode=="AAAAAAA" and "\nCouldn't find a creator code, used AAAAAAA as placeholder." or "") ..
+				(mainCode=="AAAAAA" and "\nCouldn't find a creator code, used AAAAAA as placeholder." or "") ..
 				(nRumpus==0 and "" or "\nSet the Rumpus codes of "..nRumpus.." levels.")
 			)
 		end

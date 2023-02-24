@@ -55,6 +55,13 @@ function UI:onReload(list)
 	-- list:addButtonEntry("Delete",function()
 	-- 	self.editor:deleteSelection()
 	-- end)
+	list:addButtonEntry("Standardise IDs",function()
+		local nChanged, usedPlaceholderCreator = self.editor:standardiseIDs()
+		MainUI:popup(
+			"Set the IDs of "..nChanged.." nodes." ..
+			(usedPlaceholderCreator and "\nCouldn't find a creator code, used AAAAAAA as placeholder." or "")
+		)
+	end)
 	
 	--single node properties
 	if n==1 then

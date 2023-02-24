@@ -175,6 +175,58 @@ end
 
 -- do things with the selection
 
+function UI:standardiseIDs()
+	-- find most used creator code
+	local creators = {}
+	for node in self.campaign.nodes:iterate() do
+		local creatorCode = node:idMatchStandard()
+		if creatorCode then
+			if not creators[creatorCode] then
+				creators[creatorCode] = {}
+			end
+			table.insert(creators[creatorCode], node)
+		end
+	end
+	local mainCode = "AAAAAA"
+	local mostN = 0
+	for code, nodes in pairs(creators) do
+		if #nodes > mostN then
+			mainCode = code
+		end
+	end
+
+	local cName = self.campaign:getName()
+
+	local nChanged = 0
+	for node in self.selection:iterate() do
+		if not node.id:match("^chcx-") then
+			local nodeType = ({
+				level = "level",
+				["icon pack"] = "vendr",
+				path = "path",
+				presentation = "pres",
+			})[node.type] .. "Node"
+			
+			local subId = node.id
+			if type(node.level)=="table" then
+				local _, _, _, levelSubId = node.level:idMatchStandard()
+				if levelSubId then
+					subId = levelSubId
+				end
+			elseif type(node.level)=="string" then
+				subId = node.level
+			end
+			
+			node:setId(string.format("chcx-%s-%s-%s-%s", mainCode, cName, nodeType, subId))
+			nChanged = nChanged + 1
+		end
+	end
+	
+	self.selectionDetails:reload()
+	
+	return nChanged, mainCode=="AAAAAA"
+end
+
 function UI:setId(id)
 	if self.selection then
 		for node in self.selection:iterate() do
