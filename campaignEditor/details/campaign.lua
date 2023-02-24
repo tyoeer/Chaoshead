@@ -59,7 +59,7 @@ function UI:onReload(list,campaign)
 				local out = {
 					creatorName = name,
 					creatorCode = code,
-					campaignName = self.editor.campaign.path:match("([^/\\]+)/?$"),
+					campaignName = self.editor.campaign:getName(),
 					version = self.editor.campaign.campaignVersion,
 					mapNodes = {},
 				}

@@ -32,6 +32,10 @@ function C:initialize(path)
 	self.contentVersion = "0"
 end
 
+function C:getName()
+	return self.path:match("([^/\\]+)/?$")
+end
+
 -- LEVELS
 
 function C:addLevelRaw(level)

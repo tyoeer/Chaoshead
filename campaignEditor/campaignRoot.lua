@@ -94,6 +94,10 @@ function UI:runChecks(prefix)
 			l:addTextEntry(failure.label)
 			
 			for _,problem in ipairs(failure.problems) do
+				if type(problem[1])=="string" and type(problem[2])=="table" then
+					l:addTextEntry(problem[1])
+					problem = problem[2]
+				end
 				if type(problem)=="table" then
 					if problem:isInstanceOf(Node) then
 						l:addButtonEntry(problem:getLabel(), function()
