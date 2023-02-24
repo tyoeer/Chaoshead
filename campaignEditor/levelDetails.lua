@@ -57,6 +57,20 @@ function UI:onReload(list, level)
 	
 	list:addSeparator(true)
 	
+	list:addTextEntry("Rumpus code:")
+	list:addButtonEntry(l.rumpusCode or "$None", function()
+		MainUI:getString(
+			"Enter the new rumpus code:",
+			function(code)
+				l.rumpusCode = code
+				self.root:levelChanged(l)
+			end,
+			l.rumpusCode
+		)
+	end)
+	
+	list:addSeparator(true)
+	
 	if l.metadata then
 		list:addTextEntry("Raw metadata: ")
 		for key, value in pairs(l.metadata) do
