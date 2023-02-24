@@ -189,6 +189,12 @@ end
 function UI:cursorToMouse()
 	local pos = self:roundToChar(self.textDisplay:getMouseX())
 	
+	if self.selection and not Input.isActive("selectModifier", "textInput") then
+		--deselect
+		self.left = self.left .. self.selection
+		self.selection = nil
+	end
+	
 	while pos > self:getCurrentCaretPos() do
 		self:moveRight()
 	end
