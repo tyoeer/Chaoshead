@@ -53,6 +53,52 @@ function UI:getRootEntries()
 		end
 	})
 	table.insert(out, 2, {
+		title = "Standardise all IDs",
+		action = function()
+			-- find most used creator code
+			local creators = {}
+			for level in self.root.campaign.levels:iterate() do
+				local creatorCode = level:idMatchStandard()
+				if creatorCode then
+					if not creators[creatorCode] then
+						creators[creatorCode] = {}
+					end
+					table.insert(creators[creatorCode], level)
+				end
+			end
+			local mainCode = "AAAAAAA"
+			local mostN = 0
+			for code, levels in pairs(creators) do
+				if #levels > mostN then
+					mainCode = code
+				end
+			end
+			
+			local cName = self.root.campaign:getName()
+			
+			local nChanged = 0
+			local nRumpus = 0
+			for level in self.root.campaign.levels:iterate() do
+				if not level.id:match("^chcx-") then
+					local creator, levelCode = level.id:match("^(%w%w%w%w%w%w)-(%w%w%w%w%w%w%w)$")
+					if creator and levelCode and not level.rumpusCode then
+						level.rumpusCode = levelCode
+						nRumpus = nRumpus + 1
+					end
+					level:setId(string.format("chcx-%s-%s-level-%s", mainCode, cName, level.id))
+					nChanged = nChanged + 1
+				end
+			end
+			
+			self.root:levelChanged()
+			MainUI:popup(
+				"Set the IDs of "..nChanged.." levels." ..
+				(mainCode=="AAAAAAA" and "\nCouldn't find a creator code, used AAAAAAA as placeholder." or "") ..
+				(nRumpus==0 and "" or "\nSet the Rumpus codes of "..nRumpus.." levels.")
+			)
+		end
+	})
+	table.insert(out, 3, {
 		title = "Reload all metadata",
 		action = function()
 			local suc = xpcall(
