@@ -70,11 +70,12 @@ function UI:onReload(list,campaign)
 					table.insert(out.mapNodes, outNode)
 				end
 				
-				local url = "https://level-kit.netlify.app/customcampaigns/?userCampaign="..JSON.encode(out)
-				love.system.setClipboardText(url)
+				local json = JSON.encode(out)
+				local url = "https://level-kit.netlify.app/customcampaigns/?userCampaign="..json
+				love.system.setClipboardText(json)
 				local success = love.system.openURL(url:gsub("\"","\\\"")) -- Least amount of URL encoding that still works
 				
-				MainUI:popup("Copied to clipboard + ".. (success and "opened" or "failed to open") .." in browser")
+				MainUI:popup("Copied JSON to clipboard + ".. (success and "opened" or "failed to open") .." URL in browser")
 			end)
 		end
 	)
