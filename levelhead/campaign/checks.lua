@@ -42,6 +42,38 @@ return {
 			return out
 		end,
 	},
+	{
+		label = "The following level nodes are missing level data:",
+		---@param c Campaign
+		check = function(c)
+			local out = {}
+			
+			local toCheck = {
+				"onTimeDelivery",
+				"scale",
+				"weather",
+				"zoneId",
+				"hasGr17",
+				"hasBugs",
+			}
+			
+			for node in c.nodes:iterate() do
+				if node.type=="level" then
+					local missing = "Missing "
+					for _,prop in ipairs(toCheck) do
+						if node[prop]==nil then
+							missing = missing..prop..", "
+						end
+					end
+					if missing ~= "Missing " then
+						table.insert(out, {missing:gsub(", $",":"), node})
+					end
+				end
+			end
+			
+			return out
+		end
+	},
 	
 	{
 		label = "The following levels don't follow the id standard:",
