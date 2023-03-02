@@ -176,6 +176,52 @@ function UI:onReload(list)
 		end
 	end)
 	
+	list:addButtonEntry("Theme generator", function()
+		local themeGen = require("utils.themeGen")
+		
+		local entries = {"Select a color:"}
+		for _, color in ipairs(themeGen.presetColors) do
+			table.insert(entries, {
+				color[1],
+				function()
+					themeGen.setAccentColor(color[2])
+				end
+			})
+		end
+		table.insert(entries, {
+			"Custom",
+			function()
+				MainUI:getString("Enter R, G, B (you can go over 1 to increase a certain color)", function(val)
+					local r,g,b = val:match("(%d+%.?%d*), ?(%d+%.?%d*), ?(%d+%.?%d*)")
+					if not r then
+						MainUI:popup("Enter value does not match color format")
+						return
+					end
+					r = tonumber(r)
+					g = tonumber(g)
+					b = tonumber(b)
+					if not r then
+						MainUI:popup("Couldn't parse entered red value as a number")
+						return
+					end
+					if not g then
+						MainUI:popup("Couldn't parse entered green value as a number")
+						return
+					end
+					if not b then
+						MainUI:popup("Couldn't parse entered blue value as a number")
+						return
+					end
+					
+					themeGen.setAccentColor({r,g,b})
+				end, "1,1,1")
+			end
+		})
+		table.insert(entries, "") -- poor man's separator
+		
+		MainUI:popup(unpack(entries))
+	end)
+	
 	list:addSeparator(false)
 	
 	-- CAMPAIGN
