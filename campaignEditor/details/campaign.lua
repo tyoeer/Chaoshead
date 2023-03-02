@@ -40,13 +40,13 @@ function UI:onReload(list,campaign)
 	list:addSeparator(true)
 	
 	list:addButtonEntry(
-		"Pack campign",
+		"Pack campaign",
 		function()
 			CampaignMisc.pack(self.editor.root.path)
 		end
 	)
 	list:addButtonEntry(
-		"Pack campign and mod levelhead to use it",
+		"Pack campaign and mod levelhead to use it",
 		function()
 			CampaignMisc.packAndMove(self.editor.root.path)
 		end
