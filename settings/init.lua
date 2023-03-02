@@ -5,7 +5,8 @@ local STORAGE_FOLDER = "storage/"
 
 local base = select(1, ...).."."
 local settings = {
-	folder = SETTINGS_FOLDER
+	folder = SETTINGS_FOLDER,
+	defaults = {},
 }
 
 -- COMMON
@@ -15,6 +16,17 @@ local function saveData(path,data)
 	if not success then
 		error("Error saving settings: "..tostring(err))
 	end
+end
+
+function settings:save(which)
+	if type(self)=="string" then
+		which = self
+	end
+	if not settings[which] then
+		return
+	end
+	local filePath = SETTINGS_FOLDER..which..".json"
+	saveData(filePath, settings[which])
 end
 
 local function loadData(path)
@@ -66,6 +78,7 @@ local function load(name, maxLevel, ...)
 	--how deep new settings still get added (in case some settings take a datastructure as value)
 	local maxLevel = maxLevel or math.huge
 	local defaults = require(base..name)
+	settings.defaults[name] = defaults
 	
 	local changed = false
 	
