@@ -106,7 +106,8 @@ function UI:onReload(list)
 	list:addButtonEntry("Open Levelhead installation folder",function()
 		local path = require("levelhead.misc").getInstallationPath()
 		if not path then
-			local other = "If you are using the non-Steam version, please get in touch so support can be added."
+			local other = "If you are using the non-Steam version, please get in touch so support can be added.\n"
+				.."If you're doing something weird, specify a custom path using the misc. setting levelheadInstallationPath."
 			local customDir = Settings.misc.levelheadInstallationPath
 			if customDir and customDir~="" then
 				other = string.format(
