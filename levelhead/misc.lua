@@ -9,6 +9,9 @@ function m.getDataPath()
 			custom = custom .. "/"
 		end
 		return custom
+	elseif love.system.getOS()=="Linux" then
+		--flatpak
+		return love.filesystem.getUserDirectory()..".var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/compatdata/792710/pfx/drive_c/users/steamuser/AppData/Local/PlatformerBuilder/"
 	else
 		return love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/"
 	end
@@ -19,7 +22,8 @@ function m.getUserDataPath()
 end
 
 local installationPaths = {
-	"C:/Program Files (x86)/Steam/steamapps/common/Levelhead/"
+	"C:/Program Files (x86)/Steam/steamapps/common/Levelhead/",
+	love.filesystem.getUserDirectory()..".var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/common/Levelhead/", -- Linux (flatpak)
 }
 function m.getInstallationPath()
 	local customDir = Settings.misc.levelheadInstallationPath
