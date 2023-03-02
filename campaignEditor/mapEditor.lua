@@ -123,6 +123,7 @@ function UI:selectAddArea(startX,startY,endX,endY)
 end
 
 function UI:selectAll()
+	self:deselectAll()
 	self:newSelection()
 	for node in self.campaign.nodes:iterate() do
 		self.selection:add(node)
