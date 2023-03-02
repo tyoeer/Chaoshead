@@ -3,7 +3,15 @@ local NFS = require("libs.nativefs")
 local m = {}
 
 function m.getDataPath()
-	return love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/"
+	local custom = Settings.misc.levelheadDataPath
+	if custom and custom~="" then
+		if custom:sub(-1)~="/" then
+			custom = custom .. "/"
+		end
+		return custom
+	else
+		return love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/"
+	end
 end
 
 function m.getUserDataPath()

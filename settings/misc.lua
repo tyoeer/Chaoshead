@@ -1,5 +1,6 @@
 return {
 	levelheadInstallationPath = "",
+	levelheadDataPath = "",
 	checkForUpdatesEveryXHours = 24,
 	selectionDetails = {
 		maxUnknownProperties = 10,
