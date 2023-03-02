@@ -175,5 +175,17 @@ return {
 			return out
 		end,
 	},
+	
+	{
+		label = "The campaign uses a campaign version different from 2299, this is untested:",
+		---@param c Campaign
+		check = function(c)
+			if c.campaignVersion~=2299 then
+				return {tostring(c.campaignVersion)} 
+			else
+				return false
+			end
+		end,
+	}
 }
 	
