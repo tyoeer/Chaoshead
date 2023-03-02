@@ -7,11 +7,14 @@ local Button = require("ui.widgets.button")
 
 ---@return boolean|nil noPopupShown true if no pop-up was shown
 local checkForUpdate = function(force)
+	if Version.current=="DEV" and not force then
+		return true
+	end
 	if Storage.lastUpdateCheck and not force then
 		local diff = os.difftime(os.time(), Storage.lastUpdateCheck)
 		-- diff is seconds since last update
 		if diff < Settings.misc.checkForUpdatesEveryXHours*60*60 then
-			return -- Too early to check, don't spam GitHub
+			return true -- Too early to check, don't spam GitHub
 		end
 	end
 	
@@ -46,9 +49,6 @@ local checkForUpdate = function(force)
 	if not release then
 		MainUI:popup("Found no release on GitHub when checking for updates, which is weird, and suggests something is broken.")
 	else
-		if Version.current=="DEV" and not force then
-			return true
-		end
 		local ver = release.tag_name:gsub("^v","")
 
 		local comp = Version.compareStrings(Version.current, ver)
