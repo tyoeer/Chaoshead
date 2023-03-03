@@ -66,7 +66,7 @@ function UI:onReload(list,campaign)
 					landmarks = {},
 				}
 				
-				for k,v in pairs(cam:loadData("landmarks")) do
+				for _,v in pairs(cam:loadData("landmarks")) do
 					table.insert(out.landmarks, v)
 				end
 				
@@ -82,14 +82,16 @@ function UI:onReload(list,campaign)
 					end
 				end
 				for node in cam.nodes:iterate() do
-					local outNode = node:toMapped()
-					outNode.levelID = getId(node)
-					-- outNode.dat = nil -- not used
-					for i,nodeId in ipairs(outNode.pre) do
-						outNode.pre[i] = getId(cam:getNode(nodeId))
+					if node.type=="level" or node.type=="path" then
+						local outNode = node:toMapped()
+						outNode.levelID = getId(node)
+						-- outNode.dat = nil -- not used
+						for i,nodeId in ipairs(outNode.pre) do
+							outNode.pre[i] = getId(cam:getNode(nodeId))
+						end
+						
+						table.insert(out.mapNodes, outNode)
 					end
-					
-					table.insert(out.mapNodes, outNode)
 				end
 				
 				local json = JSON.encode(out)
