@@ -63,14 +63,31 @@ function UI:onReload(list,campaign)
 					version = self.editor.campaign.campaignVersion,
 					mapNodes = {},
 				}
+				
+				local function getId(node)
+					if node.type=="level" then
+						if type(node.level)=="table" then
+							return node.level.rumpusCode or node.id
+						else
+							return node.id
+						end
+					else
+						return node.id
+					end
+				end
 				for node in self.editor.campaign.nodes:iterate() do
 					local outNode = node:toMapped()
-					outNode.levelID = node.id
+					outNode.levelID = getId(node)
 					-- outNode.dat = nil -- not used
+					for i,nodeId in ipairs(outNode.pre) do
+						outNode.pre[i] = getId(self.editor.campaign:getNode(nodeId))
+					end
+					
 					table.insert(out.mapNodes, outNode)
 				end
 				
 				local json = JSON.encode(out)
+				
 				local url = "https://level-kit.netlify.app/customcampaigns/?userCampaign="..json
 				love.system.setClipboardText(json)
 				local success = love.system.openURL(url:gsub("\"","\\\"")) -- Least amount of URL encoding that still works
