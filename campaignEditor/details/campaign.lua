@@ -55,14 +55,20 @@ function UI:onReload(list,campaign)
 		"Open in level-kit",
 		function()
 			MainUI:getString("Enter [name] % [code]", function(str)
+				local cam = self.editor.campaign
 				local name, code = str:match("(.+) %% (.+)$")
 				local out = {
 					creatorName = name,
 					creatorCode = code,
-					campaignName = self.editor.campaign:getName(),
-					version = self.editor.campaign.campaignVersion,
+					campaignName = cam:getName(),
+					version = cam.campaignVersion,
 					mapNodes = {},
+					landmarks = {},
 				}
+				
+				for k,v in pairs(cam:loadData("landmarks")) do
+					table.insert(out.landmarks, v)
+				end
 				
 				local function getId(node)
 					if node.type=="level" then
@@ -75,12 +81,12 @@ function UI:onReload(list,campaign)
 						return node.id
 					end
 				end
-				for node in self.editor.campaign.nodes:iterate() do
+				for node in cam.nodes:iterate() do
 					local outNode = node:toMapped()
 					outNode.levelID = getId(node)
 					-- outNode.dat = nil -- not used
 					for i,nodeId in ipairs(outNode.pre) do
-						outNode.pre[i] = getId(self.editor.campaign:getNode(nodeId))
+						outNode.pre[i] = getId(cam:getNode(nodeId))
 					end
 					
 					table.insert(out.mapNodes, outNode)
