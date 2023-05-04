@@ -24,7 +24,7 @@ function UI.loadErrorHandler(message)
 	--cut of the part of the trace that goes into the code that calls UI:openEditor()
 	local index = fullTrace:find("%s+%[C%]: in function 'xpcall'")
 	local trace = fullTrace:sub(1,index-1)
-	MainUI:popup("Failed to load campaign!","Error message: "..message,trace)
+	MainUI:popup("Failed to (re)load campaign!","Error message: "..message,trace)
 end
 
 function UI:initialize(subpath, overview)
