@@ -82,7 +82,7 @@ function UI:getRootEntries()
 end
 
 function UI:getChildren(parent)
-	local userData = UserData.getUserData(parent.code)
+	local userData = parent.code and UserData.getUserData(parent.code)
 	if userData then
 		local out = {}
 		for _,level in ipairs(userData:getWorkshopLevels()) do
@@ -96,17 +96,29 @@ function UI:getChildren(parent)
 		return out
 	else
 		local out = {}
-		for _,item in ipairs(NFS.getDirectoryItems(LhMisc.getUserDataPath()..parent.code)) do
+		local path = parent.path or LhMisc.getUserDataPath()..parent.code
+		for _,item in ipairs(NFS.getDirectoryItems(path)) do
+			local itemPath = path.."/"..item
 			if item:match("%.(.+)$") == "lhs" then
 				table.insert(out,{
 					raw = {
-						path = LhMisc.getUserDataPath()..parent.code.."/"..item,
+						path = itemPath,
 						name = item,
 						id = item:match("^(.+)%."),
 					},
 					title = item,
 					folder = false,
 				})
+			else
+				local info = NFS.getInfo(itemPath)
+				if info and info.type=="directory" then
+					table.insert(out,{
+						path = itemPath,
+						-- id = item:match("^(.+)%."),
+						title = item,
+						folder = true,
+					})
+				end
 			end
 		end
 		return out
