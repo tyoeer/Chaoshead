@@ -87,7 +87,7 @@ function UI:getChildren(parent)
 		local out = {}
 		for _,level in ipairs(userData:getWorkshopLevels()) do
 			table.insert(out,{
-				raw = level,
+				levelDetails = level,
 				user = parent.code,
 				title = level.name,
 				folder = false,
@@ -101,7 +101,7 @@ function UI:getChildren(parent)
 			local itemPath = path.."/"..item
 			if item:match("%.(.+)$") == "lhs" then
 				table.insert(out,{
-					raw = {
+					levelDetails = {
 						path = itemPath,
 						name = item,
 						id = item:match("^(.+)%."),
@@ -114,7 +114,6 @@ function UI:getChildren(parent)
 				if info and info.type=="directory" then
 					table.insert(out,{
 						path = itemPath,
-						-- id = item:match("^(.+)%."),
 						title = item,
 						folder = true,
 					})
@@ -126,7 +125,7 @@ function UI:getChildren(parent)
 end
 
 function UI:getDetailsUI(data)
-	return LevelDetails:new(self.workshop, data.raw)
+	return LevelDetails:new(self.workshop, data.levelDetails)
 end
 
 function UI:onFocus(focus)
