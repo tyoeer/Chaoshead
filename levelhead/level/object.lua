@@ -147,7 +147,7 @@ function OBJ:setPropertyRaw(id, value)
 end
 
 function OBJ:getPropertyRaw(id)
-	return self.properties[id] or P:getDefault(id)
+	return self.properties[id] or E:getPropertyDefault(self.id, id)
 end
 
 function OBJ:setProperty(id, value)
@@ -223,23 +223,23 @@ function OBJ:getProperty(id)
 			if #ids==0 then
 				error(string.format("Property %q doesn't exist!",id))
 			end
-			local default = P:valueToMapping(ids[1],P:getDefault(ids[1]))
+			local default = P:valueToMapping(ids[1],P:getCommonDefault(ids[1]))
 			for _,id in ipairs(ids) do
 				local value = self:getPropertyRaw(id)
 				if value then
 					return P:valueToMapping(id,value)
 				else
-					if P:valueToMapping(ids,P:getDefault(id)) ~= default then
+					if P:valueToMapping(ids,P:getCommonDefault(id)) ~= default then
 						default = nil
 					end
 				end
 			end
-			--all properties agree on the default value
+			--all properties agree on the common default value
 			if default then
 				return default
 			else
 				--the element has unknown property data
-				--of all the possible properties from th selector, this object has none set
+				--of all the possible properties from the selector, this object has none set
 				--the possible properties have different default values
 				error(string.format("Property selector %q for element %q is not concise enough to return a value! (consider adding property data)",id,self:getName()))
 			end
@@ -254,7 +254,7 @@ function OBJ:getProperty(id)
 	else
 		error(string.format("Property selector has invalid type %q!",type(id)),2)
 	end
-	return P:valueToMapping(id,self:getPropertyRaw(id) or P:getDefault(id))
+	return P:valueToMapping(id, self:getPropertyRaw(id))
 end
 
 function OBJ:__index(key)

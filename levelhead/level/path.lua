@@ -217,7 +217,7 @@ function P:setPropertyRaw(id, value)
 end
 
 function P:getPropertyRaw(id)
-	return self.properties[id] or PROP:getDefault(id)
+	return self.properties[id] or PROP:getCommonDefault(id)
 end
 
 function P:setProperty(id, value)

@@ -55,7 +55,7 @@ function P:getMin(selector)
 	return self:getRow(selector)[self.headers.min] or "$UnknownMinimum"
 end
 
-function P:getDefault(selector)
+function P:getCommonDefault(selector)
 	return self:getRow(selector)[self.headers.default] or "$UnknownDefault"
 end
 

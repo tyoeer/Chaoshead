@@ -95,6 +95,18 @@ function E:hasProperties(selector)
 	error(string.format("Failed to get property status of %q (start: %q), parent lookup took >%d checks, it's probably recursing.",selector,start,self.N_INHERITENCE_CHECKS))
 end
 
+--uses reduced propertySelector
+-- returns nil on unknown properties data instead of a $ error string
+function E:getPropertyDefault(elementSelector, targetPropId)
+	for propId, default in self:iterateProperties(elementSelector) do
+		if propId==targetPropId then
+			return default or P:getCommonDefault(targetPropId)
+		end
+	end
+	return nil
+end
+
+---Iterates over the property ID and an optional default
 function E:iterateProperties(selector)
 	local start = selector
 	for _=1,self.N_INHERITENCE_CHECKS,1 do
@@ -120,10 +132,10 @@ function E:iterateProperties(selector)
 			--this is a quick hack
 			if type(base)=="number" then base = tostring(base) end
 			--wrap string:gmatch() to tonumber() everything
-			local f,s,v = base:gmatch("(%d+):?%d*")
-			return function(s,v)
-				v = f(s,v)
-				return v==nil and nil or tonumber(v)
+			local f,s,v = base:gmatch("(%d+):?(%d*)")
+			return function(s,propId)
+				propId, default = f(s,propId)
+				return propId==nil and nil or tonumber(propId), default==nil and nil or tonumber(default) 
 			end, s, v
 		end
 	end
