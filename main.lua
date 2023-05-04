@@ -88,3 +88,7 @@ end
 function love.mousereleased(x, y, button, isTouch, presses)
 	Input.mousereleased(x,y, button, isTouch, presses)
 end
+
+function love.filedropped(file)
+	MainUI.workshop:openEditor(file:getFilename())
+end
