@@ -73,6 +73,10 @@ function love.load(args)
 	
 	--checks to run at startup
 	require("chaoshead.startupChecks")
+	
+	if args[1] then
+		MainUI.workshop:openEditor(args[1])
+	end
 end
 
 function love.keypressed(key, scancode, isrepeat)
