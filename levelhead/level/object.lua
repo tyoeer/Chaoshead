@@ -225,7 +225,8 @@ function OBJ:getProperty(id)
 			end
 			local default = P:valueToMapping(ids[1],P:getCommonDefault(ids[1]))
 			for _,id in ipairs(ids) do
-				local value = self:getPropertyRaw(id)
+				--can't use getPropertRaw() because that one fall back on the default
+				local value = self.properties[id]
 				if value then
 					return P:valueToMapping(id,value)
 				else
