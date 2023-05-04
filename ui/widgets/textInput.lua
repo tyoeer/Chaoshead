@@ -428,10 +428,21 @@ function UI:onInputActivated(name,group,_isCursorBound)
 			if self.selection then
 				love.system.setClipboardText(self.selection)
 			end
+		elseif name=="cut" then
+			if self.selection then
+				love.system.setClipboardText(self.selection)
+				self.selection = nil
+				self:changed()
+			end
 		elseif name=="paste" then
 			self.selection = love.system.getClipboardText()
 			self:moveRight()
 			self:changed()
+		elseif name=="selectAll" then
+			self.selection = self:getText()
+			self.left = ""
+			self.right = ""
+			self.cursorRightOfSelection = true
 		end
 		if not name:match("Modifier") then
 			self.timer = 0

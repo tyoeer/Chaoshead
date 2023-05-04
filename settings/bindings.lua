@@ -337,10 +337,30 @@ return {
 				},
 			}
 		},
+		cut = {
+			type = "and",
+			triggers = {
+				"key: x",
+				{
+					type = "or",
+					triggers = {"lctrl","rctrl"}
+				},
+			}
+		},
 		paste = {
 			type = "and",
 			triggers = {
 				"key: v",
+				{
+					type = "or",
+					triggers = {"lctrl","rctrl"}
+				},
+			}
+		},
+		selectAll = {
+			type = "and",
+			triggers = {
+				"key: a",
 				{
 					type = "or",
 					triggers = {"lctrl","rctrl"}
