@@ -326,6 +326,28 @@ return {
 		defocusDetection = "mouse: left",
 		gotoFirst = "key: home",
 		gotoLast = "key: end",
+		
+		copy = {
+			type = "and",
+			triggers = {
+				"key: c",
+				{
+					type = "or",
+					triggers = {"lctrl","rctrl"}
+				},
+			}
+		},
+		paste = {
+			type = "and",
+			triggers = {
+				"key: v",
+				{
+					type = "or",
+					triggers = {"lctrl","rctrl"}
+				},
+			}
+		},
+		
 		selectModifier = {
 			type = "or",
 			triggers = {

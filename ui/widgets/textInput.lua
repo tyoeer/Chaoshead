@@ -424,6 +424,14 @@ function UI:onInputActivated(name,group,_isCursorBound)
 			if self.timer~=0 then
 				self:defocus()
 			end
+		elseif name=="copy" then
+			if self.selection then
+				love.system.setClipboardText(self.selection)
+			end
+		elseif name=="paste" then
+			self.selection = love.system.getClipboardText()
+			self:moveRight()
+			self:changed()
 		end
 		if not name:match("Modifier") then
 			self.timer = 0
