@@ -1,4 +1,4 @@
-Name	ID(decimal)	ID(hex)	Width	Height	Parent (If this element is for example a bigger version of another, the other ones ID(decimal) goes here. "No" if this element is it's own.)	Properties (Comma seperated list. None=Element does not have properties. Inherit=Same properties as Base Id)	Layer	Name Combobulator (2=In-game selectable, 1=shows up, but not selectable, 0=displays raw)	Notes
+Name	ID(decimal)	ID(hex)	Width	Height	Parent (If this element is for example a bigger version of another, the other ones ID(decimal) goes here. "No" if this element is it's own.)	Properties (Comma seperated list. A : after the property ID specifies the default value for that property after it. None=Element does not have properties. Inherit=Same properties as Base Id)	Layer	Name Combobulator (2=In-game selectable, 1=shows up, but not selectable, 0=displays raw)	Notes
 Delete	0	#00			No			2	
 Environment	1	#01	1	1	No	None	Foreground	1	
 Spiketron	2	#02	1	1	No	109	Foreground	2	
@@ -6,7 +6,7 @@ Vacrat	3	#03	1	1	No	None	Foreground	2
 Fallthrough Ledge	4	#04	1	1	No	None	Foreground	2	
 Long Flyblock	5	#05	3	1	50	Inherit	Foreground	2	
 Dense Fog	6	#06	1	1	No	None	Foreground	2	
-Hardlight	7	#07	1	1	No	47,49,60	Foreground	2	
+Hardlight	7	#07	1	1	No	47:2,49,60	Foreground	2	
 Flipwip	8	#08	1	1	No	None	Foreground	2	
 Blopfush	9	#09	1	1	No	30,35,36,40,58	Foreground	2	
 Flapjack	10	#0A	1	1	No	None	Foreground	2	
@@ -30,27 +30,27 @@ Jackdrop	27	#1B	1	1	No	49,60	Foreground	2
 2x2 Vacrat	28	#1C	2	2	3	Inherit	Foreground		
 Keycard	29	#1D	1	1	No	47,49,60	Foreground	2	
 Key Gate	30	#1E	1	3	No	2,47,90	Foreground	2	
-Blaster	31	#1F	1	1	No	4,23,24,25,72,73,75,79	Foreground	2	
+Blaster	31	#1F	1	1	No	4:0,23,24,25,72,73:45,75,79	Foreground	2	
 Zipper	32	#20	1	1	No	49,60	Foreground	2	
 Vacsteak	33	#21	1	1	No	49,60	Foreground	2	
 Lizumi	34	#22	1	1	No	None	Foreground	2	
 Pressure Switch	35	#23	1	1	No	0,2,3,76,85	Foreground	2	
 Hard Clay	36	#24	1	1	No	None	Foreground	2	
 Clock Switch	37	#25	1	1	No	0,2,5,10,11,76	Foreground	2	
-Rift	38	#26	1	1	No	28,29,47,49,60	Foreground	2	
-Trigblaster	39	#27	1	1	No	4,23,24,72,73,75,79	Foreground	2	
+Rift	38	#26	1	1	No	28,29,47:0,49,60	Foreground	2	
+Trigblaster	39	#27	1	1	No	4:0,23,24,72,73:45,75,79	Foreground	2	
 Prize Block	40	#28	1	1	No	3,5,49,60	Foreground	2	
 Brittle Rock	41	#29	1	1	No	None	Foreground	2	
-Cannon	42	#2A	1	1	No	3,32,33,48,49,60,87	Foreground	2	
+Cannon	42	#2A	1	1	No	3:2,32:2,33,48,49,60,87	Foreground	2	
 Package Cam	43	#2B	1	1	No	0,2,5,8,14,80,81,82,83,84	Foreground	2	
-Lookannon	44	#2C	1	1	No	32,33,48,49,60,87,104	Foreground	2	
-Crombler	45	#2D	1	1	No	31,32,49,60,77	Foreground	2	
+Lookannon	44	#2C	1	1	No	32:2,33,48,49,60,87,104	Foreground	2	
+Crombler	45	#2D	1	1	No	31:3,32,49,60,77	Foreground	2	
 2x2 Crombler	46	#2E	2	2	45	Inherit	Foreground		
 Toe Slider	47	#2F	1	1	No	21,22,49,60	Foreground	2	
 BUDD-E	48	#30	2	2	No	92	Foreground	2	
 Burny Whirler	49	#31	1	1	No	40,41,42,43,45,49,60,72,73,74,75,87	Foreground	2	
 Flyblock	50	#32	1	1	No	None	Foreground	2	
-Arrow Hologram	51	#33	1	1	No	4,47,49,60	Foreground	2	
+Arrow Hologram	51	#33	1	1	No	4,47:0,49,60	Foreground	2	
 Flippy Longswitch	52	#34	1	1	No	0,2	Foreground	2	
 2x2 Spiktron	53	#35	2	2	2	Inherit	Foreground		
 3x3 Spiketron	54	#36	3	3	2	Inherit	Foreground		
@@ -92,14 +92,14 @@ Lectroshield	89	#59	1	1	No	49,60	Foreground	2
 Armor Plate	90	#5A	1	1	No	49,60	Foreground	2	
 DBot	91	#5B	1	1	No	49,60	Foreground	2	
 Sign	92	#5C	1	2	No	49,59,60,86	Foreground	2	
-Doomerang	93	#5D	1	1	No	31,32,33,34	Foreground	1	
+Doomerang	93	#5D	1	1	No	31:1,32,33,34	Foreground	1	
 Purge Gate	94	#5E	1	1	No	49,60,70	Foreground	2	
 Spike Trap	95	#5F	1	1	No	8,49,60,109	Foreground	2	
 Dropblock	96	#60	1	1	No	None	Foreground	1	
 Antigrav Block	97	#61	1	1	No	None	Foreground	1	
 Tempswitch	98	#62	1	1	No	0,2,3,5,12,13,49,60,76	Foreground	2	
 Flapsack	99	#63	1	1	No	49,60	Foreground	2	
-Beamer	100	#64	1	1	No	2,17,49,60,107,108	Foreground	2	
+Beamer	100	#64	1	1	No	2,17,49,60,90,107,108	Foreground	2	
 Robo Factory	101	#65	1	1	No	2,18,19,20,49,60,90	Foreground	2	
 Spike Block	102	#66	1	1	No	49,60,109	Foreground	2	
 Long Dropblock	103	#67	3	1	96	None	Foreground		
@@ -132,12 +132,12 @@ Spinny Platform	129	#81	1	1	No	40,45,49,56,57,58,60	Foreground	2
 Flingo	130	#82	1	1	No	49,60	Foreground	2	
 2x2 Rift	131	#83	2	2	38	Inherit	Foreground		
 3x3 Rift	132	#84	3	3	38	Inherit	Foreground		
-Regret Gate	133	#85	1	1	No	3,49,60	Foreground	2	
+Regret Gate	133	#85	1	1	No	3:0,49,60	Foreground	2	
 3x1 Toe Slider	134	#86	3	1	47	Inherit	Foreground		
 2x2 Hardlight	135	#87	2	2	7	Inherit	Foreground		
 2x2 Robo Factory	136	#88	2	2	101	Inherit	Foreground		
 3x3 Robo Factory	137	#89	3	3	101	Inherit	Foreground		
-Sweep Laser	138	#8A	1	1	No	31,49,50,52,60,67	Foreground	1	
+Sweep Laser	138	#8A	1	1	No	31:0,49,50,52,60,67	Foreground	1	
 Boombox	139	#8B	1	1	No	3,5,49,51,54,55,60,64,68,93,94,95,96,97,98	Foreground	2	
 Recycler	140	#8C	1	1	No	49,60	Foreground	1	
 Blopsack	141	#8D	1	1	No	49,60	Foreground	2	

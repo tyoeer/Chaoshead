@@ -120,7 +120,7 @@ function E:iterateProperties(selector)
 			--this is a quick hack
 			if type(base)=="number" then base = tostring(base) end
 			--wrap string:gmatch() to tonumber() everything
-			local f,s,v = base:gmatch("(%d+)")
+			local f,s,v = base:gmatch("(%d+):?%d*")
 			return function(s,v)
 				v = f(s,v)
 				return v==nil and nil or tonumber(v)

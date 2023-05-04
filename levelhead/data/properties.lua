@@ -31,7 +31,7 @@ function P:initialize()
 			self.headers.min = v
 		elseif raw:match("^max$") then
 			self.headers.max = v
-		elseif raw:match("^default$") then
+		elseif raw:match("^commondefault") then
 			self.headers.default = v
 		else
 			for i=SIMPLE_MAPPING_MIN, SIMPLE_MAPPING_MAX, 1 do
