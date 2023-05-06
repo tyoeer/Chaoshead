@@ -21,7 +21,9 @@ function UI:initialize(child,style)
 	--self.child can get cleared
 	self.contents = child
 	self.blocking = false
-	self.blockRoot = BlockRoot:new()
+
+	---@diagnostic disable-next-line param-type-mismatch We'll set it later before use
+	self.blockRoot = BlockRoot:new(nil)
 end
 
 function UI:setBlock(block)
