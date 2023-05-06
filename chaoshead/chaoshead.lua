@@ -31,6 +31,10 @@ function UI:initialize()
 	UI.super.initialize(self,self.mainTabs)
 end
 
+function UI:focusModule(module)
+	self.mainTabs:setActiveTab(module)
+end
+
 function UI:toggleFullscreen()
 	local fullscreen = not love.window.getFullscreen()
 	Storage.fullscreen = fullscreen

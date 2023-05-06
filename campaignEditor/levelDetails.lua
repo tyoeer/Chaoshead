@@ -55,6 +55,13 @@ function UI:onReload(list, level)
 		list:addTextEntry("Nodes: none")
 	end
 	
+	list:addSeparator(false)
+	
+	list:addButtonEntry("Open level in workshop", function()
+		MainUI.workshop:openEditor(l:getPath())
+		MainUI:focusModule(MainUI.workshop)
+	end)
+	
 	list:addSeparator(true)
 	
 	list:addTextEntry("Rumpus code:")
