@@ -72,10 +72,12 @@ return {
 		},
 		--outside bounds
 		{
-			message = "The %s at (%i,%i) is outside bounds!",
+			message = "The %s at (%i,%i) is outside saveable range!",
 			check = function(level)
 				for obj in level.objects:iterate() do
-					if obj.x < level.left or obj.x > level.right or obj.y < level.top or obj.y > level.bottom then
+					local x = level:worldToFileX(obj.x)
+					local y = level:worldToFileY(obj.y)
+					if x < 0 or x > 255 or y < 0 or y > 255 then
 						return obj:getName(), obj.x, obj.y
 					end
 				end
@@ -83,11 +85,13 @@ return {
 			end,
 		},
 		{
-			message = "The path node at (%i,%i) is outside bounds!",
+			message = "The path node at (%i,%i) is outside saveable range!",
 			check = function(level)
 				for path in level.paths:iterate() do
 					for node in path:iterateNodes() do
-						if node.x < level.left or node.x > level.right or node.y < level.top or node.y > level.bottom then
+						local x = level:worldToFileX(node.x)
+						local y = level:worldToFileY(node.y)
+						if x < 0 or x > 255 or y < 0 or y > 255 then
 							return node.x, node.y
 						end
 					end
@@ -176,6 +180,18 @@ return {
 				end)
 			end,
 		},
+		-- objects outside bounds
+		{
+			message = "The %s at (%i,%i) is outside bounds!",
+			check = function(level)
+				for obj in level.objects:iterate() do
+					if obj.x < level.left or obj.x > level.right or obj.y < level.top or obj.y > level.bottom then
+						return obj:getName(), obj.x, obj.y
+					end
+				end
+				return false
+			end,
+		},
 	},
 	editor = {
 		-- level size
@@ -202,6 +218,20 @@ return {
 				else
 					return false
 				end
+			end,
+		},
+		--outside bounds
+		{
+			message = "The path node at (%i,%i) is outside bounds!",
+			check = function(level)
+				for path in level.paths:iterate() do
+					for node in path:iterateNodes() do
+						if node.x < level.left or node.x > level.right or node.y < level.top or node.y > level.bottom then
+							return node.x, node.y
+						end
+					end
+				end
+				return false
 			end,
 		},
 	},
