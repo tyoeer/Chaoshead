@@ -41,7 +41,7 @@ function UI:toCache(input, opened)
 	local out = {}
 	for i,v in ipairs(input) do
 		out[i] = {
-			title = v.title,
+			title = tostring(v.title),
 			folder = v.folder,
 			action = v.action,
 			data = v,
