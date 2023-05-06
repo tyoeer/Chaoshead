@@ -1,5 +1,6 @@
 ---@class BlockRootUI : RootUI
 ---@field super RootUI
+---@field new fun(self, child: BaseNodeUI): self
 local UI = Class("BlockRootUI",require("ui.base.root"))
 
 -- a replacement for base.root that doesn't give it's children access to stuff

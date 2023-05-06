@@ -1,7 +1,11 @@
 local BlockRoot = require("ui.layout.blockRoot")
 
+---@class BlockStyle
+---@field overlayColor table
+
 ---@class BlockUI : ProxyUI
 ---@field super ProxyUI
+---@field new fun(self, child: BaseNodeUI, style: BlockStyle): self
 local UI = Class("BlockUI",require("ui.base.proxy"))
 
 -- thsi UI can optionally block access to the underlying child

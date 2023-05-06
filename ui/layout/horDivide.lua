@@ -1,5 +1,11 @@
+---@class HorDivideStyle
+---@field divisionRatio number
+---@field dividerColor table
+---@field dividerWidth number
+
 ---@class HorDivideUI : ContainerUI
 ---@field super ContainerUI
+---@field new fun(self, left: BaseNodeUI, right: BaseNodeUI, style: HorDivideStyle): self
 local UI = Class("HorDivideUI",require("ui.base.container"))
 
 function UI:initialize(left,right,style)
