@@ -3,9 +3,6 @@ local WORKSHOP = require("levelEditor.workshop.workshop")
 local CAMPAIGNS = require("campaignEditor.overview.overview")
 local DATA_EXPLORER = require("dataExplorer.overview")
 local MISC = require("chaoshead.misc")
-local LH_MISC = require("levelhead.misc")
-local NFS = require("libs.nativefs")
-local Version = require("utils.version")
 
 ---@class ChaosheadUI : ModalManagerUI
 ---@field super ModalManagerUI
