@@ -61,6 +61,10 @@ function UI:onReload(list, level)
 		MainUI.workshop:openEditor(l:getPath())
 		MainUI:focusModule(MainUI.workshop)
 	end)
+	list:addButtonEntry("Delete level (doesn't delete file)", function()
+		l.campaign:removeLevel(l)
+		self.root:levelChanged(l)
+	end)
 	
 	list:addSeparator(true)
 	

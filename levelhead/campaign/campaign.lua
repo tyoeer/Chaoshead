@@ -52,6 +52,13 @@ function C:getLevel(id)
 	return out
 end
 
+---DOesn't remove the level file
+function C:removeLevel(level)
+	self.levels:remove(level)
+	self.levelsById[level.id] = nil
+	level.campaign = nil
+end
+
 function C:clearLevels()
 	self.levels = EP:new()
 	self.levelsById = {}
