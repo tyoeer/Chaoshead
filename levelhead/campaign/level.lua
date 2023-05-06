@@ -61,11 +61,11 @@ function L:removeNodeRaw(node)
 end
 
 function L:getPath()
-	return self.campaign.path..self.campaign.SUBPATHS.levels..self.file
+	return love.filesystem.getSaveDirectory().."/"..self.campaign.path..self.campaign.SUBPATHS.levels..self.file
 end
 
 function L:getLHS()
-	return LHS:new(love.filesystem.getSaveDirectory().."/"..self:getPath())
+	return LHS:new(self:getPath())
 end
 
 function L:getLabel()
@@ -95,7 +95,7 @@ function L:renameFile(name)
 	local oldFile = self.file
 	self.file = name
 	local newPath = self:getPath()
-	local _success, err = os.rename(love.filesystem.getSaveDirectory().."/"..oldPath, love.filesystem.getSaveDirectory().."/"..newPath)
+	local _success, err = os.rename(oldPath, newPath)
 	if err then
 		self.id = oldFile
 		return false, err
