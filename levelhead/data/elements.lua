@@ -1,30 +1,33 @@
-local csv = require("utils.csv")
+local Csv = require("utils.csv")
 local P = require("levelhead.data.properties")
+
+---@class LHElementsData : LHData
+---@field super LHData
 local E = Class(require("levelhead.data.base"))
 
 function E:initialize()
 	--parse data file
 	local rawHeaders
-	self.data, rawHeaders = csv.parseString(love.filesystem.read("data/levelElements.tsv"),"\t")
+	self.data, rawHeaders = Csv.parseString(love.filesystem.read("data/levelElements.tsv"),"\t")
 	self.N_INHERITENCE_CHECKS = 20
 	--parse headers
 	self.headers = {}
-	for i,v in ipairs(rawHeaders) do
-		local raw = self:reduceSelector(v)
+	for _, header in ipairs(rawHeaders) do
+		local raw = self:reduceSelector(header)
 		if raw:match("^name$") then
-			self.headers.name = v
+			self.headers.name = header
 		elseif raw:match("^iddecimal$") then
-			self.headers.id = v
+			self.headers.id = header
 		elseif raw:match("width") then
-			self.headers.width = v
+			self.headers.width = header
 		elseif raw:match("height") then
-			self.headers.height = v
+			self.headers.height = header
 		elseif raw:match("^parent") then
-			self.headers.parent = v
+			self.headers.parent = header
 		elseif raw:match("^properties") then
-			self.headers.properties = v
+			self.headers.properties = header
 		elseif raw:match("^layer") then
-			self.headers.layer = v
+			self.headers.layer = header
 		end
 	end
 end
@@ -145,8 +148,9 @@ function E:iterateProperties(selector)
 			if type(base)=="number" then base = tostring(base) end
 			--wrap string:gmatch() to tonumber() everything
 			local f,s,v = base:gmatch("(%d+):?(%d*)")
-			return function(s,propId)
-				propId, default = f(s,propId)
+			return function(_s,propId)
+				local default
+				propId, default = f() --f(s,propId) apparently not needed
 				return propId==nil and nil or tonumber(propId), default==nil and nil or tonumber(default) 
 			end, s, v
 		end

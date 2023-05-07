@@ -23,7 +23,7 @@ function love.load(args)
 	---@field class Class
 	local c = {}
 	---@generic T
-	---@param self `T`
+	---@param self T
 	---@return T
 	function c:new(...) return self end
 	

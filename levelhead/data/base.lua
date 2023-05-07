@@ -1,3 +1,6 @@
+---@class LHData : Object
+---@field data table<number, table<string, unknown>>
+---@field headers table<string, string>
 local DATA = Class()
 
 function DATA:getRow(selector)
@@ -12,9 +15,9 @@ function DATA:getRow(selector)
 			return {}
 		end
 	elseif type(selector)=="string" then
-		for i,v in ipairs(self.data) do
-			if v[self.headers.name] == selector then
-				return v
+		for _,row in ipairs(self.data) do
+			if row[self.headers.name] == selector then
+				return row
 			end
 		end
 		
@@ -38,9 +41,9 @@ end
 function DATA:getAllIDs(name)
 	name = self:reduceSelector(name)
 	local out = {}
-	for i,v in ipairs(self.data) do
-		if v[self.headers.name]:lower():gsub(" ","") == name then
-			table.insert(out, v[self.headers.id])
+	for _,row in ipairs(self.data) do
+		if row[self.headers.name]:lower():gsub(" ","") == name then
+			table.insert(out, row[self.headers.id])
 		end
 	end
 	return out
