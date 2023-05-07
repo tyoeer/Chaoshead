@@ -1,5 +1,4 @@
 local World = require("levelhead.level.world")
-local EntityPool = require("libs.tyoeerUtils.entitypool")
 
 local Clipboard = Class()
 
@@ -19,7 +18,7 @@ function Clipboard:initialize(world,mask)
 end
 
 --offset are from (1,1), so offsets should be 1 lower than the start position
---(the start psoition of (1,1) need offset (0,0))
+--(the start position of (1,1) need offset (0,0))
 function Clipboard:copy(srcWorld, dstWorld, srcOffsetX,srcOffsetY, dstOffsetX,dstOffsetY)
 	local nodes = {}
 	self.mask:forEach(function(x,y,value)

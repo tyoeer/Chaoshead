@@ -56,7 +56,7 @@ function UI:addFilter(op)
 			local propList, additionalDeselection = self.editor:filterProperty(self.propertyList.propId,v, op)
 			if not propList then
 				--filtered out every object with this modal
-				MainUI:removeModal(self)
+				MainUI:removeModal()
 			end
 			
 			if additionalDeselection then
