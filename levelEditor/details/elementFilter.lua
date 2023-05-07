@@ -73,7 +73,9 @@ function UI:buildElementList(s)
 		local bSize, bName = b.label:match("(%d+x%d+) (.+)")
 		if not bName then bName = b.label end
 		if aName==bName then
-			if not aSize then
+			if not aSize and not bSize then
+				return a.context < b.context
+			elseif not aSize then
 				return true
 			elseif not bSize then
 				return false

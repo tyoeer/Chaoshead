@@ -17,13 +17,15 @@ do
 		})
 	end
 	
-	table.sort(elemList, function (a,b)
+	table.sort(elemList, function(a,b)
 		local aSize, aName = a.name:match("(%d+x%d+) (.+)")
 		if not aName then aName = a.name end
 		local bSize, bName = b.name:match("(%d+x%d+) (.+)")
 		if not bName then bName = b.name end
 		if aName==bName then
-			if not aSize then
+			if not aSize and not bSize then
+				return a.id < b.id
+			elseif not aSize then
 				return true
 			elseif not bSize then
 				return false
