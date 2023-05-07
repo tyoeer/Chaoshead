@@ -1,5 +1,6 @@
 local E = require("levelhead.data.elements")
 local P = require("levelhead.data.properties")
+local WikiData = require("levelhead.wikiData")
 
 local OBJ = Class("Object")
 
@@ -70,8 +71,21 @@ end
 
 local colorsIndex = Settings.theme.editor.level
 
+local halfSize = TILE_SIZE/2
+
 function OBJ:drawShape()
 	local x, y = self:getDrawCoords()
+	local img = WikiData:getImage(self.id)
+	if img then
+		local scale = math.min(TILE_SIZE/img:getWidth(), TILE_SIZE/img:getHeight())
+		love.graphics.setColor(1,1,1)
+		love.graphics.draw(img,
+			x+halfSize,y+halfSize,
+			0,
+			scale,scale,--TILE_SIZE/img:getWidth(), TILE_SIZE/img:getHeight(),
+			img:getWidth()/2, img:getHeight()/2
+		)
+	else
 	if self.layer=="foreground" then
 		love.graphics.setColor(colorsIndex.foregroundObject.shape)
 		love.graphics.rectangle("fill",x,y,TILE_SIZE,TILE_SIZE)
@@ -80,10 +94,12 @@ function OBJ:drawShape()
 		love.graphics.translate(x,y)
 		love.graphics.polygon("fill",self.backgroundShape)
 		love.graphics.translate(-x,-y)
+		end
 	end
 end
 
 function OBJ:drawText()
+	if WikiData:getImage(self.id) then return end
 	local x, y = self:getDrawCoords()
 	if self.layer=="foreground" then
 		love.graphics.setColor(colorsIndex.foregroundObject.text)
@@ -95,6 +111,7 @@ function OBJ:drawText()
 end
 
 function OBJ:drawOutline()
+	if WikiData:getImage(self.id) then return end
 	local x, y = self:getDrawCoords()
 	if self.layer=="foreground" then
 		love.graphics.setColor(colorsIndex.foregroundObject.outline)

@@ -51,6 +51,18 @@ end
 function E:getParent(selector)
 	return self:getRow(selector)[self.headers.parent] or "$UnknownParent"
 end
+-- Keeps getting the parent until the end
+function E:getRootParentId(selector)
+	local row = self:getRow(selector)
+	for _=1,self.N_INHERITENCE_CHECKS,1 do
+		if row[self.headers.parent] and row[self.headers.parent]~="No" then
+			row = self:getRow(row[self.headers.parent])
+		else
+			break
+		end
+	end
+	return row[self.headers.id]
+end
 
 --uses reduced selectors
 function E:buildPropertyIDMap(element)
