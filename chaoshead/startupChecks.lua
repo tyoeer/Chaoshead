@@ -127,6 +127,20 @@ local checks = {
 	
 	-- New update
 	checkForUpdate,
+	
+	-- New user intro
+	function()
+		if not Storage.shownIntro then
+			MainUI:popup(
+				"Looks like you're new to using Chaoshead. Consider visiting the Misc. tab to:\n"
+				.."- View a list of all the keybinds\n"
+				.."- Patch Levelhead so you don't have to restart it to load a level edited in Chaoshead\n"
+				.."- Generate a colored theme for Chaoshead"
+			)
+			Storage.shownIntro = true
+			Storage:save()
+		end
+	end
 }
 
 
