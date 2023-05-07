@@ -11,6 +11,7 @@ local Tabs = require("ui.tools.tabs")
 local WorldEditor = require("levelEditor.worldEditor")
 local SelectionDetails = require("levelEditor.details.selection")
 local LevelDetails = require("levelEditor.details.level")
+local Palette = require("levelEditor.details.palette")
 
 local UI = Class("LevelEditorUI",require("ui.base.proxy"))
 
@@ -22,8 +23,14 @@ function UI:initialize(level,root)
 	--ui state
 	self.viewer = WorldEditor:new(self)
 	self.detailsUI = Tabs:new()
+	
 	self.levelDetails = LevelDetails:new(level,self)
 	self:addTab(self.levelDetails)
+	
+	self.palette = Palette:new(level,self)
+	self:addTab(self.palette)
+	
+	self.detailsUI:setActiveTab(self.levelDetails)
 	
 	--editor state
 	self.selection = nil
