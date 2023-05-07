@@ -52,7 +52,7 @@ Burny Whirler	49	#31	1	1	No	40,41,42,43,45,49,60,72,73,74,75,87	Foreground	2
 Flyblock	50	#32	1	1	No	None	Foreground	2	
 Arrow Hologram	51	#33	1	1	No	4,47:0,49,60	Foreground	2	
 Flippy Longswitch	52	#34	1	1	No	0,2	Foreground	2	
-2x2 Spiktron	53	#35	2	2	2	Inherit	Foreground		
+2x2 Spiketron	53	#35	2	2	2	Inherit	Foreground		
 3x3 Spiketron	54	#36	3	3	2	Inherit	Foreground		
 Turbo Jem	55	#37	2	2	11	Inherit	Foreground	2	
 Mega Jem	56	#38	2	3	11	Inherit	Foreground	2	
