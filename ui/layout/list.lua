@@ -81,7 +81,6 @@ end
 function UI:resetList()
 	--the garbage collector should take care of the old list
 	self.children = {}
-	self:minimumHeightChanged()
 end
 
 function UI:getMinimumHeight(width)
