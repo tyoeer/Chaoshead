@@ -53,13 +53,16 @@ local function accentuator(accent)
 	end
 end
 
-local function replaceInPlace(old, new, conv)
+local function replaceInPlace(old, new, conv, exceptions)
+	exceptions = exceptions or {}
 	local replacedKeys = {}
 	for key,value in pairs(new) do
-		if type(value)=="table" and type(old[key])=="table" then
-			replaceInPlace(old[key], conv and conv(value) or value, conv)
-		else
-			old[key] = value
+		if not exceptions[key] then
+			if type(value)=="table" and type(old[key])=="table" then
+				replaceInPlace(old[key], conv and conv(value) or value, conv, exceptions)
+			else
+				old[key] = value
+			end
 		end
 		replacedKeys[key] = true
 	end
@@ -82,16 +85,17 @@ return {
 		if type(color)=="string" then
 			if color=="classic" then
 				replaceInPlace(Settings.theme, require("utils.classicTheme"))
-				Settings:save("theme")
+			elseif color=="default" then
+				replaceInPlace(Settings.theme, Settings.defaults.theme)
 			end
 		else
 			color = C(color)
-			replaceInPlace(Settings.theme, Settings.defaults.theme, accentuator(color))
-			Settings:save("theme")
+			replaceInPlace(Settings.theme, Settings.defaults.theme, accentuator(color), {rulerStyle = true})
 		end
+		Settings:save("theme")
 	end,
 	presetColors = {
-		{"Default", C{1,1,1}},
+		{"Default", "default"},
 		{"Classic", "classic"},
 		{"Dark Blue", C{0.95, 1, 1.2}},
 		{"Dark Gold", C{1.2, 1.2, 0.95}},
