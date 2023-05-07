@@ -79,12 +79,20 @@ end
 
 return {
 	setAccentColor = function(color)
-		color = C(color)
-		replaceInPlace(Settings.theme, Settings.defaults.theme, accentuator(color))
-		Settings:save("theme")
+		if type(color)=="string" then
+			if color=="classic" then
+				replaceInPlace(Settings.theme, require("utils.classicTheme"))
+				Settings:save("theme")
+			end
+		else
+			color = C(color)
+			replaceInPlace(Settings.theme, Settings.defaults.theme, accentuator(color))
+			Settings:save("theme")
+		end
 	end,
 	presetColors = {
 		{"Default", C{1,1,1}},
+		{"Classic", "classic"},
 		{"Dark Blue", C{0.95, 1, 1.2}},
 		{"Dark Gold", C{1.2, 1.2, 0.95}},
 		{"Dark Fuchsia", C{1.1, 0.85, 1.1}},
