@@ -5,6 +5,7 @@ return {
 			isCursorBound = true,
 		},
 		toggleFullscreen = "key: f11",
+		toggleFancyGraphics = "key: f10",
 	},
 	editor = {
 		quickRunScript = {

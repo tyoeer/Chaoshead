@@ -3,6 +3,7 @@ local WORKSHOP = require("levelEditor.workshop.workshop")
 local CAMPAIGNS = require("campaignEditor.overview.overview")
 local DATA_EXPLORER = require("dataExplorer.overview")
 local MISC = require("chaoshead.misc")
+local WikiData = require("levelhead.wikiData")
 
 ---@class ChaosheadUI : ModalManagerUI
 ---@field super ModalManagerUI
@@ -24,6 +25,8 @@ function UI:initialize()
 	
 	self.mainTabs:setActiveTab(self.workshop)
 	
+	self:setFancyGraphics(Storage.fancyGraphics)
+	
 	--TabsUI needs buttons before getting resized (which always happens when added)
 	UI.super.initialize(self,self.mainTabs)
 end
@@ -40,14 +43,23 @@ function UI:toggleFullscreen()
 	UiRoot:resize(love.graphics.getWidth(), love.graphics.getHeight())
 end
 
+function UI:setFancyGraphics(fancy)
+	WikiData:setImagesEnabled(fancy)
+end
 
 function UI:preDraw()
 	love.graphics.clear(Settings.theme.main.background)
 end
 
 function UI:onInputActivated(name,group,isCursorBound)
-	if group=="main" and name=="toggleFullscreen" then
-		self:toggleFullscreen()
+	if group=="main" then
+		if name=="toggleFullscreen" then
+			self:toggleFullscreen()
+		elseif name=="toggleFancyGraphics" then
+			Storage.fancyGraphics = not Storage.fancyGraphics
+			self:setFancyGraphics(Storage.fancyGraphics)
+			Storage:save()
+		end
 	else
 		UI.super.onInputActivated(self, name,group,isCursorBound)
 	end

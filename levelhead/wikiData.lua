@@ -51,9 +51,17 @@ function W:buildImages()
 	return images
 end
 
+function W:setImagesEnabled(enabled)
+	if enabled then
+		self.imageLookup = self.images
+	else
+		self.imageLookup = {}
+	end
+end
+
 ---@param id number
 function W:getImage(id)
-	return self.images[id]
+	return self.imageLookup[id]
 end
 
 return W:new()
