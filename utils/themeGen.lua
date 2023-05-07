@@ -84,7 +84,7 @@ return {
 		Settings:save("theme")
 	end,
 	presetColors = {
-		{"None", C{1,1,1}},
+		{"Default", C{1,1,1}},
 		{"Dark Blue", C{0.95, 1, 1.2}},
 		{"Dark Gold", C{1.2, 1.2, 0.95}},
 		{"Dark Fuchsia", C{1.1, 0.85, 1.1}},
