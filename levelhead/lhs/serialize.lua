@@ -212,7 +212,7 @@ function LHS:serializeContainedObjects(level)
 	--process
 	for obj in level.objects:iterate() do
 		if obj.contents then
-			if not idMap[obj.id] then
+			if not idMap[obj.contents] then
 				local entry = {}
 				entry.id = obj.contents
 				entry.subentries = {}
