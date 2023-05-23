@@ -61,7 +61,9 @@ function UI:onReload(list,level)
 			mask:setLayerEnabled("background", false)
 			mask:setLayerEnabled("pathNodes", false)
 			local width = E:getWidth(elem.id)
+			if width=="$UnknownWidth" then width = 1 end
 			local height = E:getHeight(elem.id)
+			if height=="$UnknownHeight" then height = 1 end
 			for x=1,width do
 				for y=1,height do
 					mask:add(x,y)

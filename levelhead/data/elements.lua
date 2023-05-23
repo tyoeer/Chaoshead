@@ -32,11 +32,12 @@ function E:initialize()
 	end
 end
 
-
+---@return integer|"$UnknownWidth"
 function E:getWidth(selector)
 	return self:getRow(selector)[self.headers.width] or "$UnknownWidth"
 end
 
+---@return integer|"$UnknownHeight"
 function E:getHeight(selector)
 	return self:getRow(selector)[self.headers.height] or "$UnknownHeight"
 end
