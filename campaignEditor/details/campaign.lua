@@ -96,7 +96,7 @@ function UI:onReload(list,campaign)
 				
 				local json = JSON.encode(out)
 				
-				local url = "https://level-kit.netlify.app/customcampaigns/?userCampaign="..json
+				local url = "https://level-kit.netlify.app/customcampaigns/#"..json
 				love.system.setClipboardText(json)
 				local success = love.system.openURL(url:gsub("\"","\\\"")) -- Least amount of URL encoding that still works
 				
