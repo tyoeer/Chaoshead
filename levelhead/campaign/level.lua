@@ -21,7 +21,7 @@ local COLLECTABLE_ID_MAP = {
 ---@field gr17 boolean If this levels has a collectable GR-17
 ---@field campaignMarker boolean If the CampaigMarker has been set on this level
 
----@class Campaignlevel : Mapped
+---@class CampaignLevel : Mapped
 ---@field super Mapped
 ---@field campaign Campaign?
 ---@field metadata CampaignLevelMetadata?

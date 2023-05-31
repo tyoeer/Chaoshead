@@ -20,7 +20,7 @@ return {
 		check = function(c)
 			local out = {}
 			for level in c.levels:iterate() do
-				---@cast level Campaignlevel
+				---@cast level CampaignLevel
 				if not level.nodes:getTop() then
 					table.insert(out,level)
 				end
@@ -34,7 +34,7 @@ return {
 		check = function(c)
 			local out = {}
 			for level in c.levels:iterate() do
-				---@cast level Campaignlevel
+				---@cast level CampaignLevel
 				if level:getMetadata().campaignMarker~=true then
 					table.insert(out,level)
 				end
@@ -83,7 +83,7 @@ return {
 			local cName = c:getName()
 			local creators = {}
 			for level in c.levels:iterate() do
-				---@cast level Campaignlevel
+				---@cast level CampaignLevel
 				local creatorCode, campaignName, type, _subid = level:idMatchStandard()
 				if not creatorCode then
 					table.insert(out, {"Doesn't follow id format:", level})
