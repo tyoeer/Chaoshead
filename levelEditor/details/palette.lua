@@ -17,6 +17,11 @@ do
 		})
 	end
 	
+	table.insert(elemList, {
+		id = -10,
+		name = "Path Node"
+	})
+	
 	table.sort(elemList, function(a,b)
 		local aSize, aName = a.name:match("(%d+x%d+) (.+)")
 		if not aName then aName = a.name end
@@ -77,8 +82,13 @@ function UI:onReload(list,level)
 			local x, y = math.ceil(width/2), height - math.ceil(height/2) + 1
 			local layer = E:getLayer(elem.id)
 			if layer=="$UnknownLayer" then
-				mask:setLayerEnabled("foreground", true)
-				tmpWorld:addForegroundObject(Object:new(elem.id), x,y)
+				if elem.id==-10 then
+					mask:setLayerEnabled("pathNodes", true)
+					tmpWorld:newPath():append(x,y)
+				else
+					mask:setLayerEnabled("foreground", true)
+					tmpWorld:addForegroundObject(Object:new(elem.id), x,y)
+				end
 			else
 				mask:setLayerEnabled(E:getLayer(elem.id):lower(), true)
 				tmpWorld:addObject(Object:new(elem.id), x,y)
