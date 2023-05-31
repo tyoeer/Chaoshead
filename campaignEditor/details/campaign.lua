@@ -54,12 +54,24 @@ function UI:onReload(list,campaign)
 	list:addButtonEntry(
 		"Open in level-kit",
 		function()
-			MainUI:getString("Enter [name] % [code]", function(str)
+			MainUI:getString("Enter [name] % [code] +[modifier] (there're defaults for quick testing)", function(str)
+				local exportPaths = false
+				local subStr = str
+				local mod
+				while subStr do
+					subStr, mod = str:match("(.*)%+([^+]-)$")
+					if subStr and mod then
+						str = subStr
+						if mod=="path" or mod=="paths" then
+							exportPaths = true
+						end
+					end
+				end
+				local name, code = str:match("(.+) ?%% ?(.+)$")
 				local cam = self.editor.campaign
-				local name, code = str:match("(.+) %% (.+)$")
 				local out = {
-					creatorName = name,
-					creatorCode = code,
+					creatorName = string.trim(name or "$Nameless"),
+					creatorCode = string.trim(code or "$Codeless"),
 					campaignName = cam:getName(),
 					version = cam.campaignVersion,
 					mapNodes = {},
@@ -70,22 +82,28 @@ function UI:onReload(list,campaign)
 					table.insert(out.landmarks, v)
 				end
 				
+				---@param node CampaignNode
 				local function getId(node)
 					if node.type=="level" then
+						---@cast node CampaignLevelNode
 						if type(node.level)=="table" then
 							return node.level.rumpusCode or node.id
 						else
 							return node.id
 						end
+					elseif not exportPaths and node.type=="path" then
+						---@cast node CampaignPathNode
+						return getId(node.prevLevel)
 					else
 						return node.id
 					end
 				end
 				for node in cam.nodes:iterate() do
-					if node.type=="level" or node.type=="path" then
+					---@cast node CampaignNode
+					if node.type=="level" or exportPaths and node.type=="path" then
 						local outNode = node:toMapped()
 						outNode.levelID = getId(node)
-						-- outNode.dat = nil -- not used
+						outNode.dat = nil -- not used
 						for i,nodeId in ipairs(outNode.pre) do
 							outNode.pre[i] = getId(cam:getNode(nodeId))
 						end
