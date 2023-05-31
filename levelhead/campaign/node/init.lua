@@ -1,3 +1,13 @@
+---@alias CampaignNodeType "level"|"icon pack"|"path"|"presentation"
+
+---@class CampaignNode : Mapped
+---@field super Mapped
+---@field campaign Campaign?
+---@field x number
+---@field y number
+---@field prev CampaignNode[]
+---@field next CampaignNode[]
+---@field type CampaignNodeType
 local N = Class("CampaignNode",require("levelhead.campaign.mapped"))
 
 local MAPPINGS = {

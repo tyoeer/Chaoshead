@@ -1,6 +1,11 @@
+---@class CampaignPathNode : CampaignNode
+---@field super CampaignNode
+---@field prevLevel CampaignNode?
+---@field nextLevel CampaignNode?
 local P = Class("CampaignPathNode",require("levelhead.campaign.node"))
 
 local MAPPINGS = {
+	--TODO: Is this always a level?
 	prevLevel = {
 		"pre_actual",
 		optional = true,

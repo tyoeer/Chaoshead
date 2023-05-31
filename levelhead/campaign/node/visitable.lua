@@ -1,4 +1,15 @@
--- Represents a node that the player can travel to as a destination
+--- Represents a node that the player can travel to as a destination
+---@class CampaignVisitableNode : CampaignNode
+---@field super CampaignNode
+---@field title string
+---@field mainPath boolean?
+---@field secret boolean
+---@field secretPrevPaths boolean
+---@field secretNextPaths boolean
+---@field requiresBugs boolean
+---@field requiresAllLevels boolean
+---@field requiresJems boolean
+---@field requiresGr17 boolean
 local V = Class("CampaignVisitableNode",require("levelhead.campaign.node"))
 
 local MAPPINGS = {

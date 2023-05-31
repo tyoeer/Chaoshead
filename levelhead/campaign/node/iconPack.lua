@@ -1,3 +1,6 @@
+---@class CampaignIconPackNode : CampaignVisitableNode
+---@field super CampaignVisitableNode
+---@field unlocks table
 local I = Class("CampaignIconPackNode",require("levelhead.campaign.node.visitable"))
 
 local MAPPINGS = {

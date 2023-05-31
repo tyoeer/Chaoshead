@@ -1,3 +1,6 @@
+---@class CampaignPresentationNode : CampaignVisitableNode
+---@field super CampaignVisitableNode
+---@field presentation string
 local P = Class("CampaignPresentationNode",require("levelhead.campaign.node.visitable"))
 
 local MAPPINGS = {

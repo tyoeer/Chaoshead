@@ -86,13 +86,17 @@ end
 
 --- Generate the Mapping to map a number to a bool in the object.
 ---@param field string
----@param optional boolean
+---@param optional boolean?
+---@return Mapping
 function JM.mapBool(field, optional)
 	if type(field)=="table" then
 		error("Don't use OOP call!", 2)
 	end
 	if field==nil then
 		error("Field is nil!", 2)
+	end
+	if optional==nil then
+		optional = false
 	end
 	return {
 		field,
