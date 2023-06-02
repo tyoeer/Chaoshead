@@ -53,7 +53,7 @@ local function unpack(callback)
 		MainUI:setCancelAction(cancel)
 	else
 		MainUI:popup("No campaign_hardfile found in the Chaoshead data directory!\nYou have to manually move it there first."
-		.."\n(You can open the data direcotry in the Misc. tab.")
+		.."\n(You can open the data directory in the Misc. tab.)")
 	end
 end
 
