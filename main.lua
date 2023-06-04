@@ -10,8 +10,6 @@ function love.load(args)
 	--load stuff
 	require("utils.utils")
 	
-	local TU = require("libs.tyoeerUtils")(require("libs.middleclass"))
-	
 	-- Boilerplate for types
 	
 	---@class Class
@@ -27,11 +25,20 @@ function love.load(args)
 	---@return T
 	function c:new(...) return self end
 	
-	--Globals unfortunately don't have types, so this doesn't actually work
+	local middleclass = require("libs.middleclass")
+	
 	---@overload fun(): Class
 	---@overlaod fun(parent: Class): Class
 	---@overload fun(name: string, parent?: Class): Class
-	Class = TU("oop")
+	function Class(nameOrParent, parent)
+		if nameOrParent==nil then
+			return middleclass("Unnamed")
+		elseif type(nameOrParent)=="table" then
+			return middleclass("Unnamed", nameOrParent)
+		elseif type(nameOrParent)=="string" then
+			return middleclass(nameOrParent, parent)
+		end
+	end
 	
 	--constants
 	TILE_SIZE = 71
@@ -40,7 +47,6 @@ function love.load(args)
 	Persistant = require("settings")
 	Settings = Persistant.settings
 	Storage = Persistant:get("data")
-	Input = TU("input")
 	--make sure which version of CH we're using is saved on disk
 	require("utils.version")
 	
@@ -63,6 +69,7 @@ function love.load(args)
 	UiRoot:resize(love.graphics.getWidth(), love.graphics.getHeight())
 	
 	--bind ui and input
+	Input = require("chaoshead.input")
 	Input.parseActions(Settings.bindings)
 	Input.inputActivated = function(...)
 		UiRoot:inputActivated(...)

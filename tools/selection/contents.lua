@@ -1,4 +1,4 @@
-local EP = require("libs.tyoeerUtils.entitypool")
+local EP = require("utils.entitypool")
 local E = require("levelhead.data.elements")
 local P = require("levelhead.data.properties")
 

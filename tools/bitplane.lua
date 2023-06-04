@@ -1,4 +1,4 @@
-local DS = require("libs.tyoeerUtils.datastructures")
+local Grid = require("utils.grid")
 
 --the bitplane itself
 local B = Class("Bitplane")
@@ -11,7 +11,7 @@ function B:initialize(w,h,default)
 	else
 		self.default = default
 	end
-	self.grid = DS.grid()
+	self.grid = Grid()
 end
 
 function B:get(x,y)

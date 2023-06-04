@@ -1,5 +1,5 @@
-local Pool = require("libs.tyoeerUtils.entitypool")
-local DS = require("libs.tyoeerUtils.datastructures")
+local Pool = require("utils.entitypool")
+local Grid = require("utils.grid")
 local OBJ = require("levelhead.level.object")
 local Path = require("levelhead.level.path")
 local E = require("levelhead.data.elements")
@@ -18,11 +18,11 @@ function World:initialize()
 	self.bottom = 2
 	
 	self.objects = Pool:new()
-	self.foreground = DS.grid()
-	self.background = DS.grid()
+	self.foreground = Grid()
+	self.background = Grid()
 	
 	self.paths = Pool:new()
-	self.pathNodes = DS.grid()
+	self.pathNodes = Grid()
 end
 
 --misc

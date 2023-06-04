@@ -1,5 +1,5 @@
 local LHS = require("levelhead.lhs")
-local EP = require("libs.tyoeerUtils.entitypool")
+local EP = require("utils.entitypool")
 local ElemData = require("levelhead.data.elements")
 
 --- Maps from an element id to to which field in the metadata indiciates its presence

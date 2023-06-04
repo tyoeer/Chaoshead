@@ -1,5 +1,5 @@
-local DS = require("libs.tyoeerUtils.datastructures")
-local EntityPool = require("libs.tyoeerUtils.entitypool")
+local Grid = require("utils.grid")
+local EntityPool = require("utils.entitypool")
 local Bitplane = require("tools.bitplane")
 local OBJ = require("levelhead.level.object")
 local PN = require("levelhead.level.pathNode")
@@ -8,7 +8,7 @@ local PN = require("levelhead.level.pathNode")
 local S = Class()
 
 function S:initialize()
-	self.mask = DS.grid()
+	self.mask = Grid()
 	self.tiles = EntityPool:new()
 	self.layers = {
 		foreground = true,

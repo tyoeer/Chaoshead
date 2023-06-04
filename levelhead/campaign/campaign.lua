@@ -1,4 +1,4 @@
-local EP = require("libs.tyoeerUtils.entitypool")
+local EP = require("utils.entitypool")
 local JSON = require("libs.json")
 local Node = require("levelhead.campaign.node")
 local LevelNode = require("levelhead.campaign.node.level")
