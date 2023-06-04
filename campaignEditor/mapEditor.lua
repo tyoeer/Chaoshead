@@ -1,5 +1,5 @@
 -- --editor tools
-local EP = require("utils.entitypool")
+local Set = require("utils.orderedSet")
 local LhData = require("levelhead.dataFile")
 local LhMisc = require("levelhead.misc")
 --misc UIs
@@ -59,7 +59,7 @@ end
 -- private editor stuff
 
 function UI:newSelection()
-	self.selection = EP:new()
+	self.selection = Set:new()
 	self.selectionSize = 0
 	self.selectionDetails = SelectionDetails:new(self) -- editor also gets set in addTab(), but it requires acces to the editor/selection to properly initialize
 	self:addTab(self.selectionDetails)

@@ -39,7 +39,11 @@
 			alias for :iterateUpwards()
 ]]--
 
-local Pool = Class("Entitypool")
+-- Generics don't work yet
+-- https://github.com/LuaLS/lua-language-server/issues/734
+-- https://github.com/LuaLS/lua-language-server/issues/1861
+---@class OrderedSet<T> : Object
+local Pool = Class("OrderedSet")
 
 function Pool:initialize()
 	self.containerMap = {}

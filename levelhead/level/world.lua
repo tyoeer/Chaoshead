@@ -1,4 +1,4 @@
-local Pool = require("utils.entitypool")
+local Set = require("utils.orderedSet")
 local Grid = require("utils.grid")
 local OBJ = require("levelhead.level.object")
 local Path = require("levelhead.level.path")
@@ -17,11 +17,11 @@ function World:initialize()
 	self.top = 1
 	self.bottom = 2
 	
-	self.objects = Pool:new()
+	self.objects = Set:new()
 	self.foreground = Grid()
 	self.background = Grid()
 	
-	self.paths = Pool:new()
+	self.paths = Set:new()
 	self.pathNodes = Grid()
 end
 

@@ -1,4 +1,4 @@
-local EP = require("utils.entitypool")
+local Set = require("utils.orderedSet")
 local E = require("levelhead.data.elements")
 local P = require("levelhead.data.properties")
 
@@ -6,7 +6,7 @@ local P = require("levelhead.data.properties")
 local PL = Class()
 do
 	function PL:initialize(propertyId)
-		self.pool = EP:new()
+		self.pool = Set:new()
 		self.propId = propertyId
 		self.max = -math.huge
 		self.min = math.huge
@@ -57,9 +57,9 @@ end
 local C = Class()
 
 function C:initialize()
-	self.foreground = EP:new()
-	self.background = EP:new()
-	self.pathNodes = EP:new()
+	self.foreground = Set:new()
+	self.background = Set:new()
+	self.pathNodes = Set:new()
 	--EntityPools currently don't track their size
 	self.nForeground = 0
 	self.nBackground = 0
@@ -70,7 +70,7 @@ function C:initialize()
 	self.pathNodeAmountMap = {}
 	
 	self.properties = {}
-	self.unknownProperties = EP:new()
+	self.unknownProperties = Set:new()
 end
 
 function C:endBatchRemove()

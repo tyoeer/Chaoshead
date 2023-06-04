@@ -1,4 +1,4 @@
-local EP = require("utils.entitypool")
+local Set = require("utils.orderedSet")
 local JSON = require("libs.json")
 local Node = require("levelhead.campaign.node")
 local LevelNode = require("levelhead.campaign.node.level")
@@ -60,7 +60,7 @@ function C:removeLevel(level)
 end
 
 function C:clearLevels()
-	self.levels = EP:new()
+	self.levels = Set:new()
 	self.levelsById = {}
 end
 
@@ -139,7 +139,7 @@ function C:newLevelNode(id)
 end
 
 function C:clearNodes()
-	self.nodes = EP:new()
+	self.nodes = Set:new()
 	self.nodesById = {}
 end
 

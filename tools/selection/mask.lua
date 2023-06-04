@@ -1,5 +1,5 @@
 local Grid = require("utils.grid")
-local EntityPool = require("utils.entitypool")
+local Set = require("utils.orderedSet")
 local Bitplane = require("tools.bitplane")
 local OBJ = require("levelhead.level.object")
 local PN = require("levelhead.level.pathNode")
@@ -9,7 +9,7 @@ local S = Class()
 
 function S:initialize()
 	self.mask = Grid()
-	self.tiles = EntityPool:new()
+	self.tiles = Set:new()
 	self.layers = {
 		foreground = true,
 		background = true,

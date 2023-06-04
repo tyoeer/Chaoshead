@@ -1,5 +1,5 @@
 local LHS = require("levelhead.lhs")
-local EP = require("utils.entitypool")
+local Set = require("utils.orderedSet")
 local ElemData = require("levelhead.data.elements")
 
 --- Maps from an element id to to which field in the metadata indiciates its presence
@@ -49,7 +49,7 @@ function L:initialize(id)
 	L.super.initialize(self, MAPPINGS)
 	self.id = id
 	self.file = id..".lhs"
-	self.nodes = EP:new()
+	self.nodes = Set:new()
 	-- self.campaign
 end
 
