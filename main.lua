@@ -71,9 +71,13 @@ function love.load(args)
 	--bind ui and input
 	Input = require("chaoshead.input")
 	Input.parseActions(Settings.bindings)
+	---It's meant to be overwritten
+	---@diagnostic disable-next-line duplicate-set-field
 	Input.inputActivated = function(...)
 		UiRoot:inputActivated(...)
 	end
+	---It's meant to be overwritten
+	---@diagnostic disable-next-line duplicate-set-field
 	Input.inputDeactivated = function(...)
 		UiRoot:inputDeactivated(...)
 	end
