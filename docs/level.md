@@ -132,12 +132,12 @@ In case there's no path node at the specified coordinates, nothing will happen.
 ```Lua
 world.objects
 ```
-Read-only __EntityPool__ with all the objects.
+Read-only __OrderedSet__ with all the objects.
 
 ```Lua
 world.paths
 ```
-Read-only __EntityPool__ with all the paths.
+Read-only __OrderedSet__ with all the paths.
 
 ```Lua
 world.foreground

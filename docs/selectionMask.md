@@ -36,7 +36,7 @@ present = mask:has(x,y)
 ```Lua
 mask.tiles
 ```
-__EntityPool__ containing all the selected tiles as tables with `x` and `y`.
+__OrderedSet__ containing all the selected tiles as tables with `x` and `y`.
 
 ```Lua
 mask.nTiles

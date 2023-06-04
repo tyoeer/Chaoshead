@@ -1,7 +1,7 @@
 Provides fast adding/removing (in the complexity of a map) and fast iteration (no waste between entries)
 
 ----constructor:
-	Pool(), Pool:new()
+	Set(), Set:new()
 ----functions:
 	:has(v)
 		returns whether or not v is in the pool
