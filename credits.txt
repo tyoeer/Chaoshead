@@ -8,7 +8,6 @@ Libraries used:
 middleclass by Enrique García Cota, licensed under MIT (see licenses/lib-middleclass-mit.txt)
 json.lua by rxi, licensed under MIT (see licenses/lib-json-mit.txt)
 nativefs by megagrump@pm.me, licensed under MIT (see licenses/lib-nativefs-mit.txt)
-tyoeerUtils by tyoeer, licensed under CC-BY 4.0 (see licenses/lib-tyoeerUtils-cc_by_4_0.txt)
 lua-https by LÖVE development team under ZLIB (see licenses/lib-lua_https-zlib.txt)
 
 Fonts used:
