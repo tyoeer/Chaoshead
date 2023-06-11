@@ -2,10 +2,9 @@ Provides fast adding/removing (in the complexity of a map) and fast iteration (n
 
 ----constructor:
 	Set(), Set:new()
-----info:
-	.count
-		how many values there are in this set
 ----functions:
+	:size()
+		returns how many values/items there are in this set
 	:has(v)
 		returns whether or not v is in the pool
 	

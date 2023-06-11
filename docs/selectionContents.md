@@ -36,17 +36,17 @@ An __OrderedSet__ containing all the background **PathNode**s in the selection.
 ```Lua
 contents.nForeground
 ```
-DEPRECATED: use `contents.foreground.count` instead
+DEPRECATED: use `contents.foreground:size()` instead
 How many foreground objects there are in the selection.
 
 ```Lua
 contents.nBackground
 ```
-DEPRECATED: use `contents.background.count` instead
+DEPRECATED: use `contents.background:size()` instead
 How many background objects there are in the selection.
 
 ```Lua
 contents.nPathNodes
 ```
-DEPRECATED: use `contents.pathNodes.count` instead
+DEPRECATED: use `contents.pathNodes:size()` instead
 How many path nodes there are in the selection.

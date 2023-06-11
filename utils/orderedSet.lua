@@ -3,10 +3,9 @@
 
 	----constructor:
 		Pool(), Pool:new()
-	----info:
-		.count
-			how many values there are in this set
 	----functions
+		:size()
+			returns how many values/items there are in this set
 		:has(v)
 			returns wether or not v is in the pool
 		
@@ -56,6 +55,10 @@ function Pool:initialize()
 end
 
 --misc
+
+function Pool:size()
+	return self.count
+end
 
 function Pool:has(value)
 	if self.containerMap[value] then

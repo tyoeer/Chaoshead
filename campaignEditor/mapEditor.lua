@@ -129,7 +129,7 @@ function UI:deselectSub(x,y)
 		local node = self.campaign:getNodeAt(x,y)
 		if node then
 			self.selection:remove(node)
-			if self.selection.count==0 then
+			if self.selection:size()==0 then
 				self:deselectAll()
 			else
 				self.selectionDetails:reload()
@@ -145,7 +145,7 @@ function UI:deselectSubArea(startX,startY,endX,endY)
 	for _, node in ipairs(self.campaign:getNodesIn(startX,startY,endX,endY)) do
 		self.selection:remove(node)
 	end
-	if self.selection.count==0 then
+	if self.selection:size()==0 then
 		self:deselectAll()
 	else
 		self.selectionDetails:reload()
