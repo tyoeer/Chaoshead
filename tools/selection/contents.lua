@@ -60,7 +60,7 @@ function C:initialize()
 	self.foreground = Set:new()
 	self.background = Set:new()
 	self.pathNodes = Set:new()
-	--OrderedSets currently don't track their size
+	--DEPRECATED: OrderedSets used to not track their count/size
 	self.nForeground = 0
 	self.nBackground = 0
 	self.nPathNodes = 0
