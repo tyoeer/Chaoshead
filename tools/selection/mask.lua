@@ -4,8 +4,8 @@ local Bitplane = require("tools.bitplane")
 local OBJ = require("levelhead.level.object")
 local PN = require("levelhead.level.pathNode")
 
-
-local S = Class()
+---@class SelectionMask : Object
+local S = Class("SelectionMask")
 
 function S:initialize()
 	self.mask = Grid:new()

@@ -2,8 +2,8 @@ local Set = require("utils.orderedSet")
 local E = require("levelhead.data.elements")
 local P = require("levelhead.data.properties")
 
---PropertyLists
-local PL = Class()
+---@class PropertyList : Object
+local PL = Class("PropertyList")
 do
 	function PL:initialize(propertyId)
 		self.pool = Set:new()
@@ -53,8 +53,8 @@ do
 	end
 end
 
-
-local C = Class()
+---@class SelectionContents : Object
+local C = Class("SelectionContents")
 
 function C:initialize()
 	self.foreground = Set:new()

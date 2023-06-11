@@ -1,7 +1,9 @@
 local Mask = require("tools.selection.mask")
 local Contents = require("tools.selection.contents")
 
-local T = Class()
+---@class SelectionTracker : Object
+---@field mask SelectionMask
+local T = Class("SelectionTracker")
 
 function T:initialize(level,mask)
 	self.level = level
