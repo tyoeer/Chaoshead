@@ -54,18 +54,18 @@ function UI:onReload(list)
 	local c = s.contents
 	--counts + layer filters
 	do
-		list:addTextEntry("Tiles: "..s.mask.nTiles)
+		list:addTextEntry("Tiles: "..s.mask.tiles:size())
 		list:addButtonEntry("Deselect all",function()
 			self.editor:deselectAll()
 		end)
 		if s:hasLayer("foreground") then
-			local text = string.format("Deselect foreground (%d object%s)", c.nForeground, c.nForeground==1 and "" or "s")
+			local text = string.format("Deselect foreground (%d object%s)", c.foreground:size(), c.foreground:size()==1 and "" or "s")
 			list:addButtonEntry(text, function()
 				self.editor:removeSelectionLayer("foreground")
 			end)
 		end
 		if s:hasLayer("background") then
-			local text = string.format("Deselect background (%d object%s)", c.nBackground, c.nBackground==1 and "" or "s")
+			local text = string.format("Deselect background (%d object%s)", c.background:size(), c.background:size()==1 and "" or "s")
 			list:addButtonEntry(text, function()
 				self.editor:removeSelectionLayer("background")
 			end)
@@ -77,7 +77,7 @@ function UI:onReload(list)
 			-- end
 		end
 		if s:hasLayer("pathNodes") then
-			local text = string.format("Deselect path nodes (%d node%s)", c.nPathNodes, c.nPathNodes==1 and "" or "s")
+			local text = string.format("Deselect path nodes (%d node%s)", c.pathNodes:size(), c.pathNodes:size()==1 and "" or "s")
 			list:addButtonEntry(text, function()
 				self.editor:removeSelectionLayer("pathNodes")
 			end)
@@ -96,7 +96,7 @@ function UI:onReload(list)
 	list:addButtonEntry("Delete",function()
 		self.editor:deleteSelection()
 	end)
-	if c.nPathNodes >= 2 then
+	if c.pathNodes:size() >= 2 then
 		list:addButtonEntry(
 			"Disconnect path nodes",
 			function()
@@ -104,7 +104,7 @@ function UI:onReload(list)
 			end
 		)
 	end
-	if c.nPathNodes == 2 then
+	if c.pathNodes:size() == 2 then
 		list:addButtonEntry(
 			"Connect path nodes",
 			function()
@@ -112,7 +112,7 @@ function UI:onReload(list)
 			end
 		)
 	end
-	if c.nPathNodes >= 1 then
+	if c.pathNodes:size() >= 1 then
 		list:addButtonEntry(
 			"Reverse path(s)",
 			function()
@@ -121,16 +121,16 @@ function UI:onReload(list)
 		)
 	end
 	do -- single object info
-		if s.mask.nTiles==1 then
+		if s.mask.tiles:size()==1 then
 			local t = s.mask.tiles:getTop()
 			list:addTextEntry("Position: "..self:formatPosition(t, false))
 		end
 		--foreground
-		if c.nForeground==1 then
+		if c.foreground:size()==1 then
 			local o = c.foreground:getTop()
 			
 			local elem = "Foreground "..self:formatElement(o)
-			if s.mask.nTiles ~= 1 then
+			if s.mask.tiles:size() ~= 1 then
 				elem = elem .. self:formatPosition(o, true)
 			end
 			list:addTextEntry(elem)
@@ -145,23 +145,23 @@ function UI:onReload(list)
 				list:addTextEntry("Contents: None")
 			end
 		end
-		if c.nBackground==1 then
+		if c.background:size()==1 then
 			--background
 			local o = c.background:getTop()
 			
 			local elem = "Background "..self:formatElement(o)
-			if s.mask.nTiles ~= 1 then
+			if s.mask.tiles:size() ~= 1 then
 				elem = elem .. self:formatPosition(o, true)
 			end
 			list:addTextEntry(elem)
 			-- list:addTextEntry("Layer: Background")
 		end
-		if c.nPathNodes==1 and s.mask.nTiles~=1 then
+		if c.pathNodes:size()==1 and s.mask.tiles:size()~=1 then
 			local n = c.pathNodes:getTop()
 			--mark it as a path node to prevent possible confusion
 			list:addTextEntry("Path Node position: ("..n.x..","..n.y..")")
 		end
-		if c.nPathNodes==1 then
+		if c.pathNodes:size()==1 then
 			local n = c.pathNodes:getTop()
 			if n.next and (n.next~=n) then
 				local dx = n.next.x - n.x

@@ -160,7 +160,7 @@ function S:draw(startX,startY, endX,endY, zoomFactor)
 	end
 	local drawArea = math.abs( (startX-endX+1) * (startY-endY+1) )
 	
-	if drawArea >= self.nTiles then
+	if drawArea >= self.tiles:size() then
 		for tile in self.tiles:iterate() do
 			draw(self,tile.x, tile.y)
 		end

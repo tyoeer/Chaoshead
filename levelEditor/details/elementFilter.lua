@@ -20,25 +20,25 @@ function UI:buildElementList(s)
 	---@type FLItem
 	local out = {}
 	
-	if s.mask:getLayerEnabled("pathNodes") and c.nPathNodes>=1 then
+	if s.mask:getLayerEnabled("pathNodes") and c.pathNodes:size()>=1 then
 		table.insert(out, {
 			label = "Path node",
 			context = -10
 		})
 	end
-	if s.mask:getLayerEnabled("foreground") and s.mask.nTiles>c.nForeground then
+	if s.mask:getLayerEnabled("foreground") and s.mask.tiles:size()>c.foreground:size() then
 		table.insert(out, {
 			label = "Air (foreground)",
 			context = -3
 		})
 	end
-	if s.mask:getLayerEnabled("background") and s.mask.nTiles>c.nBackground then
+	if s.mask:getLayerEnabled("background") and s.mask.tiles:size()>c.background:size() then
 		table.insert(out, {
 			label = "Air (background)",
 			context = -4
 		})
 	end
-	if s.mask:getLayerEnabled("pathNodes") and s.mask.nTiles>c.nPathNodes then
+	if s.mask:getLayerEnabled("pathNodes") and s.mask.tiles:size()>c.pathNodes:size() then
 		table.insert(out, {
 			label = "Air (path nodes)",
 			context = -5

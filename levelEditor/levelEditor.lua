@@ -141,7 +141,7 @@ end
 function UI:deselectSub(tileX,tileY)
 	if self.selection then
 		self.selection:remove(tileX,tileY)
-		if self.selection.mask.nTiles==0 then
+		if self.selection.mask.tiles:size()==0 then
 			self:deselectAll()
 		else
 			self.selectionDetails:reload()
@@ -158,7 +158,7 @@ function UI:deselectSubArea(startX,startY,endX,endY)
 			self.selection:removeBatch(x,y)
 		end
 	end
-	if self.selection.mask.nTiles==0 then
+	if self.selection.mask.tiles:size()==0 then
 		self:deselectAll()
 	else
 		self.selection:endBatchRemove()
