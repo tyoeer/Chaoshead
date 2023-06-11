@@ -25,7 +25,6 @@ function UI:initialize(root)
 	
 	--editor state
 	-- self.selection = nil
-	-- self.selectionSize = 0
 	-- self.selectionDetails = nil
 	-- self.hand = nil
 	
@@ -60,7 +59,6 @@ end
 
 function UI:newSelection()
 	self.selection = Set:new()
-	self.selectionSize = 0
 	self.selectionDetails = SelectionDetails:new(self) -- editor also gets set in addTab(), but it requires acces to the editor/selection to properly initialize
 	self:addTab(self.selectionDetails)
 end
@@ -82,7 +80,6 @@ function UI:selectNode(node)
 	end
 	self:newSelection()
 	self.selection:add(node)
-	self.selectionSize = 1
 	self.selectionDetails:reload()
 end
 
@@ -100,9 +97,7 @@ function UI:selectAdd(x,y)
 	if self.selection then
 		local node = self.campaign:getNodeAt(x,y)
 		if node then
-			if self.selection:add(node) then
-				self.selectionSize = self.selectionSize + 1
-			end
+			self.selection:add(node)
 			self.selectionDetails:reload()
 		end
 	else
@@ -115,9 +110,7 @@ function UI:selectAddArea(startX,startY,endX,endY)
 		self:newSelection()
 	end
 	for _, node in ipairs(self.campaign:getNodesIn(startX,startY,endX,endY)) do
-		if self.selection:add(node) then
-			self.selectionSize = self.selectionSize + 1
-		end
+		self.selection:add(node)
 	end
 	self.selectionDetails:reload()
 end
@@ -127,8 +120,6 @@ function UI:selectAll()
 	self:newSelection()
 	for node in self.campaign.nodes:iterate() do
 		self.selection:add(node)
-		-- Don't need to check if selection already has it 'cause we reset it
-		self.selectionSize = self.selectionSize + 1
 	end
 	self.selectionDetails:reload()
 end
@@ -137,10 +128,8 @@ function UI:deselectSub(x,y)
 	if self.selection then
 		local node = self.campaign:getNodeAt(x,y)
 		if node then
-			if self.selection:remove(node) then
-				self.selectionSize = self.selectionSize - 1
-			end
-			if self.selectionSize==0 then
+			self.selection:remove(node)
+			if self.selection.count==0 then
 				self:deselectAll()
 			else
 				self.selectionDetails:reload()
@@ -154,11 +143,9 @@ function UI:deselectSubArea(startX,startY,endX,endY)
 		return
 	end
 	for _, node in ipairs(self.campaign:getNodesIn(startX,startY,endX,endY)) do
-		if self.selection:remove(node) then
-			self.selectionSize = self.selectionSize - 1
-		end
+		self.selection:remove(node)
 	end
-	if self.selectionSize==0 then
+	if self.selection.count==0 then
 		self:deselectAll()
 	else
 		self.selectionDetails:reload()
@@ -168,7 +155,6 @@ end
 function UI:deselectAll()
 	if self.selection then
 		self.selection = nil
-		self.selectionSize = -1
 		self:removeTab(self.selectionDetails)
 		self.selectionDetails = nil
 	end

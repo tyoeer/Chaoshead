@@ -38,10 +38,9 @@ end
 function UI:onReload(list)
 	list:resetList()
 	local s = self.editor.selection
-	local n = self.editor.selectionSize
 	--counts + layer filters
 	do
-		list:addTextEntry("Nodes: "..n)
+		list:addTextEntry("Nodes: "..s.count)
 		list:addButtonEntry("Deselect all",function()
 			self.editor:deselectAll()
 		end)
@@ -64,7 +63,7 @@ function UI:onReload(list)
 	end)
 	
 	--single node properties
-	if n==1 then
+	if s.count==1 then
 		local node = s:getTop()
 		
 		list:addTextEntry("Id:")
