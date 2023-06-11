@@ -69,12 +69,6 @@ function UI:onReload(list)
 			list:addButtonEntry(text, function()
 				self.editor:removeSelectionLayer("background")
 			end)
-			-- list:addTextEntry("Background objects: "..c.nBackground)
-			-- if c.nBackground ~= 0 then
-			-- 	list:addButtonEntry("Deselect background layer",function()
-			-- 		self.editor:removeSelectionLayer("background")
-			-- 	end)
-			-- end
 		end
 		if s:hasLayer("pathNodes") then
 			local text = string.format("Deselect path nodes (%d node%s)", c.pathNodes:size(), c.pathNodes:size()==1 and "" or "s")
