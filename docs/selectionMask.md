@@ -38,9 +38,12 @@ mask.tiles
 ```
 __OrderedSet__ containing all the selected tiles as tables with `x` and `y`.
 
+### DEPRECATED
+
 ```Lua
 mask.nTiles
 ```
+DEPRECATED: use `mask.tiles.count` instead.
 How many tiles are part of this selection.
 
 ## Layers

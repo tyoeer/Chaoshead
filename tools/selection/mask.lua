@@ -15,6 +15,7 @@ function S:initialize()
 		background = true,
 		pathNodes = true,
 	}
+	---DEPRECATED
 	self.nTiles = 0
 end
 
