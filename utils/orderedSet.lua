@@ -3,6 +3,9 @@
 
 	----constructor:
 		Pool(), Pool:new()
+	----info:
+		.count
+			how many values there are in this set
 	----functions
 		:has(v)
 			returns wether or not v is in the pool
