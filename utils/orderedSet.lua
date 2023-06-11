@@ -47,6 +47,7 @@ local Pool = Class("OrderedSet")
 
 function Pool:initialize()
 	self.containerMap = {}
+	self.count = 0
 	--self.top = nil
 	--self.bottom = nil
 end
@@ -62,6 +63,12 @@ function Pool:has(value)
 end
 
 --adding elements
+
+---@private
+function Pool:addContainer(container)
+	self.containerMap[container.value] = container
+	self.count = self.count + 1
+end
 
 function Pool:addAtTop(value)
 	if self.containerMap[value] then
@@ -79,7 +86,7 @@ function Pool:addAtTop(value)
 		if not self.bottom then
 			self.bottom = container
 		end
-		self.containerMap[value] = container
+		self:addContainer(container)
 		return true
 	end
 end
@@ -100,7 +107,7 @@ function Pool:addAtBottom(value)
 		if not self.top then
 			self.top = container
 		end
-		self.containerMap[value] = container
+		self:addContainer(container)
 		return true
 	end
 end
@@ -148,6 +155,7 @@ function Pool:removeContainer(container)
 		self.bottom = up
 	end
 	self.containerMap[container.value] = nil
+	self.count = self.count - 1
 	return container
 end
 
