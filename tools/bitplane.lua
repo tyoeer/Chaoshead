@@ -11,7 +11,7 @@ function B:initialize(w,h,default)
 	else
 		self.default = default
 	end
-	self.grid = Grid()
+	self.grid = Grid:new()
 end
 
 function B:get(x,y)

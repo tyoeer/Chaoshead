@@ -8,7 +8,7 @@ local PN = require("levelhead.level.pathNode")
 local S = Class()
 
 function S:initialize()
-	self.mask = Grid()
+	self.mask = Grid:new()
 	self.tiles = Set:new()
 	self.layers = {
 		foreground = true,

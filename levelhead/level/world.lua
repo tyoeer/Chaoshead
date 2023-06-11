@@ -18,11 +18,11 @@ function World:initialize()
 	self.bottom = 2
 	
 	self.objects = Set:new()
-	self.foreground = Grid()
-	self.background = Grid()
+	self.foreground = Grid:new()
+	self.background = Grid:new()
 	
 	self.paths = Set:new()
-	self.pathNodes = Grid()
+	self.pathNodes = Grid:new()
 end
 
 --misc
