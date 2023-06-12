@@ -90,17 +90,17 @@ function C:removeLayer(layer)
 		end
 		self:endBatchRemove()
 		self.nForeground = 0
-		self.foreground = nil
+		self.foreground = Set:new()
 	elseif layer=="background" then
 		self.nBackground = 0
-		self.background = nil
+		self.background = Set:new()
 	elseif layer=="pathNodes" then
 		for node in self.pathNodes:iterate() do
 			self:removePathNodePropertiesBatch(node)
 		end
 		self:endBatchRemove()
 		self.nPathNodes = 0
-		self.pathNodes = nil
+		self.pathNodes = Set:new()
 	else
 		error(string.format("Invalid layer: %q",layer))
 	end
