@@ -114,11 +114,13 @@ function S:drawTile(x,y,lineThickness)
 end
 
 -- Gets redrawn everytime before use, can thus be shared between instances
-local tile = love.graphics.newCanvas(TILE_SIZE, TILE_SIZE)
+local tile = love.graphics.newCanvas(TILE_SIZE, TILE_SIZE, {
+	mipmaps="auto"
+})
 
 function S:draw(startX,startY, endX,endY, zoomFactor)
 	local draw
-	if zoomFactor < 1/Settings.misc.editor.selectionShapeLod then
+	if zoomFactor < 1/Settings.misc.editor.selectionPointLod then
 		if self.layers.foreground then
 			love.graphics.setColor(colors.foregroundObject.selected)
 		elseif self.layers.pathNodes then
@@ -127,18 +129,10 @@ function S:draw(startX,startY, endX,endY, zoomFactor)
 			love.graphics.setColor(colors.backgroundObject.selected)
 		end
 		
-		if zoomFactor < 1/Settings.misc.editor.selectionPointLod then
-			love.graphics.setPointSize(TILE_SIZE*zoomFactor)
-			draw = function(_, x, y)
-				local xx, yy = x*TILE_SIZE, y*TILE_SIZE
-				love.graphics.points(xx+TILE_SIZE/2,yy+TILE_SIZE/2)
-			end
-		else
-			love.graphics.setLineWidth(1)
-			draw = function(_, x, y)
-				local xx, yy = x*TILE_SIZE, y*TILE_SIZE
-				love.graphics.rectangle("line",xx+0.5,yy+0.5,TILE_SIZE-1,TILE_SIZE-1)
-			end
+		love.graphics.setPointSize(TILE_SIZE*zoomFactor)
+		draw = function(_, x, y)
+			local xx, yy = x*TILE_SIZE, y*TILE_SIZE
+			love.graphics.points(xx+TILE_SIZE/2,yy+TILE_SIZE/2)
 		end
 	elseif zoomFactor <= 1/Settings.misc.editor.selectionSmoothLod then
 		love.graphics.push("all")

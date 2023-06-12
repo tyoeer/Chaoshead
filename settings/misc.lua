@@ -14,8 +14,7 @@ return {
 		textLod = 4,
 		outlineLod = 14,
 		selectionSmoothLod = 2,
-		selectionShapeLod = 12,
-		selectionPointLod = 23,
+		selectionPointLod = 25,
 		cameraMoveSpeed = 25*60,
 		showRawNumbers = false,
 		checkLimits = {"file","game"}, -- "editor"
