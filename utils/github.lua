@@ -118,7 +118,15 @@ function G.api(repo, apiPath, queryParams)
 	G.error = nil
 	local code, body, headers = G.apiCall(G.getURL(repo, apiPath, queryParams))
 	if code==200 then
-		local data = Json.decode(body)
+		local success, data = pcall(Json.decode, body)
+		if not success then
+			G.error = {
+				code = code,
+				body = body,
+				headers = headers
+			}
+			error("Error parsing return data (check getError() for more info): "..tostring(data))
+		end
 		return data
 	else
 		G.error = {

@@ -22,11 +22,13 @@ local checkForUpdate = function(force)
 	Storage:save()
 	
 	local success, release = xpcall(Github.latestRelease, function(message)
-		if message:find("NetworkError") and message:find("getError()") then
+		if message:find("getError()") then
 			local err = Github.getError()
 			MainUI:popup(
 				"Error fetching update news:",
 				"Server returned status code "..tostring(err.code),
+				"Internal error message: "..message,
+				"Server returned:",
 				tostring(err.body)
 			)
 		else
