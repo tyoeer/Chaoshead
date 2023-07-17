@@ -159,11 +159,6 @@ end
 
 
 function LHS:writeAll()
-	local file = NFS.newFile(self.path)
-	local success,err = file:open("w")
-	if not success then error(err) end
-	self.saveHandle = file
-	
 	self:writeHeaders()
 	
 	self:writeSingle("singleForeground")
@@ -181,10 +176,79 @@ function LHS:writeAll()
 	self:writeSingle("singleBackground")
 	self:writeStructure("backgroundRows")
 	self:writeStructure("backgroundColumns")
-	local hash = self:writeHash()
+	local hash =  self:writeHash()
+	return hash
+end
+
+function LHS:writeDirectly()
+	local file = NFS.newFile(self.path)
+	local success,err = file:open("w")
+	if not success then error(err) end
+	self.saveHandle = file
+	
+	local hash = self:writeAll()
 	
 	self.saveHandle:close()
 	self.saveHandle = nil
+	return hash
+end
+
+function LHS:writeWithBackup()
+	local basePath, file = self.path:match("^(.+)[/\\]([^/\\]*)$")
+	if not basePath or not file then
+		error("Failed getting directory path", 2)
+	end
+	local r = string.format("%06i", love.math.random(0,999999))
+	local backupPath = basePath .. "/" .. "ch-backup-"..r.."-"..file
+	local _success, err = os.rename(self.path, backupPath)
+	if err then
+		error(string.format("Error moving\n%s\nto\n%s\n%s",self.path,backupPath,err),2)
+	end
+	table.insert(self.tempFiles, backupPath)
+	
+	local hash = self:writeDirectly()
+	
+	local checker = self.class:new(self.path)
+	local success, err = xpcall(function()
+		checker:readAll()
+	end, function(message)
+		message = tostring(message)
+		--part of snippet yoinked from default löve error handling
+		local fullTrace = debug.traceback("",2):gsub("\n[^\n]+$", "")
+		print(message)
+		print(fullTrace)
+		--cut of the part of the trace that goes into the code that calls UI:openEditor()
+		local index = fullTrace:find("%s+%[C%]: in function 'xpcall'")
+		local trace = fullTrace:sub(1,index-1)
+		return {message, trace}
+	end)
+	if not success then
+		error(string.format(
+			"Verification of written level failed: %s\nBackup of old level should live at: %s\n%s",
+			err[1],
+			backupPath,
+			err[2]
+		),2)
+	end
+	
+	local success, err = NFS.remove(backupPath)
+	if not success then
+		error(string.format(
+			"Error removing backup at %s:\n%s",
+			backupPath,
+			err
+		))
+	end
+	
+	local index = -1
+	for i,v in ipairs(self.tempFiles) do
+		if v==backupPath then
+			index = i
+			break
+		end
+	end
+	table.remove(self.tempFiles,index)
+	
 	return hash
 end
 

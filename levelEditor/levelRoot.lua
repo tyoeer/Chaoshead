@@ -19,6 +19,17 @@ function UI.loadErrorHandler(message)
 	local trace = fullTrace:sub(1,index-1)
 	MainUI:popup("Failed to load level!","Error message: "..message,trace)
 end
+function UI.saveErrorHandler(message)
+	message = tostring(message)
+	--part of snippet yoinked from default löve error handling
+	local fullTrace = debug.traceback("",2):gsub("\n[^\n]+$", "")
+	print(message)
+	print(fullTrace)
+	--cut of the part of the trace that goes into the code that calls UI:openEditor()
+	local index = fullTrace:find("%s+%[C%]: in function 'xpcall'")
+	local trace = fullTrace:sub(1,index-1)
+	return {message,trace}
+end
 
 function UI:initialize(levelPath, workshop)
 	self.workshop = workshop
@@ -68,9 +79,34 @@ end
 
 function UI:save()
 	if self:checkLimits("Can't save level:\n") then
-		self.levelFile:serializeAll(self.level)
-		self.latestHash = self.levelFile:writeAll()
-		MainUI:popup("Succesfully saved level!")
+		local success, hashOrErr = xpcall(
+			function()
+				self.levelFile:serializeAll(self.level)
+				return self.levelFile:writeWithBackup()
+			end,
+			self.saveErrorHandler
+		)
+		if success then
+			self.latestHash = hashOrErr
+			MainUI:popup("Succesfully saved level!")
+		else
+			local files = ""
+			for _,path in ipairs(self.levelFile.tempFiles) do
+				if files~="" then
+					files = files .. "\n"
+				end
+				files = files .. path
+			end
+			MainUI:popup(
+				"Error saving level:",
+				hashOrErr[1],
+				"\nLeft over files:",
+				files,
+				"\n",
+				hashOrErr[2]
+			)
+			return
+		end
 	end
 end
 

@@ -51,6 +51,8 @@ LHS.tags = {
 function LHS:initialize(path)
 	self:loadFile(path)
 	self.rawContentEntries = {}
+	--- Files created while writing
+	self.tempFiles = {}
 end
 
 --load the other files
