@@ -308,8 +308,8 @@ function UI:onReload(list)
 				end
 			end
 		end
-		local beepr = B:new("Will beep when a save_data gets modified. Alt+F4 to stop.",0,Settings.theme.modal.listStyle.textStyle)
-		MainUI:setModal(beepr)
+		local beepr = B:new("Will beep when a save_data gets modified.", 0, Settings.theme.modal.listStyle.textStyle)
+		MainUI:popup(beepr)
 	end)
 	
 end
