@@ -79,8 +79,17 @@ end
 function P:openExe()
 	local dir = require("levelhead.misc").getInstallationPath()
 	if not dir then
+		local other = "If you are using the non-Steam version, please get in touch so support can be added.\n"
+			.."If you're doing something weird, specify a custom path using the misc. setting levelheadInstallationPath."
+		local customDir = Settings.misc.levelheadInstallationPath
+		if customDir and customDir~="" then
+			other = string.format(
+				"A custom directory was specified in the settings, but it didn't contain a Levelhead.exe: %q",
+				customDir
+			)
+		end
 		return nil, "Could not find Levelhead installation directory\n"
-			.."If you are using the non-Steam version, please get in touch so support can be added."
+			..other
 	end
 	--Can't use nativefs because it doesn't let us open the file in a way to edit in it's middle
 	local file, err = io.open(dir.."Levelhead.exe","r+b")
