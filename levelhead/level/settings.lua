@@ -34,6 +34,11 @@ function Settings:getLevelheadVersion()
 	return self.levelheadVersion.major, self.levelheadVersion.minor, self.levelheadVersion.patch
 end
 
+---@return string
+function Settings:getLevelheadVersionString()
+	return string.format("%i.%i.%i",self:getLevelheadVersion())
+end
+
 ---@param major integer
 ---@param minor integer
 ---@param patch integer

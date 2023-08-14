@@ -2,7 +2,6 @@ local UI = Class("LevelDetailsUI",require("ui.tools.details"))
 
 local levelSettings = {
 	--{index into the Settings, display label, don't include raw ID}
-	--third option is only used once, but making a special case for title in the handling code is worse
 	{"getTitle","Title",true},
 	{"getZone","Zone"},
 	{"getMusic","Music"},
@@ -12,6 +11,10 @@ local levelSettings = {
 	{"getMultiplayerRespawnStyle","Multiplayer Respawn Style"},
 	{"stopCameraAtLevelSides","Stop Camera At Level Sides"},
 	{"getLanguage","Language"},
+	{"mode","Mode ID"},
+	{"getLevelheadVersionString","Levelhead Version",true},
+	{"legacyVersion","Legacy Version"},
+	{"published","Published"}
 }
 
 function UI:initialize(level,editor)
