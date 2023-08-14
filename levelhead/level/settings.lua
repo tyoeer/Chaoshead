@@ -101,7 +101,7 @@ function Settings:__index(key)
 		local lhv = Misc.encodeVersionTable(self.levelheadVersion)
 		return love.data.pack("string", prefixFormat, self.legacyVersion, lhv)
 	else
-		return self[key]
+		rawget(self,key)
 	end
 end
 
@@ -115,7 +115,7 @@ function Settings:__newindex(key, value)
 		---@cast lhv integer as specified in the prefixFormat string
 		self.levelheadVersion = Misc.decodeVersionTable(lhv)
 	else
-		self[key] = value
+		rawset(self,key,value)
 	end
 end
 
