@@ -36,7 +36,7 @@ function UI:childMinimumHeightChanged()
 end
 
 function UI:resized(width,height)
-	local minH = self.padding:getMinimumHeight(width)
+	local minH = self.padding:getMinimumHeight(width-2)
 	local maxH = height - 2*self.style.minMargin
 	height = math.min(minH,maxH)
 	self.child:resize(width-2, height)
