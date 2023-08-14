@@ -10,15 +10,24 @@ local LHS = {}
 It should be noted that the raw stuff uses zero as lowest value when refering to coördinates
 
 ]]--
-
+---@param version integer
+---@return integer major, integer minor, integer patch
+function LHS:decodeVersion(version)
+	local major = math.floor(version/1000000)
+	local minor = math.floor((version % 1000000)/1000)
+	local patch = version % 1000
+	return major, minor, patch
+end
 
 function LHS:parseHeaders()
 	local raw = self.rawHeaders
 	
 	local settings = Settings:new()
 	settings.zone = raw.zone
-	settings.prefix = raw.prefix
-	settings.campaignMarker = raw.campaignMarker
+	settings.legacyVersion = raw.legacyVersion
+	settings:setLevelheadVersion(self:decodeVersion(raw.levelheadVersion))
+	settings.published = raw.published>=1
+	settings.zoomLevel = raw.zoomLevel
 	
 	--title
 	for k,v in pairs(raw.title) do

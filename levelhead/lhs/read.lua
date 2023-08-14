@@ -58,8 +58,9 @@ function LHS:readHeaders()
 	self.rawHeaders = h
 	
 	--unknowns
-	h.prefix = self:getBytes(1,6)
-	h.campaignMarker = self:getNumber1(7)
+	h.legacyVersion = self:getNumber2(1)
+	h.levelheadVersion = love.data.unpack("<I4",self:getBytes(3,4))
+	h.published = self:getNumber1(7)
 	
 	--settingsList
 	h.settingsList.amount = self:getNumber1(8)
@@ -96,8 +97,8 @@ function LHS:readHeaders()
 	--level dimensions
 	h.width = self:getNumber1(h.titleEndOffset+2)
 	h.height = self:getNumber1(h.titleEndOffset+3)
-	--an unknown
-	h.dividerConstant = self:getBytes(h.titleEndOffset+4,4)
+	
+	h.zoomLevel = love.data.unpack(self.floatFormat,self:getBytes(h.titleEndOffset+4,4))
 	
 	self.contentStartOffset = self.rawHeaders.titleEndOffset+8
 end

@@ -25,8 +25,10 @@ end
 function LHS:writeHeaders()
 	local h = self.rawHeaders
 	
-	self:write(h.prefix)
-	self:write(h.campaignMarker)
+	self:write2(h.legacyVersion)
+	self:write(love.data.pack("string", "<I4", h.levelheadVersion))
+	
+	self:write(h.published)
 	
 	--settings list
 	self:write(h.settingsList.amount)
@@ -50,7 +52,7 @@ function LHS:writeHeaders()
 	self:write(h.height)
 	
 	--DividerConstant (unknown), it's always this
-	self:write(deHex("0000803F"))
+	self:write(love.data.pack("string", "<I4", h.zoomLevel))
 end
 
 function LHS:writeSingle(section)

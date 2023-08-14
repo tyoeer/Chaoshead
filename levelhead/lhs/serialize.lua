@@ -1,13 +1,23 @@
 local P = require("levelhead.data.properties")
 local LHS = {}
 
+---@param major integer
+---@param minor integer
+---@param patch integer
+---@return integer
+function LHS:encodeVersion(major,minor,patch)
+	return major*1000000 + minor*1000 + patch
+end
+
 function LHS:serializeHeaders(level)
 	local s = level.settings
 	local h = self.rawHeaders
 	
-	h.prefix = s.prefix
+	h.legacyVersion = s.legacyVersion
+	h.levelheadVersion = self:encodeVersion(s:getLevelheadVersion())
 	h.zone = s.zone
-	h.campaignMarker = s.campaignMarker
+	h.published = s.published and 1 or 0
+	h.zoomLevel = s.zoomLevel
 	
 	h.width = level:getWidth()
 	h.height = level:getHeight()
