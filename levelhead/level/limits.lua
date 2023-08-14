@@ -127,6 +127,7 @@ return {
 				end
 			end,
 		},
+		-- Not actually a file limit but limit in the saving logic
 		{
 			message = "The property %q in the %s at (%i,%i) is $Nan!",
 			check = function(level)
@@ -163,6 +164,46 @@ return {
 						return false
 					end
 				end)
+			end,
+		},
+		{
+			message = "Legacy version %i is %s!",
+			check = function(level)
+				if level.settings.legacyVersion < 0 then
+					return level.settings.legacyVersion, "below 0"
+				elseif level.settings.legacyVersion > 65535 then
+					return level.settings.legacyVersion, "above 65535"
+				end
+			end,
+		},
+		{
+			message = "Levelhead %s version %i is %s!",
+			check = function(level)
+				local major, minor, patch = level.settings:getLevelheadVersion()
+				if major < 0 then
+					return "major", major, "below 0"
+				elseif major > 4294 then
+					return "major", major, "above 4294"
+				elseif major == 4294 then
+					if minor > 967 then
+						return "minor", minor, "above 967 while major is 4294"
+					elseif minor == 967 then
+						if patch > 296 then
+							return "patch", patch, "above 296 while major is 4294 and minor is 967"
+						end
+					end
+				end
+				if minor < 0 then
+					return "minor", minor, "below 0"
+				elseif minor > 999 then
+					return "minor", minor, "above 999"
+				end
+				if patch < 0 then
+					return "patch", patch, "below 0"
+				elseif patch > 999 then
+					return "patch", patch, "above 999"
+				end
+					
 			end,
 		},
 	},
