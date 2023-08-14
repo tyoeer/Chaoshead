@@ -3,11 +3,11 @@ local Zones = require("levelhead.data.zones")
 local Lang = require("levelhead.data.languages")
 local Misc = require("levelhead.misc")
 
+---@class Settings : Object
 local Settings = Class()
 
-
-
 function Settings:initialize()
+	---@type integer
 	self.legacyVersion = 11000 --default value also used by Levelhead
 	self.levelheadVersion = { -- the latest LH version as of the time of this writing
 		major = 1,
@@ -26,13 +26,17 @@ function Settings:initialize()
 	self.multiplayerRespawnStyle = 0 -- Bubble
 	self.stopCameraAtLevelSides = false
 	self.title = {} -- empty title
-	self.zoomLevel = 1
+	self.zoomLevel = 1.0
 end
 
+---@return integer major, integer minor, integer patch
 function Settings:getLevelheadVersion()
 	return self.levelheadVersion.major, self.levelheadVersion.minor, self.levelheadVersion.patch
 end
 
+---@param major integer
+---@param minor integer
+---@param patch integer
 function Settings:setLevelheadVersion(major, minor, patch)
 	self.levelheadVersion.major = major
 	self.levelheadVersion.minor = minor
@@ -42,6 +46,7 @@ end
 function Settings:setZone(selector)
 	self.zone = Zones:getID(selector)
 end
+---@return string
 function Settings:getZone()
 	return Zones:getName(self.zone)
 end
@@ -49,6 +54,7 @@ end
 function Settings:setMusic(selector)
 	self.music = Music:getID(selector)
 end
+---@return string
 function Settings:getMusic()
 	return Music:getName(self.music)
 end
@@ -56,6 +62,7 @@ end
 function Settings:setLanguage(selector)
 	self.music = Lang:getID(selector)
 end
+---@return string
 function Settings:getLanguage()
 	return Lang:getName(self.language)
 end
@@ -64,6 +71,7 @@ local mpRespawnStyles = {
 	[0] = "Bubble",
 	[1] = "BUDD-E",
 }
+---@param selector "Bubble"|"BUDD-E"
 function Settings:setMultiplayerRespawnStyle(selector)
 	for k,v in pairs(mpRespawnStyles) do
 		if v==selector then
@@ -72,10 +80,12 @@ function Settings:setMultiplayerRespawnStyle(selector)
 		end
 	end
 end
+---@return "Bubble"|"BUDD-E"
 function Settings:getMultiplayerRespawnStyle()
 	return mpRespawnStyles[self.multiplayerRespawnStyle]
 end
 
+---@return string
 function Settings:getTitle()
 	return Misc.parseLevelName(self.title)
 end
@@ -97,8 +107,9 @@ function Settings:__newindex(key, value)
 	if key=="campaignMarker" then
 		self.published = value~=0
 	elseif key=="prefix" then
-		local lhv
-		self.legacyVersion, lhv = love.data.unpack(prefixFormat, value)
+		local legacy, lhv = love.data.unpack(prefixFormat, value)
+		---@cast legacy integer as specified in the prefixFormat string
+		self.legacyVersion = legacy
 		---@cast lhv integer as specified in the prefixFormat string
 		self.levelheadVersion = Misc.decodeVersionTable(lhv)
 	end
