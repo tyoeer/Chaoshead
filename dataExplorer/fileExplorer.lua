@@ -51,11 +51,13 @@ function UI:getDetailsUI(node)
 		list:addButtonEntry("Open in data file viewer",function()
 			self.overview:openDataFileViewer(node.path)
 		end)
-	elseif extension=="json" then
+	end
+	if not extension or extension=="json" then
 		list:addButtonEntry("Open in JSON viewer",function()
 			self.overview:openJSONViewer(node.path)
 		end)
-	elseif extension=="lhs" then
+	end
+	if not extension or extension=="lhs" then
 		list:addButtonEntry("Open in LHS hex inspector",function()
 			self.overview:openLHSHexInspector(node.path)
 		end)
