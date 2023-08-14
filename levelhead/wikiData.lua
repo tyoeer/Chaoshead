@@ -10,11 +10,15 @@ local wikiPath = LhMisc.getDataPath() .. "Wiki/"
 local W = Class("LHWikiData")
 
 function W:initialize()
+	self.images = {}
+	self.imageLookup = {}
 	if not NFS.getInfo(wikiPath) then
+		self.error = "Wiki export not found"
 		return
 	end
 	local dataPath = wikiPath.."GameData.json"
 	if not NFS.getInfo(dataPath) then
+		self.error = "Wiki export data file not found"
 		return
 	end
 	self.data = JSON.decode(NFS.read(dataPath))
@@ -42,6 +46,7 @@ function W:buildImages()
 				if imgName then
 					local imgPath = wikiPath.."Images/"..imgName
 					local imgData = NFS.read("data", imgPath)
+					---@cast imgData love.FileData
 					images[id] = love.graphics.newImage(imgData, {mipmaps = true})
 				end
 			end

@@ -44,6 +44,12 @@ function UI:toggleFullscreen()
 end
 
 function UI:setFancyGraphics(fancy)
+	if WikiData.error and self:inTree() then
+		self:popup(
+			"Error loading LH wiki game data export, fancy graphics disabled:",
+			WikiData.error
+		)
+	end
 	WikiData:setImagesEnabled(fancy)
 end
 
