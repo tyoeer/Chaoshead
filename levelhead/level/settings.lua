@@ -4,7 +4,7 @@ local Lang = require("levelhead.data.languages")
 local Misc = require("levelhead.misc")
 
 ---@class Settings : Object
-local Settings = Class()
+local Settings = Class("LevelSettings")
 
 function Settings:initialize()
 	---@type integer
