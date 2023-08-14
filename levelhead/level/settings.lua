@@ -103,7 +103,12 @@ function Settings:__index(key)
 	if key=="campaignMarker" then
 		return self.published and 1 or 0
 	elseif key=="prefix" then
-		local lhv = Misc.encodeVersionTable(self.levelheadVersion)
+		--require only here to prevent recursive require()s
+		local lhv = require("levelhead.lhs"):encodeVersion(
+			self.levelheadVersion.major,
+			self.levelheadVersion.minor,
+			self.levelheadVersion.patch
+		)
 		return love.data.pack("string", prefixFormat, self.legacyVersion, lhv)
 	else
 		rawget(self,key)
@@ -118,7 +123,13 @@ function Settings:__newindex(key, value)
 		---@cast legacy integer as specified in the prefixFormat string
 		self.legacyVersion = legacy
 		---@cast lhv integer as specified in the prefixFormat string
-		self.levelheadVersion = Misc.decodeVersionTable(lhv)
+		--require only here to prevent recursive require()s
+		local major, minor, patch = require("levelhead.lhs"):decodeVersion(lhv)
+		self.levelheadVersion = {
+			major = major,
+			minor = minor,
+			patch = patch,
+		}
 	else
 		rawset(self,key,value)
 	end

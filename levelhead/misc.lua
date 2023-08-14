@@ -97,40 +97,4 @@ function m.parseLevelName(parts)
 	end
 end
 
----@alias VersionTable {major: integer, minor: integer, patch: integer}
-
----@param major integer
----@param minor integer
----@param patch integer
----@return integer
-function m.encodeVersion(major,minor,patch)
-	return major*1000000 + minor*1000 + patch
-end
-
----@param versionTable VersionTable
----@return integer
-function m.enocdeVersionTable(versionTable)
-	return m.encodeVersion(versionTable.major, versionTable.minor, versionTable.patch)
-end
-
----@param version integer
----@return integer major, integer minor, integer patch
-function m.decodeVersion(version)
-	local major = math.floor(version/1000000)
-	local minor = math.floor((version % 1000000)/1000)
-	local patch = version % 1000
-	return major, minor, patch
-end
-
----@param version integer
----@return VersionTable
-function m.decodeVersionTable(version)
-	local major, minor, patch = m.decodeVersion(version)
-	return {
-		major = major,
-		minor = minor,
-		patch = patch
-	}
-end
-
 return m
