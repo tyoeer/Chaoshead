@@ -52,7 +52,7 @@ function LHS:writeHeaders()
 	self:write(h.height)
 	
 	--DividerConstant (unknown), it's always this
-	self:write(love.data.pack("string", "<I4", h.zoomLevel))
+	self:write(love.data.pack("string", self.floatFormat, h.zoomLevel))
 end
 
 function LHS:writeSingle(section)
