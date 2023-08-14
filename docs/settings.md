@@ -80,16 +80,43 @@ title = settings:getTitle()
 There's currently no way to set the title because I haven't made something yet to work around/with Name Combobulator limitations.
 
 ```Lua
-settings.prefix
+major, minor, patch = settings:getLevelheadVersion()
 ```
-Unknown what it does, probably related to the level version. See the File Format document for more info. Is a 6 bytes long string.
+The semantic version of Levelhead this level was last edited/saved with.
 
 ```Lua
-settings.campaignMarker
+settings:setLevelheadVersion(major,minor,patch)
 ```
-Partially unknown what it does, but can differ between levels. _You probably shouldn't edit this._ See the File Format document for more info. Is a byte.
+The semantic version of Levelhead this level was last edited/saved with.
+
+```Lua
+settings.legacyVersion
+```
+No longer used by Levelhead, defaults to 11000. Can not be larger than 65535.
 
 ```Lua
 settings.mode
 ```
 Represents which mode a level is in. See the File Format document for more info. Is a byte.
+
+```Lua
+settings.zoomLevel
+```
+See the File Format document for more information. Is a float.
+
+```Lua
+settings.published
+```
+_You probably shouldn't edit this._ See the File Format document what this does. Is a boolean.
+
+## DEPRECATED
+
+```Lua
+settings.prefix
+```
+Raw access to the first 6 bytes, which form the legacy and Levelhead version.
+
+```Lua
+settings.campaignMarker
+```
+_You probably shouldn't edit this._ Numerical version of the `published` field.
