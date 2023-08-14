@@ -14,7 +14,8 @@ local levelSettings = {
 	{"mode","Mode ID"},
 	{"getLevelheadVersionString","Levelhead Version",true},
 	{"legacyVersion","Legacy Version"},
-	{"published","Published"}
+	{"published","Published"},
+	{"zoomLevel","Zoom"},
 }
 
 function UI:initialize(level,editor)
