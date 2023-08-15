@@ -1,3 +1,6 @@
+---@class MiscTabUI : DetailsUI
+---@field super DetailsUI
+---@field new fun(self): self
 local UI = Class("MiscTabUI",require("ui.tools.details"))
 
 function UI:initialize()

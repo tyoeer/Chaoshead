@@ -2,10 +2,15 @@ local LIST = require("ui.layout.list")
 local PADDING = require("ui.layout.padding")
 local SCROLLBAR = require("ui.tools.optionalScrollbar")
 
+---@class DetailsUI : ProxyUI
+---@field super ProxyUI
+---@field onReload fun(self, list: ListUI, ...)
+---@field new fun(self, autoload: boolean): self
 local UI = Class("DetailsUI",require("ui.base.proxy"))
 
 local theme = Settings.theme.details
 
+---@param autoLoad boolean?
 function UI:initialize(autoLoad)
 	self.list = LIST:new(
 		theme.listStyle
@@ -25,6 +30,7 @@ function UI:initialize(autoLoad)
 end
 
 --provide access to the underlying list
+---@return ListUI
 function UI:getList()
 	return self.list
 end
