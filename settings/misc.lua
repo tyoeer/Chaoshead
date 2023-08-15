@@ -18,6 +18,7 @@ return {
 		cameraMoveSpeed = 25*60,
 		showRawNumbers = false,
 		checkLimits = {"file","game"}, -- "editor"
+		allowMouseDragPlacement = true,
 	},
 	scrollbar = {
 		buttonScrollFactor = 0.9,

@@ -676,7 +676,9 @@ function UI:mouseMoved(x,y,dx,dy)
 	end
 	
 	--stop placing something
-	self.placing = false
+	if not Settings.misc.editor.allowMouseDragPlacement then
+		self.placing = false
+	end
 end
 
 function UI:wheelMoved(sx,sy)
