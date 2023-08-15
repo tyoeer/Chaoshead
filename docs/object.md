@@ -82,9 +82,9 @@ for propertyId in object:iterateProperties() do
 Iterates over all the properties this object has.
 
 ```Lua
-has = object:hasProperty(id)
+has = object:hasProperty(selector)
 ```
-- id: the numerical id of the property to check
+- selector: the numerical id or properly capitalized name of the property to retrieve
 - has: whether or not this objects has that property
 
 ## Contained Objects

@@ -166,6 +166,10 @@ function OBJ:iterateProperties()
 end
 
 function OBJ:hasProperty(prop)
+	prop = P:getID(prop)
+	if prop=="$UnknownId" then
+		return false
+	end
 	for prop2 in self:iterateProperties() do
 		if prop == prop2 then
 			return true
