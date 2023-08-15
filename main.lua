@@ -28,7 +28,7 @@ function love.load(args)
 	local middleclass = require("libs.middleclass")
 	
 	---@overload fun(): Class
-	---@overlaod fun(parent: Class): Class
+	---@overload fun(parent: Class): Class
 	---@overload fun(name: string, parent?: Class): Class
 	function Class(nameOrParent, parent)
 		if nameOrParent==nil then
