@@ -2,7 +2,7 @@
 
 A tool to place objects and keep track of channels & rift IDs more easily.
 Objects are allocating in the order of (relay) execution.
-Currently expects an empty level, and has no support for appending an existing level (yet).
+Can overwrite existing stuff with some settings.
 
 ## Creation
 
