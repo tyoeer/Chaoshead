@@ -182,7 +182,7 @@ Battle Gate (hor.)	179	#B3	3	1	21	Inherit	Foreground
 Key Gate (hor.)	180	#B4	3	1	30	Inherit	Foreground		
 Jem Gate (hor.)	181	#B5	3	1	23	Inherit	Foreground		
 Scrubb	182	#B6	1	1	No	105	Foreground	2	
-Ocula	183	#B7	1	1	182	Inherit	Foreground	2	
+Ocula	183	#B7	1	1	No	105	Foreground	2	
 Squished Ocula	184	#B8	1	1	No	None	Foreground	2	
 Squished Scrubb	185	#B9	1	1	No	None	Foreground	2	
 Key Chest	186	#BA	2	2	No	2,47,86,90	Foreground	2	
