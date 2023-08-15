@@ -2,12 +2,24 @@ local E = require("levelhead.data.elements")
 local P = require("levelhead.data.properties")
 local WikiData = require("levelhead.wikiData")
 
+---@alias ObjectLayer "foreground"|"background"
+
+---@class LHObject : Object
+---@field x integer
+---@field y integer
+---@field world LHWorld?
+---@field layer ObjectLayer?
+---@field contents integer?
+---@field new fun(self, id: Selector): self
 local OBJ = Class("Object")
 
 function OBJ:initialize(id)
-	self.id = E:getID(id)
-	if self.id=="$UnknownId" then
+	local id = E:getID(id)
+	if id=="$UnknownId" then
 		error("Unknown object id: "..id,3)
+	else
+		---@cast id -string
+		self.id = id
 	end
 	self.properties = {}
 	--self.x = nil
@@ -41,7 +53,12 @@ end
 
 
 function OBJ:setContents(element)
-	self.contents = E:getID(element)
+	local c = E:getID(element)
+	if c=="$UnknownId" then
+		error("Can't set contents to invalid element selector: "..tostring(element))
+	end
+	---@cast c -string
+	self.contents = c
 end
 OBJ.setContainedObject = OBJ.setContents
 OBJ.setThingInsideThisThing = OBJ.setContents
@@ -103,10 +120,10 @@ function OBJ:drawText()
 	local x, y = self:getDrawCoords()
 	if self.layer=="foreground" then
 		love.graphics.setColor(colorsIndex.foregroundObject.text)
-		love.graphics.print(self.id,x+2,y+2)
+		love.graphics.print(tostring(self.id),x+2,y+2)
 	else --background
 		love.graphics.setColor(colorsIndex.backgroundObject.text)
-		love.graphics.print(self.id, x+20,y+51)
+		love.graphics.print(tostring(self.id), x+20,y+51)
 	end
 end
 

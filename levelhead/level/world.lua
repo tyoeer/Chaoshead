@@ -4,7 +4,8 @@ local OBJ = require("levelhead.level.object")
 local Path = require("levelhead.level.path")
 local E = require("levelhead.data.elements")
 
-local World = Class()
+---@class LHWorld
+local World = Class("LHWorld")
 --[[
 
 Top left corner is (1,1), to be consistent with Lua and Löve2d

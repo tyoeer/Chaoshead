@@ -1,8 +1,11 @@
+---@alias Selector integer|string
+
 ---@class LHData : Object
 ---@field data table<number, table<string, unknown>>
 ---@field headers table<string, string>
 local DATA = Class()
 
+---@param selector Selector
 function DATA:getRow(selector)
 	if type(selector)=="number" then
 		-- +1 to convert from 0-indexed levelhead ID's to 1-indexed Lua lists
@@ -32,6 +35,8 @@ function DATA:reduceSelector(selector)
 	return selector:gsub("%W",""):lower()
 end
 
+---@param selector Selector
+---@return integer|"$UnknownId"
 function DATA:getID(selector)
 	return self:getRow(selector)[self.headers.id] or
 		(type(selector)=="number" and selector or "$UnknownId")
