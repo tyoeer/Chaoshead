@@ -18,6 +18,11 @@ for i=0, P:getMax("Sending Channel") do
 	channels[i] = {
 		from = 0,
 		to = 0,
+		
+		frMin = math.huge,
+		frMax = -math.huge,
+		trMin = math.huge,
+		trMax = -math.huge,
 	}
 end
 
@@ -31,7 +36,12 @@ end
 for i=P:getMin("Switch Requirements"), P:getMax("Switch Requirements") do
 	reqs[P:valueToMapping("Switch Requirements",i)] = 0
 end
+
 -- collect
+
+local function rPos(obj)
+	return obj.y * level:getWidth() + obj.x
+end
 
 local function prop(thing,prop)
 	if thing:hasProperty(prop) then
@@ -45,11 +55,21 @@ local function addThing(thing)
 	local from = prop(thing,"Receiving Channel")
 	if from then
 		channels[from].from = channels[from].from + 1
+		if thing.x then
+			local r = rPos(thing)
+			channels[from].frMin = math.min(channels[from].frMin, r)
+			channels[from].frMax = math.max(channels[from].frMax, r)
+		end
 	end
 	
 	local to = prop(thing,"Sending Channel")
 	if to then
 		channels[to].to = channels[to].to + 1
+		if thing.x then
+			local r = rPos(thing)
+			channels[to].trMin = math.min(channels[to].trMin, r)
+			channels[to].trMax = math.max(channels[to].trMax, r)
+		end
 	end
 	
 	local req = prop(thing,"Switch Requirements")
@@ -94,6 +114,11 @@ local types = {
 	"Unused",
 }
 
+local cdTypes = {
+	delay = 0,
+	complex = 0,
+	fast = 0,
+}
 local cTypes = {}
 local rTypes = {}
 for _,v in ipairs(types) do
@@ -124,6 +149,16 @@ for i=0, P:getMax("Sending Channel") do
 	
 	channels[i].type = cType
 	cTypes[cType] = cTypes[cType] + 1
+	
+	if cType~="Unused" and cType~="0>X" and cType ~="X>0" then
+		if channels[i].trMax < channels[i].frMin then
+			cdTypes.fast = cdTypes.fast + 1
+		elseif channels[i].frMax < channels[i].trMin then
+			cdTypes.delay = cdTypes.delay + 1
+		else
+			cdTypes.complex = cdTypes.complex + 1
+		end
+	end
 end
 
 for i=0, P:getMax("Rift ID") do
@@ -218,6 +253,9 @@ o("\nSwitch Requirements:")
 	o("- one0: %i", reqs["One Inactive"])
 o("\nChannels:")
 typeOut(cTypes)
+	o("\n- Immediate: %i", cdTypes.fast)
+	o("- Delayed: %i", cdTypes.delay)
+	o("- Complicated: %i", cdTypes.complex)
 o("\nRelays:")
 crossOut("relays")
 o("\nRift IDs:")
