@@ -117,8 +117,13 @@ Sets the top-left corner of the area in which things can be allocated.
 Use together with the `size` setting to limit the allocator to a specific area.
 
 ```Lua
-x,y allocator:getTopLeftCorner()
+x, y = allocator:getTopLeftCorner()
 ```
 - `x, y`: the position of the top-left corner (inclusive)
 
 Returns the top-left corner of the area in which things can be allocated.
+
+```Lua
+width, height = allocator:getSize()
+```
+- `wdith, height`: the size of the area in which things can be allocated.

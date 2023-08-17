@@ -328,8 +328,15 @@ function A:setTopLeftCorner(x,y)
 	self.maxX = x + self.width - 1
 	self.maxY = y + self.height - 1
 end
+
+---@return integer x, integer ys
 function A:getTopLeftCorner()
 	return self.minX, self.minY
+end
+
+---@return integer width, integer height
+function A:getSize()
+	return self.width, self.height
 end
 
 function A:getShortcuts()
