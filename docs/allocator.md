@@ -25,7 +25,7 @@ allocator = require("tools.allocator"):new(level,settings)
 	- `riftIdMask`: whether the allocator should have a mask that limits which rift IDs can be used.
 	  See `getRiftIdMask()` for more info.
 	  Defaults to `false`
-	- preScan: whether to automatically scan the level and mask away anything already used.
+	- `preScan`: whether to automatically scan the level and mask away anything already used.
 	  Does not properly work with objects bigger than 1x1 due to data that still needs to be collected.
 	  (Objects bigger than 1x1 will not get masked off completely, causing overlap, causing undefined behaviour in Levelhead.)
 	  Defaults to `false`.

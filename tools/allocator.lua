@@ -64,35 +64,7 @@ function A:initialize(level,settings)
 		end
 	end
 	if self.settings.preScan then
-		for obj in level.objects:iterate() do
-			if self.objectMask then
-				self.objectMask:set(obj.x, obj.y, false)
-			end
-	
-			-- {Sending Channel, Receiving Channel, Receving Channel (optional variant), Sending Channel (optional variant)}
-			local channelProperties = {0, 1, 49, 90}
-			
-			if self.channelMask then
-				for _,propId in ipairs(channelProperties) do
-					local p = obj:getPropertyRaw(propId)
-					if p ~= nil then
-						self.channelMask[p] = false
-					end
-				end
-			end
-			
-			-- {Rift ID, Destination Rift ID}
-			local riftIdProperties = {30, 31}
-			
-			if self.riftIdMask then
-				for _,propId in ipairs(riftIdProperties) do
-					local p = obj:getPropertyRaw(propId)
-					if p ~= nil then
-						self.riftIdMask[p] = false
-					end
-				end
-			end
-		end
+		self:scan()
 	end
 	
 	
@@ -110,6 +82,38 @@ function A:initialize(level,settings)
 	self.riftIdCounter = -1
 end
 
+-- Fills in the mask by scanning the level
+function A:scan()
+	for obj in level.objects:iterate() do
+		if self.objectMask then
+			self.objectMask:set(obj.x, obj.y, false)
+		end
+
+		-- {Sending Channel, Receiving Channel, Receving Channel (optional variant), Sending Channel (optional variant)}
+		local channelProperties = {0, 1, 49, 90}
+		
+		if self.channelMask then
+			for _,propId in ipairs(channelProperties) do
+				local p = obj:getPropertyRaw(propId)
+				if p ~= nil then
+					self.channelMask[p] = false
+				end
+			end
+		end
+		
+		-- {Rift ID, Destination Rift ID}
+		local riftIdProperties = {30, 31}
+		
+		if self.riftIdMask then
+			for _,propId in ipairs(riftIdProperties) do
+				local p = obj:getPropertyRaw(propId)
+				if p ~= nil then
+					self.riftIdMask[p] = false
+				end
+			end
+		end
+	end
+end
 
 -- OBJECTS & AREAS
 
