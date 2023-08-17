@@ -31,6 +31,15 @@ end
 
 -- MISC
 
+---@param objectOrSelector LHObject|Selector
+function OBJ:orNew(objectOrSelector)
+	if type(objectOrSelector)=="table" then
+		return objectOrSelector
+	else
+		---@cast objectOrSelector -LHObject
+		return self:new(objectOrSelector)
+	end
+end
 
 function OBJ:getName()
 	return E:getName(self.id)

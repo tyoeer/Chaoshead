@@ -8,11 +8,18 @@ in which case Levelhead tends to ignore it.
 ## Creation
 
 ```Lua
-object = require("levelhead.level.object"):new(id)
+object = require("levelhead.level.object"):new(selector)
 ```
-- id: the id or name of the level element this object is.
+- selector: the id or name of the level element this object is.
 
 Also see `Object:clone()`
+
+```Lua
+object = require("levelhead.level.object"):orNew(objectOrSelector)
+```
+- objectOrSelector: An existing object, or the id or name of the level element to make a new object of.
+
+Returns existing object if passed, otherwise makes a new one.
 
 ## Properties
 
