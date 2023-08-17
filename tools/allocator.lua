@@ -119,7 +119,7 @@ end
 
 
 function A:allocateObject(element)
-	local obj = OBJ:new(element)
+	local obj = OBJ:orNew(element)
 	if self.settings.immediate then
 		self:placeObject(obj)
 	else

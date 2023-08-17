@@ -43,9 +43,9 @@ rift = allocator:allocateRift(riftId, receivingChannel, switchRequirements, dest
 Allocates a rift and returns the allocated object. Function arguments correspond to their in-game properties.
 
 ```Lua
-obj = allocator:allocateObject(element)
+obj = allocator:allocateObject(elementOrObject)
 ```
-- `element`: the name or id of the level element to allocate
+- `elementOrObject`: the name or id of the level element to allocate, or an existing object
 - `obj`: an object that the allocator will make sure gets placed somewhere
 
 ```Lua
