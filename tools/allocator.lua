@@ -2,8 +2,20 @@ local OBJ = require("levelhead.level.object")
 local Bitplane = require("tools.bitplane")
 local P = require("levelhead.data.properties")
 
-local A = Class()
+---@class AllocatorSettings
+---@field immediate boolean?
+---@field objectMask boolean?
+---@field channelMask boolean?
+---@field riftIdMask boolean?
+---@field preScan boolean?
+---@field size { [1]:integer, [2]:integer}?
 
+---@class Allocator : Object
+---@field new fun(self, level: LHWorld, settings: AllocatorSettings): self
+local A = Class("Allocator")
+
+---@param level LHWorld
+---@param settings AllocatorSettings
 function A:initialize(level,settings)
 	self.settings = settings
 	self.level = level
