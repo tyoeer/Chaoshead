@@ -23,9 +23,9 @@ world = require("levelhead.level.world"):new()
 ### Foreground & Background
 
 ```Lua
-world:addObject(object, x, y)
+world:addObject(objectOrSelector, x, y)
 ```
-- object: the __Object__ to add to the world
+- objectOrSelector: the __Object__ to add to the world, or the id or name of the level element to create a new object off.
 - x, y: the position where to place the object
 
 Tries to automatically determine the layer to add the object to.
@@ -53,9 +53,9 @@ object = world:place[element](x,y)
 ### Foreground
 
 ```Lua
-world:addForegroundObject(object,x,y)
+world:addForegroundObject(objectOrSelector,x,y)
 ```
-- object: the foreground __Object__ to add to the world
+- object: the foreground __Object__ to add to the world,  or the id or name of the level element to create a new foreground object off.
 - x, y: the position where to place the object
 
 ```Lua
@@ -76,9 +76,9 @@ In case there's no foreground object at the specified coordinates, nothing will 
 ### Background
 
 ```Lua
-world:addBackgroundObject(object,x,y)
+world:addBackgroundObject(objectOrSelector,x,y)
 ```
-- object: the background __Object__ to add to the world
+- object: the background __Object__ to add to the world,  or the id or name of the level element to create a new background object off.
 - x, y: the position where to place the object
 
 ```Lua

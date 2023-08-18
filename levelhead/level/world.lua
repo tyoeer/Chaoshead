@@ -38,7 +38,8 @@ end
 
 --foreground & background
 
-function World:addObject(obj,x,y)
+function World:addObject(objOrSel,x,y)
+	local obj = OBJ:orNew(objOrSel)
 	if obj.layer=="foreground" then
 		self:addForegroundObject(obj,x,y)
 	elseif obj.layer=="background" then
@@ -72,7 +73,8 @@ end
 
 --foreground
 
-function World:addForegroundObject(obj,x,y)
+function World:addForegroundObject(objOrSel,x,y)
+	local obj = OBJ:orNew(objOrSel)
 	self:removeForegroundAt(x,y)
 	obj.world = self
 	obj.layer = "foreground"
@@ -111,7 +113,8 @@ end
 
 --background
 
-function World:addBackgroundObject(obj,x,y)
+function World:addBackgroundObject(objOrSel,x,y)
+	local obj = OBJ:orNew(objOrSel)
 	self:removeBackgroundAt(x,y)
 	obj.world = self
 	obj.layer = "background"
