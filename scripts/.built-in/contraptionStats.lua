@@ -8,16 +8,29 @@ local P = require("levelhead.data.properties")
 
 -- init
 
-local channels = {}
-local riftIds = {}
-local reqs = {}
-local nRifts = 0
 local nRelays = 0
+local nRifts = 0
+
+local channels = {
+	None={
+		from = 0,
+		to = 0,
+		dq = "None"
+	}
+}
+local riftIds = {
+	None={
+		from = 0,
+		to = 0,
+		dq = "None"
+	}
+}
 
 for i=0, P:getMax("Sending Channel") do
 	channels[i] = {
 		from = 0,
 		to = 0,
+		-- dq = nil
 		
 		frMin = math.huge,
 		frMax = -math.huge,
@@ -30,9 +43,11 @@ for i=0, P:getMax("Rift ID") do
 	riftIds[i] = {
 		from = 0,
 		to = 0,
+		-- dq = nil
 	}
 end
 
+local reqs = {}
 for i=P:getMin("Switch Requirements"), P:getMax("Switch Requirements") do
 	reqs[P:valueToMapping("Switch Requirements",i)] = 0
 end
@@ -104,7 +119,9 @@ for path in level.paths:iterate() do
 	addThing(path)
 end
 
-local types = {
+-- Calculate DQs + channel timings
+
+local dqList = {
 	"0>X",
 	"X>0",
 	"1>1",
@@ -119,40 +136,42 @@ local cdTypes = {
 	complex = 0,
 	fast = 0,
 }
-local cTypes = {}
-local rTypes = {}
-for _,v in ipairs(types) do
-	cTypes[v] = 0
-	rTypes[v] = 0
+local channelDqCounts = {}
+local riftIDDqCounts = {}
+for _,v in ipairs(dqList) do
+	channelDqCounts[v] = 0
+	riftIDDqCounts[v] = 0
+end
+
+local function getDQ(of)
+	-- The amount of objects that send to this channel/rift id
+	local t = of.to
+	-- The amount of objects that receive from this channel/rift id
+	local f = of.from
+	if t==0 and f==0 then
+		return "Unused"
+	elseif t==0 and f>0 then
+		return "0>X"
+	elseif t>0 and f==0 then
+		return "X>0"
+	elseif t==1 and f==1 then
+		return "1>1"
+	elseif t==1 and f>1 then
+		return "1>N"
+	elseif t>1 and f==1 then
+		return "N>1"
+	elseif t>1 and f>1 then
+		return "N>N"
+	end
 end
 
 
 for i=0, P:getMax("Sending Channel") do
-	-- The amount of objects that send to this channel
-	local t = channels[i].to
-	-- The amount of objects that receive from this channel
-	local f = channels[i].from
-	local cType
-	if t==0 and f==0 then
-		cType = "Unused"
-	elseif t==0 and f>0 then
-		cType = "0>X"
-	elseif t>0 and f==0 then
-		cType = "X>0"
-	elseif t==1 and f==1 then
-		cType = "1>1"
-	elseif t==1 and f>1 then
-		cType = "1>N"
-	elseif t>1 and f==1 then
-		cType = "N>1"
-	elseif t>1 and f>1 then
-		cType = "N>N"
-	end
+	local dq = getDQ(channels[i])
+	channels[i].dq = dq
+	channelDqCounts[dq] = channelDqCounts[dq] + 1
 	
-	channels[i].type = cType
-	cTypes[cType] = cTypes[cType] + 1
-	
-	if cType~="Unused" and cType~="0>X" and cType ~="X>0" then
+	if dq~="Unused" and dq~="0>X" and dq ~="X>0" then
 		if channels[i].trMax < channels[i].frMin then
 			cdTypes.fast = cdTypes.fast + 1
 		elseif channels[i].frMax < channels[i].trMin then
@@ -164,37 +183,24 @@ for i=0, P:getMax("Sending Channel") do
 end
 
 for i=0, P:getMax("Rift ID") do
-	-- The amount of rifts that has as destination this rift id
-	local t = riftIds[i].to
-	-- The amount of rifts that has this rift id
-	local f = riftIds[i].from
-	local cType
-	if t==0 and f==0 then
-		cType = "Unused"
-	elseif t==0 and f>0 then
-		cType = "0>X"
-	elseif t>0 and f==0 then
-		cType = "X>0"
-	elseif t==1 and f==1 then
-		cType = "1>1"
-	elseif t==1 and f>1 then
-		cType = "1>N"
-	elseif t>1 and f==1 then
-		cType = "N>1"
-	elseif t>1 and f>1 then
-		cType = "N>N"
-	end
-	
-	riftIds[i].type = cType
-	rTypes[cType] = rTypes[cType] + 1
+	local dq = getDQ(riftIds[i])
+	riftIds[i].dq = dq
+	riftIDDqCounts[dq] = riftIDDqCounts[dq] + 1
 end
 
-local cross = {}
+-- Objects by DQ
 
-for _,v in ipairs(types) do
-	cross[v] = {}
-	for _,vv in ipairs(types) do
-		cross[v][vv] = {
+local dqAndNoneList = {"None"}
+for _,dq in ipairs(dqList) do
+	table.insert(dqAndNoneList, dq)
+end
+
+local objectsByDq = {}
+
+for _,v in ipairs(dqAndNoneList) do
+	objectsByDq[v] = {}
+	for _,vv in ipairs(dqAndNoneList) do
+		objectsByDq[v][vv] = {
 			relays = 0,
 			rifts = 0,
 		}
@@ -205,14 +211,14 @@ for obj in level.objects:iterate() do
 	if obj:isElement("Relay") then
 		local from = obj:getReceivingChannel()
 		local to = obj:getSendingChannel()
-		cross[channels[from].type][channels[to].type].relays =
-		cross[channels[from].type][channels[to].type].relays + 1
+		objectsByDq[channels[from].dq][channels[to].dq].relays =
+		objectsByDq[channels[from].dq][channels[to].dq].relays + 1
 	end
 	if obj:isElement("Rift") or obj:isElement("2x2 Rift") or obj:isElement("3x3 Rift") then
 		local from = obj:getRiftID()
 		local to = obj:getDestinationRiftID()
-		cross[riftIds[from].type][riftIds[to].type].rifts =
-		cross[riftIds[from].type][riftIds[to].type].rifts + 1
+		objectsByDq[riftIds[from].dq][riftIds[to].dq].rifts =
+		objectsByDq[riftIds[from].dq][riftIds[to].dq].rifts + 1
 	end
 end
 
@@ -228,26 +234,26 @@ local function o(s, ...)
 	end
 end
 
-local function typeOut(l)
-	for _,v in ipairs(types) do
-		o("- %s: %i", v, l[v])
+local function outputDq(l)
+	for _,dq in ipairs(dqList) do
+		o("- %s: %i", dq, l[dq])
 	end
 end
-local function crossOut(field)
-	for _,v in ipairs(types) do
-		for _,vv in ipairs(types) do
-			local n = cross[v][vv][field]
+local function outputObjectByDq(field)
+	for _,fromDq in ipairs(dqAndNoneList) do
+		for _,toDq in ipairs(dqAndNoneList) do
+			local n = objectsByDq[fromDq][toDq][field]
 			if n~=0 then
-				o("- %s -> %s: %i",v,vv,n)
+				o("- %s -> %s: %i",fromDq,toDq,n)
 			end
 		end
 	end
 end
 
 o("Total relays: %i", nRelays)
-o("Total channels: %i", 1000-cTypes.Unused)
+o("Total channels: %i", 1000-channelDqCounts.Unused)
 o("Total rifts: %i", nRifts)
-o("Total rift IDs: %i", 1000-rTypes.Unused)
+o("Total rift IDs: %i", 1000-riftIDDqCounts.Unused)
 o("\nSwitch Requirements counts:")
 	o("- any1: %i", reqs["Any Active"])
 	o("- all1:  %i", reqs["All Active"])
@@ -255,18 +261,18 @@ o("\nSwitch Requirements counts:")
 	o("- any0: %i", reqs["Any Inactive"])
 	o("- all0:  %i", reqs["All Inactive"])
 	o("- one0: %i", reqs["One Inactive"])
-o("\nChannel degrees:")
-typeOut(cTypes)
+o("\nChannels by degree quantifier:")
+outputDq(channelDqCounts)
 o("\nChannel timings:\n  (only counted channels with both senders and receivers)")
 	o("- Immediate: %i", cdTypes.fast)
 	o("- Delayed: %i", cdTypes.delay)
-	o("- Complicated: %i", cdTypes.complex)
-o("\nRelays by channel degrees:")
-crossOut("relays")
-o("\nRift ID degrees:")
-typeOut(rTypes)
-o("\nRifts by rift ID degrees:")
-crossOut("rifts")
+	o("- Mixed/complicated: %i", cdTypes.complex)
+o("\nRelays by channel DQs:")
+outputObjectByDq("relays")
+o("\nRift IDs by degree qunatifier:")
+outputDq(riftIDDqCounts)
+o("\nRifts by rift ID DQs:")
+outputObjectByDq("rifts")
 
 
 local out = table.concat(out,"\n")
