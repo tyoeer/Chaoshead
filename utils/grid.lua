@@ -1,4 +1,4 @@
----@class Grid : Object
+---@class Grid : Class
 local Grid = Class("Grid")
 
 local dataMetatable = {

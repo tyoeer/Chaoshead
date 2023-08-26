@@ -4,7 +4,7 @@ local Bitplane = require("tools.bitplane")
 local OBJ = require("levelhead.level.object")
 local PN = require("levelhead.level.pathNode")
 
----@class SelectionMask : Object
+---@class SelectionMask : Class
 local S = Class("SelectionMask")
 
 function S:initialize()

@@ -10,7 +10,7 @@ local P = require("levelhead.data.properties")
 ---@field preScan boolean?
 ---@field size { [1]:integer, [2]:integer}?
 
----@class Allocator : Object
+---@class Allocator : Class
 ---@field new fun(self, level: LHWorld, settings: AllocatorSettings): self
 local A = Class("Allocator")
 

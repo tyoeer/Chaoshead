@@ -1,4 +1,4 @@
----@class BaseNodeUI : Object
+---@class BaseNodeUI : Class
 ---@field getMinimumHeight nil|fun(self: self, width?: number): number
 local UI = Class("BaseNodeUI")
 

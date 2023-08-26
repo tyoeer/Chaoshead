@@ -9,7 +9,7 @@
 ---@alias Mappings table<string, Mapping> the string index is 
 
 
----@class Mapped : Object
+---@class Mapped : Class
 ---@field new fun(self, ...: Mappings): self
 local JM = Class("Mapped")
 

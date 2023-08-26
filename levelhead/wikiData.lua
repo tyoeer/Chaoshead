@@ -5,7 +5,7 @@ local E = require("levelhead.data.elements")
 
 local wikiPath = LhMisc.getDataPath() .. "Wiki/"
 
----@class LHWikiData : Object
+---@class LHWikiData : Class
 ---@field new fun(self): self
 local W = Class("LHWikiData")
 

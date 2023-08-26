@@ -3,7 +3,7 @@ local Zones = require("levelhead.data.zones")
 local Lang = require("levelhead.data.languages")
 local Misc = require("levelhead.misc")
 
----@class Settings : Object
+---@class Settings : Class
 local Settings = Class("LevelSettings")
 
 function Settings:initialize()

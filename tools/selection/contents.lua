@@ -2,7 +2,7 @@ local Set = require("utils.orderedSet")
 local E = require("levelhead.data.elements")
 local P = require("levelhead.data.properties")
 
----@class PropertyList : Object
+---@class PropertyList : Class
 local PL = Class("PropertyList")
 do
 	function PL:initialize(propertyId)
@@ -53,7 +53,7 @@ do
 	end
 end
 
----@class SelectionContents : Object
+---@class SelectionContents : Class
 local C = Class("SelectionContents")
 
 function C:initialize()

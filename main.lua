@@ -12,13 +12,13 @@ function love.load(args)
 	
 	-- Boilerplate for types
 	
-	---@class Class
+	---@class ClassInfo
 	---@field name string
-	---@field super Class
+	---@field super ClassInfo
 	
 	--has to be done as a table because generics can't be done on an abstract
-	---@class Object : Class
-	---@field class Class
+	---@class Class : ClassInfo
+	---@field class ClassInfo
 	local c = {}
 	---@generic T
 	---@param self T
@@ -27,9 +27,9 @@ function love.load(args)
 	
 	local middleclass = require("libs.middleclass")
 	
-	---@overload fun(): Class
-	---@overload fun(parent: Class): Class
-	---@overload fun(name: string, parent?: Class): Class
+	---@overload fun(): ClassInfo
+	---@overload fun(parent: ClassInfo): ClassInfo
+	---@overload fun(name: string, parent?: ClassInfo): ClassInfo
 	function Class(nameOrParent, parent)
 		if nameOrParent==nil then
 			return middleclass("Unnamed")

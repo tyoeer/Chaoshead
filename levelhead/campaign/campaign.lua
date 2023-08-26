@@ -4,7 +4,7 @@ local Node = require("levelhead.campaign.node")
 local LevelNode = require("levelhead.campaign.node.level")
 local Level = require("levelhead.campaign.level")
 
----@class Campaign : Object
+---@class Campaign : Class
 ---@field new fun(self, path: string): self
 local C = Class("Campaign")
 

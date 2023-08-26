@@ -1,6 +1,6 @@
 ---@alias Selector integer|string
 
----@class LHData : Object
+---@class LHData : Class
 ---@field data table<number, table<string, unknown>>
 ---@field headers table<string, string>
 local DATA = Class()

@@ -44,7 +44,7 @@
 -- Generics don't work yet
 -- https://github.com/LuaLS/lua-language-server/issues/734
 -- https://github.com/LuaLS/lua-language-server/issues/1861
----@class OrderedSet<T> : Object
+---@class OrderedSet<T> : Class
 local Pool = Class("OrderedSet")
 
 function Pool:initialize()

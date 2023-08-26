@@ -4,7 +4,7 @@ local WikiData = require("levelhead.wikiData")
 
 ---@alias ObjectLayer "foreground"|"background"
 
----@class LHObject : Object
+---@class LHObject : Class
 ---@field x integer
 ---@field y integer
 ---@field world LHWorld?
