@@ -2,6 +2,10 @@ local TABS = require("ui.tools.tabs")
 local LEVEL_SELECTOR = require("levelEditor.workshop.levelSelector")
 local LEVEL_ROOT = require("levelEditor.levelRoot")
 
+---@class WorkshopUI : ProxyUI
+---@field super ProxyUI
+---@field clipboard Clipboard?
+---@field new fun(self): self
 local UI = Class("WorkshopUI",require("ui.base.proxy"))
 
 function UI:initialize()

@@ -13,10 +13,15 @@ local SelectionDetails = require("levelEditor.details.selection")
 local LevelDetails = require("levelEditor.details.level")
 local Palette = require("levelEditor.details.palette")
 
+---@class LevelEditorUI : ProxyUI
+---@field super ProxyUI
+---@field new fun(self, level: Level, root: LevelRootUI): self
 local UI = Class("LevelEditorUI",require("ui.base.proxy"))
 
 local theme = Settings.theme.editor
 
+---@param level Level
+---@param root LevelRootUI
 function UI:initialize(level,root)
 	self.level = level
 	self.root = root

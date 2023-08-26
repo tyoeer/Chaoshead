@@ -5,7 +5,9 @@ local Script = require("script")
 local LevelEditor = require("levelEditor.levelEditor")
 local ScriptInterface = require("levelEditor.scriptInterface")
 
---levelRoot was the best name I could come up with, OK?
+---@class LevelRootUI : ProxyUI
+---@field super ProxyUI
+---@field new fun(self, levelPath: string, workshop: WorkshopUI): self
 local UI = Class("LevelRootUI",require("ui.base.proxy"))
 
 function UI.loadErrorHandler(message)
@@ -31,6 +33,8 @@ function UI.saveErrorHandler(message)
 	return {message,trace}
 end
 
+---@param levelPath string
+---@param workshop WorkshopUI
 function UI:initialize(levelPath, workshop)
 	self.workshop = workshop
 	self.levelPath = levelPath
@@ -155,10 +159,12 @@ function UI:runScript(path,disableSandbox)
 end
 
 
+---@param cp Clipboard
 function UI:setClipboard(cp)
 	self.workshop.clipboard = cp
 end
 
+---@return Clipboard
 function UI:getClipboard()
 	return self.workshop.clipboard
 end

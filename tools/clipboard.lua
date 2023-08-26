@@ -1,6 +1,8 @@
 local World = require("levelhead.level.world")
 
-local Clipboard = Class()
+---@class Clipboard : Class
+---@field new fun(self, world: World, mask: SelectionMask): self
+local Clipboard = Class("Clipboard")
 
 function Clipboard:initialize(world,mask)
 	local startX, startY
