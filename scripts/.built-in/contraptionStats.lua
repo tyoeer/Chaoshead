@@ -128,22 +128,24 @@ end
 
 
 for i=0, P:getMax("Sending Channel") do
-	local f = channels[i].from
+	-- The amount of objects that send to this channel
 	local t = channels[i].to
+	-- The amount of objects that receive from this channel
+	local f = channels[i].from
 	local cType
-	if f==0 and t==0 then
+	if t==0 and f==0 then
 		cType = "Unused"
-	elseif f==0 and t>0 then
+	elseif t==0 and f>0 then
 		cType = "0>X"
-	elseif f>0 and t==0 then
+	elseif t>0 and f==0 then
 		cType = "X>0"
-	elseif f==1 and t==1 then
+	elseif t==1 and f==1 then
 		cType = "1>1"
-	elseif f==1 and t>1 then
+	elseif t==1 and f>1 then
 		cType = "1>N"
-	elseif f>1 and t==1 then
+	elseif t>1 and f==1 then
 		cType = "N>1"
-	elseif f>1 and t>1 then
+	elseif t>1 and f>1 then
 		cType = "N>N"
 	end
 	
@@ -162,22 +164,24 @@ for i=0, P:getMax("Sending Channel") do
 end
 
 for i=0, P:getMax("Rift ID") do
-	local f = riftIds[i].from
+	-- The amount of rifts that has as destination this rift id
 	local t = riftIds[i].to
+	-- The amount of rifts that has this rift id
+	local f = riftIds[i].from
 	local cType
-	if f==0 and t==0 then
+	if t==0 and f==0 then
 		cType = "Unused"
-	elseif f==0 and t>0 then
+	elseif t==0 and f>0 then
 		cType = "0>X"
-	elseif f>0 and t==0 then
+	elseif t>0 and f==0 then
 		cType = "X>0"
-	elseif f==1 and t==1 then
+	elseif t==1 and f==1 then
 		cType = "1>1"
-	elseif f==1 and t>1 then
+	elseif t==1 and f>1 then
 		cType = "1>N"
-	elseif f>1 and t==1 then
+	elseif t>1 and f==1 then
 		cType = "N>1"
-	elseif f>1 and t>1 then
+	elseif t>1 and f>1 then
 		cType = "N>N"
 	end
 	
