@@ -5,8 +5,8 @@ local Settings = require("levelhead.level.settings")
 ---@field super World
 local Level = Class(World)
 
-function Level:initialize(w,h)
-	Level.super.initialize(self, w,h)
+function Level:initialize()
+	Level.super.initialize(self)
 	self.settings = Settings:new()
 end
 
