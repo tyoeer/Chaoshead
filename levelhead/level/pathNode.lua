@@ -1,4 +1,8 @@
-
+---@class PathNode : Class
+---@field path Path?
+---@field next self?
+---@field prev self?
+---@field new fun(self, x: integer, y: integer): self
 local PN = Class("PathNode")
 
 
@@ -16,7 +20,7 @@ function PN:append(x,y)
 	if not self.path then
 		error("Can't append a node to a node without a path!",2)
 	end
-	local new = self.class:new(x,y)
+	local new = self:new(x,y)
 	self.path:addNodeAfter(new, self)
 	return new
 end
@@ -25,7 +29,7 @@ function PN:prepend(x,y)
 	if not self.path then
 		error("Can't append a node to a node without a path!",2)
 	end
-	local new = self.class:new(x,y)
+	local new = self:new(x,y)
 	self.path:addNodeBefore(new, self)
 	return new
 end

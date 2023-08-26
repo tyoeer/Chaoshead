@@ -1,6 +1,10 @@
 local PROP = require("levelhead.data.properties")
 local PN = require("levelhead.level.pathNode")
 
+---@class Path : Class
+---@field world World?
+---@field getClosed fun(self): "Yes"|"No"
+---@field setClosed fun(self, closed: "Yes"|"No"): self
 local P = Class("Path")
 
 local CLOSED_PROPERTY_ID = 38
