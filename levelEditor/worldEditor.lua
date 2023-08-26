@@ -1,6 +1,6 @@
 local Clipboard = require("tools.clipboard")
 
-local UI = Class(require("ui.base.node"))
+local UI = Class("WorldEditorUI",require("ui.base.node"))
 
 local theme = Settings.theme.editor
 
@@ -82,6 +82,26 @@ function UI:posNearCorner(worldX,worldY)
 		end
 	end
 	return false
+end
+
+---@param inwards boolean
+---@param aroundMouse boolean whether zoom from the point under the cursor (or just the center)
+function UI:zoom(inwards, aroundMouse)
+	local preX,preY = self:getMouseWorldPos()
+	if inwards then
+		self.zoomFactor = self.zoomFactor * self.zoomSpeed
+	else
+		self.zoomFactor = self.zoomFactor / self.zoomSpeed
+	end
+	local postX,postY = self:getMouseWorldPos()
+	if aroundMouse then
+		-- make sure the point under the cursor stays under the cursor
+		self.cameraX = self.cameraX + postX - preX
+		self.cameraY = self.cameraY + postY - preY
+	end
+	--Snap to pixel to prevent tiny little offsets from messing with lines when zoomed out
+	self.cameraX = math.roundPrecision(self.cameraX, 1/self.zoomFactor)
+	self.cameraY = math.roundPrecision(self.cameraY, 1/self.zoomFactor)
 end
 
 
@@ -547,6 +567,13 @@ function UI:inputActivated(name,group, isCursorBound)
 			end
 		end
 	end
+	if group=="camera" then
+		if name=="zoomIn" then
+			self:zoom(true, false)
+		elseif name=="zoomOut" then
+			self:zoom(false, false)
+		end
+	end
 end
 
 function UI:inputDeactivated(name,group, isCursorBound)
@@ -681,20 +708,8 @@ function UI:mouseMoved(x,y,dx,dy)
 	end
 end
 
-function UI:wheelMoved(sx,sy)
-	local ax,ay = self:getMouseWorldPos()
-	if sy>0 then
-		self.zoomFactor = self.zoomFactor * self.zoomSpeed
-	elseif sy<0 then
-		self.zoomFactor = self.zoomFactor / self.zoomSpeed
-	end
-	local bx,by = self:getMouseWorldPos()
-	-- make sure the point under the cursor stays under the cursor
-	self.cameraX = self.cameraX + bx - ax
-	self.cameraY = self.cameraY + by - ay
-	--Snap to pixel to prevent tiny little offsets from messing with lines when zoomed out
-	self.cameraX = math.roundPrecision(self.cameraX,1/self.zoomFactor)
-	self.cameraY = math.roundPrecision(self.cameraY,1/self.zoomFactor)
+function UI:wheelMoved(_sx,sy)
+	self:zoom(sy > 0, true)
 end
 
 return UI

@@ -235,6 +235,20 @@ return {
 		},
 	},
 	camera = {
+		zoomIn = {
+			type = "or",
+			triggers = {
+				"key: +",
+				"key: kp+"
+			},
+		},
+		zoomOut = {
+			type = "or",
+			triggers = {
+				"key: -",
+				"key: kp-"
+			},
+		},
 		drag = {
 			trigger = "mouse: middle",
 			isCursorBound = true,
