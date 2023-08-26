@@ -11,10 +11,10 @@ local P = require("levelhead.data.properties")
 ---@field size { [1]:integer, [2]:integer}?
 
 ---@class Allocator : Class
----@field new fun(self, level: LHWorld, settings: AllocatorSettings): self
+---@field new fun(self, level: World, settings: AllocatorSettings): self
 local A = Class("Allocator")
 
----@param level LHWorld
+---@param level World
 ---@param settings AllocatorSettings
 function A:initialize(level,settings)
 	self.settings = settings

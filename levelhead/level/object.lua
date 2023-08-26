@@ -4,10 +4,10 @@ local WikiData = require("levelhead.wikiData")
 
 ---@alias ObjectLayer "foreground"|"background"
 
----@class LHObject : Class
+---@class Object : Class
 ---@field x integer
 ---@field y integer
----@field world LHWorld?
+---@field world World?
 ---@field layer ObjectLayer?
 ---@field contents integer?
 ---@field new fun(self, id: Selector): self
@@ -31,12 +31,12 @@ end
 
 -- MISC
 
----@param objectOrSelector LHObject|Selector
+---@param objectOrSelector Object|Selector
 function OBJ:orNew(objectOrSelector)
 	if type(objectOrSelector)=="table" then
 		return objectOrSelector
 	else
-		---@cast objectOrSelector -LHObject
+		---@cast objectOrSelector -Object
 		return self:new(objectOrSelector)
 	end
 end
