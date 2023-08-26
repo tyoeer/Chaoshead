@@ -14,7 +14,7 @@ function input.parseButton(selector)
 	selector = selector:lower()
 	local moduleName, button
 	if selector:find("%:") then
-		moduleName, button = string.match(selector,"^(%w+)%:%s?(%w-)$")
+		moduleName, button = string.match(selector,"^([^:]+)%:%s?([^:]-)$")
 		local module = input.modules[moduleName]
 		local b = module:verify(button)
 		if b then
