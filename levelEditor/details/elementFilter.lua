@@ -17,7 +17,7 @@ end
 
 function UI:buildElementList(s)
 	local c = s.contents
-	---@type FLItem
+	---@type FilteredList.Item
 	local out = {}
 	
 	if s.mask:getLayerEnabled("pathNodes") and c.pathNodes:size()>=1 then

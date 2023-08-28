@@ -2,19 +2,19 @@ local Button = require("ui.widgets.button")
 local List = require("ui.layout.list")
 local TextInput = require("ui.widgets.textInput")
 
----@class FLItem
+---@class FilteredList.Item
 ---@field label string
 ---@field context unknown User-specifed thingy so they can recognise this item without string macthing
 ---@field filter string? string that gets checked against the filter
 
----@alias FLItems (string|FLItem)[]
+---@alias FilteredList.Items (string|FilteredList.Item)[]
 
 ---@class FilteredListUI : ListUI
 ---@field super ListUI
----@field new fun(self: self, items: FLItems, listStyle: ListStyle, textInputStyle: TextInputStyle): self
+---@field new fun(self: self, items: FilteredList.Items, listStyle: ListStyle, textInputStyle: TextInputStyle): self
 local UI = Class("FilteredListUI", List)
 
----@param items FLItem[]
+---@param items FilteredList.Item[]
 function UI:initialize(items, listStyle, textInputStyle)
 	UI.super.initialize(self, listStyle)
 	
@@ -30,9 +30,9 @@ function UI:grabFocus()
 	self.input:grabFocus()
 end
 
----@param items FLItems
+---@param items FilteredList.Items
 function UI:setItemList(items)
-	---@type FLItem[]
+	---@type FilteredList.Item[]
 	self.items = {}
 	for _,entry in ipairs(items) do
 		if type(entry)=="string" then
@@ -78,7 +78,7 @@ function UI:textChanged()
 	self:genList(self:getFilter())
 end
 
----@param item FLItem
+---@param item FilteredList.Item
 function UI:itemClicked(item)
 	self.input:setText(item.label)
 end
