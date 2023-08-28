@@ -1,5 +1,6 @@
 local P = require("levelhead.data.properties")
 
+---@param num number
 local function formatNumber(num)
 	if num == math.huge then
 		return "$Infinity"
@@ -12,11 +13,19 @@ local function formatNumber(num)
 	end
 end
 
+---@alias LevelLimitCheck.PropertyCheck
+---| fun(propertyId: integer, rawValue: number): number|false, any, any
+---| fun(propertyId: integer, rawValue: number): number|false
+
+---@param level Level
+---@param func LevelLimitCheck.PropertyCheck
 local function checkPropRange(level, func)
 	--objects
 	for obj in level.objects:iterate() do
+		---@cast obj Object
 		for prop in obj:iterateProperties() do
-			local val,min,max = func(prop,obj:getPropertyRaw(prop))
+			--We got the property id from the object, so we know for sure the object has it
+			local val,min,max = func(prop, obj:getPropertyRaw(prop)--[[@as number]])
 			if val then
 				local name = P:getName(prop)
 				if name=="$UnknownName" then name = prop end
@@ -38,6 +47,11 @@ local function checkPropRange(level, func)
 	end
 end
 
+---@class LevelLimitCheck
+---@field message string
+---@field check fun(level: Level): ... If the returned value is truthy, it get srting.format()ted with the message field and reported.
+
+---@type table<string,LevelLimitCheck[]>
 return {
 	--[[
 		message: which message to display if check return true
