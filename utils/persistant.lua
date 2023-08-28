@@ -18,6 +18,8 @@ local function saveData(path,data)
 	end
 end
 
+---@overload fun(which: string)
+---@param which string
 function settings:save(which)
 	if type(self)=="string" then
 		which = self
@@ -131,10 +133,17 @@ saveStorage = function(self)
 	self.save = saveStorage
 end
 
+---@class Persistant
 local storage = {
 	settings = settings
 }
 
+---@class Storage : table<string, any>
+---@field save fun(self)
+---@field storageName string
+
+---@param name string
+---@return Storage
 function storage:get(name)
 	if not self[name] then
 		local path = getStoragePath(name)

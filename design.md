@@ -25,9 +25,6 @@ The stuff on which the rest of CH is built.
   - `level/`: Everything dealing with the Lua representation of a LH level.
     - `limits.lua`: A list of functions for checking various limits imposed by several different things.
 - `ui/`: The main UI system. Has its own design.md describing (some of) the design of the UI system.
-- `settings/`: The settings & storage systems aka systems for data that persists between restarts.
-  - `init.lua`: The actual code.
-  - The other files: default settings.
 
 ## Misc code
 
@@ -43,6 +40,7 @@ The stuff on which the rest of CH is built.
 ## Resources
 
 - `data/`: Contains `.tsv` data files based on [the spreadsheet](https://docs.google.com/spreadsheets/d/1bzASSn2FgjqUldPzX8DS66Lv-r2lk3V12jZjl51uaTk/)
+- `settings/`: The default settings.
 - `docs/`: Documentation for user scripts.
 - `resources/`: Contains non code misc. stuff (font & image used in README)
 - `licenses/`: All the licenses of third-party stuff used by Chaoshead. Has a naming scheme for the licenses.
