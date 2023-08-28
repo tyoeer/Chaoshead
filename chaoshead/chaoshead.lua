@@ -7,6 +7,7 @@ local WikiData = require("levelhead.wikiData")
 
 ---@class ChaosheadUI : ModalManagerUI
 ---@field super ModalManagerUI
+---@field new fun(self): self
 local UI = Class("ChaosheadUI",require("ui.tools.modal"))
 
 function UI:initialize()
