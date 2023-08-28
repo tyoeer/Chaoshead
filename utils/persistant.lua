@@ -138,9 +138,7 @@ local storage = {
 	settings = settings
 }
 
----@class Storage : table<string, any>
----@field save fun(self)
----@field storageName string
+---@alias Storage {save: fun(self: self), storageName: string, [string]: any}
 
 ---@param name string
 ---@return Storage
