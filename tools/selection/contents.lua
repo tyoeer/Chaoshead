@@ -3,8 +3,10 @@ local E = require("levelhead.data.elements")
 local P = require("levelhead.data.properties")
 
 ---@class PropertyList : Class
+---@field new fun(self, propertyId: integer): self
 local PL = Class("PropertyList")
 do
+	---@param propertyId integer
 	function PL:initialize(propertyId)
 		self.pool = Set:new()
 		self.propId = propertyId
