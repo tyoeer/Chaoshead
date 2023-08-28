@@ -1,10 +1,15 @@
 local E = require("levelhead.data.elements")
 local FilteredList = require("ui.widgets.filteredList")
 
+---@class ElementFilterUI : ListUI
+---@field super ListUI
+---@field new fun(self, editor: LevelEditorUI, selection: SelectionTracker): self
 local UI = Class("ElementFilterUI", require("ui.layout.list"))
 
 local theme = Settings.theme.details
 
+---@param editor LevelEditorUI
+---@param selection SelectionTracker
 function UI:initialize(editor, selection)
 	UI.super.initialize(self, theme.listStyle)
 	
@@ -15,9 +20,10 @@ function UI:initialize(editor, selection)
 	self:reload()
 end
 
+---@param s SelectionTracker
 function UI:buildElementList(s)
 	local c = s.contents
-	---@type FilteredList.Item
+	---@type FilteredList.Items
 	local out = {}
 	
 	if s.mask:getLayerEnabled("pathNodes") and c.pathNodes:size()>=1 then

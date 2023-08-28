@@ -16,6 +16,7 @@ local SeparatorEntry = require("ui.widgets.separator")
 ---@field new fun(self: self, style: ListStyle): self
 local UI = Class("ListUI",require("ui.base.container"))
 
+---@param style ListStyle
 function UI:initialize(style)
 	UI.super.initialize(self)
 	
