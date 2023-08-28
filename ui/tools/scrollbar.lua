@@ -1,5 +1,8 @@
 local Button = require("ui.widgets.button")
 
+---@class ScrollbarUI : ContainerUI
+---@field super ContainerUI
+---@field new fun(self, contents: BaseNodeUI): self
 local UI = Class("ScrollbarUI",require("ui.base.container"))
 
 local theme = Settings.theme.scrollbar

@@ -1,8 +1,13 @@
-local SCROLL = require("ui.tools.optionalScrollbar")
-local HOR_DIVIDE = require("ui.layout.horDivide")
-local LIST = require("ui.tools.treeList")
-local BASE = require("ui.base.node")
+local OptionalScrollbar = require("ui.tools.optionalScrollbar")
+local HorDivide = require("ui.layout.horDivide")
+local TreeList = require("ui.tools.treeList")
+local Base = require("ui.base.node")
 
+---@class TreeViewer.DataHandler : TreeList.DataRetriever
+---@field getDetailsUI fun(self: self, data: TreeListEntry): BaseNodeUI
+
+---@class TreeViewerUI : ProxyUI, TreeViewer.DataHandler
+---@field super ProxyUI
 local UI = Class("TreeViewerUI",require("ui.base.proxy"))
 
 --[[
@@ -31,20 +36,20 @@ function UI:initialize()
 		self.persistant = self.class.name
 	end
 	--ui state
-	self.list = LIST:new(self, function(data)
+	self.list = TreeList:new(self, function(data)
 		self:setDetailsUI(self:getDetailsUI(data))
 	end)
 	--can't use :resetDetails() because we don't have a child yet
-	self.details = BASE:new()
+	self.details = Base:new()
 	
-	UI.super.initialize(self,HOR_DIVIDE:new(
-		SCROLL:new(self.list), self.details,
+	UI.super.initialize(self,HorDivide:new(
+		OptionalScrollbar:new(self.list), self.details,
 		theme.listDetailsDivisionStyle
 	))
 end
 
 function UI:resetDetails()
-	self:setDetailsUI(BASE:new())
+	self:setDetailsUI(Base:new())
 end
 
 function UI:reload()

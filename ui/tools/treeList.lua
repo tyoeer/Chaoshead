@@ -1,25 +1,28 @@
+---@class TreeListEntry
+---@field title string titel to display
+---@field folder boolean whetehr or not this is a folder
+---@field action fun(this: TreeListEntry)? overwrites onClick if present
+
+---@class TreeList.DataRetriever
+---@field persistant string name to remember under which entries have been opened
+---@field getRootEntries fun(self): TreeListEntry[] should return the entries at the root
+---@field getChildren fun(self, parent: TreeListEntry): TreeListEntry[] should return all the children of parent
+
+---@alias Opened table<string,Opened>
+---@alias TreeList.OnClick fun(entry: TreeListEntry)
+
+---@class TreeListUI : ListUI
+---@field super ListUI
+---@field opened Opened?
+---@field new fun(self, dataRetriever: TreeList.DataRetriever, onClick: TreeList.OnClick): self
 local UI = Class("TreeListUI",require("ui.layout.list"))
 
---[[
-
-dataRetriever:
-	getChildren(dataRetriever,parent)
-		should return all the children of parent
-	getRootEntries(dataRetriever)
-		should return the entries at the root
-	persistant
-		name to remember under which entries have been opened
-		
-	entry format:
-		- title: title to display
-		- folder: wether or not this is a folder
-		- action: overwrite onClick
-
-]]--
 
 local treeStorage = Persistant:get("tree")
 local theme = Settings.theme.treeViewer
 
+---@param dataRetriever TreeList.DataRetriever
+---@param onClick TreeList.OnClick
 function UI:initialize(dataRetriever,onClick)
 	UI.super.initialize(self, theme.listStyle)
 	
@@ -37,6 +40,8 @@ function UI:initialize(dataRetriever,onClick)
 	self:buildList(self.dataCache,0, self.opened)
 end
 
+---@param input TreeListEntry[]
+---@param opened Opened?
 function UI:toCache(input, opened)
 	local out = {}
 	for i,v in ipairs(input) do
@@ -56,6 +61,7 @@ function UI:toCache(input, opened)
 	return out
 end
 
+---@param opened Opened?
 function UI:buildList(data,indentLevel, opened)
 	for _,v in ipairs(data) do
 		local indent = string.rep(" ",indentLevel*self.style.indentCharacters)

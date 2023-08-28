@@ -5,6 +5,7 @@ local INPUT = require("ui.widgets.textInput")
 
 ---@class ModalManagerUI : ContainerUI
 ---@field super ContainerUI
+---@field new fun(self, child: BaseNodeUI): self
 local UI = Class("ModalManagerUI",require("ui.base.container"))
 
 local theme = Settings.theme.modal

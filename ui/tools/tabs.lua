@@ -1,6 +1,8 @@
 local Button = require("ui.widgets.button")
 local Text = require("ui.widgets.text")
 
+---@class TabsUI : ContainerUI
+---@field super ContainerUI
 local UI = Class("TabsUI",require("ui.base.container"))
 
 local theme = Settings.theme.tabs

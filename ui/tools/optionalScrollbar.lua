@@ -1,5 +1,8 @@
 local Scrollbar = require("ui.tools.scrollbar")
 
+---@class OptionalScrollbarUI : ProxyUI
+---@field super ProxyUI
+---@field new fun(self, child: BaseNodeUI): self
 local UI = Class("OptionalScrollbarUI",require("ui.base.proxy"))
 
 function UI:initialize(child)
