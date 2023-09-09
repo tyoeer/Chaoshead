@@ -58,6 +58,14 @@ function OBJ:isElement(elemSel)
 	return self.id==E:getID(elemSel)
 end
 
+--- Returns whether or not the level element of this object has the specified root element.
+--- Useful when dealing with scalepopped elements.
+--- E.g. A 2x2 Rift still has Rift as root element.
+---@param rootElementSel Selector
+function OBJ:isRootElement(rootElementSel)
+	return E:getRootParentId(self.id)==E:getID(rootElementSel)
+end
+
 -- CONTAINED OBJECTS
 
 

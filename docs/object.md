@@ -125,6 +125,14 @@ isIt = object:isElement(element)
 Returns whether or not this object is of the specified level element
 
 ```Lua
+isIt = object:isRootElement(rootElement)
+```
+- rootElement: name/id of the root element
+
+Returns whether or not the level element of this object has the specified root element.
+Useful when dealing with scalepopped elements. E.g. A 2x2 Rift is not a Rift, but does have it as root.
+
+```Lua
 object.x, object.y
 ```
 The position of the object. Nil if it hasn't been placed yet. DO NOT edit this directly. (use **World**`:moveObject()` instead)
