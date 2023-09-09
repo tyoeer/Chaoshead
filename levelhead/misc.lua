@@ -2,19 +2,30 @@ local NFS = require("libs.nativefs")
 
 local m = {}
 
+local dataPaths = {
+	love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/",
+	love.filesystem.getUserDirectory()..".var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/compatdata/792710/pfx/drive_c/users/steamuser/AppData/Local/PlatformerBuilder/",
+	love.filesystem.getUserDirectory()..".local/share/Steam/steamapps/compatdata/792710/pfx/drive_c/users/steamuser/AppData/Local/PlatformerBuilder/",
+}
+---@return string|nil
 function m.getDataPath()
-	local custom = Settings.misc.levelheadDataPath
-	if custom and custom~="" then
-		if custom:sub(-1)~="/" then
-			custom = custom .. "/"
+	local customDir = Settings.misc.levelheadDataPath
+	if customDir and customDir~="" then
+		if customDir:sub(-1)~="/" then
+			customDir = customDir .. "/"
 		end
-		return custom
-	elseif love.system.getOS()=="Linux" then
-		--flatpak
-		return love.filesystem.getUserDirectory()..".var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/compatdata/792710/pfx/drive_c/users/steamuser/AppData/Local/PlatformerBuilder/"
-	else
-		return love.filesystem.getUserDirectory().."AppData/Local/PlatformerBuilder/"
+		local info = NFS.getInfo(customDir.."Levelhead.exe")
+		if info then
+			return customDir
+		end
 	end
+	for _,dir in ipairs(dataPaths) do
+		local info = NFS.getInfo(dir)
+		if info then
+			return dir
+		end
+	end
+	return nil
 end
 
 function m.getUserDataPath()
@@ -24,6 +35,7 @@ end
 local installationPaths = {
 	"C:/Program Files (x86)/Steam/steamapps/common/Levelhead/",
 	love.filesystem.getUserDirectory()..".var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/common/Levelhead/", -- Linux (flatpak)
+	love.filesystem.getUserDirectory()..".local/share/Steam/steamapps/common/Levelhead/", -- Linux (flatpak)
 }
 function m.getInstallationPath()
 	local customDir = Settings.misc.levelheadInstallationPath
