@@ -230,7 +230,11 @@ return {
 			isCursorBound = true,
 		},
 		releaseHand = {
-			trigger = "mouse: right",
+			type = "or",
+			triggers = {
+				"key: escape",
+				"mouse: right",
+			},
 			isCursorBound = true,
 		},
 	},
