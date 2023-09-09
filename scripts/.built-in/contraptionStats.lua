@@ -107,7 +107,7 @@ for obj in level.objects:iterate() do
 	if obj:hasProperties() then
 		addThing(obj)
 	end
-	if obj:isElement("Rift") or obj:isElement("2x2 Rift") or obj:isElement("3x3 Rift") then
+	if obj:isRootElement("Rift") then
 		nRifts = nRifts + 1
 	end
 	if obj:isElement("Relay") then
@@ -214,7 +214,7 @@ for obj in level.objects:iterate() do
 		objectsByDq[channels[from].dq][channels[to].dq].relays =
 		objectsByDq[channels[from].dq][channels[to].dq].relays + 1
 	end
-	if obj:isElement("Rift") or obj:isElement("2x2 Rift") or obj:isElement("3x3 Rift") then
+	if obj:isRootElement("Rift") then
 		local from = obj:getRiftID()
 		local to = obj:getDestinationRiftID()
 		objectsByDq[riftIds[from].dq][riftIds[to].dq].rifts =
