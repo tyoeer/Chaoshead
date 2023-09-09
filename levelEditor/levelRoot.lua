@@ -1,6 +1,7 @@
 local LHS = require("levelhead.lhs")
 local LIMITS = require("levelhead.level.limits")
 local TABS = require("ui.tools.tabs")
+local Misc = require("levelhead.misc")
 local Script = require("script")
 local LevelEditor = require("levelEditor.levelEditor")
 local ScriptInterface = require("levelEditor.scriptInterface")
@@ -42,6 +43,13 @@ function UI:initialize(levelPath, workshop)
 	self.levelFile:readAll()
 	self.latestHash = self.levelFile:getHash()
 	self.level = self.levelFile:parseAll()
+	
+	if self.level.settings.published and
+		levelPath:match(Misc:getDataPath()) and
+		levelPath:match("Rumpus")
+	then
+		error("Can't open published level!")
+	end
 	
 	local tabs = TABS:new()
 
