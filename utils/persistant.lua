@@ -79,7 +79,7 @@ end
 local function load(name, maxLevel, ...)
 	--how deep new settings still get added (in case some settings take a datastructure as value)
 	local maxLevel = maxLevel or math.huge
-	local defaults = require(base..name)
+	local defaults = require("settings."..name)
 	settings.defaults[name] = defaults
 	
 	local changed = false
