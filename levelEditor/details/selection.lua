@@ -3,6 +3,10 @@ local PEDIT = require("levelEditor.details.propertyPopup")
 local P = require("levelhead.data.properties")
 local ElementFilter = require("levelEditor.details.elementFilter")
 
+---@class SelectionDetailsUI : DetailsUI
+---@field super DetailsUI
+---@field new fun(self, tracker: SelectionTracker): self
+---@field editor LevelEditorUI
 local UI = Class("SelectionDetailsUI",require("ui.tools.details"))
 
 function UI:initialize(tracker)
