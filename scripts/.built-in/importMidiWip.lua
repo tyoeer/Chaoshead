@@ -73,7 +73,11 @@ end
 local alloc
 local tempo
 local ticksPerBeat
-
+local latestBoombox = {
+	Melody = {},
+	Bass = {},
+	Percussion = {},
+}
 
 -- Functions depending on script global state
 
@@ -82,7 +86,7 @@ local function ticksToBeat(ticks)
 	return ticks/ticksPerBeat
 end
 
-local function boombox(note,delay,duration,volume,isPerc)
+local function boombox(note,startDelayBeats,durationBeats,volume,isPerc)
 	local b = alloc:allocateObject("Boombox")
 	b:setInvisible("Yes")
 	
@@ -104,15 +108,59 @@ local function boombox(note,delay,duration,volume,isPerc)
 		b:setSharp("No")
 	end
 	b:setBeatsPerMinute(tempo)
-	b:setStartDelayBeats(delay)
-	b:setNoteBeats(duration)
+	b:setStartDelayBeats(startDelayBeats)
+	b:setNoteBeats(durationBeats)
 	b:setReceivingChannel(999)
 	b:setSwitchRequirements("Any Inactive")
 	b:setVolume(volume)
 	
+	latestBoombox[b:getInstrument()][note] = b
 	selection.mask:add(b.x, b.y)
 end
 
+local function note(note,startDelayBeats,durationBeats,volume,isPerc)
+	local instrument
+	if isPerc then
+		instrument = "Percussion"
+	else
+		if note >= 48 then
+			instrument = "Melody"
+		else
+			instrument = "Bass"
+		end
+	end
+	
+	local prev = latestBoombox[instrument][note]
+	
+	if prev and prev:getNoteBeats()==durationBeats and prev:getVolume()==volume then
+		local prevStartDelay = prev:getStartDelayBeats()
+		if prevStartDelay=="No Delay" then prevStartDelay=0 end
+		if prev:getRepeatBeats()=="No Repeat" then
+			local delay = startDelayBeats - prevStartDelay
+			--don't combine simultaneous notes in the hope of avoiding weirdness
+			if math.abs(delay) > 0.1 then
+				if delay < 0 then
+					-- startDelayBeats is the lower one
+					prev:setStartDelayBeats(startDelayBeats)
+					delay = -delay
+				end
+				prev:setRepeatBeats(delay)
+				prev:setRepeatCount(2)
+				return
+			end
+		else
+			--find last note time
+			local lastBeat = prevStartDelay + prev:getRepeatCount() * prev:getRepeatBeats()
+			local delay = startDelayBeats - lastBeat
+			if math.abs(delay - prev:getRepeatBeats()) < 0.0001 then
+				prev:setRepeatCount(prev:getRepeatCount() + 1)
+				return
+			end
+		end
+	end
+	
+	boombox(note,startDelayBeats,durationBeats,volume,isPerc)
+end
 --field indices in the event
 
 local TYPE = 1
@@ -166,12 +214,12 @@ for track=2,#score,1 do
 			else
 				if event[CHANNEL]==9 then
 					if midiToPerc(event[NOTE]) then
-						boombox(event[NOTE],ticksToBeat(event[START_TIME]),ticksToBeat(event[DURATION]),event[VELOCITY],true)
+						note(event[NOTE],ticksToBeat(event[START_TIME]),ticksToBeat(event[DURATION]),event[VELOCITY],true)
 					else
 						table.insert(missing_percussion,event[NOTE])
 					end
 				else
-					boombox(event[NOTE],ticksToBeat(event[START_TIME]),ticksToBeat(event[DURATION]),event[VELOCITY],false)
+					note(event[NOTE],ticksToBeat(event[START_TIME]),ticksToBeat(event[DURATION]),event[VELOCITY],false)
 				end
 			end
 		end
