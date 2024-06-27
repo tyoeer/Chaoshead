@@ -82,8 +82,6 @@ local function ticksToBeat(ticks)
 	return ticks/ticksPerBeat
 end
 
-local bx = level.left
-local by = level.top
 local function boombox(note,delay,duration,volume,isPerc)
 	local b = alloc:allocateObject("Boombox")
 	b:setInvisible("Yes")
@@ -111,11 +109,8 @@ local function boombox(note,delay,duration,volume,isPerc)
 	b:setReceivingChannel(999)
 	b:setSwitchRequirements("Any Inactive")
 	b:setVolume(volume)
-	bx = bx+1
-	if bx>level.right then
-		bx=1
-		by = by+1
-	end
+	
+	selection.mask:add(b.x, b.y)
 end
 
 --field indices in the event
@@ -128,12 +123,18 @@ local CHANNEL = 4
 local NOTE = 5
 local VELOCITY = 6
 
-
-alloc = require("tools.allocator"):new(level, {objectMask=true, preScan=true, immediate=true})
-
 --https://gitlab.com/peterbillam/miditools/
 --https://peterbillam.gitlab.io/pjb_lua/lua/MIDI.html#changes
 local M = require("libs.midi")
+
+alloc = require("tools.allocator"):new(level, {objectMask=true, preScan=true, immediate=true, scanBgObjects=false})
+
+if not selection then
+	selection = {}
+end
+selection.mask = require("tools.selection.mask"):new()
+selection.mask:setLayerEnabled("background",false)
+selection.mask:setLayerEnabled("pathNodes",false)
 
 local raw, nRaw = love.filesystem.read("scripts/mysteryProjectA/import.mid")
 local score = M.midi2score(raw)
