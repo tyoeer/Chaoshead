@@ -52,6 +52,17 @@ function UI:sortProperties()
 	return list
 end
 
+local function addSize(list, label, size, min, max)
+	if size==1 then
+		list:addTextEntry(label..": "..size)
+	else
+		list:addTextEntry(string.format(
+			"%s: %d; spanning [%d, %d]",
+			label, size, min, max
+		))
+	end
+end
+
 function UI:onReload(list)
 	list:resetList()
 	local s = self.selection
@@ -132,7 +143,10 @@ function UI:onReload(list)
 				elem = elem .. self:formatPosition(o, true)
 			end
 			list:addTextEntry(elem)
-			-- list:addTextEntry("Layer: Foreground")
+			
+			addSize(list, "Width", o:getWidth(), o:getMinX(), o:getMaxX())
+			addSize(list, "Height", o:getHeight(), o:getMinY(), o:getMaxY())
+			
 			if o.contents then
 				if Settings.misc.editor.showRawNumbers then
 					list:addTextEntry("Contents: "..o:getContents().." ("..o.contents..")")
@@ -152,7 +166,9 @@ function UI:onReload(list)
 				elem = elem .. self:formatPosition(o, true)
 			end
 			list:addTextEntry(elem)
-			-- list:addTextEntry("Layer: Background")
+			
+			addSize(list, "Width", o:getWidth(), o:getMinX(), o:getMaxX())
+			addSize(list, "Height", o:getHeight(), o:getMinY(), o:getMaxY())
 		end
 		if c.pathNodes:size()==1 and s.mask.tiles:size()~=1 then
 			local n = c.pathNodes:getTop()
