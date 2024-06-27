@@ -66,6 +66,64 @@ function OBJ:isRootElement(rootElementSel)
 	return E:getRootParentId(self.id)==E:getID(rootElementSel)
 end
 
+
+-- SIZE STUFF
+
+
+function OBJ:getWidth()
+	return E:getWidth(self.id)
+end
+
+function OBJ:getHeight()
+	return E:getHeight(self.id)
+end
+
+--[[
+
+The following function were tricky to get right.
+They were derived from the following table, and experimentally double-checked
+
+height	minY offset	maxY offset
+1     	0          	0
+2     	1          	0
+3     	1          	1
+4     	2          	1
+
+width	minX offset	maxX offset
+1    	0          	0
+2    	0          	1
+3    	1          	1
+4    	1          	2
+
+
+]]
+
+--- Get the lowest X coordinate this object occupies
+function OBJ:getMinX()
+	if self.x then
+		return self.x - math.ceil(E:getWidth(self.id)/2) + 1
+	end
+end
+--- Get the largest X coordinate this object occupies
+function OBJ:getMaxX()
+	if self.x then
+		return self.x + math.floor(E:getWidth(self.id)/2)
+	end
+end
+--- Get the lowest Y coordinate this object occupies
+function OBJ:getMinY()
+	if self.y then
+		return self.y - math.floor(E:getHeight(self.id)/2)
+	end
+end
+--- Get the largest Y coordinate this object occupies
+function OBJ:getMaxY()
+	if self.y then
+		return self.y + math.ceil(E:getHeight(self.id)/2) - 1
+	end
+end
+
+
 -- CONTAINED OBJECTS
 
 
