@@ -9,6 +9,7 @@ middleclass by Enrique García Cota, licensed under MIT (see licenses/lib-middle
 json.lua by rxi, licensed under MIT (see licenses/lib-json-mit.txt)
 nativefs by megagrump@pm.me, licensed under MIT (see licenses/lib-nativefs-mit.txt)
 lua-https by LÖVE development team under ZLIB (see licenses/lib-lua_https-zlib.txt)
+MIDI.lua by Peter J. Billam under Apache (see licenses/lib-midi-apache.txt)
 
 Fonts used:
 
