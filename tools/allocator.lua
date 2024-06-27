@@ -86,7 +86,12 @@ end
 function A:scan()
 	for obj in level.objects:iterate() do
 		if self.objectMask then
-			self.objectMask:set(obj.x, obj.y, false)
+			self.objectMask:setRect(
+				obj:getMinX(), obj:getMinY(),
+				obj:getWidth(), obj:getHeight(),
+				false
+			)
+			-- self.objectMask:set(obj.x, obj.y, false)
 		end
 
 		-- {Sending Channel, Receiving Channel, Receving Channel (optional variant), Sending Channel (optional variant)}
