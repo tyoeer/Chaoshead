@@ -147,6 +147,22 @@ object.layer
 ```
 Whether this object is on the "foreground" or "background" layer of a __Level__. Nil if it's not bound to a level. DO NOT edit this directly.
 
+### Size
+
+```lua
+width = object:getWidth()
+height = object:getHeight()
+```
+The size of this object.
+
+```lua
+minX, maxX = object:getMinX(), object:getMaxX()
+minY, maxY = object:getMinY(), object:getMaxY()
+```
+The edge coordinates of the rectangle this object occupies.
+These are all the same as the position for 1x1 objects, but start differing for larger objects.
+This is an inclusive range, so `obj:getWidth() == object:getMaxX() - object:getMinX() + 1`.
+
 ## Other
 
 ```Lua
