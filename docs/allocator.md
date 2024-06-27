@@ -29,6 +29,8 @@ allocator = require("tools.allocator"):new(level,settings)
 	  Does not properly work with objects bigger than 1x1 due to data that still needs to be collected.
 	  (Objects bigger than 1x1 will not get masked off completely, causing overlap, causing undefined behaviour in Levelhead.)
 	  Defaults to `false`.
+	- `scanBgObjects`: whether to also scan background objects when scanning for the mask.
+	  Defaults to `true`.
 
 ## Allocating
 

@@ -8,6 +8,7 @@ local P = require("levelhead.data.properties")
 ---@field channelMask boolean?
 ---@field riftIdMask boolean?
 ---@field preScan boolean?
+---@field scanBgObjects boolean?
 ---@field size { [1]:integer, [2]:integer}?
 
 ---@class Allocator : Class
@@ -34,6 +35,9 @@ function A:initialize(level,settings)
 	end
 	if self.settings.preScan==nil then
 		self.settings.preScan = false
+	end
+	if self.settings.scanBgObjects==nil then
+		self.settings.scanBgObjects = true
 	end
 	
 	if self.settings.size then
@@ -85,35 +89,38 @@ end
 -- Fills in the mask by scanning the level
 function A:scan()
 	for obj in level.objects:iterate() do
-		if self.objectMask then
-			self.objectMask:setRect(
-				obj:getMinX(), obj:getMinY(),
-				obj:getWidth(), obj:getHeight(),
-				false
-			)
-			-- self.objectMask:set(obj.x, obj.y, false)
-		end
+		---@cast obj Object
+		if self.settings.scanBgObjects or obj.layer=="foreground" then
+			if self.objectMask then
+				self.objectMask:setRect(
+					obj:getMinX(), obj:getMinY(),
+					obj:getWidth(), obj:getHeight(),
+					false
+				)
+				-- self.objectMask:set(obj.x, obj.y, false)
+			end
 
-		-- {Sending Channel, Receiving Channel, Receving Channel (optional variant), Sending Channel (optional variant)}
-		local channelProperties = {0, 1, 49, 90}
-		
-		if self.channelMask then
-			for _,propId in ipairs(channelProperties) do
-				local p = obj:getPropertyRaw(propId)
-				if p ~= nil then
-					self.channelMask[p] = false
+			-- {Sending Channel, Receiving Channel, Receving Channel (optional variant), Sending Channel (optional variant)}
+			local channelProperties = {0, 1, 49, 90}
+			
+			if self.channelMask then
+				for _,propId in ipairs(channelProperties) do
+					local p = obj:getPropertyRaw(propId)
+					if p ~= nil then
+						self.channelMask[p] = false
+					end
 				end
 			end
-		end
-		
-		-- {Rift ID, Destination Rift ID}
-		local riftIdProperties = {30, 31}
-		
-		if self.riftIdMask then
-			for _,propId in ipairs(riftIdProperties) do
-				local p = obj:getPropertyRaw(propId)
-				if p ~= nil then
-					self.riftIdMask[p] = false
+			
+			-- {Rift ID, Destination Rift ID}
+			local riftIdProperties = {30, 31}
+			
+			if self.riftIdMask then
+				for _,propId in ipairs(riftIdProperties) do
+					local p = obj:getPropertyRaw(propId)
+					if p ~= nil then
+						self.riftIdMask[p] = false
+					end
 				end
 			end
 		end
