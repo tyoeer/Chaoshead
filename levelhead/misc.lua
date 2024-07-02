@@ -14,7 +14,7 @@ function m.getDataPath()
 		if customDir:sub(-1)~="/" then
 			customDir = customDir .. "/"
 		end
-		local info = NFS.getInfo(customDir.."Levelhead.exe")
+		local info = NFS.getInfo(customDir)
 		if info then
 			return customDir
 		end
