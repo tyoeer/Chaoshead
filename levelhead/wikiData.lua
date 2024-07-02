@@ -3,7 +3,7 @@ local LhMisc = require("levelhead.misc")
 local JSON = require("libs.json")
 local E = require("levelhead.data.elements")
 
-local wikiPath = LhMisc.getDataPath() .. "Wiki/"
+local wikiPath = LhMisc.getDataPath() and (LhMisc.getDataPath() .. "Wiki/")
 
 ---@class LHWikiData : Class
 ---@field new fun(self): self
@@ -12,6 +12,10 @@ local W = Class("LHWikiData")
 function W:initialize()
 	self.images = {}
 	self.imageLookup = {}
+	if not wikiPath then
+		self.error = "Could not find LH data folder"
+		return
+	end
 	if not NFS.getInfo(wikiPath) then
 		self.error = "Wiki export not found"
 		return
