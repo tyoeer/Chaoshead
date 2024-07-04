@@ -1,8 +1,11 @@
 local JSON = require("libs.json")
 local NFS = require("libs.nativefs")
 
+---@class DataFile : Class
+---@field new fun(self, fullPath: string): self
 local DataFile = Class("DataFile")
 
+---@param fullPath string
 function DataFile:initialize(fullPath)
 	local raw, err = NFS.read(fullPath)
 	if not raw then
