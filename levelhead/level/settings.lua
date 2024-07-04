@@ -111,7 +111,7 @@ function Settings:__index(key)
 		)
 		return love.data.pack("string", prefixFormat, self.legacyVersion, lhv)
 	else
-		rawget(self,key)
+		return rawget(self,key)
 	end
 end
 
