@@ -28,8 +28,10 @@ function m.getDataPath()
 	return nil
 end
 
+---@return string|nil
 function m.getUserDataPath()
-	return m.getDataPath().."UserData/"
+	local dp = m.getDataPath()
+	return dp and dp.."UserData/"
 end
 
 local installationPaths = {

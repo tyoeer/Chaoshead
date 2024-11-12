@@ -4,8 +4,13 @@ local UD = {}
 
 local dataFilePath = "/save_data"
 
+---@return string[]
 function UD.getUserCodes()
-	local items = NFS.getDirectoryItemsInfo(require("levelhead.misc").getUserDataPath())
+	local udp = require("levelhead.misc").getUserDataPath()
+	if not udp then
+		return {} -- no user codes
+	end
+	local items = NFS.getDirectoryItemsInfo(udp)
 	local out = {}
 	for _,v in ipairs(items) do
 		if v.type=="directory" then
@@ -18,7 +23,11 @@ end
 ---@param code string
 ---@return table?, string?
 function UD.getUserData(code)
-	local path = require("levelhead.misc").getUserDataPath()..code..dataFilePath
+	local udp = require("levelhead.misc").getUserDataPath()
+	if not udp then
+		return nil, "No user data path available"
+	end
+	local path = udp..code..dataFilePath
 	local info = NFS.getInfo(path)
 	if info and info.type=="file" then
 		local success, result = pcall(
