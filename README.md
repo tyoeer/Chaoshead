@@ -2,7 +2,8 @@
 
 A level editor, scripting interface, campaign editor, and reverse engineering tool for [Levelhead](https://lvlhd.co) in ongoing development,
 made using [LÖVE](http://www.love2d.org).
-
+
+
 There's a button that shows all the keybinds in the misc. tab. \
 Binary releases that can be run without manually installing LÖVE can be found
 [somewhere in that bar on the right](https://github.com/tyoeer/Chaoshead/releases). \
@@ -37,6 +38,12 @@ Chaoshead tries to impose as little limits as possible.
 	- Built-in scripts (see [further down this readme](#built-in-scripts))
 		- E.g. Excel-like auto-fill
 - A palette to select objects from to place
+
+### Maintenance status
+
+There's practically no active development anymore, though if someone runs into a bug or has a very highly requested feature I'll try to fix/add that.
+I also still watch this repository and can be found in the BScotch Discord, so if there're any question please reach out to me.
+
 
 ### Currently not supported
 
