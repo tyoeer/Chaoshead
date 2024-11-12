@@ -1,8 +1,13 @@
 --[[
 
-TODO
+Imports `import.mid` in the CH user data folder into a level as boomboxes.
+- Doesn't overwrite foreground objects
+- Selects placed objects afterwards
+- Merge Boomboxes that are simple repetitions
+
+
+TODO:
 - Better file select
-- Note velocity is 0-127, that needs to be adjusted
 - Property ranges:
 	- Too many note beats
 	- Notes that are too short
@@ -66,6 +71,11 @@ local function isSharp(midi)
 	return midiNotes[2*(midi%12)+2]
 end
 
+local function velocityToVolume(velocity)
+	--velocity has range 0..=127
+	-- volume 0..=100
+	return velocity /127 * 100
+end
 
 -- Script global state
 
@@ -184,7 +194,7 @@ selection.mask = require("tools.selection.mask"):new()
 selection.mask:setLayerEnabled("background",false)
 selection.mask:setLayerEnabled("pathNodes",false)
 
-local raw, nRaw = love.filesystem.read("scripts/mysteryProjectA/import.mid")
+local raw, nRaw = love.filesystem.read("import.mid")
 local score = M.midi2score(raw)
 
 ticksPerBeat = score[1]
@@ -214,12 +224,24 @@ for track=2,#score,1 do
 			else
 				if event[CHANNEL]==9 then
 					if midiToPerc(event[NOTE]) then
-						note(event[NOTE],ticksToBeat(event[START_TIME]),ticksToBeat(event[DURATION]),event[VELOCITY],true)
+						note(
+							event[NOTE],
+							ticksToBeat(event[START_TIME]),
+							ticksToBeat(event[DURATION]),
+							velocityToVolume(event[VELOCITY]),
+							true
+						)
 					else
 						table.insert(missing_percussion,event[NOTE])
 					end
 				else
-					note(event[NOTE],ticksToBeat(event[START_TIME]),ticksToBeat(event[DURATION]),event[VELOCITY],false)
+					note(
+						event[NOTE],
+						ticksToBeat(event[START_TIME]),
+						ticksToBeat(event[DURATION]),
+						velocityToVolume(event[VELOCITY]),
+						false
+					)
 				end
 			end
 		end
