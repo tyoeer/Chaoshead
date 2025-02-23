@@ -38,6 +38,25 @@ mask.tiles
 ```
 __OrderedSet__ containing all the selected tiles as tables with `x` and `y`.
 
+```Lua
+xMin, yMin, xMax, yMax = mask:getBounds()
+```
+- xMin, yMin: lowest x/y coordinate of any tile
+- xMax, yMax: highest x/y coordinate of any tile
+
+Returns the bounds of all the tiles in the selection.
+
+```Lua
+plane, xStart, yStart = mask:getBitplane()
+```
+- plane: the __Bitplane__ containing tile selection status.
+- xStart, yStart: position in the world/level of the Bitplane.
+
+Returns a __Bitplane__ sized to the bounds of the selection, which has true for selected tiles and false for tiles that aren't in this selection.
+Bitplane position `1, 1` maps to `xStart, yStart` in the world/level this selection is from.
+(This does not actually require a level/world, it's just about their relative frames of reference between the Bitplane and this selection.
+Ignore that part if it just causes extra confusion.)
+
 ### DEPRECATED
 
 ```Lua
