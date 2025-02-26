@@ -1,12 +1,18 @@
 local P = require("levelhead.data.properties")
 local ParsedInput = require("ui.widgets.parsedInput")
 
+---@class PropertyEditorUI : PropertyDetailsUI
+---@field super PropertyDetailsUI
+---@field new fun(self, propertyList: PropertyList, popupUI: PropertyPopupUI, editor: LevelEditorUI, filter: boolean?): self
 local UI = Class("PropertyEditorUI",require("levelEditor.details.property"))
 
 local theme = Settings.theme.details
 
-function UI:initialize(propertyList, editor, filter)
+---@param editor LevelEditorUI
+---@param popupUI PropertyPopupUI
+function UI:initialize(propertyList, popupUI, editor, filter)
 	self.editor = editor
+	self.popupUI = popupUI
 	
 	self.filtering = filter or false
 	if self.filtering then
@@ -43,7 +49,7 @@ function UI:addPropertyChanger(id, op)
 				MainUI:popup("Can't divide by zero!")
 			else
 				self.editor:changeProperty(id, v, op)
-				self:reload()
+				self.popupUI:refreshPropertyList(self.propertyList) --also reloads
 			end
 		end
 	end)
@@ -67,7 +73,8 @@ function UI:addFilter(op)
 			end
 			
 			if propList then
-				self:setPropertyList(propList) --also reloads
+				--propList has changed due to a selection refresh in editor:filterProperty()
+				self.popupUI:refreshPropertyList(propList) --also reloads
 			end
 		end
 	end)

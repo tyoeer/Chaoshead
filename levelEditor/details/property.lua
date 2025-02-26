@@ -1,5 +1,8 @@
 local P = require("levelhead.data.properties")
 
+---@class PropertyDetailsUI : ListUI
+---@field super ListUI
+---@field new fun(self, propertyList: PropertyList, listStyle: ListStyle): self
 local UI = Class("PropertyDetailsUI",require("ui.layout.list"))
 
 function UI:initialize(propertyList,listStyle)
