@@ -35,6 +35,7 @@ Chaoshead tries to impose as little limits as possible.
 	- Works between levels
 - Script support:
 	- User defined scripts that let you do everything you want
+		- [See documentation in the scripts folder](docs/index.md)
 	- Built-in scripts (see [further down this readme](#built-in-scripts))
 		- E.g. Excel-like auto-fill
 - A palette to select objects from to place
@@ -70,25 +71,6 @@ More information about the scripts can be found in comments at the top of their 
 - Mapping vs. Value (in the context of properties): a value is the raw number saved in the file, a mapping is what that number means.
   E.g. value 1 for rotation is mapping/mapped to "Up".
 - Contained object/object contents: Example: A Jem inside a Brittle Rock is that Brittle Rocks contained object/contents.
-
-## Scripting
-
-Chaoshead executes from the scripts folder, which can be opened from the Misc. tab.
-When it says running scripts without sandbox is dangerous, it mostly means that you shouldn't randomly trust script from others,
-making a script yourself will most likely be alright.
-
-Scripts get provided access to the following globals:
-- `level`: The **Level** opened in the editor. You usually want to modify this one (using the provided methods).
-  If you overwrite it with a new value though, Chaoshead will use that one.
-- `selection`: The selection in the current editor, `nil` if nothing is selected. Has the following fields:
-  - `mask`: The **SelectionMask** that shows which area of the level is selected.
-    If you overwrite it with a new value, Chaoshead will use that one (modifying an existing one is probably easier though).
-    If the `selection` global is not set at first, you can set it to a table yourself and then set the `mask` field to a new **SelectionMask**.
-  - `contents`: The **SelectionContents** that have all the objects in the current selection.
-    Does not update if you change the level or the mask.
-    Modifications and overwriting get ignored (the new contents get constructed based on the new mask).
-
-For documentation on how to use these globals and other stuff, have a look at the [docs/](docs/) folder.
 
 ## Useful links
 
