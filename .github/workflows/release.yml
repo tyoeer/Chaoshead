@@ -31,7 +31,7 @@ jobs:
         run: rm https.dll
       - name: "Build binaries"
         id: "love-build"
-        uses: nhartland/love-build@v1-beta4
+        uses: nhartland/love-build@v1-beta5
         with:
           # Name of the application to be built
           app_name: "Chaoshead"
