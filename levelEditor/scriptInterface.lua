@@ -1,8 +1,12 @@
 local UserData = require("levelhead.userData")
 local Script = require("script")
 
+---@class ScriptInterfaceUI: DetailsUI
+---@field super DetailsUI
+---@field new fun(self, data: unknown, root: LevelRootUI): self
 local DetUI = Class("ScriptInterfaceUI",require("ui.tools.details"))
 
+---@param root LevelRootUI
 function DetUI:initialize(data,root)
 	self.data = data
 	self.root = root
@@ -43,6 +47,10 @@ function DetUI:onReload(list)
 	end
 end
 
+
+---@class ScriptExplorerUI: TreeViewerUI
+---@field super TreeViewerUI
+---@field new fun(self, root: LevelRootUI): self
 local UI = Class("ScriptExplorerUI",require("ui.tools.treeViewer"))
 
 function UI:initialize(root)
