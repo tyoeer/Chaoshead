@@ -20,7 +20,10 @@ function S.errorHandler(message)
 end
 
 function S.runDangerously(path, level, selection)
-	local scriptText = love.filesystem.read(path)
+	local scriptText, sizeOrError = love.filesystem.read(path)
+	if scriptText==nil then
+		return false, "Error reading script file at "..path..":\n"..tostring(sizeOrError)
+	end
 	local name = path:match("scripts?[/\\](.+)") or path
 	local script, err = loadstring(scriptText, name)
 	if not script then
