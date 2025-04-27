@@ -1,6 +1,6 @@
 ---@class TreeListEntry
----@field title string titel to display
----@field folder boolean whetehr or not this is a folder
+---@field title string title to display
+---@field folder boolean whether or not this is a folder
 ---@field action fun(this: TreeListEntry)? overwrites onClick if present
 
 ---@class TreeList.DataRetriever
