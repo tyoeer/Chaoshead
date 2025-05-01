@@ -14,7 +14,7 @@ If you have any questions, feel free to ask.
 Chaoshead Update Awareness Day is annually on february 27, in order to spread awareness about Chaoshead updates.
 
 Chaoshead tries to impose as little limits as possible.
-[For more information about those limits and which your allowed to break, go here.](http://levelmod.epizy.com/wiki/doku.php?id=blocked_stuff)
+[For more information about those limits and which you're allowed to break, go here.](http://levelmod.epizy.com/wiki/doku.php?id=blocked_stuff)
 
 ### Main Level Editor Features
 
