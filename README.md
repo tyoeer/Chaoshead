@@ -3,11 +3,7 @@
 A level editor, scripting interface, campaign editor, and reverse engineering tool for [Levelhead](https://lvlhd.co) in ongoing development,
 made using [LÖVE](http://www.love2d.org).
 
-
-There's a button that shows all the keybinds in the misc. tab. \
-Binary releases that can be run without manually installing LÖVE can be found
-[somewhere in that bar on the right](https://github.com/tyoeer/Chaoshead/releases). \
-Chaoshead is rather stable these days, and will verify that it saved (mostly) correctly before irrevocably removing the old level.
+[For installation and basic usage instructions, see further down this README.](#installation)
 
 If you have any questions, feel free to ask.
 
@@ -39,12 +35,24 @@ Chaoshead tries to impose as little limits as possible.
 	- Built-in scripts (see [further down this readme](#built-in-scripts))
 		- E.g. Excel-like auto-fill
 - A palette to select objects from to place
+- Verification that the saved level is a valid level file before irrevocably removing the old level file
 
 ### Maintenance status
 
 There's practically no active development anymore, though if someone runs into a bug or has a very highly requested feature I'll try to fix/add that.
 I also still watch this repository and can be found in the BScotch Discord, so if there're any question please reach out to me.
 
+### Installation
+
+- Grab the latest version from https://github.com/tyoeer/Chaoshead/releases/latest
+- The file you want is `chaoshead-win32.zip`
+- Unzip it in a folder somewhere, and run `Chaoshead.exe`
+
+- Keybinds can be viewed in the Misc. tab
+- For actual graphics that aren't colored shapes:
+	- Get Levelhead to export it's images by pressing "Export game data" in the "Data & safety" settings
+	- Then press F10 in Chaoshead
+	- You might have to restart Chaoshead si it properly detects the images
 
 ### Currently not supported
 
