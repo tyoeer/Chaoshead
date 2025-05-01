@@ -48,6 +48,7 @@ I also still watch this repository and can be found in the BScotch Discord, so i
 - The file you want is `chaoshead-win32.zip`
 - Unzip it in a folder somewhere, and run `Chaoshead.exe`
 
+Basic usage:
 - Keybinds can be viewed in the Misc. tab
 - For actual graphics that aren't colored shapes:
 	- Get Levelhead to export it's images by pressing "Export game data" in the "Data & safety" settings
