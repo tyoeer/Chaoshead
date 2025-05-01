@@ -44,8 +44,8 @@ I also still watch this repository and can be found in the BScotch Discord, so i
 
 ### Installation
 
-- Grab the latest version from https://github.com/tyoeer/Chaoshead/releases/latest
-- The file you want is `chaoshead-win32.zip`
+- Download the latest version from https://github.com/tyoeer/Chaoshead/releases/latest/download/chaoshead-win32.zip
+	- This just the `chaoshead-win32.zip` file from the latest release on [the releases page](https://github.com/tyoeer/Chaoshead/releases/)
 - Unzip it in a folder somewhere, and run `Chaoshead.exe`
 
 Basic usage:
