@@ -1,6 +1,6 @@
 # Chaoshead
 
-A level editor, scripting interface, campaign editor, and reverse engineering tool for [Levelhead](https://lvlhd.co) in ongoing development,
+A level editor, scripting interface, campaign editor, and reverse engineering tool for [Levelhead](https://lvlhd.co),
 made using [LÖVE](http://www.love2d.org).
 
 [For installation and basic usage instructions, see further down this README.](#installation)
@@ -39,7 +39,9 @@ Chaoshead tries to impose as little limits as possible.
 
 ### Maintenance status
 
-There's practically no active development anymore, though if someone runs into a bug or has a very highly requested feature I'll try to fix/add that.
+Chaoshead is feature-complete enough to already be very useful when the Levelhead editor isn't enough.
+However, there's practically no active development of features anymore, even though there is always more neat stuff that can be added.
+Though if someone runs into a bug or has a very highly requested feature I'll try to fix/add that.
 I also still watch this repository and can be found in the BScotch Discord, so if there're any question please reach out to me.
 
 ### Installation
