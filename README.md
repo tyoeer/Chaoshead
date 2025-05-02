@@ -53,9 +53,9 @@ I also still watch this repository and can be found in the BScotch Discord, so i
 Basic usage:
 - Keybinds can be viewed in the Misc. tab
 - For actual graphics that aren't colored shapes:
-	- Get Levelhead to export it's images by pressing "Export game data" in the "Data & safety" settings
+	- Get Levelhead to export its images by pressing "Export game data" in the "Data & safety" settings
 	- Then press F10 in Chaoshead
-	- You might have to restart Chaoshead si it properly detects the images
+	- You might have to restart Chaoshead so it properly detects the images
 
 ### Currently not supported
 
