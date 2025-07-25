@@ -46,6 +46,8 @@ I also still watch this repository and can be found in the BScotch Discord, so i
 
 ### Installation
 
+#### Windows
+
 - Download the latest version from https://github.com/tyoeer/Chaoshead/releases/latest/download/chaoshead-win32.zip
 	- This just the `chaoshead-win32.zip` file from the latest release on [the releases page](https://github.com/tyoeer/Chaoshead/releases/)
 - Unzip it in a folder somewhere, and run `Chaoshead.exe`
@@ -56,6 +58,27 @@ Basic usage:
 	- Get Levelhead to export its images by pressing "Export game data" in the "Data & safety" settings
 	- Then press F10 in Chaoshead
 	- You might have to restart Chaoshead so it properly detects the images
+
+#### Linux
+
+1. Currently, you have to install [LÖVE](https://love2d.org) yourself (installation instructions are on their website).
+	- You can also try grabbing LÖVE from your package manager, but do note that the Debian package has a longstanding bug (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1025649) that makes it break Chaoshead.
+2. After you have obtained LÖVE, you have to download/clone the Chaoshead source code
+3. To run Chaoshead, run `love .` in a terminal in the Chaoshead directory
+
+Chaoshead will try to automatically find the folders where Levelhead stores user data and where the Levelhead .exe is located,
+but might fail and crash when it runs into issues [(tracked here)](https://github.com/tyoeer/Chaoshead/issues/162).
+In that case, you'll have to manually specify the paths in the settings. \
+The settings can be found in `$XDG_DATA_HOME/love/chaoshead/` or `~/.local/share/love/chaoshead/`.
+The file you want is `/settings/misc.json`.
+The settings are:
+- `levelheadDataPath`: this should point at the `PlatformerBuilder` folder
+- `levelheadInstallationPath`: this should point at the folder containing `Levelhead.exe`, but will only crash when left empty when doing stuff with the campaign.
+
+If your path is from a somewhat standard installation, do let me know and I'll add them to the paths Chaoshead checks automatically.
+
+
+Basic usage is the same as for Windows.
 
 ### Currently not supported
 
