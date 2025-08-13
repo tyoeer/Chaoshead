@@ -1,6 +1,8 @@
 local NFS = require("libs.nativefs")
 local Details = require("ui.tools.details")
 
+---@class FileExplorerUI : TreeViewerUI
+---@field super TreeViewerUI
 local UI = Class("FileExplorerUI",require("ui.tools.treeViewer"))
 
 local ROOT_PATH = require("levelhead.misc").getDataPath()
@@ -12,6 +14,7 @@ function UI:initialize(overview)
 end
 
 function UI:getItems(path)
+	if ROOT_PATH==nil then return {} end
 	local out = {}
 	for _,item in ipairs(NFS.getDirectoryItemsInfo(ROOT_PATH..path)) do
 		local isDir = item.type~="file"

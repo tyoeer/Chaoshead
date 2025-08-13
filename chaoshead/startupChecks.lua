@@ -119,10 +119,19 @@ local checks = {
 	
 	-- No Levelhead data found
 	function()
-		if not NFS.getInfo(LhMisc.getDataPath(),"directory") then
+		local dataPath = LhMisc.getDataPath()
+		if dataPath then
+			if not NFS.getInfo(dataPath,"directory") then
+				MainUI:popup(
+					"Could not find Levelhead data at "..LhMisc.getDataPath(),
+					"If you're doing something weird, specify a custom path using the misc. setting levelheadDataPath."
+				)
+			end
+		else
 			MainUI:popup(
-				"Could not find Levelhead data at "..LhMisc.getDataPath(),
-				"If you're doing something weird, specify a custom path using the misc. setting levelheadDataPath."
+				"Could not automatically find the Levelhead data folder.",
+				"Some stuff will no longer work, and certain actions will crash Chaoshead.",
+				"Please specify a custom path using the misc. setting levelheadDataPath."
 			)
 		end
 	end,
