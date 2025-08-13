@@ -138,34 +138,6 @@ function UI:checkLimits(prefix)
 	return true
 end
 
-function UI:runScriptOld(path,disableSandbox)
-	if disableSandbox then
-		local sel
-		if self.levelEditor.selection then
-			sel = {
-				mask = self.levelEditor.selection.mask,
-				contents = self.levelEditor.selection.contents,
-			}
-		end
-		local level, selectionOrMessage, errTrace = Script.runDangerously(path, self.level, sel)
-		if level then
-			local selection = selectionOrMessage
-			self:reload(level)
-			if selection and selection.mask then
-				self.levelEditor:newSelection(selection.mask)
-			end
-			--move to the levelEditor to show the scripts effects
-			self.child:setActiveTab(self.levelEditor)
-			MainUI:popup("Succesfully ran "..path)
-		else
-			local message = selectionOrMessage
-			MainUI:popup(message, errTrace)
-		end
-	else
-		error("Tried to run script in sandboxed mode, which is currently not yet implemented.")
-	end
-end
-
 
 ---@param scriptEnv table
 ---@param path string

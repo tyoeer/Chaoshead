@@ -11,17 +11,12 @@ function S.errorHandler(message)
 	--part of snippet yoinked from default löve error handling
 	local fullTrace = debug.traceback("",2):gsub("\n[^\n]+$", "")
 	print(fullTrace)
+	--since we're using a coroutine, we only have the part that goes into the script
 	--cut of the part of the trace that goes into the script
 	--Match both type of slashes because of https://github.com/tomblind/local-lua-debugger-vscode/issues/69
-	local index = fullTrace:find("%s+%[C%]: in function 'xpcall'%s+script[\\/][a-zA-Z/\\]+.lua:%d+:")
-	local trace
-	if index then
-		trace = fullTrace:sub(1,index-1)
-	else
-		trace = fullTrace
-	end
-	--trace = fullTrace
-	return {message, trace}
+	-- local index = fullTrace:find("%s+%[C%]: in function 'xpcall'%s+script[\\/][a-zA-Z/\\]+.lua:%d+:")
+	-- local trace = fullTrace:sub(1,index-1)
+	return {message, fullTrace}
 end
 
 ---@param into table
@@ -124,44 +119,5 @@ function S.runAsyncDangerously(path, env, successCallback, errorCallback)
 	return true
 end
 
-function S.runDangerously(path, level, selection)
-	local scriptText, sizeOrError = love.filesystem.read(path)
-	if scriptText==nil then
-		return false, "Error reading script file at "..path..":\n"..tostring(sizeOrError)
-	end
-	local name = path:match("scripts?[/\\](.+)") or path
-	local script, err = loadstring(scriptText, name)
-	if not script then
-		return false, "Error loading script at "..path..":\n"..err
-	end
-	
-	local scriptStartEnv = {
-		level = level,
-		selection = selection,
-		Ui = {
-			requestString = function(explanation, callback)
-				explanation = tostring(explanation)
-				if type(callback)~="function" then
-					error("the callback has to be a function",2)
-				end
-				callback = function(mes)
-					
-					callback(mes)
-				end
-			end,
-		},
-	}
-	local oldGlobals = S.insertEnv(_G, scriptStartEnv)
-	
-	local success, errInfo = xpcall(script, S.errorHandler)
-	
-	local scriptFinishedEnv = S.insertEnv(_G, oldGlobals, scriptStartEnv)
-	
-	if success then
-		return scriptFinishedEnv.level, scriptFinishedEnv.selection
-	else
-		return false, "Error running script at "..path..":\n"..errInfo[1], errInfo[2]
-	end
-end
 
 return S

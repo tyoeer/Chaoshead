@@ -1,3 +1,3 @@
-local mes = ScriptUi.requestString("Hello, world")
+local userMes = ScriptUi.requestString("Please enter")
 error(mes)
 -- error("nah")
