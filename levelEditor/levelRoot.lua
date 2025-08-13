@@ -138,7 +138,7 @@ function UI:checkLimits(prefix)
 	return true
 end
 
-function UI:runScript(path,disableSandbox)
+function UI:runScriptOld(path,disableSandbox)
 	if disableSandbox then
 		local sel
 		if self.levelEditor.selection then
@@ -161,6 +161,61 @@ function UI:runScript(path,disableSandbox)
 			local message = selectionOrMessage
 			MainUI:popup(message, errTrace)
 		end
+	else
+		error("Tried to run script in sandboxed mode, which is currently not yet implemented.")
+	end
+end
+
+
+---@param scriptEnv table
+---@param path string
+function UI:scriptSuccess(scriptEnv, path)
+	local selection = scriptEnv.selection
+	self:reload(scriptEnv.level)
+	if selection and selection.mask then
+		self.levelEditor:newSelection(selection.mask)
+	end
+	--move to the levelEditor to show the scripts effects
+	self.child:setActiveTab(self.levelEditor)
+	MainUI:popup("Succesfully ran "..path)
+end
+
+---@param errorMessage string
+---@param errTrace table
+---@param env table
+function UI:scriptError(errorMessage, errTrace, env)
+	MainUI:popup(errorMessage, errTrace)
+end
+
+
+
+---@param path string
+---@param disableSandbox boolean
+function UI:runScript(path, disableSandbox)
+	if disableSandbox then
+		local scriptEnv = Script.buildLevelEnv(
+			self.level,
+			self.levelEditor.selection and self.levelEditor.selection.mask,
+			self.levelEditor.selection and self.levelEditor.selection.contents
+		)
+		
+		--make closures over self for the callbacks
+		
+		local this = self
+		---@param env table
+		---@param path string
+		local function success(env, path)
+			this:scriptSuccess(env, path)
+		end
+		---@param errorMessage string
+		---@param errTrace table
+		---@param env table
+		local function err(errorMessage, errTrace, env)
+			this:scriptError(errorMessage, errTrace, env)
+		end
+		
+		
+		Script.runAsyncDangerously(path,scriptEnv,success,err)
 	else
 		error("Tried to run script in sandboxed mode, which is currently not yet implemented.")
 	end
