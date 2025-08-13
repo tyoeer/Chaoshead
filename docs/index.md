@@ -19,6 +19,9 @@ Scripts get provided access to the following globals:
   - `contents`: The **SelectionContents** that have all the objects in the current selection. \
 	Does not update if you change the level or the mask.
 	Modifications and overwriting get ignored (the new contents get constructed based on the new mask).
+- `ScriptUi`: Tools the show things to the user
+	- `requestString(message)`: Displays `message` to the user, with a textbox. Returns the entered text when the user clicks "Confirm".
+
 
 ## List of pages:
 
