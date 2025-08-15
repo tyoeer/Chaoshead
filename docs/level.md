@@ -170,6 +170,12 @@ height = world:getHeight()
 - height: how many tiles fit within this worlds bounds along the y axis.
 
 ```Lua
+grid = level[layer]
+```
+- grid: a grid instance with the objects on the layer specified by the index. This can be chained with grid indexes of `[x][y]` after the `[layer]` to conveniently get an object from an x-y coordinate.
+- layer: a layer name string as described in the selectionMask docs. One of `foreground`, `background`, or `pathNodes`.
+
+```Lua
 level.settings
 ```
 The __Settings__ of this level. Not available for **World**s.
