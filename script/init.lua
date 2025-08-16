@@ -39,7 +39,7 @@ end
 function S.buildLevelEnv(level, selectionMask, selectionContents)
 	return {
 		level = level,
-		selection = {
+		selection = selectionMask and {
 			mask = selectionMask,
 			contents = selectionContents,
 		},
