@@ -54,3 +54,5 @@ The stuff on which the rest of CH is built.
 - `.github/`: Contains the release Github Action.
 - `https.dll`: HTTPS library, has to be top-level because DLL libraries are weird. This is the 64x bit Windows version, which is included because I think that's what most developers would use. CH will report a nice error modal and where to get a different version if it fails to load when you use a different system.
 - `https32.dll`: Manual build HTTPS library. Build commit https://github.com/love2d/lua-https/commit/34035b6d5135c253b6c36a4547287da4d487ce3c for Windows 32 bit.
+- `scripts/`: Scripts for packaging and releasing Chaoshead. Scripts are made to be run with Deno.
+- `build/`: where the build script does its work
