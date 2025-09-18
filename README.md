@@ -64,7 +64,7 @@ Basic usage:
 1. Currently, you have to install [LÖVE](https://love2d.org) yourself (installation instructions are on their website).
 	- You can also try grabbing LÖVE from your package manager, but do note that the Debian package has a longstanding bug (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1025649) that makes it break Chaoshead.
 2. After you have obtained LÖVE, you have to download/clone the Chaoshead source code
-3. To run Chaoshead, run `love path/to/Chaoshead/` in a terminal, or just `love .` in the Chaoshead directory
+3. To run Chaoshead, run `love path/to/Chaoshead/src` in a terminal, or just `love src` in the Chaoshead directory
 
 Chaoshead will try to automatically find the folders where Levelhead stores user data and where the Levelhead .exe is located,
 but might fail and crash when it runs into issues [(tracked here)](https://github.com/tyoeer/Chaoshead/issues/162).
