@@ -1,3 +1,7 @@
+# Source files
+
+Everything in `src/`. Gets packaged into the `.love`/`.exe` file
+
 ## Modules
 
 Independent pieces with their own goal. Have their own top level tab.
@@ -41,8 +45,11 @@ The stuff on which the rest of CH is built.
 
 - `data/`: Contains `.tsv` data files based on [the spreadsheet](https://docs.google.com/spreadsheets/d/1bzASSn2FgjqUldPzX8DS66Lv-r2lk3V12jZjl51uaTk/)
 - `settings/`: The default settings.
+- `resources/`: Contains non code misc. stuff (font)
+
+# Non source-stuff
+
 - `docs/`: Documentation for user scripts.
-- `resources/`: Contains non code misc. stuff (font & image used in README)
 - `licenses/`: All the licenses of third-party stuff used by Chaoshead. Has a naming scheme for the licenses.
 - `.github/`: Contains the release Github Action.
 - `https.dll`: HTTPS library, has to be top-level because DLL libraries are weird. This is the 64x bit Windows version, which is included because I think that's what most developers would use. CH will report a nice error modal and where to get a different version if it fails to load when you use a different system.
