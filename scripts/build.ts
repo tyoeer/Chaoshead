@@ -1,113 +1,209 @@
+const ChWindows32Name = "chaoshead-windows-x32";
+const ChAppImageName = "chaoshead-linux-AppImage-x64";
 
 
+import * as Tools from "./tools.ts";
+import * as Love from "./love.ts";
 
 
-async function checkCliToolExists(cmd: string, args: string[], required_output_fragments: string[]): Promise<boolean> {
+export async function fileExists(filepath: string): Promise<boolean> {
 	try {
-		const cmdObject = new Deno.Command(cmd, {args: args});
-		const {code, stdout, stderr} = await cmdObject.output();
-		if (code === 0) {
-			const out_text = new TextDecoder().decode(stdout);
-			for (const required_fragment of required_output_fragments) {
-				if (!out_text.includes(required_fragment)) {
-					console.log(`Output of command ${cmd} did not include required substring ${required_fragment}`);
-					console.log(`Command ${cmd} output as text:`);
-					console.log(out_text);
-					return false;
-				}
-			}
-			return true;
-		} else {
-			console.log(`Problem running ${cmd} to verify it exists as cli tool, exit code ${code}, stderr:`);
-			console.log(stderr);
-			return false;
-		}
-	} catch (error: unknown) {
-		if (
-			typeof(error)=="object" &&
-			error != null &&
-			"name" in error &&
-			error.name=="NotFound" &&
-			"code" in error &&
-			error.code=="ENOENT"
-		) {
-			console.error(`Command ${cmd} could not be found`);
-		} else {
-			console.error(`Error executing command ${cmd}:`);
-			console.error(error);
+		const stats = await Deno.lstat(filepath);
+		return stats.isFile;
+	} catch (error) {
+		if (!(error instanceof Deno.errors.NotFound)) {
+			throw error;
 		}
 		return false;
 	}
 }
 
-async function validateTools(): Promise<boolean> {
-	let allFound = true;
-	allFound &&= await checkCliToolExists("zip", ["-h"], ["Info-ZIP","Zip 3.0"]);
-	allFound &&= await checkCliToolExists("git", ["--version"], ["git version 2."]);
-	return allFound;
-}
 
-async function runCmd(cmd: string, args: string[], cwd?: string): Promise<string> {
-	const opts: Deno.CommandOptions = {args: args};
-	if (cwd) {
-		opts.cwd = cwd;
-	}
-	const cmdObject = new Deno.Command(cmd, opts);
-	const {code, stdout, stderr} = await cmdObject.output();
-	if (code === 0) {
-		return new TextDecoder().decode(stdout);
-	} else {
-		const msg = `Error running ${cmd} ${args}, exit code ${code}, cwd ${cwd}:`;
-		console.error(msg);
-		console.error("Stdout:", new TextDecoder().decode(stdout));
-		console.error("Stderr:", new TextDecoder().decode(stderr));
-		throw msg;
+export async function fsExists(path: string): Promise<boolean> {
+	try {
+		const _stats = await Deno.lstat(path);
+		return true;
+	} catch (error) {
+		if (!(error instanceof Deno.errors.NotFound)) {
+			throw error;
+		}
+		return false;
 	}
 }
 
 
-async function build() {
-	const oldVersion = await runCmd("git", ["describe", "--tags", "--abbrev=0"], "..");
+export async function addMiscFiles(folder: string) {
+	async function addFile(file: string, rename?: string) {
+		const target = rename ?? file;
+		await Deno.copyFile(`../${file}`,`${folder}/${target}`);
+	}
+	await addFile("credits.txt");
+	await addFile("README.md");
+	await addFile("LICENSE.txt","license-Chaoshead.txt");
+	const licenseDir = folder+"/licenses/"
+	await Deno.mkdir(licenseDir);
+	for await (const dirEntry of await Deno.readDir("../licenses")) {
+		if (!dirEntry.isFile) {
+			throw `non-file "${dirEntry.name}" in licenses directory`;
+		}
+		await Deno.copyFile(`../licenses/${dirEntry.name}`, licenseDir+dirEntry.name);
+	}
+}
+
+
+export async function buildAndPackageWindows32() {
+	console.log("Creating Windows executable");
+	
+	//Prep basic LÖVE folder
+	if (!await fileExists("love-windows32.zip")) {
+		throw `Missing love-windows32.zip. Consider downloading it (love-windows32).`;
+	}
+	await Tools.runCmd("unzip", ["love-windows32.zip"]);
+	await Deno.rename(Love.Windows32Name, ChWindows32Name);
+	
+	//fuse .love into Chaoshead.exe
+	const dotLove = await Deno.open("chaoshead.love", {read: true});
+	const dotExe = await Deno.open(ChWindows32Name+"/love.exe", {append: true});
+	await dotLove.readable.pipeTo(dotExe.writable);
+	try {
+		dotLove.close();
+	} catch (err) {
+		// BadResource means already closed, which the pipeTo can do
+		if (!(err instanceof Deno.errors.BadResource)) throw err;
+	}
+	try {
+		dotExe.close();
+	} catch (err) {
+		// BadResource means already closed, which the pipeTo can do
+		if (!(err instanceof Deno.errors.BadResource)) throw err;
+	}
+	await Deno.rename(ChWindows32Name+"/love.exe", ChWindows32Name+"/Chaoshead.exe")
+	
+	//cleanup
+	await Deno.remove(ChWindows32Name+"/changes.txt");
+	await Deno.remove(ChWindows32Name+"/game.ico");
+	await Deno.remove(ChWindows32Name+"/love.ico");
+	await Deno.remove(ChWindows32Name+"/lovec.exe");
+	await Deno.remove(ChWindows32Name+"/readme.txt");
+	
+	//add other files
+	await Deno.copyFile("../https32.dll", ChWindows32Name + "/https.dll");
+	await Deno.rename(ChWindows32Name+"/license.txt", ChWindows32Name+"/license-love2d.txt");
+	await addMiscFiles(ChWindows32Name);
+	
+	await Tools.runCmd("zip", ["--recurse-paths", "--filesync", "--move", `../packages/${ChWindows32Name}.zip`, ".", "-i", "*"], ChWindows32Name);
+	await Deno.remove(ChWindows32Name);
+}
+
+
+export async function buildAndPackageLinuxAppImage() {
+	console.log("Creating Linux AppImage");
+	
+	if (!await fileExists("appimage-runtime-x64")) {
+		throw `Missing appimage-runtime-x64. Consider downloading it (appimage-runtime-x64).`;
+	}
+	await Deno.mkdir(ChAppImageName);
+	
+	//Extract AppImage dir
+	if (!await fileExists("love-appimage64.zip")) {
+		throw `Missing love-appimage64.zip. Consider downloading it (love-appimage).`;
+	}
+	await Tools.runCmd("unzip", ["love-appimage64.zip"]);
+	
+	// fuse .love
+	const dotLove = await Deno.open("chaoshead.love", {read: true});
+	const executable = await Deno.open("squashfs-root/bin/love", {append: true});
+	await dotLove.readable.pipeTo(executable.writable);
+	try {
+		dotLove.close();
+	} catch (err) {
+		// BadResource means already closed, which the pipeTo can do
+		if (!(err instanceof Deno.errors.BadResource)) throw err;
+	}
+	try {
+		executable.close();
+	} catch (err) {
+		// BadResource means already closed, which the pipeTo can do
+		if (!(err instanceof Deno.errors.BadResource)) throw err;
+	}
+	await Deno.rename("squashfs-root/bin/love", "squashfs-root/bin/Chaoshead");
+	
+	// modify .desktop
+	const desktopOld = await Deno.readTextFile("squashfs-root/love.desktop");
+	const desktopNew = [];
+	for (const line of desktopOld.split('\n')) {
+		if (line.startsWith("Exec=")) {
+			desktopNew.push("Exec=Chaoshead %f");
+		} else if (line.startsWith("Name=")) {
+			desktopNew.push("Name=Chaoshead");
+		} else if (line.startsWith("Comment=")) {
+			desktopNew.push("Comment=An external level editor for Levelhead");
+		} else {
+			desktopNew.push(line)
+		}
+	}
+	await Deno.writeTextFile("squashfs-root/love.desktop", desktopNew.join('\n'));
+	
+	// edit AppRun
+	const appRunOld = await Deno.readTextFile("squashfs-root/AppRun");
+	const appRunNew = [];
+	for (const line of appRunOld.split('\n')) {
+		if (line.includes("exec")) {
+			appRunNew.push(`exec "$APPDIR/bin/Chaoshead" "$@"`);
+		} else {
+			appRunNew.push(line)
+		}
+	}
+	await Deno.writeTextFile("squashfs-root/AppRun", appRunNew.join('\n'));
+	
+	// TODO https
+	
+	// copy out license + misc files
+	await Deno.copyFile("squashfs-root/license.txt", ChAppImageName+"/license-love2d.txt");
+	await addMiscFiles(ChAppImageName);
+	
+	// build into appImage
+	await Tools.runCmd("./appimagetool.AppImage", ["--runtime-file", "appimage-runtime-x64", "squashfs-root", ChAppImageName+"/Chaoshead.AppImage"]);
+	await Deno.remove("squashfs-root", {recursive: true});
+	
+	// package
+	await Tools.runCmd("zip", ["--recurse-paths", "--filesync", "--move", `../packages/${ChAppImageName}.zip`, ".", "-i", "*"], ChAppImageName);
+	await Deno.remove(ChAppImageName);
+}
+
+
+export async function build() {
+	await Tools.ensureMultiple("zip", "unzip", "git", "./appimagetool.AppImage");
+	
+	const oldVersion = await Tools.runCmd("git", ["describe", "--tags", "--abbrev=0"], "..");
 	console.log(`Enter the version (Major.Minor.Patch), previous is ${oldVersion}`);
 	const version = prompt("Version:")
 	if (!version) throw "No version given";
 	const versionRegex = /^\d+\.\d+\.\d+$/;
 	if (!version.match(versionRegex)) throw `Version \"${version}\" is not formatted as a version`;
 	
+	if (await fsExists("packages")) {
+		await Deno.remove("packages",{recursive:true});
+	}
+	await Deno.mkdir("packages");
+	
 	console.log("Creating chaoshead.love");
-	await runCmd("zip", ["--recurse-paths", "--filesync", "-9", "../build/chaoshead-love.zip", ".", "-i", "*"], "../src");
+	await Tools.runCmd("zip", ["--recurse-paths", "--filesync", "-9", "../build/chaoshead-love.zip", ".", "-i", "*"], "../src");
 	await Deno.writeTextFile("version.txt", version);
-	await runCmd("zip", ["chaoshead-love.zip", "version.txt"]);
+	await Tools.runCmd("zip", ["chaoshead-love.zip", "version.txt"]);
 	await Deno.rename("chaoshead-love.zip", "chaoshead.love");
 	
-	// build windows
-	// https
-	// build AppImage
-	// https
-	/* attach lots of things
-	licenses
-	CH license
-	love2d license
-	credits
-	README
-	*/
+	await buildAndPackageWindows32();
+	await buildAndPackageLinuxAppImage();
+	
 	// changelog: git log $(git describe --tags --abbrev=0)..HEAD --format=format:"> %s%+b" > commits.txt
 	// create git tag
 }
 
+/*
+Download LÖVE windows 32 base
+Download LÖVE AppImage base
+Download & build https libraries?
+Download AppImage tools
+*/
 
-const toolsGood = await validateTools();
-if (!toolsGood) {
-	console.log("Not all required cli tools could be found, exiting");
-	Deno.exit(1);
-}
-
-
-//get ahead of things, we'l do multiple things in the directory
-await Deno.permissions.request({name:"read",path:"build/"});
-await Deno.permissions.request({name:"write",path:"build/"});
-Deno.chdir("build/");
-console.log("Moved/cd'd into build/");
-
-
-await build();
