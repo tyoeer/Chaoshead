@@ -150,13 +150,16 @@ export async function buildAndPackageLinuxAppImage() {
 	for (const line of appRunOld.split('\n')) {
 		if (line.includes("exec")) {
 			appRunNew.push(`exec "$APPDIR/bin/Chaoshead" "$@"`);
+		} else if (line.startsWith("export LUA_CPATH")) {
+			appRunNew.push(`export LUA_CPATH="$APPDIR/lib/lua/5.1/?.so;$APPDIR/lib/?.so;$LUA_CPATH"`);
 		} else {
 			appRunNew.push(line)
 		}
 	}
 	await Deno.writeTextFile("squashfs-root/AppRun", appRunNew.join('\n'));
 	
-	// TODO https
+	// add https lib
+	await Deno.copyFile("../https.so", "squashfs-root/lib/https.so");
 	
 	// copy out license + misc files
 	await Deno.copyFile("squashfs-root/license.txt", ChAppImageName+"/license-love2d.txt");
