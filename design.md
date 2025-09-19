@@ -52,7 +52,15 @@ The stuff on which the rest of CH is built.
 - `docs/`: Documentation for user scripts.
 - `licenses/`: All the licenses of third-party stuff used by Chaoshead. Has a naming scheme for the licenses.
 - `.github/`: Contains the release Github Action.
-- `https.dll`: HTTPS library, has to be top-level because DLL libraries are weird. This is the 64x bit Windows version, which is included because I think that's what most developers would use. CH will report a nice error modal and where to get a different version if it fails to load when you use a different system.
-- `https32.dll`: Manual build HTTPS library. Build commit https://github.com/love2d/lua-https/commit/34035b6d5135c253b6c36a4547287da4d487ce3c for Windows 32 bit.
 - `scripts/`: Scripts for packaging and releasing Chaoshead. Scripts are made to be run with Deno.
 - `build/`: where the build script does its work
+
+## HTTPS libraries
+
+Have to be top-level because dynamic libraries are weird.
+CH will report a nice error modal on what to do if it fails to load.
+Grabbed on 2025-09-20 from https://github.com/qixils/lua-https/commit/973119c15c8c0f62b23f446f35474613ed47355c which is only some minor changes away from https://github.com/love2d/lua-https/commit/e1b77046dd3cf1a9f61ddeb63cb39d47c844c089
+
+- `https.dll`: HTTPS library for x64 bits Windows. Gets the name that gets searched because this is the version I expect Windows developers would need.
+- `https32.dll`: HTTPS library for x32 bits Windows. Does not have to be top-level because its different name prevents it being easily loaded, but that is where the other HTTPS libraries are.
+- `https.so`: HTTPS library for Linux. Was made on Ubuntu, and is probably for x64 bits.
