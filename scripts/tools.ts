@@ -77,14 +77,7 @@ export async function checkCmdRun(cmd: string, args: string[], required_output_f
 			return false;
 		}
 	} catch (error: unknown) {
-		if (
-			typeof(error)=="object" &&
-			error != null &&
-			"name" in error &&
-			error.name=="NotFound" &&
-			"code" in error &&
-			error.code=="ENOENT"
-		) {
+		if (error instanceof Deno.errors.NotFound) {
 			console.error(`Command ${cmd} could not be found`);
 		} else {
 			console.error(`Error executing command ${cmd}:`);
