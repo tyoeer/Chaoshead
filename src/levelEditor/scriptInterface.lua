@@ -13,13 +13,15 @@ function DetUI:initialize(data,root)
 	DetUI.super.initialize(self, true)
 end
 
+---@param list ListUI
 function DetUI:onReload(list)
 	list:resetList()
 	local path = self.data.path
 	local contents = love.filesystem.read(path, 2000);
-	local description = string.match(contents, "^%-%-%[%[\n*([^%]]+)\n*%]?%]?--")
+	local description = string.match(contents, "^%-%-%[%[([^%]]+)%]?%]?--")
 	if description then
-		list:addTextEntry(description)
+		list:addTextEntry(string.trim(description))
+		list:addSeparator(false)
 	end
 	
 	list:addTextEntry("Path: ".. path)
