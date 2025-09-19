@@ -16,6 +16,11 @@ end
 function DetUI:onReload(list)
 	list:resetList()
 	local path = self.data.path
+	local contents = love.filesystem.read(path, 2000);
+	local description = string.match(contents, "^%-%-%[%[\n*([^%]]+)\n*%]?%]?--")
+	if description then
+		list:addTextEntry(description)
+	end
 	
 	list:addTextEntry("Path: ".. path)
 	list:addButtonEntry(
