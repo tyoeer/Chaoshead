@@ -5,6 +5,7 @@ aradarbel10
 Adrthegamedev
 
 Libraries used:
+
 middleclass by Enrique García Cota, licensed under MIT (see licenses/lib-middleclass-mit.txt)
 json.lua by rxi, licensed under MIT (see licenses/lib-json-mit.txt)
 nativefs by megagrump@pm.me, licensed under MIT (see licenses/lib-nativefs-mit.txt)
@@ -14,3 +15,8 @@ MIDI.lua by Peter J. Billam under Apache (see licenses/lib-midi-apache.txt)
 Fonts used:
 
 Iosevka Aile by Renzhi Li (aka. Belleve Invis, belleve@typeof.net), licensed under SIL Open Font License (see licenses/font-iosevka-sol_ofl.txt)
+
+Framework used:
+
+LÖVE by LÖVE Development Team under ZLIB (see license-love2d.txt)
+LÖVE uses various other libraries under various other licenses (see license-love2d.txt)
