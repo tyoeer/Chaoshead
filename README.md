@@ -154,7 +154,7 @@ Chaoshead has some integration with the [Local Lua Debugger VSCode extension](ht
 		"command": "love",
 	},
 	"args": [
-		".",
+		"src",
 	],
 },
 ```
