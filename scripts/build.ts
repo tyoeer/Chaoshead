@@ -128,7 +128,7 @@ export async function buildAndPackageLinuxAppImage() {
 	}
 	await Deno.rename("squashfs-root/bin/love", "squashfs-root/bin/Chaoshead");
 	
-	// modify .desktop
+	// patch .desktop
 	const desktopOld = await Deno.readTextFile("squashfs-root/love.desktop");
 	const desktopNew = [];
 	for (const line of desktopOld.split('\n')) {
@@ -136,15 +136,20 @@ export async function buildAndPackageLinuxAppImage() {
 			desktopNew.push("Exec=Chaoshead %f");
 		} else if (line.startsWith("Name=")) {
 			desktopNew.push("Name=Chaoshead");
+		// } else if (line.startsWith("Icon=")) {
+		// 	desktopNew.push("Icon=Chaoshead");
 		} else if (line.startsWith("Comment=")) {
 			desktopNew.push("Comment=An external level editor for Levelhead");
 		} else {
 			desktopNew.push(line)
 		}
 	}
-	await Deno.writeTextFile("squashfs-root/love.desktop", desktopNew.join('\n'));
+	await Deno.writeTextFile("squashfs-root/Chaoshead.desktop", desktopNew.join('\n'));
+	await Deno.remove("squashfs-root/love.desktop");
 	
-	// edit AppRun
+	// await Deno.copyFile("../ChaosheadLogo.png","squashfs-root/Chaoshead.png");
+	
+	// patch AppRun
 	const appRunOld = await Deno.readTextFile("squashfs-root/AppRun");
 	const appRunNew = [];
 	for (const line of appRunOld.split('\n')) {
