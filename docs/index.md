@@ -24,7 +24,7 @@ Scripts get provided access to the following globals:
 
 ## Description
 
-IF you start your script with a block comment (`--[[`), Chaoshead will display the contents of that block comment in the Script Interface UI when said script is selected.
+If you start your script with a block comment (`--[[`), Chaoshead will display the contents of that block comment in the Script Interface UI when said script is selected.
 
 ## List of pages:
 
