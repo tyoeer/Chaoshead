@@ -22,6 +22,9 @@ Scripts get provided access to the following globals:
 - `ScriptUi`: Tools the show things to the user
 	- `requestString(message)`: Displays `message` to the user, with a textbox. Returns the entered text when the user clicks "Confirm".
 
+## Description
+
+IF you start your script with a block comment (`--[[`), Chaoshead will display the contents of that block comment in the Script Interface UI when said script is selected.
 
 ## List of pages:
 
