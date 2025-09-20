@@ -12,7 +12,8 @@ Select the area around the groups of objects you want to expand the groups into.
 - You can expand in all 4 direction
 
 Run this script.
-- Properties are NOT yet expanded
+- Properties are linearly extrapolated
+- TODO path properties
 
 ]]
 
@@ -21,6 +22,7 @@ local level = level
 
 local Clipboard = require("tools.clipboard")
 local SelectionMask = require("tools.selection.mask")
+local PropData = require("levelhead.data.properties")
 
 local function printTable(t)
 	local keys = {}
@@ -186,6 +188,91 @@ local function prepCell()
 	for x=cell.minX, cell.maxX do
 		for y=cell.minY, cell.maxY do
 			mask:add(x,y)
+			local obj = level.foreground[x][y]
+			if obj then
+				local posPatch = {
+					propPatches = {},
+					x = x,
+					y = y,
+				}
+				for propId in obj:iterateProperties() do
+					local baseValue = obj:getPropertyRaw(propId)
+					local propPatch = {
+						propId = propId,
+						base = baseValue,
+						dx = 0,
+						dy = 0,
+					}
+					if cell.extendX then
+						local otherX = x + cell.tileWidth
+						local otherY = y
+						local other = level.foreground[otherX][otherY]
+						if not other then
+							error(string.format(
+								"Expected object at (%i,%i) to compare to object at (%i,%i)",
+								otherX, otherY,
+								x, y
+							))
+						end
+						local otherValue = other:getPropertyRaw(propId)
+						local type = PropData:getMappingType(propId)
+						if type=="Hybrid" or type=="None" then
+							--Numerical property, increase
+							if baseValue~=otherValue then
+								propPatch.dx = otherValue - baseValue
+							end
+						else
+							-- No logical series to follow, verify they're the same
+							if baseValue~=otherValue then
+								error(string.format(
+									"Expected objects at (%d,%d) and (%d,%d) to have non-numerical property %s be the same!",
+									x, y,
+									otherX, otherY,
+									PropData:getName(propId)
+								))
+							end
+						end
+					end
+					if cell.extendY then
+						local otherX = x
+						local otherY = y + cell.tileHeight
+						local other = level.foreground[otherX][otherY]
+						if not other then
+							error(string.format(
+								"Expected object at (%i,%i) to compare to object at (%i,%i)",
+								otherX, otherY,
+								x, y
+							))
+						end
+						local otherValue = other:getPropertyRaw(propId)
+						local type = PropData:getMappingType(propId)
+						if type=="Hybrid" or type=="None" then
+							--Numerical property, increase
+							if baseValue~=otherValue then
+								propPatch.dy = otherValue - baseValue
+							end
+						else
+							-- No logical series to follow, verify they're the same
+							if baseValue~=otherValue then
+								error(string.format(
+									"Expected objects at (%d,%d) and (%d,%d) to have non-numerical property %s be the same!",
+									x, y,
+									otherX, otherY,
+									PropData:getName(propId)
+								))
+							end
+						end
+					end
+					
+					if propPatch.dx~=0 or propPatch.dy~=0 then
+						table.insert(posPatch.propPatches, propPatch)
+					end
+				end
+				
+				if #posPatch.propPatches > 0 then
+					table.insert(cell.patches, posPatch)
+				end
+			end
 		end
 	end
 	-- use clipboard to handle path nodes
@@ -229,6 +316,18 @@ local function build(cell, area)
 				tileX*cell.tileWidth + area.tileOffsetX - 1,
 				tileY*cell.tileHeight + area.tileOffsetY - 1
 			)
+			
+			local dx = tileX - area.startCellX
+			local dy = tileY - area.startCellY
+			
+			for _,posPatch in ipairs(cell.patches) do
+				local x = posPatch.x + dx*cell.tileWidth
+				local y = posPatch.y + dy*cell.tileHeight
+				local obj = level.foreground[x][y]
+				for _,propPatch in ipairs(posPatch.propPatches) do
+					obj:setPropertyRaw(propPatch.propId, propPatch.base + propPatch.dx*dx + propPatch.dy*dy)
+				end
+			end
 		end
 	end
 end
