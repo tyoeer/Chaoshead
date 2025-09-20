@@ -1,9 +1,12 @@
 local Clipboard = require("tools.clipboard")
 
+---@class WorldEditorUi : BaseNodeUI
+---@field super BaseNodeUI
 local UI = Class("WorldEditorUI",require("ui.base.node"))
 
 local theme = Settings.theme.editor
 
+---@param editor LevelEditorUI
 function UI:initialize(editor)
 	self.editor = editor
 	self.level = editor.level
