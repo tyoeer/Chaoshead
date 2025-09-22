@@ -135,17 +135,17 @@ Useful when dealing with scalepopped elements. E.g. A 2x2 Rift is not a Rift, bu
 ```Lua
 object.x, object.y
 ```
-The position of the object. Nil if it hasn't been placed yet. DO NOT edit this directly. (use **World**`:moveObject()` instead)
+The position of the object. Nil if it hasn't been placed yet. DO NOT edit this directly. (use [World`:moveObject()`](level.md#foreground--background) instead)
 
 ```Lua
 object.world
 ```
-The __World__ this object belongs to. Nil if it's not bound to a level. DO NOT edit this directly.
+The [World](level.md) this object belongs to. Nil if it's not bound to a level. DO NOT edit this directly.
 
 ```Lua
 object.layer
 ```
-Whether this object is on the "foreground" or "background" layer of a __Level__. Nil if it's not bound to a level. DO NOT edit this directly.
+Whether this object is on the "foreground" or "background" layer of a [Level](level.md). Nil if it's not bound to a level. DO NOT edit this directly.
 
 ### Size
 

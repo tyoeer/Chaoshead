@@ -1,7 +1,7 @@
 # SelectionContents
 
 Represents the objects and path nodes inside a selection.
-See the scripting documentation (in the README) for how to access the existing __SelectionMask__ when in a script
+See the scripting documentation (in the README) for how to access the existing [SelectionContents](selectionContents.md) when in a script
 (TL;DR use the `selection.contents` global).
 
 ## Creation
@@ -17,17 +17,17 @@ See the scripting documentation in the README for more information.
 ```Lua
 contents.foreground
 ```
-An __OrderedSet__ containing all the foreground **Object**s in the selection.
+An [OrderedSet](orderedSet.md) containing all the foreground [Object](object.md)s in the selection.
 
 ```Lua
 contents.background
 ```
-An __OrderedSet__ containing all the background **Object**s in the selection.
+An [OrderedSet](orderedSet.md) containing all the background [Object](object.md)s in the selection.
 
 ```Lua
 contents.pathNodes
 ```
-An __OrderedSet__ containing all the background **PathNode**s in the selection.
+An [OrderedSet](orderedSet.md) containing all the background [PathNode](path.md#pathnode)s in the selection.
 
 ## DEPRECATED
 

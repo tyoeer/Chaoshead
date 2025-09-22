@@ -25,7 +25,7 @@ world = require("levelhead.level.world"):new()
 ```Lua
 world:addObject(objectOrSelector, x, y)
 ```
-- objectOrSelector: the __Object__ to add to the world, or the id or name of the level element to create a new object off.
+- objectOrSelector: the [Object](object.md) to add to the world, or the id or name of the level element to create a new object off.
 - x, y: the position where to place the object
 
 Tries to automatically determine the layer to add the object to.
@@ -33,7 +33,7 @@ Tries to automatically determine the layer to add the object to.
 ```Lua
 world:moveObject(obj,x,y)
 ```
-- obj: the __Object__ to move.
+- obj: the [Object](object.md) to move.
 - x, y: the position to move it to.
 
 Automatically selects the right function to use depending on whether the object is on the foreground or background layer.
@@ -41,27 +41,27 @@ Automatically selects the right function to use depending on whether the object 
 ```Lua
 world:removeObject(object)
 ```
-- object: the __Object__ to remove from the world
+- object: the [Object](object.md) to remove from the world
 
 ```Lua
 object = world:place[element](x,y)
 ```
 - element: concatenated name of the level element you're placing, where each word starts with with an uppercase letter
 - x, y: the position where to place the object
-- obj: the __Object__ that has been placed
+- obj: the [Object](object.md) that has been placed
 
 ### Foreground
 
 ```Lua
 world:addForegroundObject(objectOrSelector,x,y)
 ```
-- object: the foreground __Object__ to add to the world,  or the id or name of the level element to create a new foreground object off.
+- object: the foreground [Object](object.md) to add to the world,  or the id or name of the level element to create a new foreground object off.
 - x, y: the position where to place the object
 
 ```Lua
 world:moveForegroundObject(obj,x,y)
 ```
-- obj: the foreground __Object__ to move.
+- obj: the foreground [Object](object.md) to move.
 - x, y: the position to move it to..
 
 Should not be with on background objects.
@@ -69,7 +69,7 @@ Should not be with on background objects.
 ```Lua
 world:removeForegroundAt(x,y)
 ```
-- x, y: the position of the foreground __Object__ to remove
+- x, y: the position of the foreground [Object](object.md) to remove
 
 In case there's no foreground object at the specified coordinates, nothing will happen.
 
@@ -78,13 +78,13 @@ In case there's no foreground object at the specified coordinates, nothing will 
 ```Lua
 world:addBackgroundObject(objectOrSelector,x,y)
 ```
-- object: the background __Object__ to add to the world,  or the id or name of the level element to create a new background object off.
+- object: the background [Object](object.md) to add to the world,  or the id or name of the level element to create a new background object off.
 - x, y: the position where to place the object
 
 ```Lua
 world:moveBackgroundObject(obj,x,y)
 ```
-- obj: the background __Object__ to move.
+- obj: the background [Object](object.md) to move.
 - x, y: the position to move it to..
 
 Should not be with on foreground objects.
@@ -92,7 +92,7 @@ Should not be with on foreground objects.
 ```Lua
 world:removeBackgroundAt(x,y)
 ```
-- x, y: the position of the foreground __Object__ to remove
+- x, y: the position of the foreground [Object](object.md) to remove
 
 In case there's no background object at the specified coordinates, nothing will happen.
 
@@ -101,22 +101,22 @@ In case there's no background object at the specified coordinates, nothing will 
 ```Lua
 path = Level:newPath()
 ```
-- path: a new __Path__ added to this world
+- path: a new [Path](path.md) added to this world
 
 ```Lua
 world:addPath(path)
 ```
-- path: the __Path__ to add to this world
+- path: the [Path](path.md) to add to this world
 
 ```Lua
 world:removePath(path)
 ```
-- path: the __Path__ to remove from this world
+- path: the [Path](path.md) to remove from this world
 
 ```Lua
 world:movePathNode(node,x,y)
 ```
-- node: the __PathNode__ to move.
+- node: the [PathNode](path.md#pathnode) to move.
 - x, y: the position to move it to.
 
 ```Lua
@@ -132,27 +132,27 @@ In case there's no path node at the specified coordinates, nothing will happen.
 ```Lua
 world.objects
 ```
-Read-only __OrderedSet__ with all the objects.
+Read-only [OrderedSet](orderedSet.md) with all the objects.
 
 ```Lua
 world.paths
 ```
-Read-only __OrderedSet__ with all the paths.
+Read-only [OrderedSet](orderedSet.md) with all the paths.
 
 ```Lua
 world.foreground
 ```
-Read-only __Grid__ with all the objects on the foreground layer.
+Read-only [Grid](grid.md) with all the objects on the foreground layer.
 
 ```Lua
 world.background
 ```
-Read-only __Grid__ with all the objects on the background layer.
+Read-only [Grid](grid.md) with all the objects on the background layer.
 
 ```Lua
 world.pathNodes
 ```
-Read-only __Grid__ with all the path nodes.
+Read-only [Grid](grid.md) with all the path nodes.
 
 ```Lua
 world.left, world.top, world.right, world.bottom
@@ -178,4 +178,4 @@ grid = level[layer]
 ```Lua
 level.settings
 ```
-The __Settings__ of this level. Not available for **World**s.
+The [Settings](settings.md) of this level. Not available for [World](#level)s.

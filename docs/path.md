@@ -25,19 +25,19 @@ Creates a new node that gets added to the end of the path.
 ```Lua
 path:addNodeAfter(new,anchor)
 ```
-- new: the __PathNode__ to add to the path
-- anchor: the __PathNode__ after which `new` should be placed
+- new: the [PathNode](#pathnode) to add to the path
+- anchor: the [PathNode](#pathnode) after which `new` should be placed
 
 ```Lua
 path:addNodeBefore(new,anchor)
 ```
-- new: the __PathNode__ to add to the path
-- anchor: the __PathNode__ before which `new` should be placed
+- new: the [PathNode](#pathnode) to add to the path
+- anchor: the [PathNode](#pathnode) before which `new` should be placed
 
 ```Lua
 path:removeNode(node)
 ```
-- node: the __PathNode__ to remove
+- node: the [PathNode](#pathnode) to remove
 
 ### Chaining
 
@@ -120,12 +120,12 @@ has = path:hasProperty(propId)
 ```Lua
 path.head, path.tail
 ```
-The Read-only first and last __PathNode__s of this path respectively.
+The Read-only first and last [PathNode](#pathnode)s of this path respectively.
 
 ```Lua
 path.world
 ```
-The __World__ this path belongs to. Nil if it's not bound to a level. DO NOT edit this directly.
+The [World](level.md) this path belongs to. Nil if it's not bound to a level. DO NOT edit this directly.
 
 ```Lua
 for node in path:iterateNodes() do
@@ -139,12 +139,14 @@ newPath = path:cloneWithoutNodes()
 ```
 - newPath: a new path that has the same properties as `path`
 
-Only copies properties, both nodes and which __World__ this path is in is _not_ copied.
+Only copies properties, both nodes and which [World](level.md) this path is in is _not_ copied.
 
 ```Lua
 path:reverse()
 ```
 Flips the direction this path is going.
+
+
 
 # PathNode
 
@@ -174,7 +176,7 @@ In case of a closed path, these can point to itself.
 ```Lua
 pathNode.path
 ```
-The __Path__ this node belongs to. Nil if it's not bound to a path. DO NOT edit this directly.
+The [Path](#path) this node belongs to. Nil if it's not bound to a path. DO NOT edit this directly.
 
 ## Path manipulation
 

@@ -10,7 +10,7 @@ settings = require("levelhead.level.settings"):new()
 ```
 Creates a new group of settings.
 
-Also see __Level__`.settings`
+Also see [Level](level.md)`.settings`
 
 ## Settings
 
