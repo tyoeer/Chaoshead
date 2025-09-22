@@ -93,7 +93,8 @@ Basic usage is the same as for Windows.
 ### Built-in scripts
 
 Chaoshead comes with some built-in scripts, which are shown in the `.built-in` folder in the scripting interface.
-More information about the scripts can be found in comments at the top of their files. Their files can be found in the [src/scripts/.built-in](src/scripts/.built-in)
+More information about them can be found in their descriptions displayed in Chaoshead
+
 
 ## Terminology
 
