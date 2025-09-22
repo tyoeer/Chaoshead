@@ -3,6 +3,7 @@ const ChAppImageName = "chaoshead-linux-AppImage-x64";
 
 
 import * as Tools from "./tools.ts";
+import * as Publish from "./publish.ts";
 import * as Love from "./love.ts";
 
 
@@ -193,7 +194,8 @@ export async function buildAndPackageLinuxAppImage() {
 export async function build() {
 	await Tools.ensureMultiple("zip", "unzip", "git", "./appimagetool.AppImage");
 	
-	const oldVersion = await Tools.runCmd("git", ["describe", "--tags", "--abbrev=0"], "..");
+	let oldVersion = await Tools.runCmd("git", ["describe", "--tags", "--abbrev=0"], "..");
+	oldVersion = oldVersion.trim();
 	console.log(`Enter the version (Major.Minor.Patch), previous is ${oldVersion}`);
 	const version = prompt("Version:")
 	if (!version) throw "No version given";
@@ -214,7 +216,8 @@ export async function build() {
 	await buildAndPackageWindows32();
 	await buildAndPackageLinuxAppImage();
 	
-	// changelog: git log $(git describe --tags --abbrev=0)..HEAD --format=format:"> %s%+b" > commits.txt
+	const releaseNotes = await Tools.runCmd("git", ["log", `${oldVersion}..HEAD` , `--format=format:"> %s%+b"`]);
+	await Deno.writeTextFile(Publish.releaseNotesFile, releaseNotes);
 	// create git tag
 }
 
