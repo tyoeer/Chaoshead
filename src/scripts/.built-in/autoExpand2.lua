@@ -5,6 +5,7 @@ Select 2 instances of the group of objects you want to expand.
 - The groups can be single tiles
 - The groups have to be rectangular, but can be any size you want
 - If you are expanding both horizontally and vertically, the bottom-right group in the 2x2 set of object groups you would expect get ignored and is optional
+- You can NOT have fully empty rows or columns within a group. As a workaround, use a dummy object you can delete later.
 
 Select the area around the groups of objects you want to expand the groups into.
 - You have to select the whole rectangle to prevent issues with a forgotten part of the selection being somewhere else
@@ -35,6 +36,7 @@ local function printTable(t)
 	end
 end
 
+---@return {minX:number, minY:number, maxX:number, maxY: number}
 local function findObjectRegion()
 	local region = {
 		minX = math.huge,
@@ -65,8 +67,9 @@ local function findObjectRegion()
 	return region
 end
 
+---@return {rows:number[], columns: number[]}
 local function findEmptyLines(region)
-	local firstEmptyColumn
+	local emptyColumns = {}
 	-- we can shrink the search region by from each side because if those columns/rows have objects for sure, otherwise the region wouldn't extend so far
 	for x=region.minX+1, region.maxX-1 do
 		local empty = true
@@ -82,12 +85,11 @@ local function findEmptyLines(region)
 		end
 
 		if empty then
-			firstEmptyColumn = x
-			break
+			table.insert(emptyColumns,x)
 		end
 	end
 	
-	local firstEmptyRow
+	local emptyRows = {}
 	-- we can shrink the search region by from each side because if those columns/rows have objects for sure, otherwise the region wouldn't extend so far
 	for y=region.minY+1, region.maxY-1 do
 		local empty = true
@@ -103,14 +105,13 @@ local function findEmptyLines(region)
 		end
 
 		if empty then
-			firstEmptyRow = y
-			break
+			table.insert(emptyRows, y)
 		end
 	end
 	
 	return {
-		row=firstEmptyRow,
-		column=firstEmptyColumn,
+		rows=emptyRows,
+		columns=emptyColumns,
 	}
 end
 
@@ -145,8 +146,19 @@ local function cellSize()
 	
 	if not cell.extendX then
 		cell.maxX = region.maxX
-	elseif emptyLines.column then
-		cell.maxX = emptyLines.column-1
+	elseif #emptyLines.columns > 0 then
+		cell.maxX = emptyLines.columns[1]-1
+		for i, x in ipairs(emptyLines.columns) do
+			if i~=1 then
+				local prevX = emptyLines.columns[i-1]
+				if x-1 ~= prevX then
+					error(string.format(
+						"Failed detecting object groups: multiple disconnected empty columns at x %i and %i",
+						prevX, x
+					))
+				end
+			end
+		end
 	else
 		if rWidth % 2 == 1 then
 			error("Content width is uneven without air columns, can't neatly divide it in two")
@@ -156,8 +168,19 @@ local function cellSize()
 	
 	if not cell.extendY then
 		cell.maxY = region.maxY
-	elseif emptyLines.row then
-		cell.maxY = emptyLines.row-1
+	elseif #emptyLines.rows > 0 then
+		cell.maxY = emptyLines.rows[1]-1
+		for i, y in ipairs(emptyLines.rows) do
+			if i~=1 then
+				local prevY = emptyLines.rows[i-1]
+				if y-1 ~= prevY then
+					error(string.format(
+						"Failed detecting object groups: multiple disconnected empty rows at y %i and %i",
+						prevY, y
+					))
+				end
+			end
+		end
 	else
 		if rHeight % 2 == 1 then
 			error("Content height is uneven without air rows, can't neatly divide it in two")
