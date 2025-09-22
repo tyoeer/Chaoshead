@@ -3,6 +3,8 @@ local PN = require("levelhead.level.pathNode")
 
 ---@class Path : Class
 ---@field world World?
+---@field head PathNode?
+---@field tail PathNode?
 ---@field getClosed fun(self): "Yes"|"No"
 ---@field setClosed fun(self, closed: "Yes"|"No"): self
 local P = Class("Path")
