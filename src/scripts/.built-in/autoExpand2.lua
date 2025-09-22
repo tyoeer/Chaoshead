@@ -13,11 +13,12 @@ Select the area around the groups of objects you want to expand the groups into.
 - You can expand in all 4 direction
 
 Run this script.
-- Properties are linearly extrapolated
-- TODO path properties
+- Properties of objects and paths are linearly extrapolated in all directions
+- You can expand object groups and extrapolate their properties in multiple directions at once
 
 ]]
 
+---@diagnostic disable-next-line: undefined-global
 local level = level
 ---@cast level Level
 
@@ -300,6 +301,96 @@ local function prepCell()
 	end
 	-- use clipboard to handle path nodes
 	cell.copy = Clipboard:new(level,mask)
+	
+	cell.pathPatches = {}
+	
+	for path in cell.copy.world.paths:iterate() do
+		---@cast path Path
+		local x, y = path.head.x + cell.minX - 1 , path.head.y + cell.minY - 1
+		local pathPatch = {
+			propPatches = {},
+			x = x,
+			y = y,
+		}
+		for propId in path:iterateProperties() do
+			local baseValue = path:getPropertyRaw(propId)
+			local propPatch = {
+				propId = propId,
+				base = baseValue,
+				dx = 0,
+				dy = 0,
+			}
+			if cell.extendX then
+				local otherX = x + cell.tileWidth
+				local otherY = y
+				local other = level.pathNodes[otherX][otherY]
+				if not other then
+					error(string.format(
+						"Expected path node at (%i,%i) to compare to path at (%i,%i)",
+						otherX, otherY,
+						x, y
+					))
+				end
+				local otherValue = other.path:getPropertyRaw(propId)
+				local type = PropData:getMappingType(propId)
+				if type=="Hybrid" or type=="None" then
+					--Numerical property, increase
+					if baseValue~=otherValue then
+						propPatch.dx = otherValue - baseValue
+					end
+				else
+					-- No logical series to follow, verify they're the same
+					if baseValue~=otherValue then
+						error(string.format(
+							"Expected paths at (%d,%d) and (%d,%d) to have non-numerical property %s be the same!",
+							x, y,
+							otherX, otherY,
+							PropData:getName(propId)
+						))
+					end
+				end
+			end
+			if cell.extendY then
+				local otherX = x
+				local otherY = y + cell.tileHeight
+				local other = level.pathNodes[otherX][otherY]
+				if not other then
+					error(string.format(
+						"Expected path node at (%i,%i) to compare to path at (%i,%i)",
+						otherX, otherY,
+						x, y
+					))
+				end
+				local otherValue = other.path:getPropertyRaw(propId)
+				local type = PropData:getMappingType(propId)
+				if type=="Hybrid" or type=="None" then
+					--Numerical property, increase
+					if baseValue~=otherValue then
+						propPatch.dy = otherValue - baseValue
+					end
+				else
+					-- No logical series to follow, verify they're the same
+					if baseValue~=otherValue then
+						error(string.format(
+							"Expected paths at (%d,%d) and (%d,%d) to have non-numerical property %s be the same!",
+							x, y,
+							otherX, otherY,
+							PropData:getName(propId)
+						))
+					end
+				end
+			end
+			
+			if propPatch.dx~=0 or propPatch.dy~=0 then
+				table.insert(pathPatch.propPatches, propPatch)
+			end
+		end
+		
+		if #pathPatch.propPatches > 0 then
+			table.insert(cell.pathPatches, pathPatch)
+		end
+	end
+	
 	return cell
 end
 
@@ -349,6 +440,14 @@ local function build(cell, area)
 				local obj = level.foreground[x][y]
 				for _,propPatch in ipairs(posPatch.propPatches) do
 					obj:setPropertyRaw(propPatch.propId, propPatch.base + propPatch.dx*dx + propPatch.dy*dy)
+				end
+			end
+			for _,pathPatch in ipairs(cell.pathPatches) do
+				local x = pathPatch.x + dx*cell.tileWidth
+				local y = pathPatch.y + dy*cell.tileHeight
+				local path = level.pathNodes[x][y].path
+				for _,propPatch in ipairs(pathPatch.propPatches) do
+					path:setPropertyRaw(propPatch.propId, propPatch.base + propPatch.dx*dx + propPatch.dy*dy)
 				end
 			end
 		end
