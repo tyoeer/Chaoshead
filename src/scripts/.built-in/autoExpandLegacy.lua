@@ -1,6 +1,9 @@
 --[[
 
-Auto fills the selection by continueing lines of foreground objects, with the numerical properties following a lineair series.
+Old version of the auto expand script kept just in case.
+The new version should support everything this one does and more
+
+Auto fills the selection by continuing lines of foreground objects, with the numerical properties following a linear series.
 A line of objects starts with exactly 2 objects, no more, no less.
 Tries to handle weird/non-rectangular selections gracefully, but gives no guarantees. 
 
