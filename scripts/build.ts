@@ -40,6 +40,7 @@ export async function addMiscFiles(folder: string) {
 	await addFile("credits.txt");
 	await addFile("README.md");
 	await addFile("LICENSE.txt","license-Chaoshead.txt");
+	
 	const licenseDir = folder+"/licenses/"
 	await Deno.mkdir(licenseDir);
 	for await (const dirEntry of await Deno.readDir("../licenses")) {
@@ -47,6 +48,15 @@ export async function addMiscFiles(folder: string) {
 			throw `non-file "${dirEntry.name}" in licenses directory`;
 		}
 		await Deno.copyFile(`../licenses/${dirEntry.name}`, licenseDir+dirEntry.name);
+	}
+	
+	const docsDir = folder+"/scriptDocs/"
+	await Deno.mkdir(docsDir);
+	for await (const dirEntry of await Deno.readDir("../docs")) {
+		if (!dirEntry.isFile) {
+			throw `non-file "${dirEntry.name}" in docs directory`;
+		}
+		await Deno.copyFile(`../docs/${dirEntry.name}`, docsDir+dirEntry.name);
 	}
 }
 
