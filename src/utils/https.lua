@@ -10,7 +10,6 @@ else
 		request = function(url, options)
 			return 418, "ERROR: Chaoshead failed to load its own HTTPS library, and is now pretending to be a teapot "
 			.."instead because I couldn't find a fitting status code.\n\n"
-			-- TODO update to consider that we have most https libraries
 			.."If you're a user, report this as a bug.\n\n"
 			.."If you're a developer:\n"
 			.." - If you're on Windows x32: rename https32.dll to https.dll (you'll have to dispose the old https.dll)\n"
