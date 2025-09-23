@@ -83,7 +83,7 @@ local G = {}
 
 function G.getHeaders()
 	return {
-		["User-Agent"] = "Chaoshead v"..Version.current.." (github.com/tyoeer/Chaoshead/)",
+		["User-Agent"] = "Chaoshead v"..Version.current.." (codeberg.com/tyoeer/Chaoshead/)",
 		["accept"] = "application/vnd.github+json",
 	}
 end

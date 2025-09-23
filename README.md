@@ -48,8 +48,8 @@ I also still watch this repository and can be found in the BScotch Discord, so i
 
 #### Windows
 
-- Download the latest version from https://github.com/tyoeer/Chaoshead/releases/latest/download/chaoshead-win32.zip
-	- This just the `chaoshead-win32.zip` file from the latest release on [the releases page](https://github.com/tyoeer/Chaoshead/releases/)
+- Download the latest version from https://codeberg.org/tyoeer/Chaoshead/releases/latest/download/chaoshead-win32.zip
+	- This just the `chaoshead-win32.zip` file from the latest release on [the releases page](https://codeberg.org/tyoeer/Chaoshead/releases/)
 - Unzip it in a folder somewhere, and run `Chaoshead.exe`
 
 Basic usage:
@@ -67,7 +67,7 @@ Basic usage:
 3. To run Chaoshead, run `love path/to/Chaoshead/src` in a terminal, or just `love src` in the Chaoshead directory
 
 Chaoshead will try to automatically find the folders where Levelhead stores user data and where the Levelhead .exe is located,
-but might fail and crash when it runs into issues [(tracked here)](https://github.com/tyoeer/Chaoshead/issues/162).
+but might fail and crash when it runs into issues [(tracked here)](https://codeberg.org/tyoeer/Chaoshead/issues/162).
 In that case, you'll have to manually specify the paths in the settings. \
 The settings can be found in `$XDG_DATA_HOME/love/chaoshead/` or `~/.local/share/love/chaoshead/`.
 The file you want is `/settings/misc.json`.
@@ -125,7 +125,7 @@ https://docs.google.com/spreadsheets/d/1wongis8qvVj3-cHEa4HhmzpL1XkP1TXjWYjV5Rob
 There's always data that needs collecting, usually about how something behaves in Levelhead.
 If you need to look at the raw representation in the file, you can enable the `misc.editor.showRawNumbers` setting so they will be displayed in Chaoshead.
 There's also still parts that need to be reverse engineered in which case the Hex Inspector is your friend.
-You can look at [the issues with the reverse engineering label](https://github.com/tyoeer/Chaoshead/labels/reverse%20engineering)
+You can look at [the issues with the reverse engineering label](https://codeberg.org/tyoeer/Chaoshead/labels/reverse%20engineering)
 for the more interesting/useful things. Data collection stuff also has that label.
 
 Though if you want to help program this thing, that's also possible.
@@ -141,7 +141,7 @@ Just looks how many bytes there are before the first position to see which save-
 
 ### Type annotations
 
-Works towards adding type annotations as used by [sumneko's language server (and VSCode extension)](https://github.com/sumneko/lua-language-server) is tracked in [issue 85](https://github.com/tyoeer/Chaoshead/issues/85).
+Works towards adding type annotations as used by [sumneko's language server (and VSCode extension)](https://github.com/sumneko/lua-language-server) is tracked in [issue 85](https://codeberg.org/tyoeer/Chaoshead/issues/85).
 
 ### Debugging
 
