@@ -1,3 +1,7 @@
+# This canonical version of this repository has moved to https://codeberg.org/tyoeer/Chaoshead
+
+This repository on Github will for now still mirror at least releases to help people on older versions update
+
 # Chaoshead
 
 A level editor, scripting interface, campaign editor, and reverse engineering tool for [Levelhead](https://lvlhd.co),
