@@ -14,7 +14,7 @@ local checkForUpdate = function(force)
 		local diff = os.difftime(os.time(), Storage.lastUpdateCheck)
 		-- diff is seconds since last update
 		if diff < Settings.misc.checkForUpdatesEveryXHours*60*60 then
-			return true -- Too early to check, don't spam GitHub
+			return true -- Too early to check, don't spam Codeberg
 		end
 	end
 	
@@ -49,7 +49,7 @@ local checkForUpdate = function(force)
 	end
 
 	if not release then
-		MainUI:popup("Found no release on GitHub when checking for updates, which is weird, and suggests something is broken.")
+		MainUI:popup("Found no release on Codeberg when checking for updates, which is weird, and suggests something is broken.")
 	else
 		local ver = release.tag_name:gsub("^v","")
 

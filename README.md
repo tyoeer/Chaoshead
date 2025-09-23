@@ -113,7 +113,7 @@ WIP file specification:<br>
 https://docs.google.com/document/d/1_Nt0u3DpgLA2KHgwVdcCnMYaY6nGjZcjbRyx1hHp9rA/<br>
 Levelhead data (level elements, properties, etc.):<br>
 https://docs.google.com/spreadsheets/d/1bzASSn2FgjqUldPzX8DS66Lv-r2lk3V12jZjl51uaTk/<br>
-The old Trello/todo-list for this project, should probably be deleted since GitHub issues are used now:<br>
+The old Trello/todo-list for this project, should probably be deleted since Codeberg issues are used now:<br>
 https://trello.com/b/eqxuD1A4/chaoshead<br>
 Collection of update cinematics (when I remember to update it):<br>
 http://levelmod.epizy.com/wiki/doku.php?id=cinematics#chaoshead<br>
