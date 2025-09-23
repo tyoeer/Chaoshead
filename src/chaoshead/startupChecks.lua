@@ -2,7 +2,7 @@ local List = require("ui.layout.list")
 local Version = require("utils.version")
 local LhMisc = require("levelhead.misc")
 local NFS = require("libs.nativefs")
-local Github = require("utils.github")
+local Codeberg = require("utils.codeberg")
 local Button = require("ui.widgets.button")
 
 ---@return boolean|nil noPopupShown true if no pop-up was shown
@@ -21,9 +21,9 @@ local checkForUpdate = function(force)
 	Storage.lastUpdateCheck = os.time()
 	Storage:save()
 	
-	local success, release = xpcall(Github.latestRelease, function(message)
+	local success, release = xpcall(Codeberg.latestRelease, function(message)
 		if message:find("getError()") then
-			local err = Github.getError()
+			local err = Codeberg.getError()
 			MainUI:popup(
 				"Error fetching update news:",
 				"Server returned status code "..tostring(err.code),

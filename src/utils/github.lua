@@ -6,7 +6,7 @@ local G = {}
 
 ---@alias Headers table<string, string>
 
----@class User
+---@class GithubUser
 ---@field name ?string|nil
 ---@field email ?string|nil
 ---@field login string
@@ -29,7 +29,7 @@ local G = {}
 ---@field site_admin boolean
 ---@field starred_at ?string
 
----@class ReleaseAsset
+---@class GithubReleaseAsset
 ---@field url string
 ---@field browser_download_url string
 ---@field id integer
@@ -42,9 +42,9 @@ local G = {}
 ---@field download_count integer
 ---@field created_at string
 ---@field updated_at string
----@field uploader User
+---@field uploader GithubUser
 
----@class Reactions
+---@class GithubReactions
 ---@field url string
 ---@field total_count integer
 -- ---@field +1 integer
@@ -56,7 +56,7 @@ local G = {}
 ---@field eyes integer
 ---@field rocket integer
 
----@class Release
+---@class GithubRelease
 ---@field url string
 ---@field html_url string
 ---@field assets_url string
@@ -73,13 +73,13 @@ local G = {}
 ---@field prerelease boolean Whether to identify the release as a prerelease or a full release.
 ---@field created_at string
 ---@field published_at string|nil
----@field author User
----@field assets ReleaseAsset[]
+---@field author GithubUser
+---@field assets GithubReleaseAsset[]
 ---@field body_html ?string
 ---@field body_text ?string
 ---@field mentions_count ?integer
 ---@field discussion_url ?string The URL of the release discussion.
----@field reactions Reactions
+---@field reactions GithubReactions
 
 function G.getHeaders()
 	return {
@@ -142,7 +142,7 @@ function G.getError()
 	return G.error
 end
 --https://docs.github.com/en/rest/releases/releases#list-releases
----@return Release? release The release, nil if there wasn't one (no releases)
+---@return GithubRelease? release The release, nil if there wasn't one (no releases)
 function G.latestRelease(repo)
 	local data = G.api(repo, "releases", {per_page=1})
 	return data[1]
