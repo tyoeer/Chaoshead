@@ -90,6 +90,80 @@ export async function publishGithub(release: Release) {
 	}
 }
 
+export async function publishCodeberg(release: Release) {
+	const token = Deno.env.get("CODEBERG_TOKEN");
+	if (!token) {
+		throw `Missing Codeberg token (should be CODEBERG_TOKEN env var)`;
+	}
+	const headers: HeadersInit = {
+		Accept: "application/json",
+		"Content-Type": "application/json",
+		Authorization: `Bearer ${token}`,
+	};
+	// cont new = {...old, ...other}
+	const response = await fetch("https://codeberg.org/api/v1/repos/tyoeer/Chaoshead/releases", {
+		headers: headers,
+		method: "POST",
+		body: JSON.stringify({
+			tag_name: release.tag,
+			name: release.name,
+			body: release.notes,
+			draft: true,
+		}),
+	});
+	
+	if (response.status < 200 || response.status > 299) {
+		console.error(response);
+		console.error(await response.text());
+		throw `Codeberg API call to make release returned non-2xx response`;
+	}
+	const cbRelease = await response.json();
+	
+	console.log(`Created draft Codeberg release ${cbRelease.name} at ${cbRelease.html_url}`);
+	
+	//regex to remove the {?name,label} at the end. include the percent-encoded stuff due to paranoia (it got returned in an error message from GH)
+	const uploadUrl = cbRelease.upload_url;
+	
+	for await (const dirEntry of await Deno.readDir("packages")) {
+		const name = dirEntry.name;
+		if (!dirEntry.isFile) {
+			throw `non-file "${name}" in packages/ directory`;
+		}
+		const path = "packages/" + name;
+		
+		let contentType: string;
+		
+		if (name.endsWith(".zip")) {
+			contentType = "application/zip";
+		} else {
+			throw `Unknown file extension for package/${name}`;
+		}
+		
+		const data = await Deno.readFile(path);
+		
+		const formData = new FormData();
+		formData.append("attachment", new Blob([data], {
+			type: contentType,
+		}));
+		
+		const response = await fetch(uploadUrl+`?name=${name}`, {
+			headers: {
+				...headers,
+			},
+			method: "POST",
+			body: formData,
+		});
+
+		if (response.status < 200 || response.status > 299) {
+			console.error(response);
+			console.error(await response.text());
+			throw `Codeberg API call to add release file ${name} returned non-2xx response`;
+		}
+		
+		console.log(`Uploaded release package ${name} to Codeberg`);
+	}
+}
+
 
 export async function publish(target: string) {
 	versionRaw = await Deno.readTextFile("version.txt");
@@ -104,8 +178,10 @@ export async function publish(target: string) {
 	
 	if (target=="github" || target=="gh") {
 		publishGithub(release);
+	} else if (target=="codeberg" || target=="cb") {
+		publishCodeberg(release);
 	} else {
-		console.error("Available publish targets: github/gh");
+		console.error("Available publish targets: github/gh, codeberg/cb");
 		throw `Invalid publish target: ${target}`;
 	}
 }
