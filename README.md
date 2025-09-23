@@ -52,8 +52,8 @@ I also still watch this repository and can be found in the BScotch Discord, so i
 
 #### Windows
 
-- Download the latest version from https://codeberg.org/tyoeer/Chaoshead/releases/download/latest/chaoshead-win32.zip
-	- This just the `chaoshead-win32.zip` file from the latest release on [the releases page](https://codeberg.org/tyoeer/Chaoshead/releases/)
+- Download the latest version from https://codeberg.org/tyoeer/Chaoshead/releases/download/latest/chaoshead-windows-x32.zip
+	- This just the `chaoshead-windows-x32.zip` file from the latest release on [the releases page](https://codeberg.org/tyoeer/Chaoshead/releases/)
 - Unzip it in a folder somewhere, and run `Chaoshead.exe`
 
 Basic usage:
@@ -65,10 +65,9 @@ Basic usage:
 
 #### Linux
 
-1. Currently, you have to install [LÖVE](https://love2d.org) yourself (installation instructions are on their website).
-	- You can also try grabbing LÖVE from your package manager, but do note that the Debian package has a longstanding bug (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1025649) that makes it break Chaoshead.
-2. After you have obtained LÖVE, you have to download/clone the Chaoshead source code
-3. To run Chaoshead, run `love path/to/Chaoshead/src` in a terminal, or just `love src` in the Chaoshead directory
+- Download the latest version from https://codeberg.org/tyoeer/Chaoshead/releases/download/latest/chaoshead-linux-AppImage-x64.zip
+	- This just the `chaoshead-linux-AppImage-x64.zip` file from the latest release on [the releases page](https://codeberg.org/tyoeer/Chaoshead/releases/)
+- Unzip it in a folder somewhere, and run `Chaoshead.AppImage`
 
 Chaoshead will try to automatically find the folders where Levelhead stores user data and where the Levelhead .exe is located,
 but might fail and crash when it runs into issues [(tracked here)](https://codeberg.org/tyoeer/Chaoshead/issues/162).
@@ -81,8 +80,22 @@ The settings are:
 
 If your path is from a somewhat standard installation, do let me know and I'll add them to the paths Chaoshead checks automatically.
 
+Basic usage is the same as for [Windows](#windows).
 
-Basic usage is the same as for Windows.
+#### Running from source
+
+1. Install [LÖVE](https://love2d.org) (installation instructions are on their website).
+	- You can also try grabbing LÖVE from your package manager, but do note that the Debian package has a longstanding bug (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1025649) that makes it break Chaoshead.
+2. After you have obtained LÖVE, you have to download/clone the Chaoshead source code/repository
+3. To run Chaoshead, run `love path/to/Chaoshead/src` in a terminal, or just `love src` in the Chaoshead directory
+
+HTTPS libraries are included in the Chaoshead source code/repository for ease of development, 
+although automatic update checks are disabled when running from source, so they aren't really needed.
+If there's a problem with them Chaoshead should provide information on what to do in the error message.
+
+You might have to tell Chaoshead where your Levelhead files are if they are in a non-standard location (Chaoshead will let you know), see the instructions under [Linux](#linux) for that.
+
+Basic usage is the same as for [Windows](#windows).
 
 ### Currently not supported
 
